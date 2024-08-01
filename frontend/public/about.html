@@ -11,6 +11,7 @@
       }
     </style>
     <link rel="stylesheet" href="./index.css" />
+    <script src="./about.js" defer></script>
   </head>
   <body>
     <div id="about-main-frame">
@@ -19,7 +20,7 @@
           <img class="card" id="img" src="./assets/EESAST2024.jpg" alt="EESAST 2024" title="EESAST 2024" width="330" height="185"/>
           <hr />
           <div class="card">
-            <form method="post" action="#">
+            <form id="contact-us" method="post" action="#">
               <h3>联系我们</h3>
               <p>
                 称呼：<input name="name" type="text" required />
@@ -63,7 +64,7 @@
             <li><strong>功能需求</strong>：用户创建和登录、会议创建和加入、会议中倒计时、随机点名等</li>
           </ul>
           <h3>这个工程分为6个循序渐进的部分</h3>
-          <ol class="styled-list">
+          <ol class="styled-list" id="about-plan">
             <li>HTML&CSS</li>
             <li>JS&TS</li>
             <li>DataBase (SQL&GraphQL)</li>
