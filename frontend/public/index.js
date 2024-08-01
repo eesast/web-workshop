@@ -13,3 +13,24 @@ const triangleArea = (a, b, c) => {
   }
   return area;
 }
+
+const imgUrlList = [
+  "./assets/tsinghua-start.jpg",
+  "./assets/tsinghua-spring.jpg",
+  "./assets/tsinghua-spring2.jpg",
+  "./assets/tsinghua-summer.jpg",
+  "./assets/tsinghua-fall.jpg",
+  "./assets/tsinghua-winter.jpg",
+];
+const randomNum = Math.floor(Math.random() * imgUrlList.length);
+const bodyDOMList = document.getElementsByTagName("body");
+for (const bodyDOM of bodyDOMList) {
+  bodyDOM.style.backgroundImage = `url(${imgUrlList[randomNum]})`;
+}
+
+const clockDOM = document.getElementById("clock");
+setInterval(() => {
+  const date = new Date().toLocaleDateString("zh-CN");
+  const time = new Date().toLocaleTimeString("zh-CN");
+  clockDOM.innerText = `今天是 ${date}，现在是北京时间 ${time}`;
+}, 1000);
