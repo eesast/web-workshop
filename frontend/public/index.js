@@ -34,3 +34,20 @@ setInterval(() => {
   const time = new Date().toLocaleTimeString("zh-CN");
   clockDOM.innerText = `今天是 ${date}，现在是北京时间 ${time}`;
 }, 1000);
+
+// 免费的API测试接口：https://api.vvhan.com/
+const mottoDOM = document.getElementById('motto');
+const getMotto = async (objDOM) => {
+  try {
+    const response = await fetch("https://api.vvhan.com/api/ian/wenxue?type=json");
+    const responseJSON = await response.json();
+    const content = responseJSON.data.content;
+    const source = responseJSON.data.form;
+    objDOM.innerText = `“${content}” ——《${source}》`;
+  }
+  catch (err) {
+    console.error(err);
+    objDOM.innerText = "每日一句加载失败";
+  }
+}
+getMotto(mottoDOM);
