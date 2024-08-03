@@ -6,6 +6,7 @@ mutation addUser($username: String!, $password: String!) {
 
 query getUsersByUsername($username: String!) {
   user(where: {username: {_eq: $username}}) {
+    uuid
     password
   }
 }
