@@ -111,7 +111,7 @@ hasura console --admin-secret <your-secret> --endpoint <your-endpoint>
 
 ##### 4.2 通过 http 请求直接访问
 
-在运行时，无论前端还是后端应用，都是通过发送一个 http 请求到 endpoint 来执行一个 graphql 操作的。我们依赖于不同的 npm 包来实现这一点，前端使用 Apollo GraphQL，后端使用 graphql-request，同时我们使用 graphql-codegen 来根据 graphql 代码自动生成可直接调用的 Typescript 代码。这些内容我们留到 NodeJS 讲解后再涉及
+在运行时，无论前端还是后端应用，都是通过发送一个 http 请求到 endpoint 来执行一个 graphql 操作的。我们依赖于不同的 npm 包来实现这一点，前端使用 Apollo GraphQL，后端使用 graphql-request。同时，我们使用 graphql-codegen 来根据 graphql 代码自动生成可直接调用的 Typescript 代码，相关配置代码已在`/database/codegen.ts`中给出，大家可以参考`/tutorial/04-Backend.md`中的方法运行。由于该工具与本节知识点无关，且单纯是代码生成的工具，因此不多作讲解，感兴趣的请参见[Introduction (GraphQL-Codegen) (the-guild.dev)](https://the-guild.dev/graphql/codegen/docs/getting-started)
 
 ### 作业
 
