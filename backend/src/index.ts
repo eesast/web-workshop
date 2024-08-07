@@ -1,5 +1,9 @@
 import express from "express";
 import morgan from "morgan";
+import dotenv from "dotenv";
+import path from "path";
+import { GraphQLClient } from "graphql-request";
+import { getSdk } from "./graphql";
 import userRouter from "./user";
 import fileRouter from "./file";
 import emailRouter from "./email";
@@ -7,6 +11,21 @@ import emailRouter from "./email";
 const app = express();
 const address = "http://localhost";
 const port = 8888;
+
+dotenv.config({
+  path: path.resolve(process.cwd(), ".local.env"),
+});
+
+const client = new GraphQLClient(
+  process.env.HASURA_GRAPHQL_ENDPOINT!,
+  {
+    headers: {
+      "Content-Type": "application/json",
+      "x-hasura-admin-secret": process.env.HASURA_GRAPHQL_ADMIN_SECRET!,
+    },
+  }
+);
+export const sdk = getSdk(client);
 
 // Log all requests to the console, optional.
 app.use(morgan(process.env.NODE_ENV === "production" ? "combined" : "dev"));
