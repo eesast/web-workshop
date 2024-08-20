@@ -1,11 +1,18 @@
 {
   "homepage": "./",
   "dependencies": {
+    "@ant-design/pro-components": "2.7.15",
+    "antd": "5.20.2",
+    "axios": "1.7.4",
+    "jwt-decode": "4.0.0",
+    "md5": "2.3.0",
     "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "react-dom": "18.3.1",
+    "react-router-dom": "6.26.1"
   },
   "devDependencies": {
     "@craco/craco": "7.1.0",
+    "@types/md5": "2.3.5",
     "@types/react": "18.3.3",
     "@types/react-dom": "18.3.0",
     "react-scripts": "5.0.1",
