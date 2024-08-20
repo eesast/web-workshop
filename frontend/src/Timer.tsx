@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Button, Card, Container, Text } from "./Components";
+import { Button, Card, Container, fontFamilies, Text } from "./Components";
 import { Input } from "antd";
 
 interface TimerProps {
@@ -140,10 +140,13 @@ const Timer: React.FC = () => {
     <Card
       style={{
         width: "250px",
-        height: mode === "countdown" ? "320px" : "216px",
+        height: mode === "countdown" ? "320px" : "215px",
       }}
     >
-      <Text size="extra">
+      <Text
+        size="extra"
+        style={{ fontFamily: fontFamilies.join(","), lineHeight: 1 }}
+      >
         <strong>
           {Math.floor(time / 60)}:{time % 60 < 10 ? "0" : ""}{time % 60}
         </strong>

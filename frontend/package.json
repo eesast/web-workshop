@@ -2,8 +2,10 @@
   "homepage": "./",
   "dependencies": {
     "@ant-design/pro-components": "2.7.15",
+    "@apollo/client": "3.11.4",
     "antd": "5.20.2",
     "axios": "1.7.4",
+    "graphql": "16.9.0",
     "jwt-decode": "4.0.0",
     "md5": "2.3.0",
     "react": "18.3.1",
