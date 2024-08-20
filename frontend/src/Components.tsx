@@ -72,6 +72,20 @@ export const Bubble: React.FC<
   );
 };
 
+export const fontFamilies = [
+  "Times New Roman",
+  "Times",
+  "Nimbus Roman No9 L",
+  "Liberation Serif",
+  "FreeSerif",
+  "Hoefler Text",
+  "Microsoft YaHei", // 微软雅黑
+  "Hiragino Sans GB", // 冬青黑体
+  "WenQuanYi Micro Hei", // 文泉驿微米黑
+  "STHeiti", // 华文黑体
+  "sans-serif", // 无衬线
+];
+
 export const Text: React.FC<
   React.PropsWithChildren<{ style?: React.CSSProperties; size?: string; editable?: any; copyable?: any }>
 > = ({ children, style, size, editable, copyable }) => {
@@ -200,5 +214,24 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({ position, parentRef, o
         ))}
       </div>
     </>
+  );
+};
+
+export const Scroll: React.FC<
+  React.PropsWithChildren<{ style?: React.CSSProperties }>
+> = ({ children, style }) => {
+  return (
+    <div
+      style={{
+        ...style,
+        height: "100%",
+        width: "100%",
+        overflowY: "scroll",
+        scrollbarWidth: "thin",
+        scrollbarColor: "rgba(0, 0, 0, 0.25) rgba(255, 255, 255, 0)",
+      }}
+    >
+      {children}
+    </div>
   );
 };
