@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Card, Text } from "./Components";
+import { Button, Card, fontFamilies, Text } from "./Components";
 
 const Dice: React.FC = () => {
   const [value, setValue] = useState<number>(0);
@@ -10,7 +10,10 @@ const Dice: React.FC = () => {
 
   return (
     <Card style={{ width: "150px", height: "150px" }}>
-      <Text size="extra">
+      <Text
+        size="extra"
+        style={{ fontFamily: fontFamilies.join(","), lineHeight: 1 }}
+      >
         <strong>{value}</strong>
       </Text>
       <Button
