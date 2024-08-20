@@ -317,3 +317,22 @@ export const Scroll: React.FC<
     </div>
   );
 };
+
+export const Scroll: React.FC<
+  React.PropsWithChildren<{ style?: React.CSSProperties }>
+> = ({ children, style }) => {
+  return (
+    <div
+      style={{
+        ...style,
+        height: "100%",
+        width: "100%",
+        overflowY: "scroll",
+        scrollbarWidth: "thin",
+        scrollbarColor: "rgba(0, 0, 0, 0.25) rgba(255, 255, 255, 0)",
+      }}
+    >
+      {children}
+    </div>
+  );
+};
