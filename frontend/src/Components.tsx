@@ -1,3 +1,5 @@
+import { Button as AntdButton } from "antd";
+
 export const Container: React.FC<
   React.PropsWithChildren<{ style?: React.CSSProperties }>
 > = ({ children, style }) => {
@@ -33,6 +35,25 @@ export const Card: React.FC<
     >
       {children}
     </Container>
+  );
+};
+
+export const Bubble: React.FC<
+  React.PropsWithChildren<{ style?: React.CSSProperties }>
+> = ({ children, style }) => {
+  return (
+    <div
+      style={{
+        ...style,
+        padding: "6px",
+        margin: "6px",
+        borderRadius: "8px",
+        boxShadow: "0 0 6px rgba(0, 0, 0, 0.25)",
+        backdropFilter: "blur(6px)",
+      }}
+    >
+      {children}
+    </div>
   );
 };
 
@@ -74,7 +95,7 @@ export const Button: React.FC<
   React.PropsWithChildren<{ style?: React.CSSProperties; onClick?: () => void }>
 > = ({ children, style, onClick }) => {
   return (
-    <button
+    <AntdButton
       style={{
         ...style,
         fontSize: "18px",
@@ -84,6 +105,6 @@ export const Button: React.FC<
       onClick={onClick}
     >
       {children}
-    </button>
+    </AntdButton>
   );
 };
