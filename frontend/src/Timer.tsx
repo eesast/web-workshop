@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Button, Card, Container, Text } from "./Components";
+import { Input } from "antd";
 
 interface TimerProps {
   setTime: (time: number) => void;
@@ -26,13 +27,14 @@ const Countdown: React.FC<TimerProps> = ({
     <Container style={{ marginTop: "24px" }}>
       <div>
         <Text>倒计时</Text>
-        <input
+        <Input
           type="number"
           value={countdownTime}
           onChange={(e) => setCountdownTime(parseInt(e.target.value))}
           style={{
             marginLeft: "12px",
             marginRight: "12px",
+            height: "28px",
             width: "80px",
             fontSize: "18px",
           }}
