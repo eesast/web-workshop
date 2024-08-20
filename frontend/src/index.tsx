@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import axios from "axios";
@@ -12,6 +12,8 @@ import Timer from "./Timer";
 import getUser from "./getUser";
 import MainPanel from "./MainPanel";
 import LoginPage from "./LoginPage";
+import ChatBox from "./ChatBox";
+import FileShare from "./FileShare";
 
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL!;
 axios.interceptors.request.use((config) => {
@@ -24,6 +26,25 @@ axios.interceptors.request.use((config) => {
 
 const App = () => {
   const user = getUser();
+  const [chatBoxList, setChatBoxList] = useState<number[]>([]);
+  const [fileShareList, setFileShareList] = useState<number[]>([]);
+
+  const addChatBox = (idx: number) => {
+    if (!chatBoxList.includes(idx)) {
+      setChatBoxList([...chatBoxList, idx]);
+    }
+  };
+  const addFileShare = (idx: number) => {
+    if (!fileShareList.includes(idx)) {
+      setFileShareList([...fileShareList, idx]);
+    }
+  };
+  const removeChatBox = (idx: number) => {
+    setChatBoxList(chatBoxList.filter((id) => id !== idx));
+  };
+  const removeFileShare = (idx: number) => {
+    setFileShareList(fileShareList.filter((id) => id !== idx));
+  };
 
   const { data, error, refetch } = graphql.useGetJoinedRoomsQuery({
     skip: !user,
@@ -40,9 +61,28 @@ const App = () => {
 
   return (
     <div style={{ display: "inline-flex", flexWrap: "wrap" }}>
-      <MainPanel user={user} rooms={data?.user_room} refetchRooms={refetch} />
+      <MainPanel
+        user={user}
+        rooms={data?.user_room}
+        refetchRooms={refetch}
+        addChatBox={addChatBox}
+        addFileShare={addFileShare}
+      />
       <Dice />
       <Timer />
+      {chatBoxList.map((idx) => (
+        <ChatBox
+          user={user}
+          room={data?.user_room[idx].room}
+          handleClose={() => removeChatBox(idx)}
+        />
+      ))}
+      {fileShareList.map((idx) => (
+        <FileShare
+          room={data?.user_room[idx].room}
+          handleClose={() => removeFileShare(idx)}
+        />
+      ))}
     </div>
   );
 };
