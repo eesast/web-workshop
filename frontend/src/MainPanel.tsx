@@ -15,6 +15,8 @@ interface MainPanelProps {
   user: user | null;
   rooms: graphql.GetJoinedRoomsQuery["user_room"] | undefined;
   refetchRooms: () => void;
+  addChatBox: (id: number) => void;
+  addFileShare: (id: number) => void;
 }
 
 const MainPanel: React.FC<MainPanelProps> = (props) => {
@@ -175,7 +177,13 @@ const JoinRoom: React.FC<MainPanelProps> = ({ user, rooms, refetchRooms }) => {
   );
 };
 
-const RoomList: React.FC<MainPanelProps> = ({ user, rooms, refetchRooms }) => {
+const RoomList: React.FC<MainPanelProps> = ({
+  user,
+  rooms,
+  refetchRooms,
+  addChatBox,
+  addFileShare,
+}) => {
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -235,7 +243,13 @@ const RoomList: React.FC<MainPanelProps> = ({ user, rooms, refetchRooms }) => {
           size="small"
           itemLayout="vertical"
           dataSource={rooms}
-          renderItem={(item) => <RoomListItem room={item.room} />}
+          renderItem={(item, index) => (
+            <RoomListItem
+              room={item.room}
+              handleOpenChat={() => addChatBox(index)}
+              handleOpenFileShare={() => addFileShare(index)}
+            />
+          )}
         />
       </Scroll>
       <Modal
@@ -271,15 +285,21 @@ const RoomList: React.FC<MainPanelProps> = ({ user, rooms, refetchRooms }) => {
 
 interface RoomListItemProps {
   room: graphql.GetJoinedRoomsQuery["user_room"][0]["room"];
+  handleOpenChat: () => void;
+  handleOpenFileShare: () => void;
 }
 
-const RoomListItem: React.FC<RoomListItemProps> = ({ room }) => {
+const RoomListItem: React.FC<RoomListItemProps> = ({
+  room,
+  handleOpenChat,
+  handleOpenFileShare,
+}) => {
   const dateUTC = new Date(room.created_at);
   const date = new Date(
     dateUTC.getTime() - dateUTC.getTimezoneOffset() * 60000
   );
 
-  const handleClick = () => {
+  const handleQuit = () => {
     message.info("暂未实现");
   };
 
@@ -309,13 +329,13 @@ const RoomListItem: React.FC<RoomListItemProps> = ({ room }) => {
           邀请码 {room.invite_code}
         </Text>
         <br />
-        <Link style={{ marginTop: "6px" }} onClick={handleClick}>
+        <Link style={{ marginTop: "6px" }} onClick={handleOpenChat}>
           打开聊天室
         </Link>
-        <Link style={{ marginLeft: "12px" }} onClick={handleClick}>
+        <Link style={{ marginLeft: "12px" }} onClick={handleOpenFileShare}>
           打开文件共享空间
         </Link>
-        <Link danger style={{ marginLeft: "12px" }} onClick={handleClick}>
+        <Link danger style={{ marginLeft: "12px" }} onClick={handleQuit}>
           退出会议
         </Link>
       </div>
