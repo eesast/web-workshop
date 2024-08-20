@@ -1,4 +1,6 @@
-import { Button as AntdButton } from "antd";
+import { Button as AntdButton, Typography } from "antd";
+
+const { Text: AntdText, Link: AntdLink } = Typography;
 
 export const Container: React.FC<
   React.PropsWithChildren<{ style?: React.CSSProperties }>
@@ -57,9 +59,28 @@ export const Bubble: React.FC<
   );
 };
 
+export const fontFamilies = [
+  "Times New Roman",
+  "Times",
+  "Nimbus Roman No9 L",
+  "Liberation Serif",
+  "FreeSerif",
+  "Hoefler Text",
+  "Microsoft YaHei", // 微软雅黑
+  "Hiragino Sans GB", // 冬青黑体
+  "WenQuanYi Micro Hei", // 文泉驿微米黑
+  "STHeiti", // 华文黑体
+  "sans-serif", // 无衬线
+];
+
 export const Text: React.FC<
-  React.PropsWithChildren<{ style?: React.CSSProperties; size?: string }>
-> = ({ children, style, size }) => {
+  React.PropsWithChildren<{
+    style?: React.CSSProperties;
+    size?: string;
+    editable?: any;
+    copyable?: any;
+  }>
+> = ({ children, style, size, editable, copyable }) => {
   switch (size) {
     case "small":
       size = "12px";
@@ -80,14 +101,37 @@ export const Text: React.FC<
       size = "18px";
   }
   return (
-    <span
+    <AntdText
       style={{
         ...style,
         fontSize: size,
       }}
+      editable={editable}
+      copyable={copyable}
     >
       {children}
-    </span>
+    </AntdText>
+  );
+};
+
+export const Link: React.FC<
+  React.PropsWithChildren<{
+    style?: React.CSSProperties;
+    onClick?: () => void;
+    danger?: boolean;
+  }>
+> = ({ children, style, onClick, danger }) => {
+  return (
+    <AntdLink
+      type={danger ? "danger" : undefined}
+      style={{
+        ...style,
+        fontSize: "12px",
+      }}
+      onClick={onClick}
+    >
+      {children}
+    </AntdLink>
   );
 };
 
@@ -106,5 +150,24 @@ export const Button: React.FC<
     >
       {children}
     </AntdButton>
+  );
+};
+
+export const Scroll: React.FC<
+  React.PropsWithChildren<{ style?: React.CSSProperties }>
+> = ({ children, style }) => {
+  return (
+    <div
+      style={{
+        ...style,
+        height: "100%",
+        width: "100%",
+        overflowY: "scroll",
+        scrollbarWidth: "thin",
+        scrollbarColor: "rgba(0, 0, 0, 0.25) rgba(255, 255, 255, 0)",
+      }}
+    >
+      {children}
+    </div>
   );
 };
