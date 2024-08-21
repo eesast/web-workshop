@@ -363,6 +363,7 @@ export const Scroll: React.FC<
 > = ({ children, style }) => {
   return (
     <div
+      className="need-interaction"
       style={{
         ...style,
         height: "100%",
