@@ -54,9 +54,8 @@ const LoginPage: React.FC = () => {
   return (
     <LoginFormPage
       style={{ height: "100vh" }}
-      backgroundImageUrl="https://mdn.alipayobjects.com/huamei_gcee1x/afts/img/A*y0ZTS6WLwvgAAAAAAAAAAAAADml6AQ/fmt.webp"
       backgroundVideoUrl="https://gw.alipayobjects.com/v/huamei_gcee1x/afts/video/jXRBRK_VAwoAAAAAAAAAAAAAK4eUAQBr"
-      logo="./favicon.png"
+      logo="https://eesast.com/android-chrome-192x192.png"
       title="登录账户"
       subTitle="科协暑培(网站部分)学习型工程"
       submitter={{ searchConfig: { submitText: "登录 / 注册" } }}
