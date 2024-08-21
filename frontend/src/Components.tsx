@@ -33,6 +33,7 @@ export const Card: React.FC<
         backgroundColor: "rgba(255, 255, 255, 0.25)",
         boxShadow: "0 0 18px rgba(0, 0, 0, 0.25)",
         backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
       }}
     >
       {children}
@@ -52,6 +53,7 @@ export const Bubble: React.FC<
         borderRadius: "8px",
         boxShadow: "0 0 6px rgba(0, 0, 0, 0.25)",
         backdropFilter: "blur(6px)",
+        WebkitBackdropFilter: "blur(6px)",
       }}
     >
       {children}
@@ -140,6 +142,7 @@ export const Button: React.FC<
 > = ({ children, style, onClick }) => {
   return (
     <AntdButton
+      className="need-interaction"
       style={{
         ...style,
         fontSize: "18px",
@@ -158,6 +161,7 @@ export const Scroll: React.FC<
 > = ({ children, style }) => {
   return (
     <div
+      className="need-interaction"
       style={{
         ...style,
         height: "100%",
