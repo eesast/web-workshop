@@ -65,6 +65,7 @@ export const Bubble: React.FC<
         borderRadius: "8px",
         boxShadow: "0 0 6px rgba(0, 0, 0, 0.25)",
         backdropFilter: "blur(6px)",
+        WebkitBackdropFilter: "blur(6px)",
       }}
     >
       {children}
@@ -222,6 +223,7 @@ export const Scroll: React.FC<
 > = ({ children, style }) => {
   return (
     <div
+      className="need-interaction"
       style={{
         ...style,
         height: "100%",
