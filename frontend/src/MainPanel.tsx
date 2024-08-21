@@ -21,7 +21,7 @@ interface MainPanelProps {
 
 const MainPanel: React.FC<MainPanelProps> = (props) => {
   return (
-    <Card style={{ width: "300px", height: "fit-content" }}>
+    <Card style={{ width: "300px", height: "fit-content", zIndex: 100 }}>
       <User {...props} />
       {props.rooms && <JoinRoom {...props} />}
       {props.rooms && <RoomList {...props} />}

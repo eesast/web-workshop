@@ -38,6 +38,7 @@ const Countdown: React.FC<TimerProps> = ({
             width: "80px",
             fontSize: "18px",
           }}
+          className="need-interaction"
         />
         <Text>秒</Text>
       </div>
