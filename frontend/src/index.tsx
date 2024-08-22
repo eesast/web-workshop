@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createHashRouter, RouterProvider } from "react-router-dom";
 import axios from "axios";
 import { ApolloProvider } from "@apollo/client";
 import { message } from "antd";
@@ -156,7 +156,7 @@ const App = () => {
 
 const domNode = document.getElementById("root");
 const root = createRoot(domNode!);
-const router = createBrowserRouter([
+const router = createHashRouter([
   { path: "/login", element: <LoginPage /> },
   { path: "*", element: <App /> },
 ]);
