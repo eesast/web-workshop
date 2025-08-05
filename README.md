@@ -131,5 +131,3 @@ git clone <先前复制的仓库URI>
    ```bash
    git push --all
    ```
-
-   test
