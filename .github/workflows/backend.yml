@@ -57,11 +57,16 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Downcase GitHub username
+        run: echo "USERNAME_LC=${USERNAME@L}" >> $GITHUB_ENV
+        env:
+          USERNAME: ${{ github.repository_owner }}
+
       - name: Build and push docker image
         uses: docker/build-push-action@v6
         with:
           context: ./backend
           push: true
           tags: |
-            ghcr.io/${{ vars.DOCKER_TAG }}
-            ${{ vars.DOCKER_TAG }}
+            ghcr.io/${{ env.USERNAME_LC }}/${{ vars.DOCKER_TAG }}
+            ${{ vars.DOCKERHUB_USERNAME }}/${{ vars.DOCKER_TAG }}

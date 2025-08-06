@@ -2,7 +2,7 @@
 
 ### 前端(Github Pages)
 
-在你复刻的仓库中，进入设置标签页（https://github.com/<username>/web-workshop/settings），点击左边栏的 Pages，在 Build and deployment 下方的 Source，选择 Github Actions。意思是通过自定义的 action 来部署静态 Github Pages（与之相对的是根据仓库中的 markdown 文件自动部署）
+在你复刻的仓库中，进入设置标签页（https://github.com/[username]/web-workshop/settings），点击左边栏的 Pages，在 Build and deployment 下方的 Source，选择 Github Actions。意思是通过自定义的 action 来部署静态 Github Pages（与之相对的是根据仓库中的 markdown 文件自动部署）
 
 ### 后端(Docker)
 
@@ -11,4 +11,4 @@
 3. 在 Github 上复刻仓库的设置页，点击左边栏的 Secrets and variables -> Actions，添加一个 Secret（即密钥，加密防护）和两个 Variables（即变量，明文显示）如下：
    - [Secret] `DOCKERHUB_TOKEN`，值为之前复制的个人访问 Token
    - [Variable] `DOCKERHUB_USERNAME`，值为你的 Docker Hub 账号名
-   - [Variable] `DOCKER_TAG`，值为你的 Docker 容器标识名，形如`<username>/<repo-name>:latest`，其中`username`为 Docker Hub 账号名和 Github 账户名（如果不同名，请修改`backend.yml`定义两个变量分别表示），`repo-name`任意，不需要与仓库同名
+   - [Variable] `DOCKER_TAG`，值为你的 Docker 容器标识名，形如`<repo-name>:latest`，其中`repo-name`任意，不需要与仓库同名
