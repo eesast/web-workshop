@@ -1,0 +1,24 @@
+body{
+        background-image: linear-gradient(to right, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.3)),
+        url("./assets/background.png");
+
+        background-size: cover; /* 适应屏幕大小 */
+        background-repeat: no-repeat; /* 不重复 */
+        background-position: center; /* 居中显示 */
+        background-attachment: fixed; /* 固定背景 */
+        min-height: 100vh; /* 确保背景覆盖整个视口高度 */
+        margin: 0; /* 移除默认边距 */
+}
+#introduction{
+        font-size: 20px;
+        font-weight: bold;
+        color: #3010e8;
+        margin-bottom: 20px;
+}
+#fun{
+        font-size: 20px;
+        font-weight: bold;
+        color: #f118ac;
+        margin-bottom: 20px;
+}
+
