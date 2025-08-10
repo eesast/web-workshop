@@ -155,9 +155,13 @@ git push origin "01-HTML&CSS"
 点击 "Compare & pull request" 按钮，并在 PR 创建页面填写相关信息
 ##### 关联PR到对应Issue
 PR提交后，需手动关联PR到对应Issue
+
 在PR界面右侧栏位点击'Development'旁边的⚙️标志，选择对应讲次的Issue进行关联
+
 <img width="316" height="543" alt="image" src="https://github.com/user-attachments/assets/10cd0817-6b40-4040-9349-c52e4ad478c2" />
+
 [示例PR](https://github.com/eesast/web-workshop/pull/12)
+
 关联完成后，作业提交完毕
 ##### 查看作业批改结果
 作业由讲师批改后，对应 PR 会被打上标签：
