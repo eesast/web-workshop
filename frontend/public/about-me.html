@@ -6,39 +6,57 @@
     <link rel="icon" type="image/png" sizes="32x32" href="./favicon.png" />
     <title>关于我</title>
     <link rel="stylesheet" href="./about-me.css" />
-
   </head>
   <body>
-    <h1>关于我</h1>
+     <label class="language-switch">
+        <input type="checkbox" id="languageToggle">
+        <span class="slider round"></span>
+    </label>
+    <h1 data-lang-key="title">关于我</h1>
     <hr />
     
-    <h2>个人简介</h2>
-    <p id="introduction">大家好！我叫刘承昊，是一名碌碌无为的电子系食物链底端的CV工程师兼资深的五道口猥琐男，擅长ctrl C,ctrl V,ctrl X,经常被网络问题逼到死角,喜欢麻烦学长。</p>
+    <h2 data-lang-key="individual">个人简介</h2>
+
+    <p id="introduction" data-lang-key="description">大家好！我叫刘承昊，是一名碌碌无为的电子系食物链底端的CV工程师兼资深的五道口猥琐男，擅长ctrl C,ctrl V,ctrl X,经常被网络问题逼到死角,喜欢麻烦学长。</p>
 
     
-    <h2>我的爱好</h2>
-    <ul>
-      <li>编程开发</li>
-      <li>阅读科幻小说</li>
-      <li>长跑</li>
-      <li>画画</li>
-      <li>看电影</li>
-
-    </ul>
-    
-    <h2>有趣的经历</h2>
-    <p id="fun">参加过拓竹杯，和THUAI8，都仅获得3等奖，但想到能摇身一变成举办方还是很有意思的<strong>🎉</strong></p>
-    
-    <h2>我的照片</h2>
-    <img 
-      src="./assets/profile1.png" 
-      alt="我的照片" 
-      width="200"
-      onmouseover="this.src='./assets/profile2.png'"
-      onmouseout="this.src='./assets/profile1.png'"
-    />
-    <h2>联系我</h2>
-    <p>邮箱: <a href="mailto:lch24@mails.tsinghua.edu.cn">lch24@mails.tsinghua.edu.cn</a></p>
-
+    <div class="photo-hobby-container">
+        <div class="photo-container">
+            <h2 data-lang-key="photo_title">我的照片</h2>
+            <img 
+                src="./assets/profile1.png" 
+                alt="我的照片" 
+                width="200"
+                onmouseover="this.src='./assets/profile2.png'"
+                onmouseout="this.src='./assets/profile1.png'"
+            />
+        </div>
+        <div class="hobby-container">
+            <h2 data-lang-key="hobby_title">我的爱好</h2>
+            <ul>
+                <li data-lang-key="hobby1">编程开发</li>
+                <li data-lang-key="hobby2">阅读科幻小说</li>
+                <li data-lang-key="hobby3">长跑</li>
+                <li data-lang-key="hobby4">画画</li>
+                <li data-lang-key="hobby5">看电影</li>
+            </ul>
+        </div>
+    </div>
+        <h2 data-lang-key="fun_title">有趣的经历</h2>
+    <p data-lang-key="fun" id="fun">参加过拓竹杯，和THUAI8，都仅获得3等奖，但想到能摇身一变成举办方还是很有意思的<strong>🎉</strong></p>
+    <div id="music-chart">
+      <h3>网易云音乐热榜</h3>
+      <div class="scroll-container">
+        <div id="song-list" class="scroll-content"></div>
+      </div>
+    </div>
+    <h2 data-lang-key="contact_title">联系我</h2>
+    <p data-lang-key="contact_info">邮箱: </p>
+    <a href="mailto:lch24@mails.tsinghua.edu.cn">lch24@mails.tsinghua.edu.cn</a>
+    <div id="github-info">
+      <h3 data-lang-key="github_title">GitHub 仓库信息</h3>
+      <div id="repo-list" data-lang-key="repo_list">加载中...</div>
+    </div>
+    <script src="./aboutme.js"></script>
   </body>
 </html>
