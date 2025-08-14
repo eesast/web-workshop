@@ -1,0 +1,329 @@
+/* CSS Document */
+body{
+	padding: 10px;
+	color: rgba(255,255,255,1);
+	background-size: 110%;
+	background: linear-gradient(to left top,rgb(0,0,0),rgb(64,64,74),rgb(128,128,138),rgb(192,192,202),rgb(245,245,255));
+	background-repeat: no-repeat;
+}
+header{
+	text-align: center;
+	background-color: rgba(0,0,0,0.85);
+ 	padding:inherit;
+ 	border:10px;
+	font-size: 50px;
+	font-family: "Times New Roman";
+	font-variant: small-caps;
+	border-radius: 10px;
+	text-shadow: 2px 2px 5px rgb(255,255,255);
+	width: auto;
+}
+div.all{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	align-items:flex-start;
+	width: 100%;
+}
+div.basic{
+	background-color: rgba(0,0,0,0.2);
+	padding-left: 5px;
+	border-radius: 5px;
+	
+}
+nav,section{
+	border-radius: 5px;
+	padding: 10px;
+	margin-top: 10px;
+}
+nav{
+	order: 0;
+	background-color: rgba(0,0,0,0.8);
+	height: 500px;
+	width: 100px;
+	border-color: rgba(0,0,0,0.9);
+	font-size: 20px;
+}
+section{
+	order: 1;
+	background-color: rgba(0,0,0,0.6);
+	flex-basis: 1000px;
+	margin-left: 10px;
+}
+ol{
+	list-style-position: inside;
+	list-style-type: upper-roman;
+	font-size: 10px;
+	margin-left: -40px;
+}
+ol li{
+	background-color: rgba(0,0,0,0.5);
+	margin: 2px;
+	margin-left: -2px;
+	margin-right: -2px;
+	padding: 5px;
+	border-radius: 4px;
+	
+}
+ol li:hover{
+	margin-left: -3px;
+	background-color: rgba(0,0,0,0.8)；
+}
+a{
+	text-decoration: none;
+}
+a:link{
+	color: rgba(0,125,233,0.90);
+}
+a:visited{
+	color: rgba(255,255,255,0.4);
+}
+a.self{
+	color: rgba(255,255,255,0.4);
+}
+h1{
+	margin: 5px;
+	font-size: 30px;
+}
+p{
+	text-indent: 20px;
+	word-break: break-all;
+}
+h3.basic{
+	margin-bottom: -5px;
+}
+h2.basic{
+	margin-top: -2px;
+	margin-bottom: -10px;
+}
+div.slider-container{
+	width: 100%;
+}
+#ri-slider,#k-slider,#n-slider-two,#p-slider-two{ /*滑动轨道样式*/
+  -webkit-appearance: none; /* 清除默认样式 */
+  width: 100%;
+  height: 8px; /* 滑动条轨道的高度 */
+  background: #ddd; /* 轨道背景色 */
+  border-radius: 5px; /* 轨道的圆角 */
+  outline: none; /* 移除焦点时的轮廓 */
+}
+#ri-input,#k-input,#n-input-two,#p-input-two {
+  width: 50px; /* 输入框的宽度 */
+  padding: 5px; /* 内边距 */
+  font-size: 14px; /* 字体大小 */
+  border: 1px solid #ccc; /* 边框 */
+  border-radius: 4px; /* 圆角 */
+  margin-left: 10px; /* 与滑动条的间距 */
+}
+button{
+	margin-left: 10px;
+	margin-bottom: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ .playlist {
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        .playlist::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .playlist::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        
+        .playlist::-webkit-scrollbar-thumb {
+            background: rgba(233, 69, 96, 0.7);
+            border-radius: 10px;
+        }
+        
+        .song-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .song-item:hover {
+            background: rgba(233, 69, 96, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .song-item.playing {
+            background: rgba(233, 69, 96, 0.3);
+            box-shadow: 0 0 15px rgba(233, 69, 96, 0.3);
+        }
+        
+        .song-rank {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(233, 69, 96, 0.3);
+            border-radius: 50%;
+            margin-right: 20px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .song-info {
+            flex: 1;
+        }
+        
+        .song-title {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+        
+        .song-artist {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .song-play-icon {
+            font-size: 22px;
+            color: #e94560;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .song-item:hover .song-play-icon {
+            opacity: 1;
+        }
+        
+        .song-item.playing .song-play-icon {
+            opacity: 1;
+        }
+        
+        .player-info {
+            display: flex;
+            align-items: center;
+            background: rgba(15, 15, 35, 0.9);
+            border-radius: 15px;
+            padding: 15px;
+            margin-top: 25px;
+            display: none;
+        }
+        
+        .player-info.active {
+            display: flex;
+        }
+        
+        .now-playing-cover {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            margin-right: 20px;
+            object-fit: cover;
+        }
+        
+        .now-playing-details {
+            flex: 1;
+        }
+        
+        .now-playing-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .now-playing-artist {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 3px;
+        }
+        
+        .now-playing-album {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .play-control {
+            background: #e94560;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .play-control:hover {
+            background: #ff5c77;
+            transform: scale(1.05);
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .loading i {
+            font-size: 40px;
+            margin-bottom: 20px;
+            color: #e94560;
+            animation: spin 1.5s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px 15px;
+            }
+            
+            h1 {
+                font-size: 26px;
+            }
+            
+            .song-item {
+                padding: 12px 15px;
+            }
+            
+            .song-title {
+                font-size: 16px;
+            }
+            
+            .song-rank {
+                width: 30px;
+                height: 30px;
+                margin-right: 15px;
+            }
+        }

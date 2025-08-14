@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>AboutMe</title>
+<link rel="icon" type="image/png" sizes="32x32" href="./favicon.png" />
+	<link rel="stylesheet" type="text/css" href="main.css" id="style" >
+</head>
+
+<body>
+	<header>
+		<div style="float: left;margin-left: -7px;margin-top: -7px;"><a><img src="icons/home1.png" alt="home" height="80px"></a></div>
+		<span style="clear: both">Hello&#9728;</span>
+            <span class="theme-switch" id="themeToggle" style="float:right">
+                    <input type="checkbox" id="themeSwitch" onClick="changeStyle()">
+                    <label class="slider" for="themeSwitch"></label>
+            </span>
+	</header>
+	<div class="all">
+		<nav>
+			<span style="text-align: center">Guiding</span>
+			<ol>
+				<a href="projects/firstproject.html"><li>Designs</li></a>
+				<a href="projects/distibution.html"><li>Distibutions</li></a>
+				<a href=""><li onClick="notExisting()">Not ready yet</li></a>
+			</ol>
+		</nav>
+		<section>
+			<h1><a>Who？</a></h1>
+			<div>
+		<p>I am an elf living in a relic of an ancient war.</p>
+				<p>I am a direct descendant of the Elf King, and noble blood flows in my veins.</p>
+				<p>Ok,ok. I am just kidding. I'm just an unsuccessful human adventurer who wants to embark on a great adventure and write his story in history.</p>
+			</div>
+			<hr/>
+			<h1><a>Other information</a></h1>
+			<dir>
+				<p>As a noble elf, I like art and archtecture very much, though I am not good at this.</p>
+			</dir>
+			<hr/>
+			        <div class="playlist" id="playlist">
+            <div class="loading">
+                <i class="fas fa-spinner"></i>
+                <p>正在加载热歌榜...</p>
+            </div>
+        </div>
+			 <div class="player-info" id="player-info">
+            <img src="" alt="专辑封面" class="now-playing-cover" id="now-playing-cover">
+            <div class="now-playing-details">
+                <h3 class="now-playing-title" id="now-playing-title">歌曲名称</h3>
+                <p class="now-playing-artist" id="now-playing-artist">歌手</p>
+                <p class="now-playing-album" id="now-playing-album">专辑</p>
+            </div>
+            <button class="play-control" id="play-control">
+                <i class="fas fa-pause"></i>
+            </button>
+        </div>
+		</section>
+	</div>
+	<script src="ing.js" type="text/javascript"></script>
+</body>
+</html>
