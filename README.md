@@ -154,15 +154,16 @@ git push origin "01-HTML&CSS"
 
 点击 "Compare & pull request" 按钮，并在 PR 创建页面填写相关信息
 ##### 关联PR到对应Issue
-PR提交后，需手动关联PR到对应Issue
+在PR模板填写界面，需手动关联PR到对应Issue
 
-在PR界面右侧栏位点击'Development'旁边的⚙️标志，选择对应讲次的Issue进行关联
+你可以在PR正文中手动关联对应Issue，方法是添加#ISSUE-NUMBER到正文后。例如，需要链接的Issue对应的id是4，则添加一行#4
 
-<img width="316" height="543" alt="image" src="https://github.com/user-attachments/assets/10cd0817-6b40-4040-9349-c52e4ad478c2" />
+你也可以在PR编辑界面点击右上方的'Reference'，选择需要链接的PR，最终效果与上述方法相同
+<img width="837" height="369" alt="image" src="https://github.com/user-attachments/assets/1b7ac4eb-ae95-426e-b17c-cc0f1ce1e66d" />
 
 [示例PR](https://github.com/eesast/web-workshop/pull/12)
 
-关联完成后，作业提交完毕
+关联完成后，提交PR，则作业提交完毕
 ##### 查看作业批改结果
 作业由讲师批改后，对应 PR 会被打上标签：
 - accepted ✅：作业通过，PR 会被关闭。
