@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon.png" />
+  <title>AboutMe</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#165DFF',
+            secondary: '#36CFC9',
+            dark: '#1D2129',
+            light: '#F2F3F5',
+            gray: {
+              100: '#F7F8FA',
+              200: '#E5E6EB',
+              300: '#C9CDD4',
+              400: '#86909C',
+              500: '#4E5969',
+              600: '#272E3B',
+              700: '#1D2129',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['Fira Code', 'monospace'],
+          },
+        }
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+        .content-auto {
+          content-visibility: auto;
+        }
+        .text-balance {
+          text-wrap: balance;
+        }
+        .bg-grid {
+          background-size: 40px 40px;
+          background-image:
+              linear-gradient(to right, rgba(22, 93, 255, 0.05) 1px, transparent 1px),
+              linear-gradient(to bottom, rgba(22, 93, 255, 0.05) 1px, transparent 1px);
+        }
+        .lang-btn {
+          padding-left: 0.75rem;
+          padding-right: 0.75rem;
+          padding-top: 0.25rem;
+          padding-bottom: 0.25rem;
+          border-radius: 9999px;
+          font-size: 0.875rem;
+          transition-property: all;
+          transition-duration: 200ms;
+        }
+        .lang-btn.active {
+          background-color: #165DFF;
+          color: #fff;
+        }
+        .lang-btn:not(.active) {
+          background-color: #F7F8FA;
+          color: #1D2129;
+        }
+        .lang-btn:not(.active):hover {
+          background-color: #E5E6EB;
+        }
+        .nav-link {
+          position: relative;
+          color: #4E5969;
+          transition-property: color;
+          transition-duration: 200ms;
+          padding-top: 0.25rem;
+          padding-bottom: 0.25rem;
+        }
+        .nav-link:hover {
+          color: #165DFF;
+        }
+        .nav-link::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          height: 2px;
+          background-color: #165DFF;
+          width: 0;
+          transition-property: width;
+          transition-duration: 300ms;
+        }
+        .nav-link:hover::after {
+          width: 100%;
+        }
+      }
+    /* Dark mode */
+    body.dark {
+      background-color: #1D2129;
+      color: #F2F3F5;
+    }
+    body.dark .bg-white,
+    body.dark .bg-white\/80 {
+      background-color: #1D2129 !important;
+    }
+    body.dark #navbar {
+      background-color: rgba(29,33,41,0.95) !important;
+      border-bottom: 1px solid #272E3B !important;
+    }
+    body.dark .text-dark, body.dark .text-gray-700 {
+      color: #F2F3F5 !important;
+    }
+    body.dark .bg-gray-100 {
+      background-color: #272E3B !important;
+    }
+    body.dark .bg-primary {
+      background-color: #165DFF !important;
+    }
+    body.dark .border-gray-200 {
+      border-color: #272E3B !important;
+    }
+    body.dark .shadow-md {
+      box-shadow: 0 2px 8px rgba(22,93,255,0.15);
+    }
+    body.dark .bg-dark {
+      background-color: #1D2129 !important;
+    }
+    body.dark .text-white {
+      color: #F2F3F5 !important;
+    }
+    body.dark .text-gray-400 {
+      color: #C9CDD4 !important;
+    }
+    body.dark .text-primary {
+      color: #36CFC9 !important;
+    }
+    body.dark .hover\:bg-primary:hover {
+      background-color: #36CFC9 !important;
+      color: #1D2129 !important;
+    }
+    body.dark .hover\:text-primary:hover {
+      color: #36CFC9 !important;
+    }
+    body.dark .bg-primary\/10 {
+      background-color: rgba(54,207,201,0.1) !important;
+    }
+    body.dark .bg-primary\/90 {
+      background-color: rgba(54,207,201,0.9) !important;
+    }
+    body.dark .bg-primary\/5 {
+      background-color: rgba(54,207,201,0.05) !important;
+    }
+  </style>
+</head>
+
+<body class="bg-white text-gray-700 font-sans">
+  <header class="fixed w-full bg-white/80 backdrop-blur-sm z-50 border-b border-gray-200 transition-all duration-300" id="navbar">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <!-- Logo, Title and Song -->
+        <a href="#" class="text-xl font-bold text-primary flex items-center gap-2">
+          <span class="bg-primary text-white p-1 rounded">
+            <i class="fa fa-bullseye"></i>
+          </span>
+          <span class="lang-text" data-en="AboutPage" data-zh="我的主页">AboutPage</span>
+          <!-- Music Player -->
+          <div id="music-player" class="flex items-center gap-3 bg-white/80 rounded-full px-3 py-1 shadow border border-gray-200 w-[320px]">
+            <img src="" alt="Song Cover" id="music-cover" class="w-8 h-8 rounded-full object-cover">
+            <div class="flex flex-col min-w-[0]">
+              <!-- Music title -->
+              <div class="song-title-container relative overflow-hidden w-[100px] h-[18px]">
+                <span id="music-title" class="text-sm font-medium text-dark absolute whitespace-nowrap">加载中...</span>
+              </div>
+              <div class="relative w-32 h-2 bg-gray-200 rounded-full mt-1">
+                <div id="music-progress" class="absolute top-0 left-0 h-2 bg-primary rounded-full" style="width: 0%"></div>
+              </div>
+            </div>
+            <button id="music-prev" class="text-gray-500 hover:text-primary px-2" title="上一首">
+              <i class="fa fa-step-backward"></i>
+            </button>
+            <button id="music-play" class="text-gray-500 hover:text-primary px-2" title="播放/暂停">
+              <i class="fa fa-play"></i>
+            </button>
+            <button id="music-next" class="text-gray-500 hover:text-primary px-2" title="下一首">
+              <i class="fa fa-step-forward"></i>
+            </button>
+            <audio id="music-audio" src=""></audio>
+          </div>
+
+          <!-- jsmediatags analysis -->
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/jsmediatags/3.9.5/jsmediatags.min.js"></script>
+          <script>
+            const songs = [
+              { src: "./assets/song1.mp3" },
+              { src: "./assets/song2.mp3" },
+              { src: "./assets/song3.mp3" },
+              { src: "./assets/song4.mp3" },
+              { src: "./assets/song5.mp3" },
+              { src: "./assets/song6.mp3" }
+            ];
+
+            let currentSong = 0;
+            let titleScrollInterval = null;
+            const audio = document.getElementById('music-audio');
+            const playBtn = document.getElementById('music-play');
+            const prevBtn = document.getElementById('music-prev');
+            const nextBtn = document.getElementById('music-next');
+            const title = document.getElementById('music-title');
+            const cover = document.getElementById('music-cover');
+            const progress = document.getElementById('music-progress');
+            const titleContainer = document.querySelector('.song-title-container');
+
+            const defaultCover = "./logo.png";
+            const defaultTitle = "Unknown";
+
+            function stopTitleScroll() {
+              if (titleScrollInterval) {
+                clearInterval(titleScrollInterval);
+                titleScrollInterval = null;
+                title.style.transform = 'translateX(0)';
+              }
+            }
+
+            function startTitleScroll() {
+              stopTitleScroll();
+              if (title.offsetWidth <= titleContainer.offsetWidth) {
+                return;
+              }
+              let position = 0;
+              const speed = 1;
+              const containerWidth = titleContainer.offsetWidth;
+              const titleWidth = title.offsetWidth;
+              const maxPosition = containerWidth - titleWidth;
+
+              titleScrollInterval = setInterval(() => {
+                position -= speed;
+                if (position < maxPosition - 50) {
+                  position = containerWidth;
+                }
+                title.style.transform = `translateX(${position}px)`;
+              }, 30);
+            }
+
+            function loadSong(index) {
+              const song = songs[index];
+              audio.src = song.src;
+              title.textContent = "Loading...";
+              cover.src = defaultCover;
+              stopTitleScroll();
+
+              fetch(song.src)
+                .then(response => {
+                  if (!response.ok) throw new Error("无法加载");
+                  return response.blob();
+                })
+                .then(blob => {
+                  jsmediatags.read(blob, {
+                    onSuccess: function(tag) {
+                      let songTitle = tag.tags.title ||
+                                    (tag.tags.artist ? `${tag.tags.artist} - ${tag.tags.album || ''}` : defaultTitle);
+                      title.textContent = songTitle.trim() || defaultTitle;
+
+                      if (tag.tags.picture) {
+                        const { data, format } = tag.tags.picture;
+                        let base64String = '';
+
+                        for (let i = 0; i < data.length; i++) {
+                          base64String += String.fromCharCode(data[i]);
+                        }
+
+                        const imageUrl = `data:${format};base64,${window.btoa(base64String)}`;
+                        cover.src = imageUrl;
+                      } else {
+                        cover.src = defaultCover;
+                      }
+
+                      setTimeout(startTitleScroll, 100);
+                    },
+                    onError: function(error) {
+                      console.log('解析元数据时出错:', error);
+                      title.textContent = defaultTitle;
+                      cover.src = defaultCover;
+                      setTimeout(startTitleScroll, 100);
+                    }
+                  });
+                })
+                .catch(error => {
+                  console.log('获取音频文件时出错:', error);
+                  title.textContent = "加载失败";
+                  cover.src = defaultCover;
+                  setTimeout(startTitleScroll, 100);
+                });
+
+              progress.style.width = '0%';
+            }
+
+            function playPause() {
+              if (audio.paused) {
+                audio.play();
+                playBtn.innerHTML = '<i class="fa fa-pause"></i>';
+              } else {
+                audio.pause();
+                playBtn.innerHTML = '<i class="fa fa-play"></i>';
+              }
+            }
+
+            function nextSong() {
+              currentSong = (currentSong + 1) % songs.length;
+              loadSong(currentSong);
+              audio.play().then(() => {
+                playBtn.innerHTML = '<i class="fa fa-pause"></i>';
+              }).catch(error => {
+                console.log('播放失败:', error);
+              });
+            }
+
+            function prevSong() {
+              currentSong = (currentSong - 1 + songs.length) % songs.length;
+              loadSong(currentSong);
+              audio.play().then(() => {
+                playBtn.innerHTML = '<i class="fa fa-pause"></i>';
+              }).catch(error => {
+                console.log('播放失败:', error);
+              });
+            }
+
+            audio.addEventListener('timeupdate', () => {
+              const percent = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
+              progress.style.width = percent + '%';
+            });
+
+            audio.addEventListener('ended', nextSong);
+            playBtn.addEventListener('click', playPause);
+            nextBtn.addEventListener('click', nextSong);
+            prevBtn.addEventListener('click', prevSong);
+
+            window.addEventListener('resize', () => {
+              stopTitleScroll();
+              setTimeout(startTitleScroll, 100);
+            });
+
+            loadSong(currentSong);
+          </script>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center space-x-8">
+          <a href="#about" class="nav-link lang-text" data-en="About" data-zh="关于">About</a>
+          <a href="#skills" class="nav-link lang-text" data-en="Skills" data-zh="技能">Skills</a>
+          <a href="#projects" class="nav-link lang-text" data-en="Projects" data-zh="项目">Projects</a>
+          <a href="#blog" class="nav-link lang-text" data-en="Blog" data-zh="文章">Blog</a>
+          <a href="#contact" class="nav-link lang-text" data-en="Contact" data-zh="联系">Contact</a>
+
+          <!-- Language Switch Buttons -->
+          <div class="flex space-x-2 ml-4">
+            <button class="lang-btn active" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="zh">中文</button>
+          </div>
+          <!-- Mode Switch Button -->
+          <button id="theme-toggle-btn" class="ml-4 px-3 py-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors flex items-center" title="切换亮/暗模式">
+            <i id="theme-toggle-icon" class="fa fa-moon-o text-gray-500"></i>
+          </button>
+        </nav>
+
+        <!-- Mobile Language button -->
+        <div class="flex items-center md:hidden">
+          <button type="button" class="text-gray-500 hover:text-primary mr-4" id="mobile-menu-button">
+            <i class="fa fa-bars text-xl"></i>
+          </button>
+
+          <!-- Mobile Language switch -->
+          <div class="flex space-x-2">
+            <button class="lang-btn active text-xs" data-lang="en">EN</button>
+            <button class="lang-btn text-xs" data-lang="zh">中文</button>
+          </div>
+
+          <!-- Mobile Mode Switch -->
+          <button id="theme-toggle-btn-mobile" class="ml-2 px-2 py-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors flex items-center" title="切换亮/暗模式">
+            <i id="theme-toggle-icon-mobile" class="fa fa-moon-o text-gray-500"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Navigation -->
+      <div class="md:hidden hidden" id="mobile-menu">
+        <div class="py-4 space-y-3 border-t border-gray-200">
+          <a href="#about" class="block nav-link lang-text" data-en="About" data-zh="关于">About</a>
+          <a href="#skills" class="block nav-link lang-text" data-en="Skills" data-zh="技能">Skills</a>
+          <a href="#projects" class="block nav-link lang-text" data-en="Projects" data-zh="项目">Projects</a>
+          <a href="#blog" class="block nav-link lang-text" data-en="Blog" data-zh="文章">Blog</a>
+          <a href="#contact" class="block nav-link lang-text" data-en="Contact" data-zh="联系">Contact</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center pt-16 bg-grid">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div class="max-w-5xl mx-auto text-center">
+          <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold text-dark leading-tight mb-6">
+            <span class="lang-text" data-en="Привет! Je suis" data-zh="安好，敝人">Привет! Je suis</span>
+            <span class="lang-text text-primary" data-en="wby_creator" data-zh="王博阳">wby_creator</span>
+          </h1>
+          <p class="text-[clamp(1.1rem,2vw,1.5rem)] text-gray-500 mb-10 text-balance lang-text"
+            data-en="Student &amp; Electronics Enthusiast never ceasing to explore and cherish literature and philosophical thinking."
+            data-zh="作为电子工程的追光者，亦从未停歇对文学哲思的漫游与热爱。">
+            Student &amp; Electronics Enthusiast never ceasing to explore and cherish literature and philosophical thinking.
+          </p>
+          <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="#projects"
+              class="px-8 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-all shadow-lg hover:shadow-primary/20 hover:-translate-y-1">
+              <span class="lang-text" data-en="View My Work" data-zh="我的作品">View My Work</span>
+            </a>
+            <a href="#contact"
+              class="px-8 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-all hover:-translate-y-1">
+              <span class="lang-text" data-en="Get In Touch" data-zh="与我联系">Get In Touch</span>
+            </a>
+          </div>
+
+          <div class="mt-16 flex justify-center space-x-6">
+            <a href="#" class="text-gray-400 hover:text-primary text-2xl transition-colors" aria-label="GitHub">
+              <i class="fa fa-github"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-primary text-2xl transition-colors" aria-label="WeChat">
+              <i class="fa fa-wechat"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-primary text-2xl transition-colors" aria-label="WeiBo">
+              <i class="fa fa-weibo"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-primary text-2xl transition-colors" aria-label="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <a href="#about" class="text-gray-400 hover:text-primary transition-colors" aria-label="Scroll down">
+          <i class="fa fa-chevron-down"></i>
+        </a>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+          <div class="text-center mb-16">
+            <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-dark mb-4 lang-text" data-en="About Me"
+              data-zh="个人介绍">About Me</h2>
+            <div class="w-20 h-1 bg-primary mx-auto"></div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-12 items-start">
+            <div class="relative">
+              <div class="absolute -inset-4 bg-primary/5 rounded-2xl -z-10"></div>
+              <img src="https://http.cat/images/418.jpg"
+                alt="The server refuses to brew coffee because it is, permanently, a teapot."
+                class="w-full h-auto rounded-xl shadow-xl">
+              <div class="absolute -bottom-10 -right-6 bg-white p-4 rounded-lg shadow-lg">
+                <div class="flex items-center gap-3">
+                  <div class="bg-green-100 p-2 rounded-full">
+                    <i class="fa fa-code text-green-600"></i>
+                  </div>
+                  <div>
+                    <p class="text-sm text-gray-500 lang-text" data-en="10+ Cups of" data-zh="10+年">10+ Cups of</p>
+                    <p class="font-semibold text-dark lang-text text-center" data-en="Tea" data-zh="茶壶">Tea</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="text-2xl font-semibold text-dark mb-4 lang-text"
+                data-en="Coding Happily" data-zh="快乐地敲代码">Coding Happily</h3>
+              <p class="text-gray-500 mb-6 leading-relaxed lang-text"
+                data-en="Como deuxième année étudiant en Electrical Engineering,
+                  Я me voy a sumergir dans le maravilloso мир de functions of complex variables,
+                  equations mathématiques de physique, data et algorithmes, logique numérique et fundamentals of processors,
+                  circuits électroniques et systèmes, et physics universitaire.
+                  В аудиториях, ces порядки tejidos por code and electric current me apporteront
+                  le sense of accomplishment de resolver problemas."
+                data-zh="作为电子工程系的大二学生，
+                  我将要沉没(bushi)在复变函数与数理方程、数据与算法、数字逻辑与处理器基础、电子电路与系统基础、大学物理的“奇妙”世界里。
+                  课堂里那些由代码与电流编织的秩序，将会带给我解决问题的成就感。">
+                Como deuxième année étudiant en Electrical Engineering,
+                Я me voy a sumergir dans le maravilloso мир de functions of complex variables,
+                equations mathématiques de physique, data et algorithmes, logique numérique et fundamentals of processors,
+                circuits électroniques et systèmes, et physics universitaire.
+                В аудиториях, ces порядки tejidos por code and electric current me apporteront
+                le sense of accomplishment de resolver problemas.
+              </p>
+              <p class="text-gray-500 mb-8 leading-relaxed lang-text"
+                data-en="Fuera de la technologie, я никогда не оставлял mon penchant pour words and thinking.
+                  Entre les sessions de coding, листаю несколько страниц стихов;
+                  después de terminar задачи сложные, regarde des débats.
+                  Trato de comprendre la symbiosis between technology and humanities с философской точки зрения.
+                  Для меня, la ingeniería eléctrica es un инструмент для explorer le monde,
+                  while la literatura y el pensamiento философское son le fond qui rend cette exploration plus chaleureuse."
+                data-zh="技术之外，我始终没放下对文字与思考的偏爱。
+                  敲代码的间隙翻几页诗，复杂作业完结后看看辩论，试着用哲思的视角理解技术与人文的共生。
+                  对我而言，电子工程是探索世界的工具，而文学与哲思则是让这份探索更有温度的底色。">
+                Fuera de la technologie, я никогда не оставлял mon penchant pour words and thinking.
+                Entre les sessions de coding, листаю несколько страниц стихов;
+                después de terminar задачи сложные, regarde des débats.
+                Trato de comprendre la symbiosis between technology and humanities с философской точки зрения.
+                Для меня, la ingeniería eléctrica es un инструмент для explorer le monde,
+                while la literatura y el pensamiento философское son le fond qui rend cette exploration plus chaleureuse.
+              </p>
+
+              <div class="grid grid-cols-2 gap-6 mb-8">
+                <div>
+                  <h4 class="font-medium text-dark mb-2 lang-text" data-en="Location" data-zh="所在地">Location</h4>
+                  <p class="text-gray-500 lang-text" data-en="Beijing, China" data-zh="中国，北京">Beijing, China</p>
+                </div>
+                <div>
+                  <h4 class="font-medium text-dark mb-2 lang-text" data-en="Email" data-zh="邮箱">Email</h4>
+                  <p class="text-gray-500">wby_2006@petalmail.com</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-gray-100">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+          <div class="text-center mb-16">
+            <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-dark mb-4 lang-text" data-en="My Skills" data-zh="我的技能">
+              My Skills
+            </h2>
+            <p class="text-gray-500 max-w-2xl mx-auto lang-text"
+              data-en="Here are some of my key skills."
+              data-zh="以下是我的一些技能。">
+              Here are some of my key skills.
+            </p>
+            <div class="w-20 h-1 bg-primary mx-auto mt-4"></div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Programming Languages -->
+            <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+              <div class="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
+                <i class="fa fa-code text-primary text-2xl"></i>
+              </div>
+              <h3 class="text-xl font-semibold text-dark mb-4 lang-text" data-en="Programming Languages" data-zh="编程语言">
+                Programming Languages
+              </h3>
+              <ul class="space-y-3">
+                <li class="flex items-center">
+                  <span class="w-32 text-gray-500">Python</span>
+                  <div class="flex-1 bg-gray-200 rounded-full h-2">
+                    <div class="bg-primary h-2 rounded-full" style="width: 98%"></div>
+                  </div>
+                </li>
+                <li class="flex items-center">
+                  <span class="w-32 text-gray-500">C</span>
+                  <div class="flex-1 bg-gray-200 rounded-full h-2">
+                    <div class="bg-primary h-2 rounded-full" style="width: 95%"></div>
+                  </div>
+                </li>
+                <li class="flex items-center">
+                  <span class="w-32 text-gray-500">C++</span>
+                  <div class="flex-1 bg-gray-200 rounded-full h-2">
+                    <div class="bg-primary h-2 rounded-full" style="width: 90%"></div>
+                  </div>
+                </li>
+                <li class="flex items-center">
+                  <span class="w-32 text-gray-500">C#</span>
+                  <div class="flex-1 bg-gray-200 rounded-full h-2">
+                    <div class="bg-primary h-2 rounded-full" style="width: 80%"></div>
+                  </div>
+                </li>
+                <li class="flex items-center">
+                  <span class="w-32 text-gray-500">ArkTS</span>
+                  <div class="flex-1 bg-gray-200 rounded-full h-2">
+                    <div class="bg-primary h-2 rounded-full" style="width: 70%"></div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Web & Database -->
+            <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+              <div class="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
+                <i class="fa fa-globe text-primary text-2xl"></i>
+              </div>
+              <h3 class="text-xl font-semibold text-dark mb-4 lang-text" data-en="Web & Database" data-zh="Web与数据库">
+                Web & Database
+              </h3>
+              <ul class="space-y-3">
+                <li class="flex items-center">
+                  <span class="w-32 text-gray-500">HTML</span>
+                  <div class="flex-1 bg-gray-200 rounded-full h-2">
+                    <div class="bg-primary h-2 rounded-full" style="width: 85%"></div>
+                  </div>
+                </li>
+                <li class="flex items-center">
+                  <span class="w-32 text-gray-500">CSS</span>
+                  <div class="flex-1 bg-gray-200 rounded-full h-2">
+                    <div class="bg-primary h-2 rounded-full" style="width: 60%"></div>
+                  </div>
+                </li>
+                <li class="flex items-center">
+                  <span class="w-32 text-gray-500">JavaScript</span>
+                  <div class="flex-1 bg-gray-200 rounded-full h-2">
+                    <div class="bg-primary h-2 rounded-full" style="width: 65%"></div>
+                  </div>
+                </li>
+                <li class="flex items-center">
+                  <span class="w-32 text-gray-500">DataBase</span>
+                  <div class="flex-1 bg-gray-200 rounded-full h-2">
+                    <div class="bg-primary h-2 rounded-full" style="width: 30%"></div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Tools & Frameworks -->
+            <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+              <div class="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
+                <i class="fa fa-wrench text-primary text-2xl"></i>
+              </div>
+              <h3 class="text-xl font-semibold text-dark mb-4 lang-text" data-en="Tools & Frameworks" data-zh="工具与框架">
+                Tools & Frameworks</h3>
+              <ul class="space-y-3">
+                <li class="flex items-center">
+                  <span class="w-32 text-gray-500">Arduino</span>
+                  <div class="flex-1 bg-gray-200 rounded-full h-2">
+                    <div class="bg-primary h-2 rounded-full" style="width: 95%"></div>
+                  </div>
+                </li>
+                <li class="flex items-center">
+                  <span class="w-32 text-gray-500">Blender</span>
+                  <div class="flex-1 bg-gray-200 rounded-full h-2">
+                    <div class="bg-primary h-2 rounded-full" style="width: 90%"></div>
+                  </div>
+                </li>
+                <li class="flex items-center">
+                  <span class="w-32 text-gray-500">Linux</span>
+                  <div class="flex-1 bg-gray-200 rounded-full h-2">
+                    <div class="bg-primary h-2 rounded-full" style="width: 50%"></div>
+                  </div>
+                </li>
+                <li class="flex items-center">
+                  <span class="w-32 text-gray-500">Git</span>
+                  <div class="flex-1 bg-gray-200 rounded-full h-2">
+                    <div class="bg-primary h-2 rounded-full" style="width: 50%"></div>
+                  </div>
+                </li>
+                <li class="flex items-center">
+                  <span class="w-32 text-gray-500">Avalonia</span>
+                  <div class="flex-1 bg-gray-200 rounded-full h-2">
+                    <div class="bg-primary h-2 rounded-full" style="width: 70%"></div>
+                  </div>
+                </li>
+                <li class="flex items-center">
+                  <span class="w-32 text-gray-500">Docker</span>
+                  <div class="flex-1 bg-gray-200 rounded-full h-2">
+                    <div class="bg-primary h-2 rounded-full" style="width: 70%"></div>
+                  </div>
+                </li>
+                <li class="flex items-center">
+                  <span class="w-32 text-gray-500">Matlab</span>
+                  <div class="flex-1 bg-gray-200 rounded-full h-2">
+                    <div class="bg-primary h-2 rounded-full" style="width: 75%"></div>
+                  </div>
+                </li>
+                <li class="flex items-center">
+                  <span class="w-32 text-gray-500">gRPC/Proto</span>
+                  <div class="flex-1 bg-gray-200 rounded-full h-2">
+                    <div class="bg-primary h-2 rounded-full" style="width: 65%"></div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-white">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+          <div class="text-center mb-16">
+            <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-dark mb-4 lang-text" data-en="Featured Projects"
+              data-zh="精选项目">Featured Projects</h2>
+            <p class="text-gray-500 max-w-2xl mx-auto lang-text"
+              data-en="A selection of my recent work. Each project represents a unique challenge and solution."
+              data-zh="我最近的一些作品精选。每个项目都代表着独特的挑战和解决方案。">
+              A selection of my recent work. Each project represents a unique challenge and solution.
+            </p>
+            <div class="w-20 h-1 bg-primary mx-auto mt-4"></div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <!-- Project 1 -->
+            <div class="group">
+              <div class="relative overflow-hidden rounded-xl mb-6">
+                <img src="https://www.omegaxyz.com/wp-content/uploads/2018/05/CA.jpg" alt="康威生命游戏（元胞自动机）"
+                  class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105">
+                <div
+                  class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                  <div class="p-6">
+                    <span class="px-3 py-1 bg-primary/90 text-white text-xs rounded-full">Python</span>
+                  </div>
+                </div>
+              </div>
+              <h3 class="text-xl font-semibold text-dark mb-2 group-hover:text-primary transition-colors lang-text"
+                data-en="Cellular Automaton" data-zh="元胞自动机">Cellular Automaton</h3>
+              <p class="text-gray-500 mb-4 lang-text"
+                data-en="A discrete model evolving complex patterns from simple rules, used in physics and biology simulations."
+                data-zh="由简单规则演化复杂模式的离散系统模型，广泛应用于物理、生物模拟。">
+                A discrete model evolving complex patterns from simple rules, used in physics and biology simulations.
+              </p>
+              <a href="#" class="inline-flex items-center text-primary hover:underline lang-text" data-en="View Project"
+                data-zh="查看项目">
+                View Project
+                <i class="fa fa-arrow-right ml-2"></i>
+              </a>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="group">
+              <div class="relative overflow-hidden rounded-xl mb-6">
+                <img src="https://ts3.tc.mm.bing.net/th/id/OIP-C.DOaJgRbANxZuyTJJmKzPTwHaFd?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" alt="多体运动模拟器"
+                  class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105">
+                <div
+                  class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                  <div class="p-6">
+                    <span class="px-3 py-1 bg-primary/90 text-white text-xs rounded-full">Python</span>
+                  </div>
+                </div>
+              </div>
+              <h3 class="text-xl font-semibold text-dark mb-2 group-hover:text-primary transition-colors lang-text"
+                data-en="Multibody Motion Simulator" data-zh="多体运动模拟器">Multibody Motion Simulator</h3>
+              <p class="text-gray-500 mb-4 lang-text"
+                data-en="A tool simulating dynamic interactions like gravity and collision among multiple objects."
+                data-zh="模拟多个物体间引力、碰撞等相互作用的动态系统工具。">
+                A tool simulating dynamic interactions like gravity and collision among multiple objects.
+              </p>
+              <a href="#" class="inline-flex items-center text-primary hover:underline lang-text" data-en="View Project"
+                data-zh="查看项目">
+                View Project
+                <i class="fa fa-arrow-right ml-2"></i>
+              </a>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="group">
+              <div class="relative overflow-hidden rounded-xl mb-6">
+                <img src="https://ts2.tc.mm.bing.net/th/id/OIP-C.fv2T08D6z7NzDDddlb6ACgHaEK?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" alt="水墨风格动画制作"
+                  class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105">
+                <div
+                  class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                  <div class="p-6">
+                    <span class="px-3 py-1 bg-primary/90 text-white text-xs rounded-full">Blender</span>
+                  </div>
+                </div>
+              </div>
+              <h3 class="text-xl font-semibold text-dark mb-2 group-hover:text-primary transition-colors lang-text"
+                data-en="Ink-Wash Animation Creation" data-zh="水墨风格动画制作">Ink-Wash Animation Creation</h3>
+              <p class="text-gray-500 mb-4 lang-text"
+                data-en="Digital animation creation blending ink-wash aesthetics, combining artistry and Oriental beauty."
+                data-zh="融合传统水墨意境的数字动画创作，兼具艺术性与东方美学。">
+                Digital animation creation blending ink-wash aesthetics, combining artistry and Oriental beauty.
+              </p>
+              <a href="#" class="inline-flex items-center text-primary hover:underline lang-text" data-en="View Project"
+                data-zh="查看项目">
+                View Project
+                <i class="fa fa-arrow-right ml-2"></i>
+              </a>
+            </div>
+
+            <!-- Project 4 -->
+            <div class="group">
+              <div class="relative overflow-hidden rounded-xl mb-6">
+                <img src="https://ts3.tc.mm.bing.net/th/id/OIP-C.R926maxtd9sE-hlxeYPlNAHaEJ?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" alt="&quot;掼林&quot;掼蛋教学软件"
+                  class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105">
+                <div
+                  class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                  <div class="p-6">
+                    <span class="px-3 py-1 bg-primary/90 text-white text-xs rounded-full">ArkTS</span>
+                  </div>
+                </div>
+              </div>
+              <h3 class="text-xl font-semibold text-dark mb-2 group-hover:text-primary transition-colors lang-text"
+                data-en="Guǎndàn Tutorial Software" data-zh="&quot;掼林&quot;掼蛋教学软件">Guǎndàn Tutorial Software</h3>
+              <p class="text-gray-500 mb-4 lang-text"
+                data-en="A tutorial tool for &quot;Guǎndàn&quot; card game, helping master strategies and rules efficiently."
+                data-zh="聚焦 “掼蛋” 牌技的教学工具，助玩家快速掌握策略与规则。">
+                A tutorial tool for "Guǎndàn" card game, helping master strategies and rules efficiently.
+              </p>
+              <a href="#" class="inline-flex items-center text-primary hover:underline lang-text" data-en="View Project"
+                data-zh="查看项目">
+                View Project
+                <i class="fa fa-arrow-right ml-2"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="text-center mt-12">
+            <a href="#"
+              class="inline-flex items-center px-6 py-3 border border-primary text-primary rounded-lg hover:bg-primary hover:text-white transition-colors lang-text"
+              data-en="View All Projects" data-zh="查看所有项目">
+              View All Projects
+              <i class="fa fa-external-link ml-2"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog" class="py-20 bg-gray-100">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+          <div class="text-center mb-16">
+            <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-dark mb-4 lang-text" data-en="Latest Articles"
+              data-zh="文章">Latest Articles</h2>
+            <p class="text-gray-500 max-w-2xl mx-auto lang-text"
+              data-en="Thoughts and insights on software development, design, and technology."
+              data-zh="关于软件开发、设计和技术的思考与见解。">
+              Thoughts and insights on software development, design, and technology.
+            </p>
+            <div class="w-20 h-1 bg-primary mx-auto mt-4"></div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Blog Post 1 -->
+            <article class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+              <img src="https://cdn.pixabay.com/photo/2023/04/26/16/01/lighthouse-7952718_1280.jpg" alt="好天气"
+                class="w-full h-48 object-cover">
+              <div class="p-6">
+                <div class="flex items-center text-gray-400 text-sm mb-3">
+                  <span><i class="fa fa-calendar-o mr-1"></i> 2025年8月13日</span>
+                  <span class="mx-2">•</span>
+                  <span><i class="fa fa-clock-o mr-1"></i> 0分钟阅读</span>
+                </div>
+                <h3 class="text-xl font-semibold text-dark mb-3 hover:text-primary transition-colors">
+                  <a href="#" class="lang-text" data-en="Good Weather" data-zh="好天气">Good Weather</a>
+                </h3>
+                <p class="text-gray-500 mb-4 lang-text"
+                  data-en="Beautiful scenery, fresh air, and a refreshing feeling."
+                  data-zh="漂亮的风景，清新的空气，令人心旷神怡。">
+                  Beautiful scenery, fresh air, and a refreshing feeling.
+                </p>
+                <a href="#" class="inline-flex items-center text-primary hover:underline lang-text" data-en="Read More"
+                  data-zh="阅读更多">
+                  Read More <i class="fa fa-long-arrow-right ml-2"></i>
+                </a>
+              </div>
+            </article>
+
+            <!-- Blog Post 2 -->
+            <article class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+              <img src="https://cdn.pixabay.com/photo/2017/02/20/18/03/cat-2083492_1280.jpg" alt="小猫"
+                class="w-full h-48 object-cover">
+              <div class="p-6">
+                <div class="flex items-center text-gray-400 text-sm mb-3">
+                  <span><i class="fa fa-calendar-o mr-1"></i> 2025年8月13日</span>
+                  <span class="mx-2">•</span>
+                  <span><i class="fa fa-clock-o mr-1"></i> 0分钟阅读</span>
+                </div>
+                <h3 class="text-xl font-semibold text-dark mb-3 hover:text-primary transition-colors">
+                  <a href="#" class="lang-text" data-en="Cat" data-zh="小猫">Cat</a>
+                </h3>
+                <p class="text-gray-500 mb-4 lang-text"
+                  data-en="Cute little cats that always bring endless joy and warmth to people."
+                  data-zh="可爱的小猫，总是带给人们无尽的欢乐和温暖。">
+                  Cute little cats that always bring endless joy and warmth to people.
+                </p>
+                <a href="#" class="inline-flex items-center text-primary hover:underline lang-text" data-en="Read More"
+                  data-zh="阅读更多">
+                  Read More <i class="fa fa-long-arrow-right ml-2"></i>
+                </a>
+              </div>
+            </article>
+
+            <!-- Blog Post 3 -->
+            <article class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+              <img src="https://cdn.pixabay.com/photo/2020/12/23/08/18/landscape-5854237_1280.jpg" alt="深山"
+                class="w-full h-48 object-cover">
+              <div class="p-6">
+                <div class="flex items-center text-gray-400 text-sm mb-3">
+                  <span><i class="fa fa-calendar-o mr-1"></i> 2025年8月13日</span>
+                  <span class="mx-2">•</span>
+                  <span><i class="fa fa-clock-o mr-1"></i> 0分钟阅读</span>
+                </div>
+                <h3 class="text-xl font-semibold text-dark mb-3 hover:text-primary transition-colors">
+                  <a href="#" class="lang-text" data-en="Deep Mountain" data-zh="深山">Deep Mountain</a>
+                </h3>
+                <p class="text-gray-500 mb-4 lang-text"
+                  data-en="A tranquil place surrounded by mountains, where you can enjoy the beauty of nature."
+                  data-zh="群山环绕的宁静之地，可以尽情享受大自然的美丽。">
+                  A tranquil place surrounded by mountains, where you can enjoy the beauty of nature.
+                </p>
+                <a href="#" class="inline-flex items-center text-primary hover:underline lang-text" data-en="Read More"
+                  data-zh="阅读更多">
+                  Read More <i class="fa fa-long-arrow-right ml-2"></i>
+                </a>
+              </div>
+            </article>
+          </div>
+
+          <div class="text-center mt-12">
+            <a href="#"
+              class="inline-flex items-center px-6 py-3 border border-primary text-primary rounded-lg hover:bg-primary hover:text-white transition-colors lang-text"
+              data-en="View All Articles" data-zh="查看所有文章">
+              View All Articles
+              <i class="fa fa-external-link ml-2"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Github Section -->
+    <section id="github" class="py-20 bg-white">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+          <div class="text-center mb-16">
+            <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-dark mb-4 lang-text" data-en="My GitHub" data-zh="我的GitHub">
+              My GitHub
+            </h2>
+            <p class="text-gray-500 max-w-2xl mx-auto lang-text"
+              data-en="Explore my open source work, contributions, and repositories."
+              data-zh="探索我的开源作品、贡献和仓库。">
+              Explore my open source work, contributions, and repositories.
+            </p>
+            <div class="w-20 h-1 bg-primary mx-auto mt-4"></div>
+          </div>
+          <div id="github-profile" class="flex flex-col md:flex-row items-center gap-12 justify-center"></div>
+          <div id="github-repos" class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+        </div>
+      </div>
+    </section>
+    <script>
+      async function fetchGithubProfile() {
+        const profileRes = await fetch('https://api.github.com/users/wby-creator');
+        const profile = await profileRes.json();
+        const profileHtml = `
+          <div class="flex flex-col items-center md:items-start md:flex-row gap-8">
+            <img src="${profile.avatar_url}" alt="avatar" class="w-32 h-32 rounded-full shadow-lg mb-4 md:mb-0">
+            <div>
+              <h3 class="text-2xl font-bold text-dark mb-2">${profile.name || profile.login}</h3>
+              <p class="text-gray-500 mb-2">${profile.bio || ''}</p>
+              <div class="flex flex-wrap gap-4 mb-2">
+                <span class="inline-flex items-center px-3 py-1 bg-primary/10 text-primary rounded-full text-sm">
+                  <i class="fa fa-github mr-2"></i>${profile.login}
+                </span>
+                ${profile.location ? `<span class="inline-flex items-center px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm"><i class="fa fa-map-marker mr-2"></i>${profile.location}</span>` : ''}
+                ${profile.blog ? `<a href="${profile.blog}" target="_blank" class="inline-flex items-center px-3 py-1 bg-gray-100 text-primary rounded-full text-sm hover:bg-primary hover:text-white transition-colors"><i class="fa fa-link mr-2"></i>Blog</a>` : ''}
+              </div>
+              <div class="flex gap-6 text-gray-500 text-sm">
+                <span><i class="fa fa-users mr-1"></i>${profile.followers} Followers</span>
+                <span><i class="fa fa-user-plus mr-1"></i>${profile.following} Following</span>
+                <span><i class="fa fa-book mr-1"></i>${profile.public_repos} Repos</span>
+              </div>
+              <div class="mt-4">
+                <a href="${profile.html_url}" target="_blank" class="px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors lang-text" data-en="View on GitHub" data-zh="访问GitHub">
+                  View on GitHub
+                </a>
+              </div>
+            </div>
+          </div>
+        `;
+        document.getElementById('github-profile').innerHTML = profileHtml;
+      }
+
+      async function fetchGithubRepos() {
+        const reposRes = await fetch('https://api.github.com/users/wby-creator/repos?sort=updated');
+        const repos = await reposRes.json();
+        const reposHtml = repos.slice(0, 6).map(repo => `
+          <div class="bg-gray-100 p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between h-full">
+            <div>
+              <h4 class="text-lg font-semibold text-dark mb-2 hover:text-primary transition-colors">
+                <a href="${repo.html_url}" target="_blank">${repo.name}</a>
+              </h4>
+              <p class="text-gray-500 mb-4">${repo.description || ''}</p>
+            </div>
+            <div class="flex items-center justify-between mt-auto pt-2">
+              <span class="inline-flex items-center px-3 py-1 bg-primary/10 text-primary rounded-full text-xs">
+                <i class="fa fa-code mr-1"></i>${repo.language || 'Unknown'}
+              </span>
+              <span class="text-gray-400 text-xs"><i class="fa fa-star mr-1"></i>${repo.stargazers_count}</span>
+              <span class="text-gray-400 text-xs"><i class="fa fa-code-fork mr-1"></i>${repo.forks_count}</span>
+            </div>
+          </div>
+        `).join('');
+        document.getElementById('github-repos').innerHTML = reposHtml;
+      }
+
+      fetchGithubProfile();
+      fetchGithubRepos();
+    </script>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gray-100">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+          <div class="text-center mb-16">
+            <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-dark mb-4 lang-text" data-en="Get In Touch"
+              data-zh="联系我">Get In Touch</h2>
+            <p class="text-gray-500 max-w-2xl mx-auto lang-text"
+              data-en="Interested in working together? Fill out the form below with some info about your project, and I'll get back to you as soon as I can."
+              data-zh="有兴趣一起合作吗？在下面的表格中填写关于你的项目的一些信息，我会尽快回复你。">
+              Interested in working together? Fill out the form below with some info about your project,
+              and I'll get back to you as soon as I can.
+            </p>
+            <div class="w-20 h-1 bg-primary mx-auto mt-4"></div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="items-start">
+              <form class="space-y-6">
+                <div>
+                  <label for="name" class="block text-sm font-medium text-gray-700 mb-1 lang-text" data-en="Your Name"
+                    data-zh="你的名字">Your Name</label>
+                  <input type="text" id="name"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-colors"
+                    placeholder="张三">
+                </div>
+
+                <div>
+                  <label for="email" class="block text-sm font-medium text-gray-700 mb-1 lang-text"
+                    data-en="Email Address" data-zh="邮箱地址">Email Address</label>
+                  <input type="email" id="email"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-colors"
+                    placeholder="zhangsan@example.com">
+                </div>
+
+                <div>
+                  <label for="subject" class="block text-sm font-medium text-gray-700 mb-1 lang-text" data-en="Subject"
+                    data-zh="主题">Subject</label>
+                  <input type="text" id="subject"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-colors"
+                    placeholder="项目咨询">
+                </div>
+
+                <div>
+                  <label for="message" class="block text-sm font-medium text-gray-700 mb-1 lang-text"
+                    data-en="Your Message" data-zh="你的留言">Your Message</label>
+                  <textarea id="message" rows="5"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-colors resize-none"
+                    placeholder="告诉我关于你的项目..."></textarea>
+                </div>
+
+                <button type="submit"
+                  class="w-full px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors shadow-lg hover:shadow-primary/20 lang-text"
+                  data-en="Send Message" data-zh="发送消息">
+                  Send Message
+                </button>
+              </form>
+            </div>
+
+            <div class="items-start">
+              <div class="bg-gray-100 p-8 rounded-xl mb-8 items-start">
+                <h3 class="text-2xl font-semibold text-dark mb-6 lang-text" data-en="Contact Information"
+                  data-zh="联系信息">Contact Information</h3>
+
+                <div class="space-y-6">
+                  <div class="flex items-start gap-4">
+                    <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                      <i class="fa fa-envelope text-primary"></i>
+                    </div>
+                    <div>
+                      <h4 class="font-medium text-dark mb-1 lang-text" data-en="Email" data-zh="邮箱">Email</h4>
+                      <p class="text-gray-500">wby_2006@petalmail.com</p>
+                    </div>
+                  </div>
+
+                  <div class="flex items-start gap-4">
+                    <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                      <i class="fa fa-map-marker text-primary"></i>
+                    </div>
+                    <div>
+                      <h4 class="font-medium text-dark mb-1 lang-text" data-en="Location" data-zh="所在地">Location</h4>
+                      <p class="text-gray-500">中国，北京</p>
+                    </div>
+                  </div>
+
+                  <div class="flex items-start gap-4">
+                    <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                      <i class="fa fa-clock-o text-primary"></i>
+                    </div>
+                    <div>
+                      <h4 class="font-medium text-dark mb-1 lang-text" data-en="Working Hours" data-zh="工作时间">Working Hours</h4>
+                      <p class="text-gray-500 lang-text" data-en="All year round" data-zh="无休"> All year round. </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h3 class="text-xl font-semibold text-dark mb-4 lang-text" data-en="Follow Me" data-zh="关注我">Follow Me
+                </h3>
+                <div class="flex space-x-4">
+                  <a href="#"
+                    class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 hover:bg-primary hover:text-white transition-colors"
+                    aria-label="GitHub">
+                    <i class="fa fa-github"></i>
+                  </a>
+                  <a href="#"
+                    class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 hover:bg-primary hover:text-white transition-colors"
+                    aria-label="WeChat">
+                    <i class="fa fa-wechat"></i>
+                  </a>
+                  <a href="#"
+                    class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 hover:bg-primary hover:text-white transition-colors"
+                    aria-label="WeiBo">
+                    <i class="fa fa-weibo"></i>
+                  </a>
+                  <a href="#"
+                    class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 hover:bg-primary hover:text-white transition-colors"
+                    aria-label="QQ">
+                    <i class="fa fa-qq"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white py-12">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+          <div class="md:col-span-2">
+            <a href="#" class="text-xl font-bold text-white flex items-center gap-2 mb-4">
+              <span class="bg-primary text-white p-1 rounded">
+                <i class="fa fa-code"></i>
+              </span>
+              <span class="lang-text" data-en="AboutPage" data-zh="我的主页">AboutPage</span>
+            </a>
+            <p class="text-gray-400 mb-6 max-w-md lang-text"
+              data-en="Creating meaningful digital experiences through thoughtful design and clean code."
+              data-zh="通过深思熟虑的设计和简洁的代码创造有意义的数字体验。">
+              Creating meaningful digital experiences through thoughtful design and clean code.
+            </p>
+            <div class="flex space-x-4">
+              <a href="#" class="text-gray-400 hover:text-primary text-2xl transition-colors" aria-label="GitHub">
+                <i class="fa fa-github"></i>
+              </a>
+              <a href="#" class="text-gray-400 hover:text-primary text-2xl transition-colors" aria-label="WeChat">
+                <i class="fa fa-wechat"></i>
+              </a>
+              <a href="#" class="text-gray-400 hover:text-primary text-2xl transition-colors" aria-label="WeiBo">
+                <i class="fa fa-weibo"></i>
+              </a>
+              <a href="#" class="text-gray-400 hover:text-primary text-2xl transition-colors" aria-label="QQ">
+                <i class="fa fa-qq"></i>
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <h4 class="text-lg font-semibold mb-4 lang-text" data-en="Quick Links" data-zh="快速链接">Quick Links</h4>
+            <ul class="space-y-2">
+              <li><a href="#about" class="text-gray-400 hover:text-white transition-colors lang-text" data-en="About"
+                  data-zh="关于">About</a></li>
+              <li><a href="#skills" class="text-gray-400 hover:text-white transition-colors lang-text" data-en="Skills"
+                  data-zh="技能">Skills</a></li>
+              <li><a href="#projects" class="text-gray-400 hover:text-white transition-colors lang-text"
+                  data-en="Projects" data-zh="项目">Projects</a></li>
+              <li><a href="#blog" class="text-gray-400 hover:text-white transition-colors lang-text" data-en="Blog"
+                  data-zh="文章">Blog</a></li>
+              <li><a href="#contact" class="text-gray-400 hover:text-white transition-colors lang-text"
+                  data-en="Contact" data-zh="联系">Contact</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="text-lg font-semibold mb-4 lang-text" data-en="Services" data-zh="服务">Services</h4>
+            <ul class="space-y-2">
+              <li><a href="#" class="text-gray-400 hover:text-white transition-colors lang-text"
+                  data-en="Web Development" data-zh="网站开发">Web Development</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white transition-colors lang-text" data-en="UI/UX Design"
+                  data-zh="UI/UX设计">UI/UX Design</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white transition-colors lang-text" data-en="Consulting"
+                  data-zh="咨询">Consulting</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white transition-colors lang-text"
+                  data-en="Technical Writing" data-zh="技术写作">Technical Writing</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white transition-colors lang-text" data-en="Mentoring"
+                  data-zh="指导">Mentoring</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
+          <p class="text-gray-400 text-sm mb-4 md:mb-0 lang-text" data-en="© 2025 All rights reserved."
+            data-zh="© 2025 保留所有权利。">
+            © 2025 All rights reserved.
+          </p>
+          <div class="flex space-x-6">
+            <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors lang-text"
+              data-en="Privacy Policy" data-zh="隐私政策">Privacy Policy</a>
+            <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors lang-text"
+              data-en="Terms of Service" data-zh="服务条款">Terms of Service</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileMenuButton.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('shadow-md');
+        navbar.classList.remove('border-b');
+      } else {
+        navbar.classList.remove('shadow-md');
+        navbar.classList.add('border-b');
+      }
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        // Close mobile menu if open
+        if (!mobileMenu.classList.contains('hidden')) {
+          mobileMenu.classList.add('hidden');
+        }
+
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Language switch functionality
+    const langButtons = document.querySelectorAll('.lang-btn');
+    const langElements = document.querySelectorAll('.lang-text');
+
+    // Set Language
+    function setLanguage(lang) {
+      langElements.forEach(element => {
+        const text = element.getAttribute(`data-${lang}`);
+        if (text) {
+          element.textContent = text;
+        }
+      });
+      document.documentElement.lang = lang;
+    }
+
+    // Click language button
+    langButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        // Remove active class from all buttons
+        langButtons.forEach(btn => btn.classList.remove('active'));
+
+        // Add active class to clicked button
+        button.classList.add('active');
+
+        // Switch language
+        const selectedLang = button.getAttribute('data-lang');
+        setLanguage(selectedLang);
+      });
+    });
+
+    // Mode switch functionality
+    function toggleTheme(isMobile = false) {
+      const body = document.body;
+      const icon = isMobile
+        ? document.getElementById('theme-toggle-icon-mobile')
+        : document.getElementById('theme-toggle-icon');
+      if (body.classList.contains('dark')) {
+        body.classList.remove('dark');
+        icon.classList.remove('fa-sun-o');
+        icon.classList.add('fa-moon-o');
+      } else {
+        body.classList.add('dark');
+        icon.classList.remove('fa-moon-o');
+        icon.classList.add('fa-sun-o');
+      }
+      // Update icons
+      document.getElementById('theme-toggle-icon').className = icon.className;
+      document.getElementById('theme-toggle-icon-mobile').className = icon.className;
+    }
+    document.getElementById('theme-toggle-btn').addEventListener('click', () => toggleTheme(false));
+    document.getElementById('theme-toggle-btn-mobile').addEventListener('click', () => toggleTheme(true));
+  </script>
+</body>
+
+</html>
