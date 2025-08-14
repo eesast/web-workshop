@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon.png" />
+  <title>About me</title>
+
+  <!-- CSS link -->
+  <link rel="stylesheet" href="about-me.css" />
+
+  <!-- Python code highlight, with the help of "Highlight.js" library -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/languages/python.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <!-- Use "KaTeX" to support LaTeX math equations -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" 
+          onload="renderMathInElement(document.body, {
+            delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '\\(', right: '\\)', display: false}
+            ]
+          });"></script>
+</head>
+<body>
+
+  <header>
+    <div class="headerTitle">About me</div>
+  </header>
+
+
+  <main>
+    <section>
+        <h2> A brief self-introduction </h2>
+        FlyingPointer2, a student from Tsinghua University, who would like to study in Github to learn and contribute to the community.
+    </section>
+
+    <section>
+      <h2>
+        One of my favourite videos:
+      </h2>
+      <!-- The video is from Bilibili, URL: https://www.bilibili.com/video/BV1Z26nYYEdj/ -->
+      <video controls
+        height="480"
+        poster="./assets/videos/HappyNewYear-MV-poster.png"
+        >
+        <source src="./assets/videos/HappyNewYear-MV.mp4" type="video/mp4" />
+
+        <!-- If the video can not be played here -->
+        The video seems not to be resolved by your browser!
+        Click <a href="./assets/videos/HappyNewYear-MV.mp4">here</a>
+        to download it.
+      </video>
+
+    </section>
+
+    <section>
+      <h2>One of favourite programming languages:</h2>
+      <pre><code>
+# An example of `class` in Python
+
+class Cat:
+    def __init__(self, name, age, height, weight):
+        self.name = name
+        self.age = age
+        self.height = height
+        self.weight = weight
+
+    def meow(self):
+        print(f"Meow~ I am a cat named {self.name}.")
+
+    def catch_mouse(self):
+        print(f"{self.name} has caught a mouse!")
+
+    def eat(self):
+        self.weight += 1
+        print(f"{self.name}'s weight is now {self.weight}")
+
+
+if __name__ == "__main__":
+    cat = Cat("小黑", 10, 30, 20)
+    print(f"{cat.name} is now {cat.age} year(s) old!")
+    cat.meow()
+      </code></pre>
+
+    </section>
+
+
+    <section>
+      <h2>One of my favourite equations:</h2>
+
+      <!-- LaTeX format, supported by Katex -->
+      <div>
+       $$
+        \left\{
+          \begin{aligned}
+            \nabla \cdot \mathbf{D} &= \rho_0 \\
+            \nabla \cdot \mathbf{B} &= 0 \\
+            \nabla \times \mathbf{E} &= -\frac{\partial \mathbf{B}}{\partial t} \\
+            \nabla \times \mathbf{H} &= \mathbf{j}_0 + \frac{\partial \mathbf{D}}{\partial t}
+          \end{aligned}
+        \right.
+        $$
+      </div>
+
+      <p>
+        The image form of the above system of equation rendered by LaTeX is as follows:
+      </p>
+      <div align="center">
+        <img src="./assets/Maxwell.png" width="565" alt="Maxwell equations">
+      </div>
+
+    </section>
+
+
+    <section>
+      <h2>Some of my favourite movies</h2>
+
+      <details>
+        <summary>Details</summary>
+        <ul>
+          <li><em>The Shawshank Redemption</em> (1994)</li>
+          <li><em>Parasite</em> (2019)</li>
+          <li><em>Inception</em> (2010)</li>
+          <li><em>Spirited Away</em> (2001)</li>
+          <li><em>The Godfather</em> (1972)</li>
+        </ul>
+      </details>
+      
+    </section>
+  </main>
+
+  <footer>
+      Copyright @ 2025 
+  </footer>
+
+
+
+
+
+
+
+</body>
+</html>

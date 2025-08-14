@@ -7,3 +7,7 @@ build
 electron
 
 .local.env
+
+# add some files ignored
+.DS_Store
+
