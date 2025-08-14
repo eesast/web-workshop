@@ -1,0 +1,90 @@
+/* Body Content and General Settings */
+/* self-defined font */
+
+@font-face {
+    font-family: "BodyMainFont";
+    src: url('./assets/fonts/SourceSerif4Caption-Light.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "CodeFont";
+    src: url('./assets/fonts/JetBrainsMono-Medium.ttf') format('truetype');
+}
+
+
+body {
+    font-family: "BodyMainFont", sans-serif;  /* use self-defined font first */
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    background: linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%);
+}
+
+/* code font */
+code {
+    font-family: "CodeFont", 'Courier New', Courier, monospace;
+}
+
+/* Header Content */
+header {
+    background-color: #a6c1ee;
+    padding: 8px 0;
+    text-align: center;
+    /* position: fixed; */
+    top: 0;
+    width: 100%;
+    /* z-index: 1000; */
+}
+
+.headerTitle {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+
+h1 {
+    font-size: 28px;
+}
+
+h2 {
+    font-size: 24px;
+}
+
+p {
+    font-size: 18px;
+}
+
+
+/* Main Content */
+main {
+    margin-top: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 60px;
+}
+
+main section {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.45);
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-size: 18px;
+}
+
+
+/* Footer */
+footer {
+    color: rgb(62, 62, 62);
+    text-align: center;
+    padding: 6px 0;
+    /* position: fixed; */
+    bottom: 0;
+    width: 100%;
+    background-color: #fbc2eb;
+}
