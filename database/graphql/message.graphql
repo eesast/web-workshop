@@ -1,0 +1,17 @@
+mutation addMessage($user_uuid: uuid!, $room_uuid: uuid!, $content: String!) {
+  insert_message_one(object: {user_uuid: $user_uuid, room_uuid: $room_uuid, content: $content}) {
+    uuid
+  }
+}
+
+subscription getMessagesByRoom($room_uuid: uuid!) {
+  message(where: {room_uuid: {_eq: $room_uuid}}) {
+    uuid
+    user {
+      uuid
+      username
+    }
+    content
+    created_at
+  }
+}
