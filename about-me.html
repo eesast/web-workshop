@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">关于我 - 个人介绍</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --bg-gradient-start: #f5f7fa;
+            --bg-gradient-end: #c3cfe2;
+            --text-color: #333;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --header-bg: rgba(255, 255, 255, 0.7);
+            --nav-bg: rgba(255, 255, 255, 0.9);
+            --primary-color: #4a6fa5;
+            --border-color: #e0e6f0;
+            --input-border: #ddd;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .dark-mode {
+            --bg-gradient-start: #121212;
+            --bg-gradient-end: #2c3e50;
+            --text-color: #e0e0e0;
+            --card-bg: rgba(45, 45, 45, 0.8);
+            --header-bg: rgba(30, 30, 30, 0.7);
+            --nav-bg: rgba(30, 30, 30, 0.9);
+            --primary-color: #7abaff;
+            --border-color: #3a4a58;
+            --input-border: #555;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        nav {
+            background: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 15px 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+
+        .nav-controls {
+            margin-left: auto;
+            display: flex;
+            gap: 10px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-align: center;
+            transition: color 0.3s;
+        }
+
+        header {
+            text-align: center;
+            padding: 50px 20px;
+            margin-bottom: 40px;
+            background: var(--header-bg);
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+
+        .profile-container {
+            display: inline-block;
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            transition: color 0.3s;
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            font-weight: 300;
+            margin-bottom: 20px;
+            transition: color 0.3s;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            font-size: 2rem;
+            color: #FFFF00; /* Keeping a bright color for contrast */
+        }
+        
+        main {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: color 0.3s, border-color 0.3s;
+        }
+
+        .card h2 i {
+            font-size: 1.8rem;
+        }
+
+        .card-content {
+            flex: 1;
+        }
+
+        .interests ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+
+        .interests li {
+            padding: 10px 0;
+            border-bottom: 1px dashed var(--input-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: color 0.3s;
+        }
+
+        .interests li:last-child {
+            border-bottom: none;
+        }
+
+        .interests li i {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            text-align: left;
+            transition: color 0.3s;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--input-border);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s, background-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.2);
+        }
+
+        button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #3a5a8c;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .copyright {
+            margin-top: 30px;
+            color: #777;
+            transition: color 0.3s;
+        }
+
+        /* Nav button styles */
+        .nav-controls button {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .nav-controls button:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+            transform: none;
+            box-shadow: none;
+        }
+        .dark-mode .nav-controls button {
+            color: var(--text-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <div class="logo" id="logo">我的个人空间</div>
+            <div class="nav-controls">
+                <button id="lang-toggle" title="Switch Language">EN</button>
+                <button id="theme-toggle" title="Toggle Dark/Light Mode"><i class="fas fa-moon"></i></button>
+            </div>
+        </nav>
+        
+        <header>
+            <div class="profile-container">
+                <img src="photo.jpg" alt="头像" width="100" height="100">
+            </div>
+            <h1 id="profile-name">许瀚元</h1>
+            <div class="tagline" id="tagline">笃实书院56班</div>
+            <p><span id="student-id-label">学号</span>：2025013072</p>
+            
+            <div class="social-icons">
+                <a href="https://github.com/fallingstar56" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+            </div>
+        </header>
+        
+        <main>
+            <section class="card interests">
+                <h2><i class="fas fa-heart"></i> <span id="interests-title">兴趣爱好</span></h2>
+                <div class="card-content">
+                    <ul>
+                        <li id="interest-math"><i class="fas fa-hiking"></i>钻研数学</li>
+                        <li id="interest-sports"><i class="fas fa-hiking"></i>唱跳rap打篮球</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+        
+        <footer>
+            <h2 id="contact-title">联系我</h2>
+            <p id="contact-instruction">请留言</p>
+            
+            <div class="contact-form">
+                <div class="form-group">
+                    <label for="name" id="name-label">姓名</label>
+                    <input type="text" id="name" placeholder="请输入您的姓名">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email" id="email-label">电子邮箱</label>
+                    <input type="email" id="email" placeholder="请输入您的邮箱">
+                </div>
+                
+                <div class="form-group">
+                    <label for="message" id="message-label">留言内容</label>
+                    <textarea id="message" rows="5" placeholder="请输入您的留言..."></textarea>
+                </div>
+                
+                <button type="submit" id="send-button">发送留言</button>
+            </div>
+            
+            <div class="copyright">
+                <p id="copyright-text">联合暑培day10 JS&TS作业</p>
+            </div>
+        </footer>
+    </div>
+    
+    <script>
+        const translations = {
+            'zh-CN': {
+                pageTitle: '关于我 - 个人介绍',
+                logo: '我的个人空间',
+                profileName: '许瀚元',
+                tagline: '笃实书院56班',
+                studentIdLabel: '学号',
+                interestsTitle: '兴趣爱好',
+                interestMath: '钻研数学',
+                interestSports: '唱跳rap打篮球',
+                contactTitle: '联系我',
+                contactInstruction: '请留言',
+                nameLabel: '姓名',
+                namePlaceholder: '请输入您的姓名',
+                emailLabel: '电子邮箱',
+                emailPlaceholder: '请输入您的邮箱',
+                messageLabel: '留言内容',
+                messagePlaceholder: '请输入您的留言...',
+                sendButton: '发送留言',
+                sentMessage: '已发送',
+                copyright: '联合暑培day10 JS&TS作业',
+            },
+            'en': {
+                pageTitle: 'About Me - Personal Profile',
+                logo: 'My Personal Space',
+                profileName: 'Xu Hanyuan',
+                tagline: 'Dushi College Class 56',
+                studentIdLabel: 'Student ID',
+                interestsTitle: 'Interests',
+                interestMath: 'Studying Mathematics',
+                interestSports: 'Singing, dancing, rapping, and playing basketball',
+                contactTitle: 'Contact Me',
+                contactInstruction: 'Please leave a message',
+                nameLabel: 'Name',
+                namePlaceholder: 'Enter your name',
+                emailLabel: 'Email',
+                emailPlaceholder: 'Enter your email',
+                messageLabel: 'Message',
+                messagePlaceholder: 'Enter your message...',
+                sendButton: 'Send Message',
+                sentMessage: 'Sent',
+                copyright: 'Summer Training Day 10 JS&TS Homework',
+            }
+        };
+
+        let currentLang = localStorage.getItem('lang') || 'zh-CN';
+        const langToggle = document.getElementById('lang-toggle');
+        
+        function setLanguage(lang) {
+            const text = translations[lang];
+            document.getElementById('page-title').textContent = text.pageTitle;
+            document.getElementById('logo').textContent = text.logo;
+            document.getElementById('profile-name').textContent = text.profileName;
+            document.getElementById('tagline').textContent = text.tagline;
+            document.getElementById('student-id-label').textContent = text.studentIdLabel;
+            document.getElementById('interests-title').textContent = text.interestsTitle;
+            document.getElementById('interest-math').innerHTML = `<i class="fas fa-hiking"></i>${text.interestMath}`;
+            document.getElementById('interest-sports').innerHTML = `<i class="fas fa-hiking"></i>${text.interestSports}`;
+            document.getElementById('contact-title').textContent = text.contactTitle;
+            document.getElementById('contact-instruction').textContent = text.contactInstruction;
+            document.getElementById('name-label').textContent = text.nameLabel;
+            document.getElementById('name').placeholder = text.namePlaceholder;
+            document.getElementById('email-label').textContent = text.emailLabel;
+            document.getElementById('email').placeholder = text.emailPlaceholder;
+            document.getElementById('message-label').textContent = text.messageLabel;
+            document.getElementById('message').placeholder = text.messagePlaceholder;
+            document.getElementById('send-button').textContent = text.sendButton;
+            document.getElementById('copyright-text').textContent = text.copyright;
+            langToggle.textContent = lang === 'zh-CN' ? 'EN' : '中文';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setLanguage(currentLang);
+            
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+            const currentTheme = localStorage.getItem('theme');
+
+            if (currentTheme) {
+                body.classList.add(currentTheme);
+            } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                body.classList.add('dark-mode');
+            }
+
+            const updateThemeIcon = () => {
+                if (body.classList.contains('dark-mode')) {
+                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                    themeToggle.title = 'Toggle Light Mode';
+                } else {
+                    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                    themeToggle.title = 'Toggle Dark Mode';
+                }
+            };
+            updateThemeIcon();
+
+            themeToggle.addEventListener('click', function() {
+                body.classList.toggle('dark-mode');
+                const newTheme = body.classList.contains('dark-mode') ? 'dark-mode' : '';
+                localStorage.setItem('theme', newTheme);
+                updateThemeIcon();
+            });
+
+            langToggle.addEventListener('click', function() {
+                currentLang = currentLang === 'zh-CN' ? 'en' : 'zh-CN';
+                localStorage.setItem('lang', currentLang);
+                setLanguage(currentLang);
+            });
+
+            const sendButton = document.getElementById('send-button');
+            if (sendButton) {
+                sendButton.addEventListener('click', function() {
+                    const name = document.getElementById('name').value;
+                    if (name) {
+                        const originalButtonText = translations[currentLang].sendButton;
+                        this.innerHTML = `<i class="fas fa-check"></i> ${translations[currentLang].sentMessage}`;
+                        this.style.background = '#2ecc71';
+                        
+                        setTimeout(() => {
+                            this.innerHTML = originalButtonText;
+                            this.style.background = '#4a6fa5';
+                        }, 2000);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
