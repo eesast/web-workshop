@@ -1,0 +1,32 @@
+query GetMessagesWithReplies($room_uuid: uuid!) {
+  message(
+    where: {room_uuid: {_eq: $room_uuid}},
+    order_by: {created_at: asc}
+  ) {
+    uuid
+    content
+    created_at
+    user_uuid
+    parent_uuid
+    parent_message {
+      uuid
+      content
+      user_uuid
+    }
+    replies {
+      uuid
+      content
+      created_at
+      user_uuid
+    }
+  }
+}
+
+mutation CreateReplyMessage($object: message_insert_input!) {
+  insert_message_one(object: $object) {
+    uuid
+    content
+    created_at
+    parent_uuid
+  }
+}
