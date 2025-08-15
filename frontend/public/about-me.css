@@ -1,0 +1,212 @@
+/* Body Content and General Settings */
+/* self-defined font */
+
+@font-face {
+    font-family: "BodyMainFont";
+    src: url('./assets/newly-added/fonts/SourceSerif4Caption-Light.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "CodeFont";
+    src: url('./assets/newly-added/fonts/JetBrainsMono-Medium.ttf') format('truetype');
+}
+
+
+body {
+    font-family: "BodyMainFont", sans-serif;  /* use self-defined font first */
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    background: linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%);
+}
+
+/* code font */
+code {
+    font-family: "CodeFont", 'Courier New', Courier, monospace;
+}
+
+/* Header Content */
+header {
+    background-color: #a6c1ee;
+    padding: 8px 0;
+    text-align: center;
+    /* position: fixed; */
+    top: 0;
+    width: 100%;
+    /* z-index: 1000; */
+}
+
+.headerTitle {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+
+h1 {
+    font-size: 28px;
+}
+
+h2 {
+    font-size: 24px;
+}
+
+p {
+    font-size: 18px;
+}
+
+
+/* Main Content */
+main {
+    margin-top: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 60px;
+}
+
+main section {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.45);
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-size: 18px;
+}
+
+
+/* Footer */
+footer {
+    color: rgb(62, 62, 62);
+    text-align: center;
+    padding: 6px 0;
+    /* position: fixed; */
+    bottom: 0;
+    width: 100%;
+    background-color: #fbc2eb;
+}
+
+/* ==================================== */
+/* Theme Toggle Button Styles      */
+/* ==================================== */
+
+#theme-toggle-button {
+    position: absolute;
+    top: 8px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#theme-toggle-button:hover {
+    transform: scale(1.1);
+}
+
+
+/* ==================================== */
+/* Dark Mode Styles            */
+/* ==================================== */
+
+/* 核心技巧：当 body 标签拥有 .dark-mode 类时，应用以下所有样式 */
+body.dark-mode {
+    background: linear-gradient(to top, #09203f 0%, #537895 100%);
+    color: #e0e0e0;
+}
+
+body.dark-mode header {
+    background-color: #1a2c3a;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode main section {
+    background-color: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode footer {
+    background-color: #09203f;
+    color: #a0a0a0;
+}
+
+/* 暗色模式下的 KaTeX 数学公式颜色反转 */
+body.dark-mode .katex {
+    color: #e0e0e0;
+}
+
+/* 暗色模式下的 details/summary 标签样式 */
+body.dark-mode details summary {
+    color: #a6c1ee; /* A touch of color from the light theme */
+}
+
+/* 暗色模式下按钮的样式 */
+body.dark-mode #theme-toggle-button {
+    background: rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+
+/* ==================================== */
+/* GitHub Activity Feed Styles     */
+/* ==================================== */
+
+#github-activity-feed {
+    max-height: 400px; /* 设置一个最大高度，超出则滚动 */
+    overflow-y: auto;  /* 内容超出时显示垂直滚动条 */
+    padding-right: 15px; /* 为滚动条留出空间 */
+}
+
+.activity-item {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ddd;
+    line-height: 1.6;
+}
+
+.activity-item:last-child {
+    border-bottom: none; /* 最后一个条目不需要下边框 */
+    margin-bottom: 0;
+}
+
+.activity-item .repo-link {
+    font-weight: bold;
+    color: #0366d6;
+    text-decoration: none;
+    font-family: "CodeFont", 'Courier New', Courier, monospace;
+}
+
+.activity-item .repo-link:hover {
+    text-decoration: underline;
+}
+
+.activity-item .activity-time {
+    display: block;
+    font-size: 14px;
+    color: #586069;
+    margin-top: 4px;
+}
+
+/* 确保暗色模式下样式也适配 */
+body.dark-mode .activity-item {
+    border-bottom-color: #444;
+}
+
+body.dark-mode .activity-item .repo-link {
+    color: #8ab4f8; /* 亮蓝色，在深色背景上很清晰 */
+}
+
+body.dark-mode .activity-item .activity-time {
+    color: #8892b0;
+}
