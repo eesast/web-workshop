@@ -38,19 +38,19 @@
 
 1.2.2 购买云服务器安装 Docker 和 Docker compose 并进行后续操作（在第 6 节详细介绍，若你熟悉云服务器的使用可选此方法）
 
-1.2.3 后续操作参见`/server/database/README.md`
+1.2.3 后续操作参见 `/server/database/README.md`
 
 ##### 2. 创建数据库表并插入记录
 
-这部分主要是对数据库本身的操作，而 SQL 语法基本是各类数据库通用的，因此我们推荐大家用 SQL 指令操作（在`/database/sql`文件夹中）。当然，Hasura 也提供了图形化操作的方式，这里不详解。
+这部分主要是对数据库本身的操作，而 SQL 语法基本是各类数据库通用的，因此我们推荐大家用 SQL 指令操作（在 `/database/sql`文件夹中）。当然，Hasura 也提供了图形化操作的方式，这里不详解。
 
 ##### 2.1. 使用预备的 SQL 语句
 
 2.1.1 在 Hasura 控制台的 Data 标签页，选择左边栏的 SQL，进入 SQL 语句执行窗口
 
-2.1.2 复制`/database/sql/*.sql`中的全部内容，黏贴到执行窗口并点击执行（Run）
+2.1.2 复制 `/database/sql/*.sql`中的全部内容，黏贴到执行窗口并点击执行（Run）
 
-2.1.3 注意执行的顺序，由于`user_room`表和`message`表对`user`、`room`表有外键依赖，所以应当先执行`user.sql`和`room.sql`中的内容
+2.1.3 注意执行的顺序，由于 `user_room`表和 `message`表对 `user`、`room`表有外键依赖，所以应当先执行 `user.sql`和 `room.sql`中的内容
 
 2.1.4 执行完提示绿色的 SQL executed!即为执行成功，否则执行失败，可自行根据报错信息 Debug
 
@@ -60,7 +60,7 @@
 
 读者可以根据 Hasura 界面的文字提示自行操作。
 
-唯一需要提示的是 Postgresql 的数据库层次为`Database -> Schema -> Table = Columns * Rows`，在创建表之前可能需要先创建 schema，默认名为 public
+唯一需要提示的是 Postgresql 的数据库层次为 `Database -> Schema -> Table = Columns * Rows`，在创建表之前可能需要先创建 schema，默认名为 public
 
 ##### 3. 调整访问权限和外键查询关系
 
@@ -68,13 +68,13 @@
 
 ##### 3.1 使用 Hasura 图形化界面操作
 
-3.1.1 进入每张表的 Permissions 标签页，新增一个`user`角色，并给予其合适的权限（注意：一般不允许普通用户直接查询密码，其余权限可视情况而定，例如不允许用户删除其他用户或消息）
+3.1.1 进入每张表的 Permissions 标签页，新增一个 `user`角色，并给予其合适的权限（注意：一般不允许普通用户直接查询密码，其余权限可视情况而定，例如不允许用户删除其他用户或消息）
 
 3.1.2 点击 public 文件夹（Schema），在 Untracked foreign-key relationships 一栏，选择 track all，即根据外键依赖关系生成对应的 graphql 查询方法。如果要修改关系的名称，也可以在每张表的 Relationships 标签页逐一操作
 
 ##### 3.2 使用 Json 文件导入备份
 
-3.2.1 点击 Hasura 控制台顶栏右侧的 Settings，在 Metadata Actions 菜单（默认）下，点击 Import metadata，选择`/database/hasura/hasura_metadata.json`文件即可
+3.2.1 点击 Hasura 控制台顶栏右侧的 Settings，在 Metadata Actions 菜单（默认）下，点击 Import metadata，选择 `/database/hasura/hasura_metadata.json`文件即可
 
 3.2.2 该 json 文件是编者根据第一种方法设置后手动导出的配置备份文件，目的主要是为了免去读者不必要的重复操作。使用它的前提是你的表结构与本教程的相同，且无特殊配置。使用后你的数据库将会被重命名为 workshop，这是正常的。如果你想要自定义配置，或想进一步了解，在导入后仍可以按照第一种方法继续调整设置
 
@@ -82,14 +82,14 @@
 
 3.3.1 安装 Hasura CLI 并配置环境变量，请参考[Install / Uninstall the Hasura CLI | Hasura GraphQL Docs](https://hasura.io/docs/latest/hasura-cli/install-hasura-cli/)
 
-3.3.2 在`/database/hasura`路径下，执行
+3.3.2 在 `/database/hasura`路径下，执行
 
 ```bash
 hasura version # 确认安装成功
 hasura metadata apply --admin-secret <your-secret> --endpoint <your-endpoint>
 ```
 
-注意：secret 和 endpoint 的寻找位置见第 4 部分，这里的`<your-endpoint>`不包含`/v1/graphql`
+注意：secret 和 endpoint 的寻找位置见第 4 部分，这里的 `<your-endpoint>`不包含 `/v1/graphql`
 
 3.3.3 仓库中的 yaml 文件也是编者根据第一种方法设置后导出的配置文件，目的主要是为了免去读者不必要的重复操作。使用它的前提是你的表结构与本教程的相同，且无特殊配置。使用后你的数据库将会被重命名为 workshop，这是正常的。如果你想要自定义配置，或想进一步了解，在导入后仍可以按照第一种方法继续调整设置
 
@@ -97,7 +97,7 @@ hasura metadata apply --admin-secret <your-secret> --endpoint <your-endpoint>
 
 ##### 4. 使用 Hasura 提供的 GraphQL 接口
 
-无论是通过控制台在线试用，还是后续通过 http 请求访问，都需要记住两个变量`HASURA_GRAPHQL_ENDPOINT (endpoint)`和`HASURA_GRAPHQL_ADMIN_SECRET (secret)`，它们相当于你访问 Hasura 服务的账号和密码。如果你是在 hasura.io 上创建的 Hasura 实例，那么你可以在 project 的设置页[Projects - Hasura Cloud](https://cloud.hasura.io/projects)中的 General 栏找到，分别对应 GraphQL API 和 Admin Secret 两项。如果你使用 docker 创建的话，那么 endpoint 就是你的主机/服务器 IP 地址加端口号再加`/v1/graphql`，secret 则定义在你的`docker-compose.yml`或相应环境变量文件中。
+无论是通过控制台在线试用，还是后续通过 http 请求访问，都需要记住两个变量 `HASURA_GRAPHQL_ENDPOINT (endpoint)`和 `HASURA_GRAPHQL_ADMIN_SECRET (secret)`，它们相当于你访问 Hasura 服务的账号和密码。如果你是在 hasura.io 上创建的 Hasura 实例，那么你可以在 project 的设置页[Projects - Hasura Cloud](https://cloud.hasura.io/projects)中的 General 栏找到，分别对应 GraphQL API 和 Admin Secret 两项。如果你使用 docker 创建的话，那么 endpoint 就是你的主机/服务器 IP 地址加端口号再加 `/v1/graphql`，secret 则定义在你的 `docker-compose.yml`或相应环境变量文件中。
 
 ##### 4.1 使用控制台在线试用 GraphQL 接口
 
@@ -111,7 +111,7 @@ hasura console --admin-secret <your-secret> --endpoint <your-endpoint>
 
 ##### 4.2 通过 http 请求直接访问
 
-在运行时，无论前端还是后端应用，都是通过发送一个 http 请求到 endpoint 来执行一个 graphql 操作的。我们依赖于不同的 npm 包来实现这一点，前端使用 Apollo GraphQL，后端使用 graphql-request。同时，我们使用 graphql-codegen 来根据 graphql 代码自动生成可直接调用的 Typescript 代码，相关配置代码已在`/database/codegen.ts`中给出，大家可以参考`/tutorial/04-Backend.md`中的方法运行。由于该工具与本节知识点无关，且单纯是代码生成的工具，因此不多作讲解，感兴趣的请参见[Introduction (GraphQL-Codegen) (the-guild.dev)](https://the-guild.dev/graphql/codegen/docs/getting-started)
+在运行时，无论前端还是后端应用，都是通过发送一个 http 请求到 endpoint 来执行一个 graphql 操作的。我们依赖于不同的 npm 包来实现这一点，前端使用 Apollo GraphQL，后端使用 graphql-request。同时，我们使用 graphql-codegen 来根据 graphql 代码自动生成可直接调用的 Typescript 代码，相关配置代码已在 `/database/codegen.ts`中给出，大家可以参考 `/tutorial/04-Backend.md`中的方法运行。由于该工具与本节知识点无关，且单纯是代码生成的工具，因此不多作讲解，感兴趣的请参见[Introduction (GraphQL-Codegen) (the-guild.dev)](https://the-guild.dev/graphql/codegen/docs/getting-started)
 
 ### 作业
 
