@@ -1,0 +1,122 @@
+<!DOCTYPE html> <!-- 文档类型声明 -->
+<html lang="zh-CN"> <!-- 根元素，lang指定语言 -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的介绍</title>
+    <link rel ="icon" href="my-head.jpg" type="image/x-icon"> <!-- 网站图标 -->
+    <link rel="stylesheet" href="my-style.css"> <!-- 引入外部CSS样式 -->
+
+    <!-- 这里可以放CSS样式链接或脚本 -->
+     <style>
+        #title1{
+            color: orange;
+            font-family: 宋体;
+            font-size: 50px;
+            text-align: center;
+        }
+        #title2{
+            color: yellowgreen;
+            font-family: 宋体;
+            font-size: 30px;
+            text-align: center;
+        }
+        #link1 {
+            color: gold;
+            font-size: 20px;
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+        }
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            bottom: 360px;
+        }
+        #diss1{
+            color: lightblue;
+            font-family: 楷体;
+            text-align: center;
+        }
+        #button1 {
+            font-size: 16px;
+            cursor: pointer; /* 鼠标悬停时显示手型 */
+            position: relative;
+            top: 170px;
+            display: block;
+            margin: auto;
+        }
+        #result {
+            color: lightblue;
+            font-family: 楷体;
+            text-align: center;
+            position: relative;
+            top: 170px;
+        }
+        img {
+            position: relative;
+            left: 20%;
+
+        }
+
+      </style>
+</head>
+<body>
+    <!-- 这里放网页所有可见内容 -->
+    <h1 id="title1">个人介绍</h1>
+    <p id="title2">hi!这里是zjy的个人介绍...</p>
+    <a href="https://www.dsc.tsinghua.edu.cn/" id="link1">点击访问笃实书院官网~</a>
+<td>
+    <table border="1">
+    <tr>
+    <td>姓名</td>
+    <td>性别</td>
+    <td>家乡</td>
+    <td>班级</td>
+    <td>爱好</td>
+    </tr>
+    <tr>
+    <td>赵景言</td>
+    <td>男</td>
+    <td>山西</td>
+    <td>笃实45</td>
+    <td>睡觉、摸鱼、追番</td>
+    </tr>
+</td>
+
+    <button id="button1" onclick="showInputValue()">支持镜音连谢谢喵~</button>
+    <p id="result"></p>
+    <script>
+    // 定义交互函数
+    function showInputValue() {
+        const resultElement = document.getElementById('result');
+        resultElement.textContent = `谢谢支持喵~`;
+    }
+</script>
+<button onclick="changeColor(this)" >点击我变色</button>
+    <script>
+      const colors = ['red', 'green', 'blue', 'purple', 'orange','white']; // 定义颜色数组
+      let currentIndex = 0; // 当前颜色索引
+      // 切换颜色
+      function changeColor(element) {
+      currentIndex = (currentIndex + 1) % colors.length; // 切换到下一个颜色索引（循环）
+      element.style.backgroundColor = colors[currentIndex]; // 改变按钮的背景色
+      }
+    </script>
+    <p id="diss1">这人写得怎么这么正经……</p>
+<style>
+    body {
+        background-image: url('my-back.jpg'); /* 替换为你的图片路径 */
+        background-size: cover; /* 使背景图片覆盖整个页面 */
+        background-repeat: no-repeat; /* 防止背景图片重复 */
+        background-attachment: fixed; /* 背景图片固定 */
+        color: white; /* 文字颜色为白色，确保在深色背景上可见 */
+    }
+</style>
+<img src="my-show.jpg" alt="test image" width="300px" height="250px"/ class="center-img">
+</body>
+</html>

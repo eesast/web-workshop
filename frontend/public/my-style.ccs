@@ -1,0 +1,12 @@
+#title1{
+  color: white;
+  font-family: 宋体;
+  font-size: 50px;
+  text-align: center;
+}
+#title2{
+        color: white;
+        font-family: 宋体;
+        font-size: 50px;
+        ext-align: center;
+}
