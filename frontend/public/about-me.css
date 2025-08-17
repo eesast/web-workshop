@@ -65,3 +65,12 @@ body {
    th {
      background-color: #f2f2f2;
    }
+
+   .light-mode {
+    background-color: white;
+    color:#333;
+   }
+   .dark-mode {
+    background-color: black;
+    color:#3498db;
+   }
