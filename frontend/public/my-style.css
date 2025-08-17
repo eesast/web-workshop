@@ -1,0 +1,53 @@
+        #title1{
+            color: orange;
+            font-family: 宋体;
+            font-size: 50px;
+            text-align: center;
+        }
+        #title2{
+            color: yellowgreen;
+            font-family: 宋体;
+            font-size: 30px;
+            text-align: center;
+        }
+        #link1 {
+            color: gold;
+            font-size: 20px;
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+        }
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            bottom: 420px;
+        }
+        #diss1{
+            color: lightblue;
+            font-family: 楷体;
+            text-align: center;
+        }
+        #button1 {
+            font-size: 16px;
+            cursor: pointer; /* 鼠标悬停时显示手型 */
+            position: relative;
+            top: 170px;
+            display: block;
+            margin: auto;
+        }
+        #result {
+            color: lightblue;
+            font-family: 楷体;
+            text-align: center;
+            position: relative;
+            top: 170px;
+        }
+        img {
+            position: relative;
+            left: 20%;
+
+        }

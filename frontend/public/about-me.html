@@ -5,65 +5,115 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>我的介绍</title>
     <link rel ="icon" href="my-head.jpg" type="image/x-icon"> <!-- 网站图标 -->
-    <link rel="stylesheet" href="my-style.css"> <!-- 引入外部CSS样式 -->
+    <link rel="stylesheet" href="my-style.css"/> <!-- 引入外部CSS样式 -->
+<style>
+      body {
+      margin: 0;
+      min-height: 100vh; /* 确保容器占满视口高度 */
+      overflow: hidden; /* 隐藏超出视口的樱花 */
+      background: #f0f8ff; /* 浅色背景，突出樱花 */
+    }
+      .vlen-container {
+      position: fixed; /* 相对于视口定位 */
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none; /* 避免樱花干扰鼠标事件 */
+    }
 
-    <!-- 这里可以放CSS样式链接或脚本 -->
-     <style>
-        #title1{
-            color: orange;
-            font-family: 宋体;
-            font-size: 50px;
-            text-align: center;
+    .vlen {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0.5; /* 半透明效果 */
+    }
+
+</style>
+<style>
+        /* 基础样式 */
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+            font-family: '微软雅黑', sans-serif;
         }
-        #title2{
-            color: yellowgreen;
-            font-family: 宋体;
-            font-size: 30px;
-            text-align: center;
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
         }
-        #link1 {
-            color: gold;
-            font-size: 20px;
-            display: block;
-            text-align: center;
-            margin-top: 20px;
+
+        .header {
+            padding: 15px 20px;
+            background: #d43c33; /* 网易云红 */
+            color: white;
+            font-size: 1.2em;
+            font-weight: bold;
         }
-        table {
-            width: 50%;
-            border-collapse: collapse;
-            text-align: center;
-            margin-left: auto;
-            margin-right: auto;
+
+        .song-list {
+            height: 400px; /* 列表高度（控制显示行数） */
+            overflow: hidden; /* 隐藏超出部分 */
             position: relative;
-            bottom: 360px;
         }
-        #diss1{
-            color: lightblue;
-            font-family: 楷体;
-            text-align: center;
+
+        .song-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
-        #button1 {
+
+        .song-item:hover {
+            background: #f8f8f8;
+        }
+
+        .cover-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+            object-fit: cover; /* 保持封面比例 */
+            margin-right: 15px;
+        }
+
+        .song-info {
+            flex: 1;
+        }
+
+        .song-name {
             font-size: 16px;
-            cursor: pointer; /* 鼠标悬停时显示手型 */
-            position: relative;
-            top: 170px;
-            display: block;
-            margin: auto;
-        }
-        #result {
-            color: lightblue;
-            font-family: 楷体;
-            text-align: center;
-            position: relative;
-            top: 170px;
-        }
-        img {
-            position: relative;
-            left: 20%;
-
+            color: #333;
+            margin: 0;
         }
 
-      </style>
+        .song-artist {
+            font-size: 14px;
+            color: #666;
+            margin: 5px 0 0;
+        }
+
+        /* 滚动动画关键帧 */
+        @keyframes scrollUp {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-50%); /* 滚动高度为列表高度的一半（无缝循环） */
+            }
+        }
+
+        .scrolling {
+            animation: scrollUp 20s linear infinite; /* 20秒完成一次滚动循环 */
+        }
+    </style>
+<script src="motto.js"></script>
+
 </head>
 <body>
     <!-- 这里放网页所有可见内容 -->
@@ -118,5 +168,10 @@
     }
 </style>
 <img src="my-show.jpg" alt="test image" width="300px" height="250px"/ class="center-img">
+<p id="motto">每日一句加载中... ...</p>
+<div class="vlen-container" id="vlenContainer"></div>
+
+<script src="vlen.js"></script>
+
 </body>
 </html>
