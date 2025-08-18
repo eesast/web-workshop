@@ -17,10 +17,27 @@
             text-align: justify;
             text-indent: 2em;
         }
+        a {
+            color: inherit;
+        }
+        a:hover {
+            color: gold;
+        }
+        #top-btn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 30px;
+            z-index: 99;
+            font-size: 16px;
+        }
+        .yao-element {
+            background: black;
+        }
     </style>
 </head>
-<body style="background: lightcyan">
-<div class="middle-container">
+<body style="background: lightcyan; color: black">
+<div class="middle-container" id="main-container">
     <h1>关于我</h1>
     <p>这是按作业要求制作的自我介绍页面，在此处可以了解到关于我的部分信息。</p>
     <br>
@@ -36,7 +53,7 @@
         <li>可点击<a href="https://amen-under-wu.github.io/cosmos/medic.html">此处</a>体验。</li>
     </ul>
     <p>起卦样例：</p>
-    <div id="resultBox" style="font-size: x-large; text-align: center;"><table style="text-align: center; margin: auto;"><tbody style="text-align: center;"><tr style="font-size:10px;"><td><br></td></tr><tr style="font-size:15px;"><td>伏</td><td>兄弟</td><td>未土</td><td></td><td>官鬼</td><td>寅木</td><td style="background:black;">   </td><td style="background:black;">   </td><td style="background:black;">   </td><td>O</td><td>未土</td><td>兄弟</td></tr><tr style="font-size:10px;"><td><br></td></tr><tr style="font-size:15px;"><td>伏</td><td>子孙</td><td>酉金</td><td></td><td>妻财</td><td>子水</td><td style="background:black;">   </td><td>   </td><td style="background:black;">   </td><td>X</td><td>酉金</td><td>子孙</td></tr><tr style="font-size:10px;"><td><br></td></tr><tr style="font-size:15px;"><td>伏</td><td>妻财</td><td>亥水</td><td>应爻</td><td>兄弟</td><td>戌土</td><td style="background:black;">   </td><td>   </td><td style="background:black;">   </td><td>X</td><td>亥水</td><td>妻财</td></tr><tr style="font-size:10px;"><td><br></td></tr><tr style="font-size:15px;"><td>伏</td><td>子孙</td><td>申金</td><td></td><td>妻财</td><td>亥水</td><td style="background:black;">   </td><td style="background:black;">   </td><td style="background:black;">   </td><td></td><td></td><td></td></tr><tr style="font-size:10px;"><td><br></td></tr><tr style="font-size:15px;"><td>伏</td><td>父母</td><td>午火</td><td></td><td>兄弟</td><td>丑土</td><td style="background:black;">   </td><td>   </td><td style="background:black;">   </td><td></td><td></td><td></td></tr><tr style="font-size:10px;"><td><br></td></tr><tr style="font-size:15px;"><td>伏</td><td>兄弟</td><td>辰土</td><td>世爻</td><td>官鬼</td><td>卯木</td><td style="background:black;">   </td><td style="background:black;">   </td><td style="background:black;">   </td><td></td><td></td><td></td></tr></tbody></table></div>
+    <div id="resultBox" style="font-size: x-large; text-align: center;"><table style="text-align: center; margin: auto;"><tbody style="text-align: center;"><tr style="font-size:10px;"><td><br></td></tr><tr style="font-size:15px;"><td>伏</td><td>兄弟</td><td>未土</td><td></td><td>官鬼</td><td>寅木</td><td class="yao-element">   </td><td class="yao-element">   </td><td class="yao-element">   </td><td>O</td><td>未土</td><td>兄弟</td></tr><tr style="font-size:10px;"><td><br></td></tr><tr style="font-size:15px;"><td>伏</td><td>子孙</td><td>酉金</td><td></td><td>妻财</td><td>子水</td><td class="yao-element">   </td><td>   </td><td class="yao-element">   </td><td>X</td><td>酉金</td><td>子孙</td></tr><tr style="font-size:10px;"><td><br></td></tr><tr style="font-size:15px;"><td>伏</td><td>妻财</td><td>亥水</td><td>应爻</td><td>兄弟</td><td>戌土</td><td class="yao-element">   </td><td>   </td><td class="yao-element">   </td><td>X</td><td>亥水</td><td>妻财</td></tr><tr style="font-size:10px;"><td><br></td></tr><tr style="font-size:15px;"><td>伏</td><td>子孙</td><td>申金</td><td></td><td>妻财</td><td>亥水</td><td class="yao-element">   </td><td class="yao-element">   </td><td class="yao-element">   </td><td></td><td></td><td></td></tr><tr style="font-size:10px;"><td><br></td></tr><tr style="font-size:15px;"><td>伏</td><td>父母</td><td>午火</td><td></td><td>兄弟</td><td>丑土</td><td class="yao-element">   </td><td>   </td><td class="yao-element">   </td><td></td><td></td><td></td></tr><tr style="font-size:10px;"><td><br></td></tr><tr style="font-size:15px;"><td>伏</td><td>兄弟</td><td>辰土</td><td>世爻</td><td>官鬼</td><td>卯木</td><td class="yao-element">   </td><td class="yao-element">   </td><td class="yao-element">   </td><td></td><td></td><td></td></tr></tbody></table></div>
     <br>
     <h3>“拓竹杯”参赛作品《㸚爻乂》</h3>
     <ul>
@@ -76,10 +93,69 @@
     <p>你可以试着考个</p>
     <p>及格的分数。</p>
     <p style="text-align: right">2025.6</p>
+    <hr>
+    <h2>Github仓库（最新）</h2>
+    <ul id="repo-list">
+    </ul>
 </div>
 <br>
 <div style="text-align: center">
     <a href="./index.html">返回首页</a>
+    <a id="style-btn" href="javascript: change_style()">深色模式</a>
 </div>
+<button id="top-btn" onclick="top_func()">返回顶部</button>
 </body>
+<script>
+    let dark = false;
+    function change_style() {
+        document.getElementById("style-btn").innerHTML = (dark ? "深" : "浅") + "色模式";
+        dark = !dark;
+        let yao_list = document.getElementsByClassName("yao-element");
+        if (dark) {
+            document.body.style.background = "darkslateblue";
+            document.body.style.color = "lightcyan";
+            document.getElementById("main-container").style.borderColor = "lightgray"
+            for (let i = 0; i < yao_list.length; ++i) {
+                yao_list[i].style.background = "lightcyan";
+            }
+        }
+        else {
+            document.body.style.background = "lightcyan";
+            document.body.style.color = "black";
+            document.getElementById("main-container").style.borderColor = "firebrick"
+            for (let i = 0; i < yao_list.length; ++i) {
+                yao_list[i].style.background = "black";
+            }
+        }
+    }
+
+    let topbtn = document.getElementById("top-btn");
+    function scroll_callback() {
+        if (!topbtn) {
+            return;
+        }
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            topbtn.style.display = "block";
+        }
+        else {
+            topbtn.style.display = "none";
+        }
+    }
+    window.onscroll = scroll_callback;
+    function top_func() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
+
+    async function update_repo_list() {
+        let repo_list = await fetch("https://api.github.com/users/Amen-under-Wu/repos").then(res => res.json());
+        repo_list.sort(function (a, b) {return (new Date(b["updated_at"])) - (new Date(a["updated_at"]))})
+        let l = Math.min(repo_list.length, 3);
+        let element = document.getElementById("repo-list");
+        for (let i = 0; i < l; ++i) {
+            element.innerHTML += `<li><a href="${repo_list[i]["html_url"]}">${repo_list[i]["name"]}</a></li>`;
+        }
+    }
+    window.onload = update_repo_list;
+</script>
 </html>
