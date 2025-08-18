@@ -7,3 +7,7 @@ build
 electron
 
 .local.env
+
+# add
+.DS_Store
+
