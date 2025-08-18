@@ -42,3 +42,21 @@ insert into public.message (user_uuid, room_uuid, content) values
 ('00000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-100000000003', '好了，今天就到这里吧');
 
 update public.message set created_at = '2021-01-01 00:00:00' where room_uuid = '00000000-0000-0000-0000-100000000002';
+
+-- 向 message 表添加一个名为 replied_to_uuid 的新列，类型为 UUID，允许为空
+ALTER TABLE public.message
+ADD COLUMN replied_to_uuid UUID NULL;
+
+-- 添加外键约束
+-- 确保 replied_to_uuid 的值必须是 message 表中已存在的 uuid
+-- 当被回复的原始消息被删除时 (ON DELETE)，将回复消息的 replied_to_uuid 设置为 NULL
+ALTER TABLE public.message
+ADD CONSTRAINT message_replied_to_uuid_fkey
+FOREIGN KEY (replied_to_uuid)
+REFERENCES public.message(uuid)
+ON DELETE SET NULL;
+
+-- 为新列创建索引
+-- 以便在查询时能快速找到所有回复特定消息的记录，或者快速关联到被回复的消息
+CREATE INDEX idx_message_replied_to_uuid
+ON public.message(replied_to_uuid);
