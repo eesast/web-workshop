@@ -1,12 +1,37 @@
-mutation addUser($username: String!, $password: String!) {
-  insert_user_one(object: {username: $username, password: $password}) {
+# 用户查询
+query GetUserByUsername($username: String!) {
+  user(where: {username: {_eq: $username}}) {
     uuid
+    username
+    password
   }
 }
 
-query getUsersByUsername($username: String!) {
-  user(where: {username: {_eq: $username}}) {
+query GetUserById($uuid: uuid!) {
+  user_by_pk(uuid: $uuid) {
     uuid
-    password
+    username
+  }
+}
+
+# 用户变更
+mutation CreateUser($username: String!, $password: String!) {
+  insert_user_one(object: {username: $username, password: $password}) {
+    uuid
+    username
+  }
+}
+
+mutation UpdateUserPassword($uuid: uuid!, $password: String!) {
+  update_user_by_pk(pk_columns: {uuid: $uuid}, _set: {password: $password}) {
+    uuid
+    username
+  }
+}
+
+mutation DeleteUser($uuid: uuid!) {
+  delete_user_by_pk(uuid: $uuid) {
+    uuid
+    username
   }
 }

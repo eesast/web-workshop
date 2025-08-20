@@ -1,11 +1,14 @@
 {
-  "devDependencies": {
-    "@graphql-codegen/cli": "5.0.2",
-    "@graphql-codegen/typescript-graphql-request": "6.2.0",
-    "@graphql-codegen/typescript-react-apollo": "4.3.0",
-    "graphql": "16.9.0"
-  },
+  "name": "meeting-app-database",
+  "version": "1.0.0",
   "scripts": {
-    "generate": "graphql-codegen"
+    "generate": "graphql-codegen --config codegen.ts"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^4.0.1",
+    "@graphql-codegen/typescript": "^3.0.4",
+    "@graphql-codegen/typescript-operations": "^3.0.4",
+    "@graphql-codegen/typescript-graphql-request": "^5.0.0",
+    "graphql": "^16.8.1"
   }
 }

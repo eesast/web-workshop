@@ -1,30 +1,29 @@
-# Builder stage
-FROM node:20 AS builder
-WORKDIR /home/node/app
+# 使用Node.js官方镜像作为基础镜像
+FROM node:18-alpine
 
-# Install Dependencies
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile --no-cache
+# 设置工作目录
+WORKDIR /app
 
-# Copy source code
+# 复制package.json和package-lock.json
+COPY package*.json ./
+
+# 安装依赖
+RUN npm ci --only=production
+
+# 复制源代码
 COPY . .
 
-# Build
-RUN yarn build
+# 编译TypeScript代码
+RUN npm run build
 
+# 创建uploads目录
+RUN mkdir -p uploads
 
-# Runner stage
-FROM node:20-alpine AS runner
-WORKDIR /home/node/app
+# 暴露端口
+EXPOSE 8888
+
+# 设置环境变量
 ENV NODE_ENV=production
 
-# Install Production Dependencies
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile --no-cache --production
-
-# Copy build files
-COPY --from=builder /home/node/app/build ./build
-
-# Expose port and run
-EXPOSE 8888
-CMD yarn serve
+# 启动应用
+CMD ["npm", "start"]

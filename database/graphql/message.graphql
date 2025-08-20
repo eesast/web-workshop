@@ -1,17 +1,46 @@
-mutation addMessage($user_uuid: uuid!, $room_uuid: uuid!, $content: String!) {
-  insert_message_one(object: {user_uuid: $user_uuid, room_uuid: $room_uuid, content: $content}) {
+# 消息查询
+query GetMessagesByRoom($room: uuid!) {
+  message(where: {room: {_eq: $room}}, order_by: {created_at: asc}) {
     uuid
+    content
+    sender
+    created_at
+    user {
+      username
+    }
   }
 }
 
-subscription getMessagesByRoom($room_uuid: uuid!) {
-  message(where: {room_uuid: {_eq: $room_uuid}}) {
+query GetMessagesBySender($sender: uuid!) {
+  message(where: {sender: {_eq: $sender}}, order_by: {created_at: desc}) {
     uuid
-    user {
-      uuid
-      username
-    }
     content
+    room
     created_at
+  }
+}
+
+# 消息变更
+mutation CreateMessage($room: uuid!, $content: String!, $sender: uuid!) {
+  insert_message_one(object: {room: $room, content: $content, sender: $sender}) {
+    uuid
+    content
+    sender
+    created_at
+  }
+}
+
+mutation DeleteMessage($uuid: uuid!) {
+  delete_message_by_pk(uuid: $uuid) {
+    uuid
+    content
+  }
+}
+
+mutation UpdateMessage($uuid: uuid!, $content: String!) {
+  update_message_by_pk(pk_columns: {uuid: $uuid}, _set: {content: $content}) {
+    uuid
+    content
+    updated_at
   }
 }

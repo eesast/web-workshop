@@ -1,0 +1,94 @@
+services:
+  # PostgreSQL数据库
+  postgres:
+    image: postgres:15-alpine
+    container_name: meeting-app-postgres
+    environment:
+      POSTGRES_DB: meeting_app
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres123
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/sql:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    networks:
+      - meeting-app-network
+
+  # Hasura GraphQL引擎
+  hasura:
+    image: hasura/graphql-engine:latest
+    container_name: meeting-app-hasura
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgres123@postgres:5432/meeting_app
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
+      HASURA_GRAPHQL_DEV_MODE: "true"
+      HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+      HASURA_GRAPHQL_ADMIN_SECRET: myadminsecretkey
+      HASURA_GRAPHQL_JWT_SECRET: '{"type":"HS256", "key": "your-jwt-secret-key"}'
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    networks:
+      - meeting-app-network
+
+  # 后端服务
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: meeting-app-backend
+    environment:
+      NODE_ENV: production
+      PORT: 8888
+      HASURA_GRAPHQL_ENDPOINT: http://hasura:8080/v1/graphql
+      HASURA_GRAPHQL_ADMIN_SECRET: myadminsecretkey
+      JWT_SECRET: your-jwt-secret-key
+      EMAIL_HOST: smtp.gmail.com
+      EMAIL_PORT: 587
+      EMAIL_USER: your-email@gmail.com
+      EMAIL_PASS: your-app-password
+    ports:
+      - "8888:8888"
+    depends_on:
+      - hasura
+    networks:
+      - meeting-app-network
+    volumes:
+      - backend_uploads:/app/uploads
+
+  # 前端服务
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: meeting-app-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - meeting-app-network
+
+  # Nginx反向代理
+  nginx:
+    image: nginx:alpine
+    container_name: meeting-app-nginx
+    ports:
+      - "3000:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - meeting-app-network
+
+volumes:
+  postgres_data:
+  backend_uploads:
+
+networks:
+  meeting-app-network:
+    driver: bridge
