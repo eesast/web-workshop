@@ -1,15 +1,21 @@
--- PostgreSQL
-create table if not exists public.room (
-  uuid uuid default gen_random_uuid() not null,
-  name text not null unique,
-  intro text not null,
-  invite_code text not null unique,
-  created_at timestamp default current_timestamp not null,
-  primary key (uuid)
+-- 创建房间表
+CREATE TABLE IF NOT EXISTS public.room (
+  uuid UUID DEFAULT gen_random_uuid() NOT NULL,
+  name TEXT NOT NULL,
+  description TEXT,
+  creator UUID NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW(),
+  PRIMARY KEY (uuid),
+  FOREIGN KEY (creator) REFERENCES public.user(uuid) ON DELETE CASCADE
 );
 
-insert into public.room (uuid, name, intro, invite_code) values
-('00000000-0000-0000-0000-100000000001', '公共聊天室', '欢迎加入公共聊天室', 'gD9jE4'),
-('00000000-0000-0000-0000-100000000002', '聊天室1', '这是一个聊天室', 'oC3kY5'),
-('00000000-0000-0000-0000-100000000003', '聊天室2', '这是一个聊天室', 'uE8aY9'),
-('00000000-0000-0000-0000-100000000004', '聊天室3', '这是一个聊天室', 'aF2jR6');
+-- 创建索引
+CREATE INDEX IF NOT EXISTS idx_room_creator ON public.room(creator);
+CREATE INDEX IF NOT EXISTS idx_room_created_at ON public.room(created_at);
+
+-- 插入测试数据
+INSERT INTO public.room (uuid, name, description, creator) VALUES
+('10000000-0000-0000-0000-000000000000', '项目讨论会', '讨论新项目的开发计划', '00000000-0000-0000-0000-000000000000'),
+('10000000-0000-0000-0000-000000000001', '技术分享会', '分享最新的技术趋势', '00000000-0000-0000-0000-000000000001'),
+('10000000-0000-0000-0000-000000000002', '团队建设', '增进团队凝聚力', '00000000-0000-0000-0000-000000000002')
+ON CONFLICT (uuid) DO NOTHING;
