@@ -8,5 +8,17 @@ query getUsersByUsername($username: String!) {
   user(where: {username: {_eq: $username}}) {
     uuid
     password
+    username
+    email
+
+  }
+}
+
+mutation updateUserPassword($uuid: uuid!, $newPassword: String!) {
+  update_user(
+    where: {uuid: {_eq: $uuid}}
+    _set: {password: $newPassword}
+  ) {
+    affected_rows
   }
 }
