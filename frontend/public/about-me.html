@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人简介</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            margin-bottom: 30px;
+            background-color: #4a6fc7;
+            color: white;
+            border-radius: 10px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .intro {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .intro p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .table-section {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        h2 {
+            color: #4a6fc7;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: #f8f9fa;
+            color: #4a6fc7;
+        }
+        
+        tr:hover {
+            background-color: #f5f7fa;
+        }
+        
+        .gallery {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .image-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        
+        .image-container img {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .image-container img:hover {
+            transform: scale(1.03);
+        }
+        
+        .contact {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        button {
+            background: #4a6fc7;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        button:hover {
+            background: #3a5bb7;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .image-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>武昊阳的个人简介</h1>
+        <p>清华大学新雅书院&电子系学生</p>
+    </header>
+    
+    <section class="intro">
+        <h2>自我介绍</h2>
+        <p>我叫武昊阳，来自内蒙古自治区包头市。</p>
+        <p>我热爱的运动是长跑，我喜欢在三千米中突破自我。</p>
+        <p>我最喜欢的歌手是维克多崔，最喜欢的歌曲是《血液型》。</p>
+    </section>
+    
+    <section class="table-section">
+        <h2>技能与经验</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>技能类别</th>
+                    <th>具体技能</th>
+                    <th>熟练程度</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>前端开发</td>
+                    <td>HTML, CSS, JavaScript</td>
+                    <td>啥也不会</td>
+                </tr>
+                <tr>
+                    <td>框架</td>
+                    <td>React, Vue, Angular</td>
+                    <td>啥也不会</td>
+                </tr>
+                <tr>
+                    <td>设计工具</td>
+                    <td>Photoshop, Figma, Sketch</td>
+                    <td>啥也不会</td>
+                </tr>
+                <tr>
+                    <td>后端知识</td>
+                    <td>Node.js, Express, MongoDB</td>
+                    <td>啥也不会</td>
+                </tr>
+                <tr>
+                    <td>吃饭</td>
+                    <td>美团，饿了么，大众点评</td>
+                    <td>精通</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    
+    <section class="gallery">
+        <h2>我亲爱的同学们</h2>
+        <div class="image-container">
+            <img src="friends1.jpg" alt="项目一">
+            <img src="friends2.jpg" alt="项目二">
+            <img src="friends3.jpg" alt="项目三">
+        </div>
+    </section>
+    
+    <section class="contact">
+        <h2>联系我</h2>
+        <form id="contact-form">
+            <div class="form-group">
+                <label for="name">姓名</label>
+                <input type="text" id="name" placeholder="请输入您的姓名" required>
+            </div>
+            <div class="form-group">
+                <label for="email">邮箱</label>
+                <input type="email" id="email" placeholder="请输入您的邮箱" required>
+            </div>
+            <div class="form-group">
+                <label for="message">消息</label>
+                <textarea id="message" placeholder="请输入您想发送的消息" required></textarea>
+            </div>
+            <button type="submit">发送消息</button>
+        </form>
+    </section>
+    
+    <footer>
+        <p>© 2025 武昊阳 - 个人简介页面</p>
+    </footer>
+
+    <script>
+        // 表单提交功能
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // 获取表单值
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            // 在实际应用中，这里会发送数据到服务器
+            // 这里我们只做一个简单的提示
+            alert(`感谢您的消息，${name}！我们会尽快回复您。`);
+            
+            // 重置表单
+            this.reset();
+        });
+    </script>
+</body>
+</html>
