@@ -28,3 +28,18 @@ mutation joinRoom($user_uuid: uuid!, $room_uuid: uuid!) {
     room_uuid
   }
 }
+
+mutation quitRoom($user_uuid: uuid!, $room_uuid: uuid!) {
+  delete_user_room_one(
+    where: {
+      user_uuid: {_eq: $user_uuid},
+      room_uuid: {_eq: $room_uuid}
+    }
+  ) {
+    affected_rows
+    returning {
+      user_uuid
+      room_uuid
+    }
+  }
+}

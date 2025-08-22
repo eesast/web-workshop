@@ -42,3 +42,22 @@ insert into public.message (user_uuid, room_uuid, content) values
 ('00000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-100000000003', '好了，今天就到这里吧');
 
 update public.message set created_at = '2021-01-01 00:00:00' where room_uuid = '00000000-0000-0000-0000-100000000002';
+
+// 在server.js中添加全局错误处理
+app.use((err, req, res, next) => {
+  if (err instanceof ValidationError) {
+    res.status(400).json({
+      errors: [{
+        extensions: { code: 'BAD_USER_INPUT' },
+        message: err.message,
+        path: err.path
+      }]
+    });
+  } else if (err.name === 'AuthenticationError') {
+    res.status(401).json({ errors: [{ message: 'Authentication failed' }] });
+  } else {
+    // 生产环境应记录日志
+    console.error(err);
+    res.status(500).json({ errors: [{ message: 'Internal server error' }] });
+  }
+});
