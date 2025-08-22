@@ -1,0 +1,161 @@
+body{
+        background-image: linear-gradient(to right, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.3)),
+        url("./assets/background.png");
+
+        background-size: cover; 
+        background-repeat: no-repeat; 
+        background-position: center; 
+        background-attachment: fixed; 
+        min-height: 100vh; 
+        margin: 0; 
+}
+#introduction{
+        font-size: 24px;
+        font-weight: bold;
+        color: #3010e8;
+        margin-bottom: 20px;
+}
+#fun{
+        font-size: 24px;
+        font-weight: bold;
+        color: #f118ac;
+        margin-bottom: 20px;
+}
+.language-switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+}
+
+.language-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+}
+
+.slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+}
+
+.slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+}
+
+input:checked + .slider {
+        background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+}
+
+.slider.round {
+        border-radius: 34px;
+}
+
+.slider.round:before {
+        border-radius: 50%;
+}
+
+.photo-hobby-container {
+        display: flex;
+        align-items: start; 
+        gap: 20px; 
+}
+
+.photo-container {
+        flex-shrink: 0; 
+}
+
+.hobby-container {
+        flex-grow: 1; 
+}
+h1 {
+        font-size: 28px; 
+}
+
+h2 {
+        font-size: 24px; 
+}
+
+p {
+        font-size: 20px; 
+}
+
+li {
+        font-size: 20px; 
+}
+
+.song-item img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+}
+
+.song-item-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.song-cover {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+
+.song-rank {
+  width: 24px;
+  text-align: right;
+  color: #666;
+}
+
+.song-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.song-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+}
+
+.song-singer {
+  font-size: 12px;
+  color: #666;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.play-button {
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
