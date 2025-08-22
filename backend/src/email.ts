@@ -3,7 +3,7 @@ import nodemailer from "nodemailer";
 
 const router = express.Router();
 
-const sendEmail = async (to: string, subject: string, text: string) => {
+export const sendEmail = async (to: string, subject: string, text: string) => {
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST!,
     port: Number(process.env.EMAIL_PORT!),
