@@ -1,0 +1,29 @@
+mutation addUser($username: String!, $password: String!) {
+  insert_user_one(object: {username: $username, password: $password}) {
+    uuid
+  }
+}
+
+query getUsersByUsername($username: String!) {
+  user(where: {username: {_eq: $username}}) {
+    uuid
+    password
+  }
+}
+
+mutation deleteUser($identifier: String!, $by: String!) {
+  delete_user(
+    where: {
+      _or: [
+        {username: {_eq: $identifier}},
+        {uuid: {_eq: $identifier}}
+      ]
+    },
+    _if: { _eq: [{_type: $by}] }
+  ) {
+    affected_rows
+    returning {
+      uuid
+    }
+  }
+}

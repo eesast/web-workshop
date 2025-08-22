@@ -1,0 +1,9 @@
+pull_request_rules:
+  - name: 🏷️ Label homework
+    description: Label a homework with 'homework' label by detecting keyword
+    conditions:
+      - body~=作业提交
+    actions:
+      label:
+        add:
+          - homework

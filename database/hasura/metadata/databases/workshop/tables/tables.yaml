@@ -1,0 +1,4 @@
+- "!include public_message.yaml"
+- "!include public_room.yaml"
+- "!include public_user.yaml"
+- "!include public_user_room.yaml"
