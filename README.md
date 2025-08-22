@@ -131,3 +131,43 @@ git clone <先前复制的仓库URI>
    ```bash
    git push --all
    ```
+
+### 作业提交
+每一讲的作业提交采用如下流程：
+- 本地修改对应分支
+- 提交修改到对应分支
+- 向本仓库对应分支提交PR
+- 关联PR到对应Issue
+- 查看作业批改结果
+##### 本地修改对应分支
+fork本仓库所有分支后，根据[Issue](https://github.com/eesast/web-workshop/issues)对应讲作业要求，在本地切换到对应分支进行修改
+```
+git checkout "01-HTML&CSS"
+```
+##### 提交修改到对应分支
+完成修改后，将改动提交到本地并推送到云端 Fork 仓库
+```
+git push origin "01-HTML&CSS"
+```
+##### 向本仓库对应分支提交PR
+打开在 GitHub 上 Fork 的仓库页面后，切换到刚刚推送的 对应分支（如 lesson1）
+
+点击 "Compare & pull request" 按钮，并在 PR 创建页面填写相关信息
+##### 关联PR到对应Issue
+在PR模板填写界面，需手动关联PR到对应Issue
+
+你可以在PR正文中手动关联对应Issue，方法是添加#ISSUE-NUMBER到正文后。例如，需要链接的Issue对应的id是4，则添加一行#4
+
+你也可以在PR编辑界面点击右上方的'Reference'，选择需要链接的PR，最终效果与上述方法相同
+<img width="837" height="369" alt="image" src="https://github.com/user-attachments/assets/1b7ac4eb-ae95-426e-b17c-cc0f1ce1e66d" />
+
+[示例PR](https://github.com/eesast/web-workshop/pull/12)
+
+关联完成后，提交PR，则作业提交完毕
+##### 查看作业批改结果
+作业由讲师批改后，对应 PR 会被打上标签：
+- accepted ✅：作业通过，PR 会被关闭。
+- require revision 🔄：需要修改，PR 保持 open 状态。
+
+
+若需修改，按 PR 下方的评论提示进行更改，然后重复 步骤 2 → 步骤 3 提交更新。

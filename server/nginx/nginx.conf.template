@@ -1,0 +1,27 @@
+events {
+  worker_connections 1024;
+}
+
+http {
+  server {
+    listen 443 ssl; # listen to IPv4, with SSL
+    listen [::]:443 ssl; # listen to IPv6, with SSL
+
+    server_name <your-domain>; # domain name
+
+    ssl_certificate /etc/letsencrypt/live/<your-domain>/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/<your-domain>/privkey.pem;
+
+    location / {
+      proxy_pass http://<ip-address>:20248; # proxy to backend server
+      client_max_body_size 100M; # allow large file upload
+    }
+
+    location /v1/graphql {
+      proxy_pass http://<ip-address>:20247; # proxy to hasura graphql endpoint
+      # Important: Do not add / to the end of URL, ref: https://blog.csdn.net/q1298252589/article/details/120729989
+      proxy_set_header Upgrade $http_upgrade; # enable websocket
+      proxy_set_header Connection "upgrade"; # enable websocket
+    }
+  }
+}
