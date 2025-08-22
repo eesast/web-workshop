@@ -10,3 +10,20 @@ query getUsersByUsername($username: String!) {
     password
   }
 }
+
+mutation deleteUser($identifier: String!, $by: String!) {
+  delete_user(
+    where: {
+      _or: [
+        {username: {_eq: $identifier}},
+        {uuid: {_eq: $identifier}}
+      ]
+    },
+    _if: { _eq: [{_type: $by}] }
+  ) {
+    affected_rows
+    returning {
+      uuid
+    }
+  }
+}
