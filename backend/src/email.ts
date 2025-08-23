@@ -3,7 +3,8 @@ import nodemailer from "nodemailer";
 
 const router = express.Router();
 
-const sendEmail = async (to: string, subject: string, text: string) => {
+// 增加 export 使得 sendEmail 函数可以被其他脚本调用
+export const sendEmail = async (to: string, subject: string, text: string) => {
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST!,
     port: Number(process.env.EMAIL_PORT!),
@@ -29,7 +30,7 @@ router.post("/contact-us", async (req, res) => {
   }
   try {
     const result = await sendEmail(
-      process.env.EMAIL_ADDRESS!,
+      `${email}`,
       "Web Workshop Contact Us Form",
       `Message from ${name} <${email}>:\n\n${message}`,
     );
