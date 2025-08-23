@@ -123,7 +123,7 @@ router.post("/change-password/request", async (req, res) => {
         `${username}`,
         "Password reset token for you",
         `Hello, ${username}! Your reset token is as follows:\n\n${resetToken}` +
-        "\n\nPlease POST /user/change-password/action for password reset, with request body {token: string, newPassword: string}" +
+        "\n\nPlease POST /user/change-password/action for password reset, with request body {token: string, newPassword: string}. " +
         "The length of newPassword must be greater than 8." +
         "\n\nNote that the token will expire in 1 hour!",
       );
