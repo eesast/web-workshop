@@ -16,6 +16,7 @@ export type Scalars = {
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
   timestamp: { input: any; output: any; }
+  timestamptz: { input: any; output: any; }
   uuid: { input: any; output: any; }
 };
 
@@ -65,6 +66,218 @@ export type String_Comparison_Exp = {
   _similar?: InputMaybe<Scalars['String']['input']>;
 };
 
+<<<<<<< HEAD
+=======
+/** Table for the test. */
+export type Test_Table = {
+  __typename?: 'Test_table';
+  created_at: Scalars['timestamptz']['output'];
+  student_id: Scalars['Int']['output'];
+  student_name: Scalars['String']['output'];
+};
+
+/** aggregated selection of "Test_table" */
+export type Test_Table_Aggregate = {
+  __typename?: 'Test_table_aggregate';
+  aggregate?: Maybe<Test_Table_Aggregate_Fields>;
+  nodes: Array<Test_Table>;
+};
+
+/** aggregate fields of "Test_table" */
+export type Test_Table_Aggregate_Fields = {
+  __typename?: 'Test_table_aggregate_fields';
+  avg?: Maybe<Test_Table_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Test_Table_Max_Fields>;
+  min?: Maybe<Test_Table_Min_Fields>;
+  stddev?: Maybe<Test_Table_Stddev_Fields>;
+  stddev_pop?: Maybe<Test_Table_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Test_Table_Stddev_Samp_Fields>;
+  sum?: Maybe<Test_Table_Sum_Fields>;
+  var_pop?: Maybe<Test_Table_Var_Pop_Fields>;
+  var_samp?: Maybe<Test_Table_Var_Samp_Fields>;
+  variance?: Maybe<Test_Table_Variance_Fields>;
+};
+
+
+/** aggregate fields of "Test_table" */
+export type Test_Table_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Test_Table_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Test_Table_Avg_Fields = {
+  __typename?: 'Test_table_avg_fields';
+  student_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "Test_table". All fields are combined with a logical 'AND'. */
+export type Test_Table_Bool_Exp = {
+  _and?: InputMaybe<Array<Test_Table_Bool_Exp>>;
+  _not?: InputMaybe<Test_Table_Bool_Exp>;
+  _or?: InputMaybe<Array<Test_Table_Bool_Exp>>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  student_id?: InputMaybe<Int_Comparison_Exp>;
+  student_name?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "Test_table" */
+export enum Test_Table_Constraint {
+  /** unique or primary key constraint on columns "student_id" */
+  TestTablePkey = 'Test_table_pkey'
+}
+
+/** input type for incrementing numeric columns in table "Test_table" */
+export type Test_Table_Inc_Input = {
+  student_id?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** input type for inserting data into table "Test_table" */
+export type Test_Table_Insert_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  student_id?: InputMaybe<Scalars['Int']['input']>;
+  student_name?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate max on columns */
+export type Test_Table_Max_Fields = {
+  __typename?: 'Test_table_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  student_id?: Maybe<Scalars['Int']['output']>;
+  student_name?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregate min on columns */
+export type Test_Table_Min_Fields = {
+  __typename?: 'Test_table_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  student_id?: Maybe<Scalars['Int']['output']>;
+  student_name?: Maybe<Scalars['String']['output']>;
+};
+
+/** response of any mutation on the table "Test_table" */
+export type Test_Table_Mutation_Response = {
+  __typename?: 'Test_table_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Test_Table>;
+};
+
+/** on_conflict condition type for table "Test_table" */
+export type Test_Table_On_Conflict = {
+  constraint: Test_Table_Constraint;
+  update_columns?: Array<Test_Table_Update_Column>;
+  where?: InputMaybe<Test_Table_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "Test_table". */
+export type Test_Table_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  student_id?: InputMaybe<Order_By>;
+  student_name?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: Test_table */
+export type Test_Table_Pk_Columns_Input = {
+  student_id: Scalars['Int']['input'];
+};
+
+/** select columns of table "Test_table" */
+export enum Test_Table_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  StudentId = 'student_id',
+  /** column name */
+  StudentName = 'student_name'
+}
+
+/** input type for updating data in table "Test_table" */
+export type Test_Table_Set_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  student_id?: InputMaybe<Scalars['Int']['input']>;
+  student_name?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate stddev on columns */
+export type Test_Table_Stddev_Fields = {
+  __typename?: 'Test_table_stddev_fields';
+  student_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Test_Table_Stddev_Pop_Fields = {
+  __typename?: 'Test_table_stddev_pop_fields';
+  student_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Test_Table_Stddev_Samp_Fields = {
+  __typename?: 'Test_table_stddev_samp_fields';
+  student_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "Test_table" */
+export type Test_Table_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Test_Table_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Test_Table_Stream_Cursor_Value_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  student_id?: InputMaybe<Scalars['Int']['input']>;
+  student_name?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Test_Table_Sum_Fields = {
+  __typename?: 'Test_table_sum_fields';
+  student_id?: Maybe<Scalars['Int']['output']>;
+};
+
+/** update columns of table "Test_table" */
+export enum Test_Table_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  StudentId = 'student_id',
+  /** column name */
+  StudentName = 'student_name'
+}
+
+export type Test_Table_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Test_Table_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Test_Table_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Test_Table_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Test_Table_Var_Pop_Fields = {
+  __typename?: 'Test_table_var_pop_fields';
+  student_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Test_Table_Var_Samp_Fields = {
+  __typename?: 'Test_table_var_samp_fields';
+  student_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Test_Table_Variance_Fields = {
+  __typename?: 'Test_table_variance_fields';
+  student_id?: Maybe<Scalars['Float']['output']>;
+};
+
+>>>>>>> 04-Backend
 /** ordering argument of a cursor */
 export enum Cursor_Ordering {
   /** ascending ordering of the cursor */
@@ -79,6 +292,16 @@ export type Message = {
   content: Scalars['String']['output'];
   created_at: Scalars['timestamp']['output'];
   /** An object relationship */
+<<<<<<< HEAD
+=======
+  replied_to_message?: Maybe<Message>;
+  replied_to_uuid?: Maybe<Scalars['uuid']['output']>;
+  /** An array relationship */
+  replies: Array<Message>;
+  /** An aggregate relationship */
+  replies_aggregate: Message_Aggregate;
+  /** An object relationship */
+>>>>>>> 04-Backend
   room: Room;
   room_uuid: Scalars['uuid']['output'];
   /** An object relationship */
@@ -87,6 +310,306 @@ export type Message = {
   uuid: Scalars['uuid']['output'];
 };
 
+<<<<<<< HEAD
+=======
+
+/** columns and relationships of "message" */
+export type MessageRepliesArgs = {
+  distinct_on?: InputMaybe<Array<Message_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Message_Order_By>>;
+  where?: InputMaybe<Message_Bool_Exp>;
+};
+
+
+/** columns and relationships of "message" */
+export type MessageReplies_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Message_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Message_Order_By>>;
+  where?: InputMaybe<Message_Bool_Exp>;
+};
+
+/** columns and relationships of "message2" */
+export type Message2 = {
+  __typename?: 'message2';
+  content: Scalars['String']['output'];
+  created_at: Scalars['timestamp']['output'];
+  /** An object relationship */
+  message2?: Maybe<Message2>;
+  /** An array relationship */
+  message2s: Array<Message2>;
+  /** An aggregate relationship */
+  message2s_aggregate: Message2_Aggregate;
+  replied_to_uuid?: Maybe<Scalars['uuid']['output']>;
+  /** An object relationship */
+  room: Room;
+  room_uuid: Scalars['uuid']['output'];
+  /** An object relationship */
+  user: User;
+  user_uuid: Scalars['uuid']['output'];
+  uuid: Scalars['uuid']['output'];
+};
+
+
+/** columns and relationships of "message2" */
+export type Message2Message2sArgs = {
+  distinct_on?: InputMaybe<Array<Message2_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Message2_Order_By>>;
+  where?: InputMaybe<Message2_Bool_Exp>;
+};
+
+
+/** columns and relationships of "message2" */
+export type Message2Message2s_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Message2_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Message2_Order_By>>;
+  where?: InputMaybe<Message2_Bool_Exp>;
+};
+
+/** aggregated selection of "message2" */
+export type Message2_Aggregate = {
+  __typename?: 'message2_aggregate';
+  aggregate?: Maybe<Message2_Aggregate_Fields>;
+  nodes: Array<Message2>;
+};
+
+export type Message2_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Message2_Aggregate_Bool_Exp_Count>;
+};
+
+export type Message2_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Message2_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Message2_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "message2" */
+export type Message2_Aggregate_Fields = {
+  __typename?: 'message2_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Message2_Max_Fields>;
+  min?: Maybe<Message2_Min_Fields>;
+};
+
+
+/** aggregate fields of "message2" */
+export type Message2_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Message2_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "message2" */
+export type Message2_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Message2_Max_Order_By>;
+  min?: InputMaybe<Message2_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "message2" */
+export type Message2_Arr_Rel_Insert_Input = {
+  data: Array<Message2_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Message2_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "message2". All fields are combined with a logical 'AND'. */
+export type Message2_Bool_Exp = {
+  _and?: InputMaybe<Array<Message2_Bool_Exp>>;
+  _not?: InputMaybe<Message2_Bool_Exp>;
+  _or?: InputMaybe<Array<Message2_Bool_Exp>>;
+  content?: InputMaybe<String_Comparison_Exp>;
+  created_at?: InputMaybe<Timestamp_Comparison_Exp>;
+  message2?: InputMaybe<Message2_Bool_Exp>;
+  message2s?: InputMaybe<Message2_Bool_Exp>;
+  message2s_aggregate?: InputMaybe<Message2_Aggregate_Bool_Exp>;
+  replied_to_uuid?: InputMaybe<Uuid_Comparison_Exp>;
+  room?: InputMaybe<Room_Bool_Exp>;
+  room_uuid?: InputMaybe<Uuid_Comparison_Exp>;
+  user?: InputMaybe<User_Bool_Exp>;
+  user_uuid?: InputMaybe<Uuid_Comparison_Exp>;
+  uuid?: InputMaybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "message2" */
+export enum Message2_Constraint {
+  /** unique or primary key constraint on columns "uuid" */
+  Message2Pkey = 'message2_pkey'
+}
+
+/** input type for inserting data into table "message2" */
+export type Message2_Insert_Input = {
+  content?: InputMaybe<Scalars['String']['input']>;
+  created_at?: InputMaybe<Scalars['timestamp']['input']>;
+  message2?: InputMaybe<Message2_Obj_Rel_Insert_Input>;
+  message2s?: InputMaybe<Message2_Arr_Rel_Insert_Input>;
+  replied_to_uuid?: InputMaybe<Scalars['uuid']['input']>;
+  room?: InputMaybe<Room_Obj_Rel_Insert_Input>;
+  room_uuid?: InputMaybe<Scalars['uuid']['input']>;
+  user?: InputMaybe<User_Obj_Rel_Insert_Input>;
+  user_uuid?: InputMaybe<Scalars['uuid']['input']>;
+  uuid?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** aggregate max on columns */
+export type Message2_Max_Fields = {
+  __typename?: 'message2_max_fields';
+  content?: Maybe<Scalars['String']['output']>;
+  created_at?: Maybe<Scalars['timestamp']['output']>;
+  replied_to_uuid?: Maybe<Scalars['uuid']['output']>;
+  room_uuid?: Maybe<Scalars['uuid']['output']>;
+  user_uuid?: Maybe<Scalars['uuid']['output']>;
+  uuid?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** order by max() on columns of table "message2" */
+export type Message2_Max_Order_By = {
+  content?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  replied_to_uuid?: InputMaybe<Order_By>;
+  room_uuid?: InputMaybe<Order_By>;
+  user_uuid?: InputMaybe<Order_By>;
+  uuid?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Message2_Min_Fields = {
+  __typename?: 'message2_min_fields';
+  content?: Maybe<Scalars['String']['output']>;
+  created_at?: Maybe<Scalars['timestamp']['output']>;
+  replied_to_uuid?: Maybe<Scalars['uuid']['output']>;
+  room_uuid?: Maybe<Scalars['uuid']['output']>;
+  user_uuid?: Maybe<Scalars['uuid']['output']>;
+  uuid?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** order by min() on columns of table "message2" */
+export type Message2_Min_Order_By = {
+  content?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  replied_to_uuid?: InputMaybe<Order_By>;
+  room_uuid?: InputMaybe<Order_By>;
+  user_uuid?: InputMaybe<Order_By>;
+  uuid?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "message2" */
+export type Message2_Mutation_Response = {
+  __typename?: 'message2_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Message2>;
+};
+
+/** input type for inserting object relation for remote table "message2" */
+export type Message2_Obj_Rel_Insert_Input = {
+  data: Message2_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Message2_On_Conflict>;
+};
+
+/** on_conflict condition type for table "message2" */
+export type Message2_On_Conflict = {
+  constraint: Message2_Constraint;
+  update_columns?: Array<Message2_Update_Column>;
+  where?: InputMaybe<Message2_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "message2". */
+export type Message2_Order_By = {
+  content?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  message2?: InputMaybe<Message2_Order_By>;
+  message2s_aggregate?: InputMaybe<Message2_Aggregate_Order_By>;
+  replied_to_uuid?: InputMaybe<Order_By>;
+  room?: InputMaybe<Room_Order_By>;
+  room_uuid?: InputMaybe<Order_By>;
+  user?: InputMaybe<User_Order_By>;
+  user_uuid?: InputMaybe<Order_By>;
+  uuid?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: message2 */
+export type Message2_Pk_Columns_Input = {
+  uuid: Scalars['uuid']['input'];
+};
+
+/** select columns of table "message2" */
+export enum Message2_Select_Column {
+  /** column name */
+  Content = 'content',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  RepliedToUuid = 'replied_to_uuid',
+  /** column name */
+  RoomUuid = 'room_uuid',
+  /** column name */
+  UserUuid = 'user_uuid',
+  /** column name */
+  Uuid = 'uuid'
+}
+
+/** input type for updating data in table "message2" */
+export type Message2_Set_Input = {
+  content?: InputMaybe<Scalars['String']['input']>;
+  created_at?: InputMaybe<Scalars['timestamp']['input']>;
+  replied_to_uuid?: InputMaybe<Scalars['uuid']['input']>;
+  room_uuid?: InputMaybe<Scalars['uuid']['input']>;
+  user_uuid?: InputMaybe<Scalars['uuid']['input']>;
+  uuid?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** Streaming cursor of the table "message2" */
+export type Message2_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Message2_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Message2_Stream_Cursor_Value_Input = {
+  content?: InputMaybe<Scalars['String']['input']>;
+  created_at?: InputMaybe<Scalars['timestamp']['input']>;
+  replied_to_uuid?: InputMaybe<Scalars['uuid']['input']>;
+  room_uuid?: InputMaybe<Scalars['uuid']['input']>;
+  user_uuid?: InputMaybe<Scalars['uuid']['input']>;
+  uuid?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** update columns of table "message2" */
+export enum Message2_Update_Column {
+  /** column name */
+  Content = 'content',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  RepliedToUuid = 'replied_to_uuid',
+  /** column name */
+  RoomUuid = 'room_uuid',
+  /** column name */
+  UserUuid = 'user_uuid',
+  /** column name */
+  Uuid = 'uuid'
+}
+
+export type Message2_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Message2_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Message2_Bool_Exp;
+};
+
+>>>>>>> 04-Backend
 /** aggregated selection of "message" */
 export type Message_Aggregate = {
   __typename?: 'message_aggregate';
@@ -141,6 +664,13 @@ export type Message_Bool_Exp = {
   _or?: InputMaybe<Array<Message_Bool_Exp>>;
   content?: InputMaybe<String_Comparison_Exp>;
   created_at?: InputMaybe<Timestamp_Comparison_Exp>;
+<<<<<<< HEAD
+=======
+  replied_to_message?: InputMaybe<Message_Bool_Exp>;
+  replied_to_uuid?: InputMaybe<Uuid_Comparison_Exp>;
+  replies?: InputMaybe<Message_Bool_Exp>;
+  replies_aggregate?: InputMaybe<Message_Aggregate_Bool_Exp>;
+>>>>>>> 04-Backend
   room?: InputMaybe<Room_Bool_Exp>;
   room_uuid?: InputMaybe<Uuid_Comparison_Exp>;
   user?: InputMaybe<User_Bool_Exp>;
@@ -158,6 +688,12 @@ export enum Message_Constraint {
 export type Message_Insert_Input = {
   content?: InputMaybe<Scalars['String']['input']>;
   created_at?: InputMaybe<Scalars['timestamp']['input']>;
+<<<<<<< HEAD
+=======
+  replied_to_message?: InputMaybe<Message_Obj_Rel_Insert_Input>;
+  replied_to_uuid?: InputMaybe<Scalars['uuid']['input']>;
+  replies?: InputMaybe<Message_Arr_Rel_Insert_Input>;
+>>>>>>> 04-Backend
   room?: InputMaybe<Room_Obj_Rel_Insert_Input>;
   room_uuid?: InputMaybe<Scalars['uuid']['input']>;
   user?: InputMaybe<User_Obj_Rel_Insert_Input>;
@@ -170,6 +706,10 @@ export type Message_Max_Fields = {
   __typename?: 'message_max_fields';
   content?: Maybe<Scalars['String']['output']>;
   created_at?: Maybe<Scalars['timestamp']['output']>;
+<<<<<<< HEAD
+=======
+  replied_to_uuid?: Maybe<Scalars['uuid']['output']>;
+>>>>>>> 04-Backend
   room_uuid?: Maybe<Scalars['uuid']['output']>;
   user_uuid?: Maybe<Scalars['uuid']['output']>;
   uuid?: Maybe<Scalars['uuid']['output']>;
@@ -179,6 +719,10 @@ export type Message_Max_Fields = {
 export type Message_Max_Order_By = {
   content?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
+<<<<<<< HEAD
+=======
+  replied_to_uuid?: InputMaybe<Order_By>;
+>>>>>>> 04-Backend
   room_uuid?: InputMaybe<Order_By>;
   user_uuid?: InputMaybe<Order_By>;
   uuid?: InputMaybe<Order_By>;
@@ -189,6 +733,10 @@ export type Message_Min_Fields = {
   __typename?: 'message_min_fields';
   content?: Maybe<Scalars['String']['output']>;
   created_at?: Maybe<Scalars['timestamp']['output']>;
+<<<<<<< HEAD
+=======
+  replied_to_uuid?: Maybe<Scalars['uuid']['output']>;
+>>>>>>> 04-Backend
   room_uuid?: Maybe<Scalars['uuid']['output']>;
   user_uuid?: Maybe<Scalars['uuid']['output']>;
   uuid?: Maybe<Scalars['uuid']['output']>;
@@ -198,6 +746,10 @@ export type Message_Min_Fields = {
 export type Message_Min_Order_By = {
   content?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
+<<<<<<< HEAD
+=======
+  replied_to_uuid?: InputMaybe<Order_By>;
+>>>>>>> 04-Backend
   room_uuid?: InputMaybe<Order_By>;
   user_uuid?: InputMaybe<Order_By>;
   uuid?: InputMaybe<Order_By>;
@@ -212,6 +764,16 @@ export type Message_Mutation_Response = {
   returning: Array<Message>;
 };
 
+<<<<<<< HEAD
+=======
+/** input type for inserting object relation for remote table "message" */
+export type Message_Obj_Rel_Insert_Input = {
+  data: Message_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Message_On_Conflict>;
+};
+
+>>>>>>> 04-Backend
 /** on_conflict condition type for table "message" */
 export type Message_On_Conflict = {
   constraint: Message_Constraint;
@@ -223,6 +785,12 @@ export type Message_On_Conflict = {
 export type Message_Order_By = {
   content?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
+<<<<<<< HEAD
+=======
+  replied_to_message?: InputMaybe<Message_Order_By>;
+  replied_to_uuid?: InputMaybe<Order_By>;
+  replies_aggregate?: InputMaybe<Message_Aggregate_Order_By>;
+>>>>>>> 04-Backend
   room?: InputMaybe<Room_Order_By>;
   room_uuid?: InputMaybe<Order_By>;
   user?: InputMaybe<User_Order_By>;
@@ -242,6 +810,11 @@ export enum Message_Select_Column {
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
+<<<<<<< HEAD
+=======
+  RepliedToUuid = 'replied_to_uuid',
+  /** column name */
+>>>>>>> 04-Backend
   RoomUuid = 'room_uuid',
   /** column name */
   UserUuid = 'user_uuid',
@@ -253,6 +826,10 @@ export enum Message_Select_Column {
 export type Message_Set_Input = {
   content?: InputMaybe<Scalars['String']['input']>;
   created_at?: InputMaybe<Scalars['timestamp']['input']>;
+<<<<<<< HEAD
+=======
+  replied_to_uuid?: InputMaybe<Scalars['uuid']['input']>;
+>>>>>>> 04-Backend
   room_uuid?: InputMaybe<Scalars['uuid']['input']>;
   user_uuid?: InputMaybe<Scalars['uuid']['input']>;
   uuid?: InputMaybe<Scalars['uuid']['input']>;
@@ -270,6 +847,10 @@ export type Message_Stream_Cursor_Input = {
 export type Message_Stream_Cursor_Value_Input = {
   content?: InputMaybe<Scalars['String']['input']>;
   created_at?: InputMaybe<Scalars['timestamp']['input']>;
+<<<<<<< HEAD
+=======
+  replied_to_uuid?: InputMaybe<Scalars['uuid']['input']>;
+>>>>>>> 04-Backend
   room_uuid?: InputMaybe<Scalars['uuid']['input']>;
   user_uuid?: InputMaybe<Scalars['uuid']['input']>;
   uuid?: InputMaybe<Scalars['uuid']['input']>;
@@ -282,6 +863,11 @@ export enum Message_Update_Column {
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
+<<<<<<< HEAD
+=======
+  RepliedToUuid = 'replied_to_uuid',
+  /** column name */
+>>>>>>> 04-Backend
   RoomUuid = 'room_uuid',
   /** column name */
   UserUuid = 'user_uuid',
@@ -299,8 +885,21 @@ export type Message_Updates = {
 /** mutation root */
 export type Mutation_Root = {
   __typename?: 'mutation_root';
+<<<<<<< HEAD
   /** delete data from the table: "message" */
   delete_message?: Maybe<Message_Mutation_Response>;
+=======
+  /** delete data from the table: "Test_table" */
+  delete_Test_table?: Maybe<Test_Table_Mutation_Response>;
+  /** delete single row from the table: "Test_table" */
+  delete_Test_table_by_pk?: Maybe<Test_Table>;
+  /** delete data from the table: "message" */
+  delete_message?: Maybe<Message_Mutation_Response>;
+  /** delete data from the table: "message2" */
+  delete_message2?: Maybe<Message2_Mutation_Response>;
+  /** delete single row from the table: "message2" */
+  delete_message2_by_pk?: Maybe<Message2>;
+>>>>>>> 04-Backend
   /** delete single row from the table: "message" */
   delete_message_by_pk?: Maybe<Message>;
   /** delete data from the table: "room" */
@@ -315,8 +914,21 @@ export type Mutation_Root = {
   delete_user_room?: Maybe<User_Room_Mutation_Response>;
   /** delete single row from the table: "user_room" */
   delete_user_room_by_pk?: Maybe<User_Room>;
+<<<<<<< HEAD
   /** insert data into the table: "message" */
   insert_message?: Maybe<Message_Mutation_Response>;
+=======
+  /** insert data into the table: "Test_table" */
+  insert_Test_table?: Maybe<Test_Table_Mutation_Response>;
+  /** insert a single row into the table: "Test_table" */
+  insert_Test_table_one?: Maybe<Test_Table>;
+  /** insert data into the table: "message" */
+  insert_message?: Maybe<Message_Mutation_Response>;
+  /** insert data into the table: "message2" */
+  insert_message2?: Maybe<Message2_Mutation_Response>;
+  /** insert a single row into the table: "message2" */
+  insert_message2_one?: Maybe<Message2>;
+>>>>>>> 04-Backend
   /** insert a single row into the table: "message" */
   insert_message_one?: Maybe<Message>;
   /** insert data into the table: "room" */
@@ -331,8 +943,25 @@ export type Mutation_Root = {
   insert_user_room?: Maybe<User_Room_Mutation_Response>;
   /** insert a single row into the table: "user_room" */
   insert_user_room_one?: Maybe<User_Room>;
+<<<<<<< HEAD
   /** update data of the table: "message" */
   update_message?: Maybe<Message_Mutation_Response>;
+=======
+  /** update data of the table: "Test_table" */
+  update_Test_table?: Maybe<Test_Table_Mutation_Response>;
+  /** update single row of the table: "Test_table" */
+  update_Test_table_by_pk?: Maybe<Test_Table>;
+  /** update multiples rows of table: "Test_table" */
+  update_Test_table_many?: Maybe<Array<Maybe<Test_Table_Mutation_Response>>>;
+  /** update data of the table: "message" */
+  update_message?: Maybe<Message_Mutation_Response>;
+  /** update data of the table: "message2" */
+  update_message2?: Maybe<Message2_Mutation_Response>;
+  /** update single row of the table: "message2" */
+  update_message2_by_pk?: Maybe<Message2>;
+  /** update multiples rows of table: "message2" */
+  update_message2_many?: Maybe<Array<Maybe<Message2_Mutation_Response>>>;
+>>>>>>> 04-Backend
   /** update single row of the table: "message" */
   update_message_by_pk?: Maybe<Message>;
   /** update multiples rows of table: "message" */
@@ -359,12 +988,42 @@ export type Mutation_Root = {
 
 
 /** mutation root */
+<<<<<<< HEAD
+=======
+export type Mutation_RootDelete_Test_TableArgs = {
+  where: Test_Table_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Test_Table_By_PkArgs = {
+  student_id: Scalars['Int']['input'];
+};
+
+
+/** mutation root */
+>>>>>>> 04-Backend
 export type Mutation_RootDelete_MessageArgs = {
   where: Message_Bool_Exp;
 };
 
 
 /** mutation root */
+<<<<<<< HEAD
+=======
+export type Mutation_RootDelete_Message2Args = {
+  where: Message2_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Message2_By_PkArgs = {
+  uuid: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+>>>>>>> 04-Backend
 export type Mutation_RootDelete_Message_By_PkArgs = {
   uuid: Scalars['uuid']['input'];
 };
@@ -408,6 +1067,23 @@ export type Mutation_RootDelete_User_Room_By_PkArgs = {
 
 
 /** mutation root */
+<<<<<<< HEAD
+=======
+export type Mutation_RootInsert_Test_TableArgs = {
+  objects: Array<Test_Table_Insert_Input>;
+  on_conflict?: InputMaybe<Test_Table_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Test_Table_OneArgs = {
+  object: Test_Table_Insert_Input;
+  on_conflict?: InputMaybe<Test_Table_On_Conflict>;
+};
+
+
+/** mutation root */
+>>>>>>> 04-Backend
 export type Mutation_RootInsert_MessageArgs = {
   objects: Array<Message_Insert_Input>;
   on_conflict?: InputMaybe<Message_On_Conflict>;
@@ -415,6 +1091,23 @@ export type Mutation_RootInsert_MessageArgs = {
 
 
 /** mutation root */
+<<<<<<< HEAD
+=======
+export type Mutation_RootInsert_Message2Args = {
+  objects: Array<Message2_Insert_Input>;
+  on_conflict?: InputMaybe<Message2_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Message2_OneArgs = {
+  object: Message2_Insert_Input;
+  on_conflict?: InputMaybe<Message2_On_Conflict>;
+};
+
+
+/** mutation root */
+>>>>>>> 04-Backend
 export type Mutation_RootInsert_Message_OneArgs = {
   object: Message_Insert_Input;
   on_conflict?: InputMaybe<Message_On_Conflict>;
@@ -464,6 +1157,31 @@ export type Mutation_RootInsert_User_Room_OneArgs = {
 
 
 /** mutation root */
+<<<<<<< HEAD
+=======
+export type Mutation_RootUpdate_Test_TableArgs = {
+  _inc?: InputMaybe<Test_Table_Inc_Input>;
+  _set?: InputMaybe<Test_Table_Set_Input>;
+  where: Test_Table_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Test_Table_By_PkArgs = {
+  _inc?: InputMaybe<Test_Table_Inc_Input>;
+  _set?: InputMaybe<Test_Table_Set_Input>;
+  pk_columns: Test_Table_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Test_Table_ManyArgs = {
+  updates: Array<Test_Table_Updates>;
+};
+
+
+/** mutation root */
+>>>>>>> 04-Backend
 export type Mutation_RootUpdate_MessageArgs = {
   _set?: InputMaybe<Message_Set_Input>;
   where: Message_Bool_Exp;
@@ -471,6 +1189,29 @@ export type Mutation_RootUpdate_MessageArgs = {
 
 
 /** mutation root */
+<<<<<<< HEAD
+=======
+export type Mutation_RootUpdate_Message2Args = {
+  _set?: InputMaybe<Message2_Set_Input>;
+  where: Message2_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Message2_By_PkArgs = {
+  _set?: InputMaybe<Message2_Set_Input>;
+  pk_columns: Message2_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Message2_ManyArgs = {
+  updates: Array<Message2_Updates>;
+};
+
+
+/** mutation root */
+>>>>>>> 04-Backend
 export type Mutation_RootUpdate_Message_By_PkArgs = {
   _set?: InputMaybe<Message_Set_Input>;
   pk_columns: Message_Pk_Columns_Input;
@@ -560,8 +1301,25 @@ export enum Order_By {
 
 export type Query_Root = {
   __typename?: 'query_root';
+<<<<<<< HEAD
   /** fetch data from the table: "message" */
   message: Array<Message>;
+=======
+  /** fetch data from the table: "Test_table" */
+  Test_table: Array<Test_Table>;
+  /** fetch aggregated fields from the table: "Test_table" */
+  Test_table_aggregate: Test_Table_Aggregate;
+  /** fetch data from the table: "Test_table" using primary key columns */
+  Test_table_by_pk?: Maybe<Test_Table>;
+  /** fetch data from the table: "message" */
+  message: Array<Message>;
+  /** fetch data from the table: "message2" */
+  message2: Array<Message2>;
+  /** fetch aggregated fields from the table: "message2" */
+  message2_aggregate: Message2_Aggregate;
+  /** fetch data from the table: "message2" using primary key columns */
+  message2_by_pk?: Maybe<Message2>;
+>>>>>>> 04-Backend
   /** fetch aggregated fields from the table: "message" */
   message_aggregate: Message_Aggregate;
   /** fetch data from the table: "message" using primary key columns */
@@ -587,6 +1345,32 @@ export type Query_Root = {
 };
 
 
+<<<<<<< HEAD
+=======
+export type Query_RootTest_TableArgs = {
+  distinct_on?: InputMaybe<Array<Test_Table_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Test_Table_Order_By>>;
+  where?: InputMaybe<Test_Table_Bool_Exp>;
+};
+
+
+export type Query_RootTest_Table_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Test_Table_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Test_Table_Order_By>>;
+  where?: InputMaybe<Test_Table_Bool_Exp>;
+};
+
+
+export type Query_RootTest_Table_By_PkArgs = {
+  student_id: Scalars['Int']['input'];
+};
+
+
+>>>>>>> 04-Backend
 export type Query_RootMessageArgs = {
   distinct_on?: InputMaybe<Array<Message_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -596,6 +1380,32 @@ export type Query_RootMessageArgs = {
 };
 
 
+<<<<<<< HEAD
+=======
+export type Query_RootMessage2Args = {
+  distinct_on?: InputMaybe<Array<Message2_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Message2_Order_By>>;
+  where?: InputMaybe<Message2_Bool_Exp>;
+};
+
+
+export type Query_RootMessage2_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Message2_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Message2_Order_By>>;
+  where?: InputMaybe<Message2_Bool_Exp>;
+};
+
+
+export type Query_RootMessage2_By_PkArgs = {
+  uuid: Scalars['uuid']['input'];
+};
+
+
+>>>>>>> 04-Backend
 export type Query_RootMessage_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Message_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -686,6 +1496,13 @@ export type Room = {
   intro: Scalars['String']['output'];
   invite_code: Scalars['String']['output'];
   /** An array relationship */
+<<<<<<< HEAD
+=======
+  message2s: Array<Message2>;
+  /** An aggregate relationship */
+  message2s_aggregate: Message2_Aggregate;
+  /** An array relationship */
+>>>>>>> 04-Backend
   messages: Array<Message>;
   /** An aggregate relationship */
   messages_aggregate: Message_Aggregate;
@@ -699,6 +1516,29 @@ export type Room = {
 
 
 /** columns and relationships of "room" */
+<<<<<<< HEAD
+=======
+export type RoomMessage2sArgs = {
+  distinct_on?: InputMaybe<Array<Message2_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Message2_Order_By>>;
+  where?: InputMaybe<Message2_Bool_Exp>;
+};
+
+
+/** columns and relationships of "room" */
+export type RoomMessage2s_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Message2_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Message2_Order_By>>;
+  where?: InputMaybe<Message2_Bool_Exp>;
+};
+
+
+/** columns and relationships of "room" */
+>>>>>>> 04-Backend
 export type RoomMessagesArgs = {
   distinct_on?: InputMaybe<Array<Message_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -767,6 +1607,11 @@ export type Room_Bool_Exp = {
   created_at?: InputMaybe<Timestamp_Comparison_Exp>;
   intro?: InputMaybe<String_Comparison_Exp>;
   invite_code?: InputMaybe<String_Comparison_Exp>;
+<<<<<<< HEAD
+=======
+  message2s?: InputMaybe<Message2_Bool_Exp>;
+  message2s_aggregate?: InputMaybe<Message2_Aggregate_Bool_Exp>;
+>>>>>>> 04-Backend
   messages?: InputMaybe<Message_Bool_Exp>;
   messages_aggregate?: InputMaybe<Message_Aggregate_Bool_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
@@ -790,6 +1635,10 @@ export type Room_Insert_Input = {
   created_at?: InputMaybe<Scalars['timestamp']['input']>;
   intro?: InputMaybe<Scalars['String']['input']>;
   invite_code?: InputMaybe<Scalars['String']['input']>;
+<<<<<<< HEAD
+=======
+  message2s?: InputMaybe<Message2_Arr_Rel_Insert_Input>;
+>>>>>>> 04-Backend
   messages?: InputMaybe<Message_Arr_Rel_Insert_Input>;
   name?: InputMaybe<Scalars['String']['input']>;
   user_rooms?: InputMaybe<User_Room_Arr_Rel_Insert_Input>;
@@ -844,6 +1693,10 @@ export type Room_Order_By = {
   created_at?: InputMaybe<Order_By>;
   intro?: InputMaybe<Order_By>;
   invite_code?: InputMaybe<Order_By>;
+<<<<<<< HEAD
+=======
+  message2s_aggregate?: InputMaybe<Message2_Aggregate_Order_By>;
+>>>>>>> 04-Backend
   messages_aggregate?: InputMaybe<Message_Aggregate_Order_By>;
   name?: InputMaybe<Order_By>;
   user_rooms_aggregate?: InputMaybe<User_Room_Aggregate_Order_By>;
@@ -918,8 +1771,29 @@ export type Room_Updates = {
 
 export type Subscription_Root = {
   __typename?: 'subscription_root';
+<<<<<<< HEAD
   /** fetch data from the table: "message" */
   message: Array<Message>;
+=======
+  /** fetch data from the table: "Test_table" */
+  Test_table: Array<Test_Table>;
+  /** fetch aggregated fields from the table: "Test_table" */
+  Test_table_aggregate: Test_Table_Aggregate;
+  /** fetch data from the table: "Test_table" using primary key columns */
+  Test_table_by_pk?: Maybe<Test_Table>;
+  /** fetch data from the table in a streaming manner: "Test_table" */
+  Test_table_stream: Array<Test_Table>;
+  /** fetch data from the table: "message" */
+  message: Array<Message>;
+  /** fetch data from the table: "message2" */
+  message2: Array<Message2>;
+  /** fetch aggregated fields from the table: "message2" */
+  message2_aggregate: Message2_Aggregate;
+  /** fetch data from the table: "message2" using primary key columns */
+  message2_by_pk?: Maybe<Message2>;
+  /** fetch data from the table in a streaming manner: "message2" */
+  message2_stream: Array<Message2>;
+>>>>>>> 04-Backend
   /** fetch aggregated fields from the table: "message" */
   message_aggregate: Message_Aggregate;
   /** fetch data from the table: "message" using primary key columns */
@@ -953,6 +1827,39 @@ export type Subscription_Root = {
 };
 
 
+<<<<<<< HEAD
+=======
+export type Subscription_RootTest_TableArgs = {
+  distinct_on?: InputMaybe<Array<Test_Table_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Test_Table_Order_By>>;
+  where?: InputMaybe<Test_Table_Bool_Exp>;
+};
+
+
+export type Subscription_RootTest_Table_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Test_Table_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Test_Table_Order_By>>;
+  where?: InputMaybe<Test_Table_Bool_Exp>;
+};
+
+
+export type Subscription_RootTest_Table_By_PkArgs = {
+  student_id: Scalars['Int']['input'];
+};
+
+
+export type Subscription_RootTest_Table_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Test_Table_Stream_Cursor_Input>>;
+  where?: InputMaybe<Test_Table_Bool_Exp>;
+};
+
+
+>>>>>>> 04-Backend
 export type Subscription_RootMessageArgs = {
   distinct_on?: InputMaybe<Array<Message_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -962,6 +1869,39 @@ export type Subscription_RootMessageArgs = {
 };
 
 
+<<<<<<< HEAD
+=======
+export type Subscription_RootMessage2Args = {
+  distinct_on?: InputMaybe<Array<Message2_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Message2_Order_By>>;
+  where?: InputMaybe<Message2_Bool_Exp>;
+};
+
+
+export type Subscription_RootMessage2_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Message2_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Message2_Order_By>>;
+  where?: InputMaybe<Message2_Bool_Exp>;
+};
+
+
+export type Subscription_RootMessage2_By_PkArgs = {
+  uuid: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootMessage2_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Message2_Stream_Cursor_Input>>;
+  where?: InputMaybe<Message2_Bool_Exp>;
+};
+
+
+>>>>>>> 04-Backend
 export type Subscription_RootMessage_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Message_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -1086,10 +2026,33 @@ export type Timestamp_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['timestamp']['input']>>;
 };
 
+<<<<<<< HEAD
+=======
+/** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
+export type Timestamptz_Comparison_Exp = {
+  _eq?: InputMaybe<Scalars['timestamptz']['input']>;
+  _gt?: InputMaybe<Scalars['timestamptz']['input']>;
+  _gte?: InputMaybe<Scalars['timestamptz']['input']>;
+  _in?: InputMaybe<Array<Scalars['timestamptz']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['timestamptz']['input']>;
+  _lte?: InputMaybe<Scalars['timestamptz']['input']>;
+  _neq?: InputMaybe<Scalars['timestamptz']['input']>;
+  _nin?: InputMaybe<Array<Scalars['timestamptz']['input']>>;
+};
+
+>>>>>>> 04-Backend
 /** columns and relationships of "user" */
 export type User = {
   __typename?: 'user';
   /** An array relationship */
+<<<<<<< HEAD
+=======
+  message2s: Array<Message2>;
+  /** An aggregate relationship */
+  message2s_aggregate: Message2_Aggregate;
+  /** An array relationship */
+>>>>>>> 04-Backend
   messages: Array<Message>;
   /** An aggregate relationship */
   messages_aggregate: Message_Aggregate;
@@ -1104,6 +2067,29 @@ export type User = {
 
 
 /** columns and relationships of "user" */
+<<<<<<< HEAD
+=======
+export type UserMessage2sArgs = {
+  distinct_on?: InputMaybe<Array<Message2_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Message2_Order_By>>;
+  where?: InputMaybe<Message2_Bool_Exp>;
+};
+
+
+/** columns and relationships of "user" */
+export type UserMessage2s_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Message2_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Message2_Order_By>>;
+  where?: InputMaybe<Message2_Bool_Exp>;
+};
+
+
+/** columns and relationships of "user" */
+>>>>>>> 04-Backend
 export type UserMessagesArgs = {
   distinct_on?: InputMaybe<Array<Message_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -1169,6 +2155,11 @@ export type User_Bool_Exp = {
   _and?: InputMaybe<Array<User_Bool_Exp>>;
   _not?: InputMaybe<User_Bool_Exp>;
   _or?: InputMaybe<Array<User_Bool_Exp>>;
+<<<<<<< HEAD
+=======
+  message2s?: InputMaybe<Message2_Bool_Exp>;
+  message2s_aggregate?: InputMaybe<Message2_Aggregate_Bool_Exp>;
+>>>>>>> 04-Backend
   messages?: InputMaybe<Message_Bool_Exp>;
   messages_aggregate?: InputMaybe<Message_Aggregate_Bool_Exp>;
   password?: InputMaybe<String_Comparison_Exp>;
@@ -1188,6 +2179,10 @@ export enum User_Constraint {
 
 /** input type for inserting data into table "user" */
 export type User_Insert_Input = {
+<<<<<<< HEAD
+=======
+  message2s?: InputMaybe<Message2_Arr_Rel_Insert_Input>;
+>>>>>>> 04-Backend
   messages?: InputMaybe<Message_Arr_Rel_Insert_Input>;
   password?: InputMaybe<Scalars['String']['input']>;
   user_rooms?: InputMaybe<User_Room_Arr_Rel_Insert_Input>;
@@ -1236,6 +2231,10 @@ export type User_On_Conflict = {
 
 /** Ordering options when selecting data from "user". */
 export type User_Order_By = {
+<<<<<<< HEAD
+=======
+  message2s_aggregate?: InputMaybe<Message2_Aggregate_Order_By>;
+>>>>>>> 04-Backend
   messages_aggregate?: InputMaybe<Message_Aggregate_Order_By>;
   password?: InputMaybe<Order_By>;
   user_rooms_aggregate?: InputMaybe<User_Room_Aggregate_Order_By>;
@@ -1319,7 +2318,11 @@ export type User_Room_Bool_Exp = {
 
 /** unique or primary key constraints on table "user_room" */
 export enum User_Room_Constraint {
+<<<<<<< HEAD
   /** unique or primary key constraint on columns "user_uuid", "room_uuid" */
+=======
+  /** unique or primary key constraint on columns "room_uuid", "user_uuid" */
+>>>>>>> 04-Backend
   UserRoomPkey = 'user_room_pkey'
 }
 
@@ -1496,6 +2499,10 @@ export type AddMessageMutationVariables = Exact<{
   user_uuid: Scalars['uuid']['input'];
   room_uuid: Scalars['uuid']['input'];
   content: Scalars['String']['input'];
+<<<<<<< HEAD
+=======
+  replied_to_uuid?: InputMaybe<Scalars['uuid']['input']>;
+>>>>>>> 04-Backend
 }>;
 
 
@@ -1506,7 +2513,11 @@ export type GetMessagesByRoomSubscriptionVariables = Exact<{
 }>;
 
 
+<<<<<<< HEAD
 export type GetMessagesByRoomSubscription = { __typename?: 'subscription_root', message: Array<{ __typename?: 'message', uuid: any, content: string, created_at: any, user: { __typename?: 'user', uuid: any, username: string } }> };
+=======
+export type GetMessagesByRoomSubscription = { __typename?: 'subscription_root', message: Array<{ __typename?: 'message', uuid: any, content: string, created_at: any, user: { __typename?: 'user', uuid: any, username: string }, replied_to_message?: { __typename?: 'message', content: string, user: { __typename?: 'user', username: string } } | null }> };
+>>>>>>> 04-Backend
 
 export type AddRoomMutationVariables = Exact<{
   name: Scalars['String']['input'];
@@ -1554,11 +2565,27 @@ export type GetUsersByUsernameQueryVariables = Exact<{
 
 export type GetUsersByUsernameQuery = { __typename?: 'query_root', user: Array<{ __typename?: 'user', uuid: any, password: string }> };
 
+<<<<<<< HEAD
 
 export const AddMessageDocument = gql`
     mutation addMessage($user_uuid: uuid!, $room_uuid: uuid!, $content: String!) {
   insert_message_one(
     object: {user_uuid: $user_uuid, room_uuid: $room_uuid, content: $content}
+=======
+export type UpdateUserPasswordMutationVariables = Exact<{
+  userID: Scalars['uuid']['input'];
+  newPassword: Scalars['String']['input'];
+}>;
+
+
+export type UpdateUserPasswordMutation = { __typename?: 'mutation_root', update_user_by_pk?: { __typename?: 'user', uuid: any } | null };
+
+
+export const AddMessageDocument = gql`
+    mutation addMessage($user_uuid: uuid!, $room_uuid: uuid!, $content: String!, $replied_to_uuid: uuid) {
+  insert_message_one(
+    object: {user_uuid: $user_uuid, room_uuid: $room_uuid, content: $content, replied_to_uuid: $replied_to_uuid}
+>>>>>>> 04-Backend
   ) {
     uuid
   }
@@ -1582,6 +2609,10 @@ export type AddMessageMutationFn = Apollo.MutationFunction<AddMessageMutation, A
  *      user_uuid: // value for 'user_uuid'
  *      room_uuid: // value for 'room_uuid'
  *      content: // value for 'content'
+<<<<<<< HEAD
+=======
+ *      replied_to_uuid: // value for 'replied_to_uuid'
+>>>>>>> 04-Backend
  *   },
  * });
  */
@@ -1602,6 +2633,15 @@ export const GetMessagesByRoomDocument = gql`
     }
     content
     created_at
+<<<<<<< HEAD
+=======
+    replied_to_message {
+      content
+      user {
+        username
+      }
+    }
+>>>>>>> 04-Backend
   }
 }
     `;
@@ -1858,4 +2898,42 @@ export function useGetUsersByUsernameSuspenseQuery(baseOptions?: Apollo.Suspense
 export type GetUsersByUsernameQueryHookResult = ReturnType<typeof useGetUsersByUsernameQuery>;
 export type GetUsersByUsernameLazyQueryHookResult = ReturnType<typeof useGetUsersByUsernameLazyQuery>;
 export type GetUsersByUsernameSuspenseQueryHookResult = ReturnType<typeof useGetUsersByUsernameSuspenseQuery>;
+<<<<<<< HEAD
 export type GetUsersByUsernameQueryResult = Apollo.QueryResult<GetUsersByUsernameQuery, GetUsersByUsernameQueryVariables>;
+=======
+export type GetUsersByUsernameQueryResult = Apollo.QueryResult<GetUsersByUsernameQuery, GetUsersByUsernameQueryVariables>;
+export const UpdateUserPasswordDocument = gql`
+    mutation UpdateUserPassword($userID: uuid!, $newPassword: String!) {
+  update_user_by_pk(pk_columns: {uuid: $userID}, _set: {password: $newPassword}) {
+    uuid
+  }
+}
+    `;
+export type UpdateUserPasswordMutationFn = Apollo.MutationFunction<UpdateUserPasswordMutation, UpdateUserPasswordMutationVariables>;
+
+/**
+ * __useUpdateUserPasswordMutation__
+ *
+ * To run a mutation, you first call `useUpdateUserPasswordMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateUserPasswordMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateUserPasswordMutation, { data, loading, error }] = useUpdateUserPasswordMutation({
+ *   variables: {
+ *      userID: // value for 'userID'
+ *      newPassword: // value for 'newPassword'
+ *   },
+ * });
+ */
+export function useUpdateUserPasswordMutation(baseOptions?: Apollo.MutationHookOptions<UpdateUserPasswordMutation, UpdateUserPasswordMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateUserPasswordMutation, UpdateUserPasswordMutationVariables>(UpdateUserPasswordDocument, options);
+      }
+export type UpdateUserPasswordMutationHookResult = ReturnType<typeof useUpdateUserPasswordMutation>;
+export type UpdateUserPasswordMutationResult = Apollo.MutationResult<UpdateUserPasswordMutation>;
+export type UpdateUserPasswordMutationOptions = Apollo.BaseMutationOptions<UpdateUserPasswordMutation, UpdateUserPasswordMutationVariables>;
+>>>>>>> 04-Backend
