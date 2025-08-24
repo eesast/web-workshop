@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>关于我</title>
+  <style>
+    /* 背景 */
+    body {
+      margin: 0;
+      background: url("./assets/bg.jpg") no-repeat center center fixed;
+      background-size: cover;
+      font-family: "Microsoft YaHei", Arial, sans-serif; /* 统一默认字体 */
+      color: #333;
+    }
+
+    /* 页面大标题 */
+    h1 {
+      text-align: center;
+      font-family: "Georgia", serif; /* 统一字体 */
+      color: #fff;
+      margin: 30px 0;
+      font-size: 2.6em;
+      text-shadow: 0 2px 8px rgba(0,0,0,.6);
+    }
+
+    /* 大卡片容器 */
+    #outer-card {
+      background: rgba(255,255,255,0.82);
+      border-radius: 20px;
+      width: 92%;
+      max-width: 1150px;
+      margin: 0 auto 60px;
+      padding: 30px;
+      box-shadow: 0 14px 30px rgba(0,0,0,0.25);
+    }
+
+    /* 内部分栏 */
+    #about-main-frame {
+      display: flex;
+      gap: 20px;
+    }
+    #left, #right {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* 小卡片通用样式 */
+    .mini-card {
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+    }
+
+    /* 背景色 */
+    .blue-card   { background: #e6f2ff; }
+    .green-card  { background: #e9f9e9; }
+    .orange-card { background: #fff2e0; }
+    .purple-card { background: #f3e8ff; }
+    .pink-card   { background: #ffe6ef; }
+
+    /* 小卡片标题统一字体 */
+    .mini-card h2 {
+      font-family: "Georgia", serif;
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 1.4em;
+    }
+
+    /* 头像 */
+    #avatar {
+      display: block;
+      margin: 0 auto 12px;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    }
+    .subtitle {
+      text-align: center;
+      font-weight: bold;
+      color: #444;
+    }
+
+    /* 列表 */
+    ul { margin: 0; padding-left: 20px; }
+    ul li { margin-bottom: 6px; }
+
+    /* 表格 */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-family: "Courier New", monospace; /* 仅表格内容突出用等宽字体 */
+    }
+    th, td {
+      border: 1px solid #666;
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background: #333;
+      color: #fff;
+    }
+
+    /* 链接 */
+    a {
+      text-decoration: none;
+      font-weight: bold;
+      color: #cc0000;
+      font-family: inherit; /* 默认统一字体 */
+    }
+    a.highlight {
+      font-family: "Courier New", monospace; /* 特意突出 */
+      color: #d63384;
+    }
+    a:hover { text-decoration: underline; }
+
+    /* 技能条 */
+    .skill { margin: 10px 0 12px; }
+    .skill-label { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 6px; }
+    .bar {
+      width: 100%; height: 10px;
+      border-radius: 999px; overflow: hidden;
+      background: #e8f2fb;
+    }
+    .bar > span {
+      display: block;
+      height: 100%; width: 0%;
+      background: #0077cc;
+      transition: width .8s ease;
+    }
+    body.loaded .bar > span { width: var(--w,60%); }
+
+    /* 折叠框 */
+    details { border-radius: 10px; background: #f8fafc; padding: 8px 12px; }
+    details summary { cursor: pointer; font-weight: 600; }
+
+    /* 响应式 */
+    @media(max-width: 800px) {
+      #about-main-frame { flex-direction: column; }
+    }
+  </style>
+</head>
+
+
+<body>
+  <h1>你好！这是我的个人介绍页面。</h1>
+
+  <div id="outer-card">
+    <div id="about-main-frame">
+      <!-- 左边 -->
+      <div id="left">
+        <div class="mini-card blue-card">
+          <img id="avatar" src="./assets/me.jpg" alt="我的照片"/>
+          <p class="subtitle">笃实书院 · 大二学生</p>
+        </div>
+
+        <div class="mini-card green-card">
+          <h2>我的兴趣</h2>
+          <ul>
+            <li>🏸 打羽毛球</li>
+            <li>💻 编程</li>
+            <li>📚 阅读</li>
+          </ul>
+        </div>
+
+        <div class="mini-card purple-card">
+          <h2>联系方式 & 更多</h2>
+          <p>📧 邮箱：<a href="mailto:sjt24@mails.tsinghua.edu.cn">sjt24@mails.tsinghua.edu.cn</a></p>
+          <p>💻 GitHub：<a class="highlight" href="https://github.com/song1316" target="_blank">@song1316</a></p>
+          <p>✨ 想更多了解我，可以访问我的 GitHub，或者与我交流编程和运动的乐趣！</p>
+        </div>
+
+        <div class="mini-card orange-card">
+          <h2>技能</h2>
+          <div class="skill" style="--w:80%">
+            <div class="skill-label"><span>HTML/CSS</span><span>熟练</span></div>
+            <div class="bar"><span></span></div>
+          </div>
+          <div class="skill" style="--w:70%">
+            <div class="skill-label"><span>C/C++/C#</span><span>熟练</span></div>
+            <div class="bar"><span></span></div>
+          </div>
+          <div class="skill" style="--w:60%">
+            <div class="skill-label"><span>Python</span><span>进阶</span></div>
+            <div class="bar"><span></span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 右边 -->
+      <div id="right">
+        <div class="mini-card pink-card">
+          <h2>关于我</h2>
+          <p>我是笃实书院的一名大二学生，喜欢编程～</p>
+        </div>
+
+        <div class="mini-card blue-card">
+          <h2>我的日常</h2>
+          <table>
+            <tr><th>时间</th><th>活动</th></tr>
+            <tr><td>上午</td><td>上课</td></tr>
+            <tr><td>下午</td><td>运动 / 项目开发</td></tr>
+            <tr><td>晚上</td><td>玩游戏</td></tr>
+          </table>
+        </div>
+
+        <div class="mini-card green-card">
+          <h2>最近在看</h2>
+          <details>
+            <summary>展开 / 收起</summary>
+            <ul>
+              <li>歌手2025</li>
+              <li>概率论</li>
+              <li>暑培网课</li>
+            </ul>
+          </details>
+        </div>
+
+        <div class="mini-card orange-card">
+          <h2>一句话</h2>
+          <blockquote style="margin:0; font-style:italic; color:#0077cc; font-family:Georgia, serif;">
+            你们给我刷过几个子？！
+          </blockquote>
+        </div>
+
+        <div class="mini-card purple-card">
+          <h2>我的 BGM</h2>
+          <audio controls style="width:100%">
+            <source src="./assets/intro.mp3" type="audio/mpeg"/>
+            你的浏览器不支持音频播放。
+          </audio>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 技能条动画 -->
+  <script>
+    window.addEventListener('load', ()=> document.body.classList.add('loaded'));
+  </script>
+</body>
+</html>
