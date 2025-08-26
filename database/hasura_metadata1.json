@@ -1,0 +1,367 @@
+{
+  "resource_version": 15,
+  "metadata": {
+    "version": 3,
+    "sources": [
+      {
+        "name": "workshop",
+        "kind": "postgres",
+        "tables": [
+          {
+            "table": {
+              "name": "message",
+              "schema": "public"
+            },
+            "object_relationships": [
+              {
+                "name": "room",
+                "using": {
+                  "foreign_key_constraint_on": "room_uuid"
+                }
+              },
+              {
+                "name": "user",
+                "using": {
+                  "foreign_key_constraint_on": "user_uuid"
+                }
+              },
+              {
+                "name": "reply_to",
+                "using": {
+                  "foreign_key_constraint_on": "reply_to_uuid"
+                }
+              }
+            ],
+            "array_relationships": [
+              {
+                "name": "replies",
+                "using": {
+                  "foreign_key_constraint_on": {
+                    "column": "reply_to_uuid",
+                    "table": {
+                      "name": "message",
+                      "schema": "public"
+                    }
+                  }
+                }
+              }
+            ],
+            "insert_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "check": {
+                    "_or": [
+                      { "reply_to_uuid": { "_is_null": true } },
+                      {
+                        "_and": [
+                          { "reply_to_uuid": { "_is_null": false } },
+                          { "reply_to": { "reply_to_uuid": { "_is_null": true } } }
+                        ]
+                      }
+                    ]
+                  },
+                  "columns": [
+                    "content",
+                    "created_at",
+                    "room_uuid",
+                    "user_uuid",
+                    "uuid",
+                    "reply_to_uuid"
+                  ]
+                },
+                "comment": ""
+              }
+            ],
+            "select_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "columns": [
+                    "content",
+                    "created_at",
+                    "room_uuid",
+                    "user_uuid",
+                    "uuid",
+                    "reply_to_uuid"
+                  ],
+                  "filter": {}
+                },
+                "comment": ""
+              }
+            ],
+            "update_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "columns": [
+                    "content",
+                    "created_at",
+                    "room_uuid",
+                    "user_uuid",
+                    "uuid",
+                    "reply_to_uuid"
+                  ],
+                  "filter": {},
+                  "check": {
+                    "_or": [
+                      { "reply_to_uuid": { "_is_null": true } },
+                      {
+                        "_and": [
+                          { "reply_to_uuid": { "_is_null": false } },
+                          { "reply_to": { "reply_to_uuid": { "_is_null": true } } }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "comment": ""
+              }
+            ],
+            "delete_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "filter": {}
+                },
+                "comment": ""
+              }
+            ]
+          },
+          {
+            "table": {
+              "name": "room",
+              "schema": "public"
+            },
+            "array_relationships": [
+              {
+                "name": "messages",
+                "using": {
+                  "foreign_key_constraint_on": {
+                    "column": "room_uuid",
+                    "table": {
+                      "name": "message",
+                      "schema": "public"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "user_rooms",
+                "using": {
+                  "foreign_key_constraint_on": {
+                    "column": "room_uuid",
+                    "table": {
+                      "name": "user_room",
+                      "schema": "public"
+                    }
+                  }
+                }
+              }
+            ],
+            "insert_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "check": {},
+                  "columns": [
+                    "intro",
+                    "invite_code",
+                    "name",
+                    "created_at",
+                    "uuid"
+                  ]
+                },
+                "comment": ""
+              }
+            ],
+            "select_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "columns": [
+                    "intro",
+                    "invite_code",
+                    "name",
+                    "created_at",
+                    "uuid"
+                  ],
+                  "filter": {}
+                },
+                "comment": ""
+              }
+            ],
+            "update_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "columns": [
+                    "intro",
+                    "invite_code",
+                    "name",
+                    "created_at",
+                    "uuid"
+                  ],
+                  "filter": {},
+                  "check": {}
+                },
+                "comment": ""
+              }
+            ],
+            "delete_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "filter": {}
+                },
+                "comment": ""
+              }
+            ]
+          },
+          {
+            "table": {
+              "name": "user",
+              "schema": "public"
+            },
+            "array_relationships": [
+              {
+                "name": "messages",
+                "using": {
+                  "foreign_key_constraint_on": {
+                    "column": "user_uuid",
+                    "table": {
+                      "name": "message",
+                      "schema": "public"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "user_rooms",
+                "using": {
+                  "foreign_key_constraint_on": {
+                    "column": "user_uuid",
+                    "table": {
+                      "name": "user_room",
+                      "schema": "public"
+                    }
+                  }
+                }
+              }
+            ],
+            "select_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "columns": [
+                    "username",
+                    "uuid"
+                  ],
+                  "filter": {}
+                },
+                "comment": ""
+              }
+            ]
+          },
+          {
+            "table": {
+              "name": "user_room",
+              "schema": "public"
+            },
+            "object_relationships": [
+              {
+                "name": "room",
+                "using": {
+                  "foreign_key_constraint_on": "room_uuid"
+                }
+              },
+              {
+                "name": "user",
+                "using": {
+                  "foreign_key_constraint_on": "user_uuid"
+                }
+              }
+            ],
+            "insert_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "check": {},
+                  "columns": [
+                    "room_uuid",
+                    "user_uuid"
+                  ]
+                },
+                "comment": ""
+              }
+            ],
+            "select_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "columns": [
+                    "room_uuid",
+                    "user_uuid"
+                  ],
+                  "filter": {}
+                },
+                "comment": ""
+              }
+            ],
+            "update_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "columns": [
+                    "room_uuid",
+                    "user_uuid"
+                  ],
+                  "filter": {},
+                  "check": {}
+                },
+                "comment": ""
+              }
+            ],
+            "delete_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "filter": {}
+                },
+                "comment": ""
+              }
+            ]
+          }
+        ],
+        "configuration": {
+          "connection_info": {
+            "database_url": {
+              "from_env": "PG_DATABASE_URL"
+            },
+            "isolation_level": "read-committed",
+            "use_prepared_statements": false
+          }
+        }
+      }
+    ],
+    "backend_configs": {
+      "dataconnector": {
+        "athena": {
+          "uri": "http://data-connector-agent:8081/api/v1/athena"
+        },
+        "mariadb": {
+          "uri": "http://data-connector-agent:8081/api/v1/mariadb"
+        },
+        "mysql8": {
+          "uri": "http://data-connector-agent:8081/api/v1/mysql"
+        },
+        "oracle": {
+          "uri": "http://data-connector-agent:8081/api/v1/oracle"
+        },
+        "snowflake": {
+          "uri": "http://data-connector-agent:8081/api/v1/snowflake"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+实现回复功能，先执行sql命令：ALTER TABLE public.message
+ADD COLUMN IF NOT EXISTS reply_to_uuid UUID NULL;
+
+ALTER TABLE public.message
+ADD CONSTRAINT message_reply_to_uuid_fkey
+FOREIGN KEY (reply_to_uuid) REFERENCES public.message(uuid)
+ON UPDATE CASCADE ON DELETE SET NULL;
+再import我加入的hasura_metadata1.json
+添加回复使用的graphsql语句格式：
+mutation InsertReplyMessage {
+  insert_message_one(
+    object: {
+      user_uuid: ""  
+      room_uuid: ""  
+      content: ""
+      reply_to_uuid: ""  
+    }
+  ) {
+    uuid
+    content
+    created_at
+    reply_to_uuid
+    user { username }
+    reply_to { content, user { username } }
+  }
+}
