@@ -10,4 +10,4 @@ electron
 
 # new
 .DS_Store
-
+.env
