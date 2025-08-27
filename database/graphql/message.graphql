@@ -1,5 +1,11 @@
-mutation addMessage($user_uuid: uuid!, $room_uuid: uuid!, $content: String!) {
-  insert_message_one(object: {user_uuid: $user_uuid, room_uuid: $room_uuid, content: $content}) {
+# add the parameter: replied_to_uuid
+mutation addMessage($user_uuid: uuid!, $room_uuid: uuid!, $content: String!, $replied_to_uuid: uuid) {
+  insert_message_one(object: {
+    user_uuid: $user_uuid,
+    room_uuid: $room_uuid,
+    content: $content,
+    replied_to_uuid: $replied_to_uuid
+  }) {
     uuid
   }
 }
@@ -13,5 +19,13 @@ subscription getMessagesByRoom($room_uuid: uuid!) {
     }
     content
     created_at
+
+    # add: data of the replied message
+    replied_to_message {
+      content
+      user {
+        username
+      }
+    }
   }
 }

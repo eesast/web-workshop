@@ -16,7 +16,7 @@ const LoginPage: React.FC = () => {
 
   const handleSumbit = async (values: any) => {
     try {
-      values.password = md5(values.password);
+      // values.password = md5(values.password);
       const response = await axios.post("/user/login", values);
       const { token } = response.data;
       localStorage.setItem("token", token);

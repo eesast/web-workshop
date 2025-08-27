@@ -10,3 +10,11 @@ query getUsersByUsername($username: String!) {
     password
   }
 }
+
+# 更新用户密码
+# 注意：需要开通user数据表的user用户的select权限与update权限
+mutation UpdateUserPassword($userID: uuid!, $newPassword: String!) {
+  update_user_by_pk(pk_columns: {uuid: $userID}, _set: {password: $newPassword}) {
+    uuid
+  }
+}
