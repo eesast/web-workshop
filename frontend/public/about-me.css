@@ -42,6 +42,17 @@ li {
   list-style: none;
 }
 
+li::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: #840be0;
+  border-radius: 50%;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
 li:hover {
   background: #e0f7fa;
   box-shadow: 0 4px 16px rgba(73, 219, 232, 0.25);
