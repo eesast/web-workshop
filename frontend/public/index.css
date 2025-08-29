@@ -62,3 +62,25 @@
 .styled-list li {
   line-height: 2em;
 }
+#clock {
+  position: absolute;
+  bottom: 0;
+  left: 12px;
+  width: 40vw;
+}
+
+#motto {
+  position: absolute;
+  bottom: 0;
+  right: 12px;
+  text-align: right;
+  width: 40vw;
+}
+#a{
+  color: blue;
+  text-align: center;
+}
+.table{
+  display: flex;
+  justify-content: center;
+}
