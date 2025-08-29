@@ -31,3 +31,23 @@
   padding: 20px;
   width: 100%;
 }
+
+li {
+  background: #f6faff;
+  box-shadow: 0 2px 8px rgba(73, 219, 232, 0.15);
+  border-radius: 8px;
+  margin-bottom: 6px;
+  padding: 10px 16px;
+  transition: background 0.2s, box-shadow 0.2s;
+  list-style: none;
+}
+
+li:hover {
+  background: #e0f7fa;
+  box-shadow: 0 4px 16px rgba(73, 219, 232, 0.25);
+}
+
+a {
+  color: #2196f3;
+  text-decoration: none;
+}
