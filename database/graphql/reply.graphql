@@ -1,0 +1,28 @@
+mutation CreateReply {
+  insert_message_one(object: {
+    content: "测试回复内容",
+    room_uuid: "00000000-0000-0000-0000-100000000001",
+    user_uuid: "00000000-0000-0000-0000-000000000001",
+    parent_uuid: "ea169e77-107c-42f5-8372-0f5148712483"
+  }) {
+    uuid
+    content
+    parent_uuid
+  }
+}
+
+query TestMessageWithReplies {
+  message(where: {room_uuid: {_eq: "00000000-0000-0000-0000-100000000001"}}) {
+    uuid
+    content
+    user_uuid
+    created_at
+    parent_uuid
+    replies {
+      uuid
+      content
+      user_uuid
+      created_at
+    }
+  }
+}
