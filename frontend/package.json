@@ -1,0 +1,101 @@
+{
+  "homepage": "./",
+  "dependencies": {
+    "@ant-design/icons": "^6.0.0",
+    "@ant-design/pro-components": "2.7.15",
+    "@apollo/client": "3.11.4",
+    "antd": "^5.20.2",
+    "axios": "1.7.4",
+    "dayjs": "^1.11.15",
+    "graphql": "16.9.0",
+    "graphql-ws": "5.16.0",
+    "jwt-decode": "4.0.0",
+    "md5": "2.3.0",
+    "react": "18.3.1",
+    "react-contexify": "^6.0.0",
+    "react-dom": "18.3.1",
+    "react-draggable": "4.4.6",
+    "react-router-dom": "6.26.1"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@craco/craco": "7.1.0",
+    "@types/md5": "2.3.5",
+    "@types/react": "18.3.3",
+    "@types/react-dom": "18.3.0",
+    "react-scripts": "5.0.1",
+    "typescript": "^4.9.5",
+    "webpack-bundle-analyzer": "4.10.2",
+    "webpackbar": "6.0.1"
+  },
+  "resolutions": {
+    "@babel/plugin-proposal-private-property-in-object": "7.21.11"
+  },
+  "scripts": {
+    "start": "craco start",
+    "build": "craco build",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --ext .ts,.tsx",
+    "electron": "yarn build && electron .",
+    "electron:build": "electron-builder"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "name": "web-workshop",
+  "version": "2024.0.0",
+  "main": "build/electron.js",
+  "build": {
+    "productName": "EESAST Web Workshop",
+    "appId": "web-workshop",
+    "icon": "build/logo.png",
+    "directories": {
+      "output": "electron"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "nsis": {
+      "shortcutName": "EESAST",
+      "oneClick": false,
+      "perMachine": true,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ]
+    },
+    "linux": {
+      "category": "Utility",
+      "maintainer": "EESAST",
+      "target": [
+        "AppImage",
+        "deb",
+        "rpm",
+        "tar.gz"
+      ]
+    }
+  }
+}
