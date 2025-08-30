@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon.png" />
+    <link rel="stylesheet" href="./about-me.css" />
+    <title>关于我</title>
+    <style>
+      body {
+        height: 100vh;
+        margin: 0;
+      }
+    </style>
+    <script>
+      console.log("欢迎进入我的网页");
+    </script>
+    <script src="./about-me.js" defer></script>
+  </head>
+  <body>
+    <div id="main-frame">
+      <div id="global-tools" style="position:fixed;top:24px;right:32px;z-index:999;">
+        <button id="dark-mode-toggle" class="commits-btn" onclick="toggleDarkMode()">切换黑暗模式</button>
+      </div>
+      <div id="top-frame">
+        <h1>欢迎来到我的个人介绍页面</h1>
+        <a href="./index.html">返回首页</a>
+      </div>
+      <div id="mid-frame">
+        <div id="mid-left-frame" class="mid-frame-ele">
+          <div id="about-card" class="about-card">
+            <div class="about-header" id="about-header">
+              <h1>关于我</h1>
+            </div>
+            <div class="about-main-content" id="about-main-content">
+              <p>你好！我是一个热爱编程和技术的开发者。</p>
+              <p>我喜欢探索新的技术和工具，并将它们应用到实际项目中。</p>
+              <p>在业余时间，我喜欢阅读技术书籍以及参与开源项目。</p>
+              <p>如果你对我的工作感兴趣，欢迎通过以下方式联系我（Contact Me）：</p>
+              <ul>
+                <li>电子邮件: example@example.com</li>
+                <li>GitHub: <a href="https://github.com/suifengwudong">https://github.com/suifengwudong</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div id="mid-right-frame" class="mid-frame-ele">
+          <div id="further-info-card" class="further-info-card">
+            <h2>更多信息</h2>
+            <p>在这里你可以找到我参与的项目和更多的个人信息。</p>
+            <div id="github-repo-list">
+              <h3>我的GitHub仓库</h3>
+              <!--TODO: 此处用js调用https://api.github.com/users/suifengwudong/repos插入-->
+            </div>
+            <div id="github-commits">
+              <h3>我的GitHub提交</h3>
+              <button id="show-commits-btn" class="commits-btn" onclick="showCommitsByClick(this)">展开</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="footer">
+        <p>感谢您的访问！</p>
+      </div>
+  </body>
+</html>
