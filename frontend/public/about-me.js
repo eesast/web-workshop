@@ -76,6 +76,17 @@ async function showCommitsByClick(btn) {
 	}
 }
 
+function toggleDarkMode() {
+	const body = document.body;
+	const btn = document.getElementById('dark-mode-toggle');
+	body.classList.toggle('dark-mode');
+	if (body.classList.contains('dark-mode')) {
+		btn.textContent = '切换白天模式';
+	} else {
+		btn.textContent = '切换黑暗模式';
+	}
+}
+
 window.addEventListener('DOMContentLoaded', () => {
 	showRepos();      // 页面加载时展示仓库
 });

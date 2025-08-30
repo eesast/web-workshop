@@ -183,3 +183,67 @@ a:hover {
     margin: 0 auto 18px auto;
   }
 }
+
+body.dark-mode {
+  background: linear-gradient(135deg, #23243a 0%, #2c2e3e 100%) !important;
+  color: #e0e0e0;
+}
+body.dark-mode #main-frame {
+  background: linear-gradient(135deg, #23243a 0%, #2c2e3e 100%) !important;
+}
+body.dark-mode #top-frame {
+  background: rgba(30,32,48,0.95);
+  color: #e0e0e0;
+  border-bottom: 2px solid #444;
+}
+body.dark-mode #top-frame h1 {
+  color: #b39ddb;
+}
+body.dark-mode #about-card,
+body.dark-mode #further-info-card {
+  background: rgba(40,42,60,0.98);
+  box-shadow: 0 6px 32px rgba(40,42,60,0.18);
+  color: #e0e0e0;
+}
+body.dark-mode #about-header {
+  background: transparent;
+}
+body.dark-mode #about-main-content {
+  background: transparent;
+}
+body.dark-mode li {
+  background: #2c2e3e;
+  color: #e0e0e0;
+  box-shadow: 0 2px 8px rgba(40,42,60,0.18);
+}
+body.dark-mode li::before {
+  background: linear-gradient(135deg, #b39ddb 60%, #2196f3 100%);
+}
+body.dark-mode li:hover {
+  background: #23243a;
+  box-shadow: 0 4px 16px rgba(40,42,60,0.28);
+}
+body.dark-mode a {
+  color: #90caf9;
+}
+body.dark-mode a:hover {
+  color: #b39ddb;
+}
+body.dark-mode #footer {
+  background: linear-gradient(90deg, #23243a 0%, #2c2e3e 100%);
+  color: #aaa;
+  border-top: 1px solid #444;
+}
+body.dark-mode .commits-btn {
+  background: #23243a;
+  color: #e0e0e0;
+  box-shadow: 0 2px 8px rgba(40,42,60,0.18);
+}
+body.dark-mode .commits-btn:hover:not(:disabled) {
+  background: #2196f3;
+  color: #fff;
+}
+body.dark-mode .commits-btn:disabled {
+  background: #444;
+  color: #aaa;
+}
