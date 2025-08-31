@@ -1,0 +1,65 @@
+[33md938132[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{0}: rebase (finish): returning to refs/heads/main
+[33md938132[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{1}: rebase (pick): Update README.md
+[33m64ca30d[m HEAD@{2}: rebase (pick): Update README.md
+[33mf14a34e[m HEAD@{3}: rebase (pick): Update README.md: add homework tutorial
+[33me7b7314[m HEAD@{4}: rebase (pick): ci(Mergify): configuration update
+[33m1e4b8c9[m HEAD@{5}: rebase (pick): ci(Mergify): configuration update
+[33m91eb037[m HEAD@{6}: rebase (pick): fix
+[33m4d355c7[m HEAD@{7}: rebase (pick): fix
+[33m522e95a[m HEAD@{8}: rebase (pick): fix(06): resolve docker image name
+[33mb9b868d[m HEAD@{9}: rebase (pick): Rename .github/PULL_REQUEST_TEMPLATE/pull_request_template.md to .github/pull_request_template.md
+[33m400eaa1[m HEAD@{10}: rebase (pick): Delete frontend/public/test_commit.md
+[33mc7061fb[m HEAD@{11}: rebase (pick): Update and rename homework.md to pull_request_template.md
+[33mb82c1ec[m HEAD@{12}: rebase (pick): Delete .github/PULL_REQUEST_TEMPLATE/simple.md
+[33md4cd80d[m HEAD@{13}: rebase (pick): Update README.md
+[33m3835d99[m HEAD@{14}: rebase (pick): Create simple.md
+[33md3b3c90[m HEAD@{15}: rebase (pick): Delete .github/PULL_REQUEST_TEMPLATE.md
+[33m634c87f[m HEAD@{16}: rebase (pick): Update README.md
+[33maf4aab7[m HEAD@{17}: rebase (pick): Create homework.md
+[33mc05aa44[m HEAD@{18}: rebase (pick): Delete .vscode/PULL_REQUEST_TEMPLATE.md
+[33m5b84584[m HEAD@{19}: rebase (pick): Create PULL_REQUEST_TEMPLATE.md
+[33mb717c00[m HEAD@{20}: rebase (pick): Delete PULL_REQUEST_TEMPLATE.md
+[33me5a6826[m HEAD@{21}: rebase (pick): Create PULL_REQUEST_TEMPLATE.md
+[33macecbc0[m HEAD@{22}: rebase (pick): Create PULL_REQUEST_TEMPLATE.md
+[33m2a3f904[m HEAD@{23}: rebase (pick): Create test_commit.md
+[33m9289b9d[m HEAD@{24}: rebase (pick): chore(06): tutorial
+[33m9b2f90a[m HEAD@{25}: rebase (pick): feat(06): desktop application via electron
+[33m2b82113[m HEAD@{26}: rebase (pick): feat(06): upgrade to https
+[33m3873acb[m HEAD@{27}: rebase (pick): feat(06): above the cloud
+[33m053c5f4[m HEAD@{28}: rebase (pick): feat(06): build backend as docker
+[33m8cbf330[m HEAD@{29}: rebase (pick): feat(06): frontend on Github Pages
+[33m4035a6b[m HEAD@{30}: rebase (pick): chore(05): tutorial
+[33mac42e1f[m HEAD@{31}: rebase (pick): fix(05): use `HashRouter` to resolve paths
+[33me3c8221[m HEAD@{32}: rebase (pick): feat(05): UX improvements
+[33m0005bf0[m HEAD@{33}: rebase (pick): feat(05): ChatBox & FileShare
+[33ma2c5281[m HEAD@{34}: rebase (pick): feat(05): MainPanel
+[33m3e98576[m HEAD@{35}: rebase (pick): feat(05): LoginPage
+[33m6824dca[m HEAD@{36}: rebase (pick): feat(05): brick and mortar
+[33m4a07e09[m HEAD@{37}: rebase (pick): feat(05): React Components
+[33m76bc0eb[m HEAD@{38}: rebase (pick): feat(05): JSX elements
+[33m3412edd[m HEAD@{39}: rebase (pick): feat(05): Hello World from React
+[33mdfd28cb[m HEAD@{40}: rebase (pick): chore(04): tutorial
+[33m5db1a12[m HEAD@{41}: rebase (pick): feat(04): email service
+[33mbec064f[m HEAD@{42}: rebase (pick): feat(04): handle files
+[33m0c8fa9e[m HEAD@{43}: rebase (pick): feat(04): user system
+[33m90bab53[m HEAD@{44}: rebase (pick): feat(04): request & response
+[33mba8cc2a[m HEAD@{45}: rebase (pick): feat(04): Hello World from Express
+[33m2a322e9[m HEAD@{46}: rebase (pick): chore(03): update totorial
+[33md2a1780[m HEAD@{47}: rebase (pick): fix(03): return user.uuid
+[33m118e716[m HEAD@{48}: rebase (pick): chore(03): tutorial
+[33m931625e[m HEAD@{49}: rebase (pick): feat(03): graphql-codegen
+[33me1753b0[m HEAD@{50}: rebase (pick): feat(03): GraphQL queries & mutations
+[33m773c90d[m HEAD@{51}: rebase (pick): feat(03): Hasura as middleware
+[33m65d7641[m HEAD@{52}: rebase (pick): feat(03): SQL to create tables & items
+[33mc81258b[m HEAD@{53}: rebase (pick): feat(03): the blueprint
+[33md4668d9[m HEAD@{54}: rebase (pick): chore(02): tutorial
+[33mca73f5c[m HEAD@{55}: rebase (pick): feat(02): imports & exports
+[33mb6a921a[m HEAD@{56}: rebase (pick): feat(02): interact with the internet
+[33m18b373e[m HEAD@{57}: rebase (pick): feat(02): dynamic elements
+[33m312d351[m HEAD@{58}: rebase (pick): feat(02): dynamic content
+[33mf4cfe9e[m HEAD@{59}: rebase (pick): feat(02): basic JS grammar
+[33mbed37b8[m[33m ([m[1;31morigin/01-HTML&CSS[m[33m, [m[1;32m01-HTML&CSS[m[33m)[m HEAD@{60}: rebase (start): checkout 01-HTML&CSS
+[33m58061e3[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{61}: checkout: moving from 01-HTML&CSS to main
+[33mbed37b8[m[33m ([m[1;31morigin/01-HTML&CSS[m[33m, [m[1;32m01-HTML&CSS[m[33m)[m HEAD@{62}: commit: 01html_css hw version1 finished
+[33m74faf05[m HEAD@{63}: checkout: moving from main to 01-HTML&CSS
+[33m58061e3[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{64}: clone: from github.com:QiHanYong/web-workshop.git

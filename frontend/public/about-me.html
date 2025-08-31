@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon.png" />
+    <title>2024科协暑培网站Demo</title>
+    <style>
+      body {
+        display: block;
+        height: 100vh;
+        margin: 0;
+        background-image: url("./assets/gura_wallpaper1.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+    </style>
+    <link rel="stylesheet" href="./about-me.css" />
+  </head>
+  <!-- 欢迎加入电子系科协，共同享受网页开发的乐趣 -->
+  <body>
+    <header>
+      <div id="js-weather-widget" class="weather-widget">正在获取天气...</div>
+      <button id="js-language-switcher">En</button>
+    </header>
+
+    <div class="self-introduction-box">
+      <div class="index-main-frame-css">
+        <div class="intro-grid-left">
+          <img class="self-photo" src="./assets/self.jpeg"/>
+        </div>
+        <div class="intro-grid-right">
+          <h1 style="padding: 0; margin: 0; color: black;">杨祺瀚</h1>
+          <p style="margin: 0; padding: 0;">Yong Qi Han</p>
+          <br/>
+          <div id="js-self-description" class="self-description">
+            <p>来自马来西亚的华人留学生，清华24级笃实书院学生</p>
+            <p>想体验不同于马来西亚的学习氛围及大学生活，于是踏上了在北京留学的旅途。平时喜欢弹钢琴、唱歌、打游戏，也喜欢旅行，想探索和尝试许多新事物。热爱大自然、宇宙，梦想为人类航空发展贡献一份力</p>
+            <p>是个二次元宅，喜欢看各种类型动漫，也喜欢弹动漫曲</p>
+          </div>
+          <div class="social-media-button">
+            <a href="https://www.instagram.com/yqh_qihan/">
+              <button>Instagram</button>
+            </a>
+            <a href="https://www.facebook.com/qihan.yong.5">
+              <button>Facebook</button>
+            </a>
+            <a id="change-text1">
+              <button></button>
+            </a>
+            <a id="change-text2">
+              <button></button>
+            </a>
+          </div>
+        </div>
+      </div>      
+    </div>
+
+    <script src="./about-me.js"></script>
+  </body>
+</html>

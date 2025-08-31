@@ -1,0 +1,104 @@
+header {
+    display: flex;
+    justify-content: right;
+}
+
+.weather-widget {
+    margin: 20px;
+}
+
+header button{
+    margin: 20px;
+    padding: 10px 30px 10px 30px;
+    background-color: rgba(255, 255, 255, 0);
+    cursor: pointer;
+}
+
+
+.self-introduction-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.index-main-frame-css {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background-color: rgba(255, 255, 255, 0.8);
+    align-items: center;
+    padding: 20px;
+}
+
+.intro-grid-left {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}
+
+.self-photo {
+    width: 400px;
+    border-radius: 20px;
+}
+
+.intro-grid-left {
+    padding: 0;
+}
+
+.self-description {
+    width: 500px;
+}
+
+.social-media-button button{
+    background-color: rgba(255, 255, 255, 0);
+    border-width: 2px;
+    border-radius: 5px;
+    width: 200px;
+    height: 40px;
+    margin: 5px;
+    font-weight: 600;
+
+    box-shadow: inset 0 0 0 0 rgb(0, 10, 120);
+    -webkit-transition: ease-out 0.4s;
+    -moz-transition: ease-out 0.4s;
+    transition: ease-out 0.4s;
+}
+
+.social-media-button a button{
+    text-decoration: none;
+    color: black;
+
+    -webkit-transition: ease-out 0.4s;
+    -moz-transition: ease-out 0.4s;
+    transition: ease-out 0.4s;
+}
+
+.social-media-button button:hover{
+    cursor: pointer;
+    box-shadow: inset 400px 0 0 0 rgb(0, 10, 120);
+}
+
+.social-media-button a:hover button{
+    color:white;
+}
+
+#change-text1:hover button:after {
+    font-size: 11px;
+    content: "yangqh24@mails.tsinghua.edu.cn";
+}
+#change-text1:hover button:before {
+    content: "";
+}
+#change-text1 button:before {
+    content: "Mail";
+}
+
+#change-text2:hover button:after {
+    font-size: 12px;
+    content: "id: wzhiaixiaotianshi";
+}
+#change-text2:hover button:before {
+    content: "";
+}
+#change-text2 button:before {
+    content: "Weixin";
+}
