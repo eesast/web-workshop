@@ -1,6 +1,7 @@
 import express from "express";
 import jwt from "jsonwebtoken";
 import { sdk as graphql } from "./index";
+import authenticate from "./authenticate";
 
 interface userJWTPayload {
   uuid: string;
@@ -70,5 +71,21 @@ router.post("/register", async (req, res) => {
     return res.sendStatus(500);
   }
 });
+
+router.get("/delete", authenticate, (req, res) => {
+    const authHeader = req.get("Authorization");
+    const token = authHeader!.substring(7);
+    const decoded = jwt.decode(token) as userJWTPayload;
+    const uuid = decoded?.uuid;
+    if (!uuid) {
+        return res.status(422).send("422 Unprocessable Entity: Missing uuid");
+    }
+    graphql.deleteUser({ uuid: uuid as string }).then(() => {
+        return res.sendStatus(200);
+    }).catch((err) => {
+        console.error(err);
+        return res.sendStatus(500);
+    });
+})
 
 export default router;

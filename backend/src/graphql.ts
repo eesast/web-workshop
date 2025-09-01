@@ -1793,6 +1793,13 @@ export type GetMessagesByRoomSubscriptionVariables = Exact<{
 
 export type GetMessagesByRoomSubscription = { __typename?: 'subscription_root', message: Array<{ __typename?: 'message', uuid: any, content: string, created_at: any, user: { __typename?: 'user', uuid: any, username: string } }> };
 
+export type GetMessagesByUserSubscriptionVariables = Exact<{
+  user_uuid: Scalars['uuid']['input'];
+}>;
+
+
+export type GetMessagesByUserSubscription = { __typename?: 'subscription_root', message: Array<{ __typename?: 'message', uuid: any, content: string, created_at: any, room: { __typename?: 'room', uuid: any } }> };
+
 export type AddRoomMutationVariables = Exact<{
   name: Scalars['String']['input'];
   intro: Scalars['String']['input'];
@@ -1824,6 +1831,14 @@ export type JoinRoomMutationVariables = Exact<{
 
 export type JoinRoomMutation = { __typename?: 'mutation_root', insert_user_room_one?: { __typename?: 'user_room', user_uuid: any, room_uuid: any } | null };
 
+export type QuitRoomMutationVariables = Exact<{
+  user_uuid: Scalars['uuid']['input'];
+  room_uuid: Scalars['uuid']['input'];
+}>;
+
+
+export type QuitRoomMutation = { __typename?: 'mutation_root', delete_user_room?: { __typename?: 'user_room_mutation_response', affected_rows: number } | null };
+
 export type AddUserMutationVariables = Exact<{
   username: Scalars['String']['input'];
   password: Scalars['String']['input'];
@@ -1838,6 +1853,13 @@ export type GetUsersByUsernameQueryVariables = Exact<{
 
 
 export type GetUsersByUsernameQuery = { __typename?: 'query_root', user: Array<{ __typename?: 'user', uuid: any, password: string }> };
+
+export type DeleteUserMutationVariables = Exact<{
+  uuid: Scalars['uuid']['input'];
+}>;
+
+
+export type DeleteUserMutation = { __typename?: 'mutation_root', delete_user_by_pk?: { __typename?: 'user', uuid: any } | null };
 
 
 export const AddMessageDocument = gql`
@@ -1856,6 +1878,18 @@ export const GetMessagesByRoomDocument = gql`
     user {
       uuid
       username
+    }
+    content
+    created_at
+  }
+}
+    `;
+export const GetMessagesByUserDocument = gql`
+    subscription getMessagesByUser($user_uuid: uuid!) {
+  message(where: {user_uuid: {_eq: $user_uuid}}) {
+    uuid
+    room {
+      uuid
     }
     content
     created_at
@@ -1897,6 +1931,15 @@ export const JoinRoomDocument = gql`
   }
 }
     `;
+export const QuitRoomDocument = gql`
+    mutation quitRoom($user_uuid: uuid!, $room_uuid: uuid!) {
+  delete_user_room(
+    where: {user_uuid: {_eq: $user_uuid}, room_uuid: {_eq: $room_uuid}}
+  ) {
+    affected_rows
+  }
+}
+    `;
 export const AddUserDocument = gql`
     mutation addUser($username: String!, $password: String!) {
   insert_user_one(object: {username: $username, password: $password}) {
@@ -1909,6 +1952,13 @@ export const GetUsersByUsernameDocument = gql`
   user(where: {username: {_eq: $username}}) {
     uuid
     password
+  }
+}
+    `;
+export const DeleteUserDocument = gql`
+    mutation deleteUser($uuid: uuid!) {
+  delete_user_by_pk(uuid: $uuid) {
+    uuid
   }
 }
     `;
@@ -1926,6 +1976,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     getMessagesByRoom(variables: GetMessagesByRoomSubscriptionVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetMessagesByRoomSubscription> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetMessagesByRoomSubscription>(GetMessagesByRoomDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getMessagesByRoom', 'subscription', variables);
     },
+    getMessagesByUser(variables: GetMessagesByUserSubscriptionVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetMessagesByUserSubscription> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetMessagesByUserSubscription>(GetMessagesByUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getMessagesByUser', 'subscription', variables);
+    },
     addRoom(variables: AddRoomMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<AddRoomMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<AddRoomMutation>(AddRoomDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'addRoom', 'mutation', variables);
     },
@@ -1938,11 +1991,17 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     joinRoom(variables: JoinRoomMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<JoinRoomMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<JoinRoomMutation>(JoinRoomDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'joinRoom', 'mutation', variables);
     },
+    quitRoom(variables: QuitRoomMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<QuitRoomMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<QuitRoomMutation>(QuitRoomDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'quitRoom', 'mutation', variables);
+    },
     addUser(variables: AddUserMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<AddUserMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<AddUserMutation>(AddUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'addUser', 'mutation', variables);
     },
     getUsersByUsername(variables: GetUsersByUsernameQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetUsersByUsernameQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetUsersByUsernameQuery>(GetUsersByUsernameDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getUsersByUsername', 'query', variables);
+    },
+    deleteUser(variables: DeleteUserMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<DeleteUserMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<DeleteUserMutation>(DeleteUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'deleteUser', 'mutation', variables);
     }
   };
 }

@@ -74,4 +74,23 @@ router.get("/download", authenticate, (req, res) => {
   }
 });
 
+router.post("/delete", authenticate, (req, res) => {
+    const { room, filename } = req.body;
+    if (!room || !filename) {
+        return res.status(422).send("422 Unprocessable Entity: Missing room or filename");
+    }
+    const dir = path.resolve(baseDir, room, filename);
+    try {
+        if (fs.existsSync(dir)) {
+            fs.unlinkSync(dir);
+            return res.send("File deleted successfully");
+        } else {
+            return res.status(404).send("404 Not Found: File does not exist");
+        }
+    } catch (err) {
+        console.error(err);
+        return res.sendStatus(500);
+    }
+})
+
 export default router;
