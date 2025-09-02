@@ -1,0 +1,153 @@
+body {
+  text-align: center;
+  height: 100vh;
+  margin: 0;
+  background-image: url("./assets/about-me.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+body.dark-theme {
+  text-align: center;
+  height: 100vh;
+  margin: 0;
+  background-image: url("./assets/about_me_dark.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+h1 {
+  font-size: 25px;
+  margin-top: 100px;
+}
+
+body.dark-theme h1 {
+  font-size: 25px;
+  margin-top: 100px;
+  color: white;
+}
+
+body.dark-theme h2 {
+  font-size: 25px;
+  color: white;
+}
+
+body.dark-theme p {
+  color: #cccccc;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#contact-info {
+  color : #2979ae;
+  margin-top: 10px;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+body.dark-theme #contact-info {
+  margin-top: 10px;
+  font-size: 18px;
+  line-height: 1.6;
+  color: rgb(190, 190, 5);
+}
+
+.the-switch {
+  font-size: 15px;
+  margin-right: 5px;
+  color: white;
+  margin-top: 5px;
+}
+
+.lan-switch {
+  font-size: 15px;
+  margin-right: 5px;
+  color: black;
+  margin-top: 5px;
+}
+
+.theme-toggle {
+  display: none;
+}
+
+.lang-toggle {
+  display: none;
+}
+
+.theme-switch {
+  position: relative;
+  display: inline-block;
+  width: 38px;
+  height: 20px;
+}
+
+.lang-switch {
+  position: relative;
+  display: inline-block;
+  width: 38px;
+  height: 20px;
+}
+
+.slider {
+  position:absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #e2d3d3;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%; /* 圆形按钮 */
+}
+
+#theme-toggle:checked + .slider {
+  background-color: #2196F3; /* 开启时的颜色 */
+}
+
+#lang-toggle:checked + .slider {
+  background-color: #2196F3; /* 开启时的颜色 */
+}
+
+#theme-toggle:checked + .slider:before {
+  transform: translateX(18px); /* 移动按钮 */
+}
+
+#lang-toggle:checked + .slider:before {
+  transform: translateX(18px); /* 移动按钮 */
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: 10px;
+}
+
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: 10px;
+}
