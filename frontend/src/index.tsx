@@ -21,7 +21,7 @@ axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL!;
 axios.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
   if (token) {
-    config.headers.Authorization = "Bearer " + token;
+    (config.headers as any).Authorization = "Bearer " + token;
   }
   return config;
 });
@@ -95,32 +95,7 @@ const App = () => {
       user_uuid: user?.uuid,
     },
   });
-  useEffect(() => {
-    if (error) {
-      console.error(error);
-      message.error("获取房间列表失败！");
-    }
-  }, [error]);
 
-  const { data, error, refetch } = graphql.useGetJoinedRoomsQuery({
-    skip: !user,
-    variables: {
-      user_uuid: user?.uuid,
-    },
-  });
-  useEffect(() => {
-    if (error) {
-      console.error(error);
-      message.error("获取房间列表失败！");
-    }
-  }, [error]);
-
-  const { data, error, refetch } = graphql.useGetJoinedRoomsQuery({
-    skip: !user,
-    variables: {
-      user_uuid: user?.uuid,
-    },
-  });
   useEffect(() => {
     if (error) {
       console.error(error);
