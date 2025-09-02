@@ -11,13 +11,13 @@ object_relationships:
 insert_permissions:
   - role: user
     permission:
-      check: {}
+      check:
+        user_uuid:
+          _eq: X-Hasura-User-Id
       columns:
         - content
-        - created_at
+        - reply_to_uuid
         - room_uuid
-        - user_uuid
-        - uuid
     comment: ""
 select_permissions:
   - role: user
@@ -25,25 +25,27 @@ select_permissions:
       columns:
         - content
         - created_at
-        - room_uuid
+        - reply_to_uuid
         - user_uuid
         - uuid
-      filter: {}
+      filter:
+        room_uuid:
+          _in: X-Hasura-Allowed-Rooms
     comment: ""
 update_permissions:
   - role: user
     permission:
       columns:
         - content
-        - created_at
-        - room_uuid
-        - user_uuid
-        - uuid
-      filter: {}
+      filter:
+        user_uuid:
+          _eq: X-Hasura-User-Id
       check: {}
     comment: ""
 delete_permissions:
   - role: user
     permission:
-      filter: {}
+      filter:
+        user_uuid:
+          _eq: X-Hasura-User-Id
     comment: ""
