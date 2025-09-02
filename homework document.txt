@@ -1,0 +1,5 @@
+GitHub action的前端页面url进入仓库即可看到
+后端部署服务器ip地址43.156.127.75
+主域名：charlotteandange.online     #(域名夹带私货，我最喜欢的一对cp,安洁和夏洛特）
+frontend文件夹里的.env文件已经设置backend url为https://charlotteandange.online(若没有可手动修改）
+在frontend文件夹运行yarn start即可进入。

@@ -1,6 +1,13 @@
 /* eslint-disable eqeqeq */
 import message, { displaySuccessMessage, displayWarningMessage } from "./displayMessage.js";
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 import { apiUrl } from "./config.js";
+>>>>>>> main
+=======
+import { apiUrl } from "./config.js";
+>>>>>>> 58061e3c24aa825728f04f83fb051f70a03e4c23
 
 message("欢迎加入电子系科协，共同享受网页开发的乐趣");
 
@@ -85,7 +92,15 @@ for (let i = 0; i < planTitleDOMList.length; i++) {
 }
 
 const contactUsDOM = document.getElementById("contact-us");
+<<<<<<< HEAD
+<<<<<<< HEAD
+contactUsDOM.onsubmit = (event) => {
+=======
 contactUsDOM.onsubmit = async (event) => {
+>>>>>>> main
+=======
+contactUsDOM.onsubmit = async (event) => {
+>>>>>>> 58061e3c24aa825728f04f83fb051f70a03e4c23
   event.preventDefault();
   const formData = new FormData(contactUsDOM);
   const email = formData.get("email").toLowerCase();
@@ -101,6 +116,13 @@ contactUsDOM.onsubmit = async (event) => {
     displayWarningMessage("包含SQL关键字或非法字符！");
     return false;
   }
+<<<<<<< HEAD
+<<<<<<< HEAD
+  displaySuccessMessage("提交成功！");
+  return true;
+=======
+=======
+>>>>>>> 58061e3c24aa825728f04f83fb051f70a03e4c23
   try {
     const response = await fetch(`${apiUrl}/email/contact-us`, {
       method: "POST",
@@ -124,4 +146,8 @@ contactUsDOM.onsubmit = async (event) => {
     displayWarningMessage("提交失败！");
     return false;
   }
+<<<<<<< HEAD
+>>>>>>> main
+=======
+>>>>>>> 58061e3c24aa825728f04f83fb051f70a03e4c23
 };
