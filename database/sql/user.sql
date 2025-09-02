@@ -3,6 +3,7 @@ create table if not exists public.user (
   uuid uuid default gen_random_uuid() not null,
   username text not null unique,
   password text not null,
+  email text,
   primary key (uuid)
 );
 

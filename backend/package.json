@@ -21,6 +21,7 @@
     "typescript": "5.5.4"
   },
   "scripts": {
+    "generate": "npx graphql-codegen",
     "start": "nodemon src/index.ts",
     "build": "tsc",
     "serve": "node build/index.js",
