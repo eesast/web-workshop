@@ -5,7 +5,7 @@ mutation addReply($user_uuid: uuid!, $msg_uuid: uuid!, $content: String!) {
 }
 
 subscription getReplyByMessage($msg_uuid: uuid!) {
-  message(where: {msg_uuid: {_eq: $msg_uuid}}) {
+  reply(where: {msg_uuid: {_eq: $msg_uuid}}) {
     uuid
     user {
       uuid
