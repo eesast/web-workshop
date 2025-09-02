@@ -5,13 +5,54 @@ mutation addMessage($user_uuid: uuid!, $room_uuid: uuid!, $content: String!) {
 }
 
 subscription getMessagesByRoom($room_uuid: uuid!) {
-  message(where: {room_uuid: {_eq: $room_uuid}}) {
-    uuid
-    user {
+    message(
+      where: { room_uuid: { _eq: $room_uuid } }
+      order_by: { created_at: asc }
+    ) {
       uuid
-      username
+      user {
+        uuid
+        username
+      }
+      content
+      created_at
+      reply_to_uuid  # 确保包含这个字段
+      reply_to {     # 确保包含这个字段及其子字段
+        uuid
+        content
+        user {
+          username
+        }
+      }
     }
+  }
+# 在您的 .graphql 文件中添加
+mutation addReplyMessage(
+  $user_uuid: uuid!
+  $room_uuid: uuid!
+  $content: String!
+  $reply_to_uuid: uuid!
+) {
+  insert_message_one(
+    object: {
+      user_uuid: $user_uuid
+      room_uuid: $room_uuid
+      content: $content
+      reply_to_uuid: $reply_to_uuid
+    }
+  ) {
+    uuid
     content
     created_at
+    reply_to_uuid
+    user {
+      username
+    }
+    reply_to {
+      content
+      user {
+        username
+      }
+    }
   }
 }

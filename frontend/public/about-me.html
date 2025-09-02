@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>武昊阳的个人简介与音乐</title>
+    <link rel="stylesheet" href="about-me.css">
+</head>
+<body>
+    <!-- 暗色模式切换按钮 -->
+    <div class="theme-switch-wrapper">
+        <label class="theme-switch" for="checkbox">
+            <input type="checkbox" id="checkbox" />
+            <div class="slider"></div>
+        </label>
+        <span class="slider-text">暗色模式</span>
+    </div>
+    
+    <header>
+        <h1>武昊阳的个人简介</h1>
+        <p>清华大学新雅书院&电子系学生</p>
+    </header>
+    
+    <section class="intro">
+        <h2>自我介绍</h2>
+        <p>我叫武昊阳，来自内蒙古自治区包头市。</p>
+        <p>我热爱的运动是长跑，我喜欢在三千米中突破自我。</p>
+        <p>我最喜欢的歌手是维克多崔，最喜欢的歌曲是《血液型》。</p>
+    </section>
+    
+    <section class="table-section">
+        <h2>技能与经验</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>技能类别</th>
+                    <th>具体技能</th>
+                    <th>熟练程度</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>前端开发</td>
+                    <td>HTML, CSS, JavaScript</td>
+                    <td>啥也不会</td>
+                </tr>
+                <tr>
+                    <td>框架</td>
+                    <td>React, Vue, Angular</td>
+                    <td>啥也不会</td>
+                </tr>
+                <tr>
+                    <td>设计工具</td>
+                    <td>Photoshop, Figma, Sketch</td>
+                    <td>啥也不会</td>
+                </tr>
+                <tr>
+                    <td>后端知识</td>
+                    <td>Node.js, Express, MongoDB</td>
+                    <td>啥也不会</td>
+                </tr>
+                <tr>
+                    <td>吃饭</td>
+                    <td>美团，饿了么，大众点评</td>
+                    <td>精通</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    
+    <section class="gallery">
+        <h2>我亲爱的同学们</h2>
+        <div class="image-container">
+            <img src="friends1.jpg" alt="同学一">
+            <img src="friends2.jpg" alt="同学二">
+            <img src="friends3.jpg" alt="同学三">
+        </div>
+    </section>
+    
+    <section class="contact">
+        <h2>联系我</h2>
+        <form id="contact-form">
+            <div class="form-group">
+                <label for="name">姓名</label>
+                <input type="text" id="name" placeholder="请输入您的姓名" required>
+            </div>
+            <div class="form-group">
+                <label for="email">邮箱</label>
+                <input type="email" id="email" placeholder="请输入您的邮箱" required>
+            </div>
+            <div class="form-group">
+                <label for="message">消息</label>
+                <textarea id="message" placeholder="请输入您想发送的消息" required></textarea>
+            </div>
+            <button type="submit">发送消息</button>
+        </form>
+    </section>
+    
+    <!-- 网易云音乐播放器部分 -->
+    <section class="music-player-section">
+        <h2>我的音乐播放器</h2>
+        <div class="player-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6 18L18 18M6 14L18 14M6 10L14 10M6 6L12 6M16 16.5C16 17.3284 15.3284 18 14.5 18C13.6716 18 13 17.3284 13 16.5C13 15.6716 13.6716 15 14.5 15C15.3284 15 16 15.6716 16 16.5Z" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div class="logo-text">网易云音乐</div>
+            </div>
+            
+            <div class="player">
+                <div class="song-info">
+                    <div class="song-title" id="song-title">加载中...</div>
+                    <div class="song-artist" id="song-artist">网易云音乐</div>
+                </div>
+                
+                <div class="album-cover">
+                    <img id="cover" src="https://p2.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg" alt="专辑封面">
+                </div>
+                
+                <div class="progress-container" id="progress-container">
+                    <div class="progress" id="progress"></div>
+                </div>
+                
+                <div class="time">
+                    <span id="current-time">0:00</span>
+                    <span id="duration">0:00</span>
+                </div>
+                
+                <div class="controls">
+                    <button class="control-btn" id="prev">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19 20L9 12L19 4V20Z" fill="currentColor"/>
+                            <path d="M5 19V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    
+                    <button class="control-btn play-pause" id="play-pause">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" id="play-icon">
+                            <path d="M8 5V19L19 12L8 5Z" fill="currentColor"/>
+                        </svg>
+                    </button>
+                    
+                    <button class="control-btn" id="next">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 4V20L15 12L5 4Z" fill="currentColor"/>
+                            <path d="M19 5V19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="volume-container">
+                    <div class="volume-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 8.37003C15.9316 8.9664 16.5 10.0332 16.5 11.175C16.5 12.3169 15.9316 13.3837 15 13.98M18 6.71003C19.6517 7.96681 20.5 9.88869 20.5 11.175C20.5 12.4614 19.6517 14.3833 18 15.64M3 14.175V8.17503C3 7.62274 3.44772 7.17503 4 7.17503H7L11 3.17503V19.175L7 15.175H4C3.44772 15.175 3 14.7273 3 14.175Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <input type="range" class="volume-slider" id="volume" min="0" max="1" step="0.01" value="1">
+                </div>
+            </div>
+            
+            <div class="player-footer">
+                歌单ID: 12781341478 · By <a href="https://enashpinal.pages.dev" target="_blank">Enashpinal</a>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <p>© 2025 武昊阳 - 个人简介页面</p>
+    </footer>
+
+    <audio id="audio"></audio>
+
+    <script src="about-me.js"></script>
+</body>
+</html>
