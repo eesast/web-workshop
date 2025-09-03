@@ -4,6 +4,12 @@ mutation addUser($username: String!, $password: String!) {
   }
 }
 
+mutation updateUserPassword($uuid: uuid!, $password: String!) {
+  update_user(where: {uuid: {_eq: $uuid}}, _set: {password: $password}) {
+    affected_rows
+  }
+}
+
 query getUsersByUsername($username: String!) {
   user(where: {username: {_eq: $username}}) {
     uuid

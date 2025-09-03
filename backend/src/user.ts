@@ -1,6 +1,7 @@
 import express from "express";
 import jwt from "jsonwebtoken";
 import { sdk as graphql } from "./index";
+import { sendEmail } from "./email";
 
 interface userJWTPayload {
   uuid: string;
@@ -72,3 +73,49 @@ router.post("/register", async (req, res) => {
 });
 
 export default router;
+
+router.post("/change-password/request", async (req, res) => {
+  const { username } = req.body;
+  if (!username) {
+    return res.status(422).send("Missing username");
+  }
+  try {
+    const queryResult = await graphql.getUsersByUsername({ username });
+    if (queryResult.user.length === 0) {
+      return res.status(404).send("User not found");
+    }
+    const user = queryResult.user[0];
+    const token = jwt.sign(
+      { uuid: user.uuid },
+      process.env.JWT_SECRET!,
+      { expiresIn: "1h" });
+    const link = `http://localhost:8888/user/change-password/action?token=${token}`;
+    await sendEmail(username, "Password Reset Request", `Click this link: ${link}`);
+    return res.status(200).send("Reset email sent");
+  } catch (err) {
+    console.error(err);
+    return res.sendStatus(500);
+  }
+});
+
+router.post("/change-password/action", async (req, res) => {
+  const { token, newPassword } = req.body;
+  if (!token || !newPassword) {
+    return res.status(422).send("Missing token or newPassword");
+  }
+  try {
+    const payload: any = jwt.verify(token, process.env.JWT_SECRET!);
+    const uuid = payload.uuid;
+    const result = await graphql.updateUserPassword({
+      uuid,
+      password: newPassword,
+    });
+    if (result.update_user?.affected_rows === 0) {
+      return res.status(404).send("User not found");
+    }
+    return res.status(200).send("Password updated successfully");
+  } catch (err) {
+    console.error(err);
+    return res.sendStatus(500);
+  }
+});
