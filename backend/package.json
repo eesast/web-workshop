@@ -24,6 +24,7 @@
     "start": "nodemon src/index.ts",
     "build": "tsc",
     "serve": "node build/index.js",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "generate": "graphql-codegen"
   }
 }
