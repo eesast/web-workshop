@@ -3,6 +3,9 @@ import { Button, Input, message, Spin } from "antd";
 import { user } from "./getUser";
 import * as graphql from "./graphql";
 import { Bubble, Card, Container, Scroll, Text } from "./Components";
+import { Menu, Item, Separator, Submenu, useContextMenu } from 'react-contexify';
+import 'react-contexify/ReactContexify.css';
+const MENU_ID = 'reply-menu';
 
 interface ChatBoxProps {
   user: user | null;
@@ -152,6 +155,38 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ user, message }) => {
   const date = new Date(
     dateUTC.getTime() - dateUTC.getTimezoneOffset() * 60000
   );
+
+  const { show } = useContextMenu({
+    id: MENU_ID,
+  });
+
+  function handleContextMenu(event: any){
+      event.preventDefault();
+      show({
+        event,
+        props: {
+            key: 'value'
+        },
+        position: {
+          x: event.clientX - event.currentTarget.getBoundingClientRect().left,
+          y: event.clientY
+        },
+      })
+  }
+  // @ts-ignore
+  const handleItemClick = (args: ItemParams<any, any>) => {
+    const { id, event, props } = args;
+    switch (id) {
+      case "reply":
+        alert("reply");
+        break;
+      default:
+        break;
+      //etc...
+    }
+  }
+
+
   return (
     <div
       style={{
@@ -161,7 +196,11 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ user, message }) => {
         flexWrap: "nowrap",
         alignItems: isSelf ? "flex-end" : "flex-start",
       }}
+      onContextMenu={handleContextMenu}
     >
+    <Menu id={MENU_ID}>
+      <Item id="reply" onClick={handleItemClick}>Reply</Item>
+    </Menu>
       <div style={{ marginLeft: "12px", marginRight: "12px" }}>
         <Text size="small">{message.user.username}</Text>
         <Text size="small" style={{ marginLeft: "6px" }}>
