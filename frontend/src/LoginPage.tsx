@@ -1,28 +1,32 @@
 import md5 from "md5";
+import React, { useState} from "react";
 import axios, { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
-import { message, Typography } from "antd";
+import { message, Typography, Modal, Input, Form } from "antd";
 import {
   LoginFormPage,
   ProFormCheckbox,
   ProFormText,
 } from "@ant-design/pro-components";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
 
 const { Link } = Typography;
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [registerEmail, setRegisterEmail] = useState("");
+  const [registerValues, setRegisterValues] = useState<any>(null);
 
   const handleSumbit = async (values: any) => {
     try {
-      values.password = md5(values.password);
+      // values.password = md5(values.password);
       const response = await axios.post("/user/login", values);
       const { token } = response.data;
       localStorage.setItem("token", token);
       localStorage.setItem("username", values.username);
       message.success("登录成功！");
-      return navigate(-1);
+      return navigate("/main");
     } catch (error) {
       const err = error as AxiosError;
       if (
@@ -30,66 +34,96 @@ const LoginPage: React.FC = () => {
         (err.response?.data as string).includes("User does not exist")
       ) {
         message.info("未找到用户，正在创建新用户");
-        try {
-          const response = await axios.post("/user/register", values);
-          const { token } = response.data;
-          localStorage.setItem("token", token);
-          localStorage.setItem("username", values.username);
-          message.success("注册成功！");
-          return navigate(-1);
-        } catch (error) {
-          console.error(error);
-          message.error("注册失败！");
-        }
+        setRegisterValues(values);
+        setIsModalVisible(true);
       }
       console.error(error);
       message.error("登录失败！");
     }
   };
 
+  const handleRegister = async (values: any) => {
+    try {
+      const registerData = {
+        ...registerValues,
+        email: registerEmail
+      };
+      const response = await axios.post("/user/register", registerData);
+      const { token } = response.data;
+      localStorage.setItem("token", token);
+      localStorage.setItem("username", registerValues.username);
+      message.success("注册成功！");
+      setIsModalVisible(false);
+      return navigate(-1);
+    } catch (error) {
+      console.error(error);
+      message.error("注册失败！");
+    }
+  }
+
   const handleForgetPassword = () => {
-    message.info("暂未实现");
+    navigate("/user/change-password/request");
   };
 
   return (
-    <LoginFormPage
-      style={{ height: "100vh" }}
-      backgroundVideoUrl="https://gw.alipayobjects.com/v/huamei_gcee1x/afts/video/jXRBRK_VAwoAAAAAAAAAAAAAK4eUAQBr"
-      logo="https://eesast.com/android-chrome-192x192.png"
-      title="登录账户"
-      subTitle="科协暑培(网站部分)学习型工程"
-      submitter={{ searchConfig: { submitText: "登录 / 注册" } }}
-      onFinish={handleSumbit}
-    >
-      <ProFormText
-        name="username"
-        fieldProps={{
-          size: "large",
-          prefix: <UserOutlined />,
-        }}
-        placeholder="用户名"
-        rules={[{ required: true, message: "请输入用户名！" }]}
-        allowClear
-      />
-      <ProFormText.Password
-        name="password"
-        fieldProps={{
-          size: "large",
-          prefix: <LockOutlined />,
-        }}
-        placeholder="密码"
-        rules={[{ required: true, message: "请输入密码！" }]}
-        allowClear
-      />
-      <div style={{ marginBlockEnd: 24 }}>
-        <ProFormCheckbox noStyle name="autoRegister" initialValue={true}>
-          自动创建新用户
-        </ProFormCheckbox>
-        <Link style={{ float: "right" }} onClick={handleForgetPassword}>
-          忘记密码
-        </Link>
-      </div>
-    </LoginFormPage>
+    <>
+      <LoginFormPage
+        style={{ height: "100vh" }}
+        backgroundVideoUrl="https://gw.alipayobjects.com/v/huamei_gcee1x/afts/video/jXRBRK_VAwoAAAAAAAAAAAAAK4eUAQBr"
+        logo="https://eesast.com/android-chrome-192x192.png"
+        title="登录账户"
+        subTitle="科协暑培(网站部分)学习型工程"
+        submitter={{ searchConfig: { submitText: "登录 / 注册" } }}
+        onFinish={handleSumbit}
+      >
+        <ProFormText
+          name="username"
+          fieldProps={{
+            size: "large",
+            prefix: <UserOutlined />,
+          }}
+          placeholder="用户名"
+          rules={[{ required: true, message: "请输入用户名！" }]}
+          allowClear
+        />
+        <ProFormText.Password
+          name="password"
+          fieldProps={{
+            size: "large",
+            prefix: <LockOutlined />,
+          }}
+          placeholder="密码"
+          rules={[{ required: true, message: "请输入密码！" }]}
+          allowClear
+        />
+        <div style={{ marginBlockEnd: 24 }}>
+          <ProFormCheckbox noStyle name="autoRegister" initialValue={true}>
+            自动创建新用户
+          </ProFormCheckbox>
+          <Link style={{ float: "right" }} onClick={handleForgetPassword}>
+            忘记密码
+          </Link>
+        </div>
+      </LoginFormPage>
+      <Modal
+        title="注册新账户"
+        open={isModalVisible}
+        onOk={handleRegister}
+        onCancel={() => setIsModalVisible(false)}
+        okText="注册"
+        cancelText="取消"
+      >
+        <p>请输入您的邮箱地址：（可选）</p>
+        <Form.Item>
+          <Input
+            prefix={<MailOutlined />}
+            placeholder="邮箱地址"
+            value={registerEmail}
+            onChange={(e) => setRegisterEmail(e.target.value)}
+          />
+        </Form.Item>
+      </Modal>
+    </>
   );
 };
 

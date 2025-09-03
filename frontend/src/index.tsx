@@ -14,6 +14,8 @@ import getUser from "./getUser";
 
 const MainPanel = React.lazy(() => import("./MainPanel"));
 const LoginPage = React.lazy(() => import("./LoginPage"));
+const RequestResetPage = React.lazy(() => import("./RequestResetPage"));
+const ResetPasswordPage = React.lazy(() => import("./ResetPasswordPage"));
 const ChatBox = React.lazy(() => import("./ChatBox"));
 const FileShare = React.lazy(() => import("./FileShare"));
 
@@ -158,8 +160,11 @@ const domNode = document.getElementById("root");
 const root = createRoot(domNode!);
 const router = createHashRouter([
   { path: "/login", element: <LoginPage /> },
+  { path: "/user/change-password/request", element: <RequestResetPage />},
+  { path: "/user/change-password/action", element: <ResetPasswordPage />},
   { path: "*", element: <App /> },
 ]);
+
 root.render(
   <React.StrictMode>
     <Suspense fallback={null}>

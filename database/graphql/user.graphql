@@ -1,5 +1,5 @@
-mutation addUser($username: String!, $password: String!) {
-  insert_user_one(object: {username: $username, password: $password}) {
+mutation addUser($username: String!, $password: String!， $email: String) {
+  insert_user_one(object: {username: $username, password: $password, email: $email}) {
     uuid
   }
 }
@@ -8,5 +8,6 @@ query getUsersByUsername($username: String!) {
   user(where: {username: {_eq: $username}}) {
     uuid
     password
+    email
   }
 }
