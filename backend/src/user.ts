@@ -102,12 +102,11 @@ router.post("/change-password/request", async (req, res) => {
     },
   });
 
-  const resetLink = `http://localhost:8888/user/change-password/action?token=${token}`;
   await transporter.sendMail({
     from: process.env.EMAIL_ADDRESS,
     to: user.email,
     subject: "密码重置",
-    text: `请点击链接重置密码：${resetLink}`,
+    text: `重置密码验证token：${token}`,
   });
 
   res.status(200).json({ message: "Reset email sent" });
