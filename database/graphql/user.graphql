@@ -4,9 +4,29 @@ mutation addUser($username: String!, $password: String!) {
   }
 }
 
+mutation deleteUser($uuid: uuid!) {
+  delete_user(where: {uuid: {_eq: $uuid}}) {
+    affected_rows
+  }
+}
+
+mutation updateUserPassword($uuid: uuid!, $password: String!) {
+  update_user_by_pk(pk_columns: { uuid: $uuid }, _set: { password: $password }) {
+    uuid
+  }
+}
+
 query getUsersByUsername($username: String!) {
   user(where: {username: {_eq: $username}}) {
     uuid
     password
   }
 }
+
+query getUsersByUuid($uuid: uuid!) {
+  user(where: {uuid: {_eq: $uuid}}) {
+    username
+    password
+  }
+}
+
