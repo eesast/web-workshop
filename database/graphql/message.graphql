@@ -15,3 +15,11 @@ subscription getMessagesByRoom($room_uuid: uuid!) {
     created_at
   }
 }
+
+mutation AddMessage($user_uuid: uuid!, $room_uuid: uuid!, $content: String!, $reply_to_uuid: uuid) {
+  insert_message_one(object: {user_uuid: $user_uuid, room_uuid: $room_uuid, content: $content, reply_to_uuid: $reply_to_uuid}) {
+    uuid
+    content
+    reply_to_uuid
+  }
+}
