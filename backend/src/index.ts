@@ -16,6 +16,8 @@ dotenv.config({
   path: path.resolve(process.cwd(), ".local.env"),
 });
 
+console.log("JWT_SECRET: ", process.env.JWT_SECRET);
+
 const client = new GraphQLClient(
   process.env.HASURA_GRAPHQL_ENDPOINT!,
   {
