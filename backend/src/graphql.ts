@@ -212,6 +212,13 @@ export type Message_Mutation_Response = {
   returning: Array<Message>;
 };
 
+/** input type for inserting object relation for remote table "message" */
+export type Message_Obj_Rel_Insert_Input = {
+  data: Message_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Message_On_Conflict>;
+};
+
 /** on_conflict condition type for table "message" */
 export type Message_On_Conflict = {
   constraint: Message_Constraint;
@@ -772,7 +779,12 @@ export type Query_RootUser_Room_By_PkArgs = {
 export type Reply = {
   __typename?: 'reply';
   content: Scalars['String']['output'];
+  created_at: Scalars['timestamp']['output'];
+  /** An object relationship */
+  message?: Maybe<Message>;
   msg_uuid?: Maybe<Scalars['uuid']['output']>;
+  /** An object relationship */
+  user?: Maybe<User>;
   user_uuid?: Maybe<Scalars['uuid']['output']>;
   uuid: Scalars['uuid']['output'];
 };
@@ -805,7 +817,10 @@ export type Reply_Bool_Exp = {
   _not?: InputMaybe<Reply_Bool_Exp>;
   _or?: InputMaybe<Array<Reply_Bool_Exp>>;
   content?: InputMaybe<String_Comparison_Exp>;
+  created_at?: InputMaybe<Timestamp_Comparison_Exp>;
+  message?: InputMaybe<Message_Bool_Exp>;
   msg_uuid?: InputMaybe<Uuid_Comparison_Exp>;
+  user?: InputMaybe<User_Bool_Exp>;
   user_uuid?: InputMaybe<Uuid_Comparison_Exp>;
   uuid?: InputMaybe<Uuid_Comparison_Exp>;
 };
@@ -819,7 +834,10 @@ export enum Reply_Constraint {
 /** input type for inserting data into table "reply" */
 export type Reply_Insert_Input = {
   content?: InputMaybe<Scalars['String']['input']>;
+  created_at?: InputMaybe<Scalars['timestamp']['input']>;
+  message?: InputMaybe<Message_Obj_Rel_Insert_Input>;
   msg_uuid?: InputMaybe<Scalars['uuid']['input']>;
+  user?: InputMaybe<User_Obj_Rel_Insert_Input>;
   user_uuid?: InputMaybe<Scalars['uuid']['input']>;
   uuid?: InputMaybe<Scalars['uuid']['input']>;
 };
@@ -828,6 +846,7 @@ export type Reply_Insert_Input = {
 export type Reply_Max_Fields = {
   __typename?: 'reply_max_fields';
   content?: Maybe<Scalars['String']['output']>;
+  created_at?: Maybe<Scalars['timestamp']['output']>;
   msg_uuid?: Maybe<Scalars['uuid']['output']>;
   user_uuid?: Maybe<Scalars['uuid']['output']>;
   uuid?: Maybe<Scalars['uuid']['output']>;
@@ -837,6 +856,7 @@ export type Reply_Max_Fields = {
 export type Reply_Min_Fields = {
   __typename?: 'reply_min_fields';
   content?: Maybe<Scalars['String']['output']>;
+  created_at?: Maybe<Scalars['timestamp']['output']>;
   msg_uuid?: Maybe<Scalars['uuid']['output']>;
   user_uuid?: Maybe<Scalars['uuid']['output']>;
   uuid?: Maybe<Scalars['uuid']['output']>;
@@ -861,7 +881,10 @@ export type Reply_On_Conflict = {
 /** Ordering options when selecting data from "reply". */
 export type Reply_Order_By = {
   content?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  message?: InputMaybe<Message_Order_By>;
   msg_uuid?: InputMaybe<Order_By>;
+  user?: InputMaybe<User_Order_By>;
   user_uuid?: InputMaybe<Order_By>;
   uuid?: InputMaybe<Order_By>;
 };
@@ -876,6 +899,8 @@ export enum Reply_Select_Column {
   /** column name */
   Content = 'content',
   /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
   MsgUuid = 'msg_uuid',
   /** column name */
   UserUuid = 'user_uuid',
@@ -886,6 +911,7 @@ export enum Reply_Select_Column {
 /** input type for updating data in table "reply" */
 export type Reply_Set_Input = {
   content?: InputMaybe<Scalars['String']['input']>;
+  created_at?: InputMaybe<Scalars['timestamp']['input']>;
   msg_uuid?: InputMaybe<Scalars['uuid']['input']>;
   user_uuid?: InputMaybe<Scalars['uuid']['input']>;
   uuid?: InputMaybe<Scalars['uuid']['input']>;
@@ -902,6 +928,7 @@ export type Reply_Stream_Cursor_Input = {
 /** Initial value of the column from where the streaming should start */
 export type Reply_Stream_Cursor_Value_Input = {
   content?: InputMaybe<Scalars['String']['input']>;
+  created_at?: InputMaybe<Scalars['timestamp']['input']>;
   msg_uuid?: InputMaybe<Scalars['uuid']['input']>;
   user_uuid?: InputMaybe<Scalars['uuid']['input']>;
   uuid?: InputMaybe<Scalars['uuid']['input']>;
@@ -911,6 +938,8 @@ export type Reply_Stream_Cursor_Value_Input = {
 export enum Reply_Update_Column {
   /** column name */
   Content = 'content',
+  /** column name */
+  CreatedAt = 'created_at',
   /** column name */
   MsgUuid = 'msg_uuid',
   /** column name */
@@ -1800,6 +1829,22 @@ export type GetMessagesByUserSubscriptionVariables = Exact<{
 
 export type GetMessagesByUserSubscription = { __typename?: 'subscription_root', message: Array<{ __typename?: 'message', uuid: any, content: string, created_at: any, room: { __typename?: 'room', uuid: any } }> };
 
+export type AddReplyMutationVariables = Exact<{
+  user_uuid: Scalars['uuid']['input'];
+  msg_uuid: Scalars['uuid']['input'];
+  content: Scalars['String']['input'];
+}>;
+
+
+export type AddReplyMutation = { __typename?: 'mutation_root', insert_reply_one?: { __typename?: 'reply', uuid: any } | null };
+
+export type GetReplyByMessageSubscriptionVariables = Exact<{
+  msg_uuid: Scalars['uuid']['input'];
+}>;
+
+
+export type GetReplyByMessageSubscription = { __typename?: 'subscription_root', reply: Array<{ __typename?: 'reply', uuid: any, content: string, created_at: any, user?: { __typename?: 'user', uuid: any, username: string } | null }> };
+
 export type AddRoomMutationVariables = Exact<{
   name: Scalars['String']['input'];
   intro: Scalars['String']['input'];
@@ -1896,6 +1941,28 @@ export const GetMessagesByUserDocument = gql`
   }
 }
     `;
+export const AddReplyDocument = gql`
+    mutation addReply($user_uuid: uuid!, $msg_uuid: uuid!, $content: String!) {
+  insert_reply_one(
+    object: {user_uuid: $user_uuid, msg_uuid: $msg_uuid, content: $content}
+  ) {
+    uuid
+  }
+}
+    `;
+export const GetReplyByMessageDocument = gql`
+    subscription getReplyByMessage($msg_uuid: uuid!) {
+  reply(where: {msg_uuid: {_eq: $msg_uuid}}) {
+    uuid
+    user {
+      uuid
+      username
+    }
+    content
+    created_at
+  }
+}
+    `;
 export const AddRoomDocument = gql`
     mutation addRoom($name: String!, $intro: String!, $invite_code: String!) {
   insert_room_one(object: {name: $name, intro: $intro, invite_code: $invite_code}) {
@@ -1978,6 +2045,12 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     getMessagesByUser(variables: GetMessagesByUserSubscriptionVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetMessagesByUserSubscription> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetMessagesByUserSubscription>(GetMessagesByUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getMessagesByUser', 'subscription', variables);
+    },
+    addReply(variables: AddReplyMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<AddReplyMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<AddReplyMutation>(AddReplyDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'addReply', 'mutation', variables);
+    },
+    getReplyByMessage(variables: GetReplyByMessageSubscriptionVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetReplyByMessageSubscription> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetReplyByMessageSubscription>(GetReplyByMessageDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getReplyByMessage', 'subscription', variables);
     },
     addRoom(variables: AddRoomMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<AddRoomMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<AddRoomMutation>(AddRoomDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'addRoom', 'mutation', variables);

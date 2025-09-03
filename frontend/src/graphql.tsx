@@ -212,6 +212,13 @@ export type Message_Mutation_Response = {
   returning: Array<Message>;
 };
 
+/** input type for inserting object relation for remote table "message" */
+export type Message_Obj_Rel_Insert_Input = {
+  data: Message_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Message_On_Conflict>;
+};
+
 /** on_conflict condition type for table "message" */
 export type Message_On_Conflict = {
   constraint: Message_Constraint;
@@ -772,7 +779,12 @@ export type Query_RootUser_Room_By_PkArgs = {
 export type Reply = {
   __typename?: 'reply';
   content: Scalars['String']['output'];
+  created_at: Scalars['timestamp']['output'];
+  /** An object relationship */
+  message?: Maybe<Message>;
   msg_uuid?: Maybe<Scalars['uuid']['output']>;
+  /** An object relationship */
+  user?: Maybe<User>;
   user_uuid?: Maybe<Scalars['uuid']['output']>;
   uuid: Scalars['uuid']['output'];
 };
@@ -805,7 +817,10 @@ export type Reply_Bool_Exp = {
   _not?: InputMaybe<Reply_Bool_Exp>;
   _or?: InputMaybe<Array<Reply_Bool_Exp>>;
   content?: InputMaybe<String_Comparison_Exp>;
+  created_at?: InputMaybe<Timestamp_Comparison_Exp>;
+  message?: InputMaybe<Message_Bool_Exp>;
   msg_uuid?: InputMaybe<Uuid_Comparison_Exp>;
+  user?: InputMaybe<User_Bool_Exp>;
   user_uuid?: InputMaybe<Uuid_Comparison_Exp>;
   uuid?: InputMaybe<Uuid_Comparison_Exp>;
 };
@@ -819,7 +834,10 @@ export enum Reply_Constraint {
 /** input type for inserting data into table "reply" */
 export type Reply_Insert_Input = {
   content?: InputMaybe<Scalars['String']['input']>;
+  created_at?: InputMaybe<Scalars['timestamp']['input']>;
+  message?: InputMaybe<Message_Obj_Rel_Insert_Input>;
   msg_uuid?: InputMaybe<Scalars['uuid']['input']>;
+  user?: InputMaybe<User_Obj_Rel_Insert_Input>;
   user_uuid?: InputMaybe<Scalars['uuid']['input']>;
   uuid?: InputMaybe<Scalars['uuid']['input']>;
 };
@@ -828,6 +846,7 @@ export type Reply_Insert_Input = {
 export type Reply_Max_Fields = {
   __typename?: 'reply_max_fields';
   content?: Maybe<Scalars['String']['output']>;
+  created_at?: Maybe<Scalars['timestamp']['output']>;
   msg_uuid?: Maybe<Scalars['uuid']['output']>;
   user_uuid?: Maybe<Scalars['uuid']['output']>;
   uuid?: Maybe<Scalars['uuid']['output']>;
@@ -837,6 +856,7 @@ export type Reply_Max_Fields = {
 export type Reply_Min_Fields = {
   __typename?: 'reply_min_fields';
   content?: Maybe<Scalars['String']['output']>;
+  created_at?: Maybe<Scalars['timestamp']['output']>;
   msg_uuid?: Maybe<Scalars['uuid']['output']>;
   user_uuid?: Maybe<Scalars['uuid']['output']>;
   uuid?: Maybe<Scalars['uuid']['output']>;
@@ -861,7 +881,10 @@ export type Reply_On_Conflict = {
 /** Ordering options when selecting data from "reply". */
 export type Reply_Order_By = {
   content?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  message?: InputMaybe<Message_Order_By>;
   msg_uuid?: InputMaybe<Order_By>;
+  user?: InputMaybe<User_Order_By>;
   user_uuid?: InputMaybe<Order_By>;
   uuid?: InputMaybe<Order_By>;
 };
@@ -876,6 +899,8 @@ export enum Reply_Select_Column {
   /** column name */
   Content = 'content',
   /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
   MsgUuid = 'msg_uuid',
   /** column name */
   UserUuid = 'user_uuid',
@@ -886,6 +911,7 @@ export enum Reply_Select_Column {
 /** input type for updating data in table "reply" */
 export type Reply_Set_Input = {
   content?: InputMaybe<Scalars['String']['input']>;
+  created_at?: InputMaybe<Scalars['timestamp']['input']>;
   msg_uuid?: InputMaybe<Scalars['uuid']['input']>;
   user_uuid?: InputMaybe<Scalars['uuid']['input']>;
   uuid?: InputMaybe<Scalars['uuid']['input']>;
@@ -902,6 +928,7 @@ export type Reply_Stream_Cursor_Input = {
 /** Initial value of the column from where the streaming should start */
 export type Reply_Stream_Cursor_Value_Input = {
   content?: InputMaybe<Scalars['String']['input']>;
+  created_at?: InputMaybe<Scalars['timestamp']['input']>;
   msg_uuid?: InputMaybe<Scalars['uuid']['input']>;
   user_uuid?: InputMaybe<Scalars['uuid']['input']>;
   uuid?: InputMaybe<Scalars['uuid']['input']>;
@@ -911,6 +938,8 @@ export type Reply_Stream_Cursor_Value_Input = {
 export enum Reply_Update_Column {
   /** column name */
   Content = 'content',
+  /** column name */
+  CreatedAt = 'created_at',
   /** column name */
   MsgUuid = 'msg_uuid',
   /** column name */
@@ -1793,6 +1822,29 @@ export type GetMessagesByRoomSubscriptionVariables = Exact<{
 
 export type GetMessagesByRoomSubscription = { __typename?: 'subscription_root', message: Array<{ __typename?: 'message', uuid: any, content: string, created_at: any, user: { __typename?: 'user', uuid: any, username: string } }> };
 
+export type GetMessagesByUserSubscriptionVariables = Exact<{
+  user_uuid: Scalars['uuid']['input'];
+}>;
+
+
+export type GetMessagesByUserSubscription = { __typename?: 'subscription_root', message: Array<{ __typename?: 'message', uuid: any, content: string, created_at: any, room: { __typename?: 'room', uuid: any } }> };
+
+export type AddReplyMutationVariables = Exact<{
+  user_uuid: Scalars['uuid']['input'];
+  msg_uuid: Scalars['uuid']['input'];
+  content: Scalars['String']['input'];
+}>;
+
+
+export type AddReplyMutation = { __typename?: 'mutation_root', insert_reply_one?: { __typename?: 'reply', uuid: any } | null };
+
+export type GetReplyByMessageSubscriptionVariables = Exact<{
+  msg_uuid: Scalars['uuid']['input'];
+}>;
+
+
+export type GetReplyByMessageSubscription = { __typename?: 'subscription_root', reply: Array<{ __typename?: 'reply', uuid: any, content: string, created_at: any, user?: { __typename?: 'user', uuid: any, username: string } | null }> };
+
 export type AddRoomMutationVariables = Exact<{
   name: Scalars['String']['input'];
   intro: Scalars['String']['input'];
@@ -1824,6 +1876,14 @@ export type JoinRoomMutationVariables = Exact<{
 
 export type JoinRoomMutation = { __typename?: 'mutation_root', insert_user_room_one?: { __typename?: 'user_room', user_uuid: any, room_uuid: any } | null };
 
+export type QuitRoomMutationVariables = Exact<{
+  user_uuid: Scalars['uuid']['input'];
+  room_uuid: Scalars['uuid']['input'];
+}>;
+
+
+export type QuitRoomMutation = { __typename?: 'mutation_root', delete_user_room?: { __typename?: 'user_room_mutation_response', affected_rows: number } | null };
+
 export type AddUserMutationVariables = Exact<{
   username: Scalars['String']['input'];
   password: Scalars['String']['input'];
@@ -1838,6 +1898,13 @@ export type GetUsersByUsernameQueryVariables = Exact<{
 
 
 export type GetUsersByUsernameQuery = { __typename?: 'query_root', user: Array<{ __typename?: 'user', uuid: any, password: string }> };
+
+export type DeleteUserMutationVariables = Exact<{
+  uuid: Scalars['uuid']['input'];
+}>;
+
+
+export type DeleteUserMutation = { __typename?: 'mutation_root', delete_user_by_pk?: { __typename?: 'user', uuid: any } | null };
 
 
 export const AddMessageDocument = gql`
@@ -1913,6 +1980,114 @@ export function useGetMessagesByRoomSubscription(baseOptions: Apollo.Subscriptio
       }
 export type GetMessagesByRoomSubscriptionHookResult = ReturnType<typeof useGetMessagesByRoomSubscription>;
 export type GetMessagesByRoomSubscriptionResult = Apollo.SubscriptionResult<GetMessagesByRoomSubscription>;
+export const GetMessagesByUserDocument = gql`
+    subscription getMessagesByUser($user_uuid: uuid!) {
+  message(where: {user_uuid: {_eq: $user_uuid}}) {
+    uuid
+    room {
+      uuid
+    }
+    content
+    created_at
+  }
+}
+    `;
+
+/**
+ * __useGetMessagesByUserSubscription__
+ *
+ * To run a query within a React component, call `useGetMessagesByUserSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useGetMessagesByUserSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMessagesByUserSubscription({
+ *   variables: {
+ *      user_uuid: // value for 'user_uuid'
+ *   },
+ * });
+ */
+export function useGetMessagesByUserSubscription(baseOptions: Apollo.SubscriptionHookOptions<GetMessagesByUserSubscription, GetMessagesByUserSubscriptionVariables> & ({ variables: GetMessagesByUserSubscriptionVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<GetMessagesByUserSubscription, GetMessagesByUserSubscriptionVariables>(GetMessagesByUserDocument, options);
+      }
+export type GetMessagesByUserSubscriptionHookResult = ReturnType<typeof useGetMessagesByUserSubscription>;
+export type GetMessagesByUserSubscriptionResult = Apollo.SubscriptionResult<GetMessagesByUserSubscription>;
+export const AddReplyDocument = gql`
+    mutation addReply($user_uuid: uuid!, $msg_uuid: uuid!, $content: String!) {
+  insert_reply_one(
+    object: {user_uuid: $user_uuid, msg_uuid: $msg_uuid, content: $content}
+  ) {
+    uuid
+  }
+}
+    `;
+export type AddReplyMutationFn = Apollo.MutationFunction<AddReplyMutation, AddReplyMutationVariables>;
+
+/**
+ * __useAddReplyMutation__
+ *
+ * To run a mutation, you first call `useAddReplyMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddReplyMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addReplyMutation, { data, loading, error }] = useAddReplyMutation({
+ *   variables: {
+ *      user_uuid: // value for 'user_uuid'
+ *      msg_uuid: // value for 'msg_uuid'
+ *      content: // value for 'content'
+ *   },
+ * });
+ */
+export function useAddReplyMutation(baseOptions?: Apollo.MutationHookOptions<AddReplyMutation, AddReplyMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddReplyMutation, AddReplyMutationVariables>(AddReplyDocument, options);
+      }
+export type AddReplyMutationHookResult = ReturnType<typeof useAddReplyMutation>;
+export type AddReplyMutationResult = Apollo.MutationResult<AddReplyMutation>;
+export type AddReplyMutationOptions = Apollo.BaseMutationOptions<AddReplyMutation, AddReplyMutationVariables>;
+export const GetReplyByMessageDocument = gql`
+    subscription getReplyByMessage($msg_uuid: uuid!) {
+  reply(where: {msg_uuid: {_eq: $msg_uuid}}) {
+    uuid
+    user {
+      uuid
+      username
+    }
+    content
+    created_at
+  }
+}
+    `;
+
+/**
+ * __useGetReplyByMessageSubscription__
+ *
+ * To run a query within a React component, call `useGetReplyByMessageSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useGetReplyByMessageSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetReplyByMessageSubscription({
+ *   variables: {
+ *      msg_uuid: // value for 'msg_uuid'
+ *   },
+ * });
+ */
+export function useGetReplyByMessageSubscription(baseOptions: Apollo.SubscriptionHookOptions<GetReplyByMessageSubscription, GetReplyByMessageSubscriptionVariables> & ({ variables: GetReplyByMessageSubscriptionVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<GetReplyByMessageSubscription, GetReplyByMessageSubscriptionVariables>(GetReplyByMessageDocument, options);
+      }
+export type GetReplyByMessageSubscriptionHookResult = ReturnType<typeof useGetReplyByMessageSubscription>;
+export type GetReplyByMessageSubscriptionResult = Apollo.SubscriptionResult<GetReplyByMessageSubscription>;
 export const AddRoomDocument = gql`
     mutation addRoom($name: String!, $intro: String!, $invite_code: String!) {
   insert_room_one(object: {name: $name, intro: $intro, invite_code: $invite_code}) {
@@ -2069,6 +2244,42 @@ export function useJoinRoomMutation(baseOptions?: Apollo.MutationHookOptions<Joi
 export type JoinRoomMutationHookResult = ReturnType<typeof useJoinRoomMutation>;
 export type JoinRoomMutationResult = Apollo.MutationResult<JoinRoomMutation>;
 export type JoinRoomMutationOptions = Apollo.BaseMutationOptions<JoinRoomMutation, JoinRoomMutationVariables>;
+export const QuitRoomDocument = gql`
+    mutation quitRoom($user_uuid: uuid!, $room_uuid: uuid!) {
+  delete_user_room(
+    where: {user_uuid: {_eq: $user_uuid}, room_uuid: {_eq: $room_uuid}}
+  ) {
+    affected_rows
+  }
+}
+    `;
+export type QuitRoomMutationFn = Apollo.MutationFunction<QuitRoomMutation, QuitRoomMutationVariables>;
+
+/**
+ * __useQuitRoomMutation__
+ *
+ * To run a mutation, you first call `useQuitRoomMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useQuitRoomMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [quitRoomMutation, { data, loading, error }] = useQuitRoomMutation({
+ *   variables: {
+ *      user_uuid: // value for 'user_uuid'
+ *      room_uuid: // value for 'room_uuid'
+ *   },
+ * });
+ */
+export function useQuitRoomMutation(baseOptions?: Apollo.MutationHookOptions<QuitRoomMutation, QuitRoomMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<QuitRoomMutation, QuitRoomMutationVariables>(QuitRoomDocument, options);
+      }
+export type QuitRoomMutationHookResult = ReturnType<typeof useQuitRoomMutation>;
+export type QuitRoomMutationResult = Apollo.MutationResult<QuitRoomMutation>;
+export type QuitRoomMutationOptions = Apollo.BaseMutationOptions<QuitRoomMutation, QuitRoomMutationVariables>;
 export const AddUserDocument = gql`
     mutation addUser($username: String!, $password: String!) {
   insert_user_one(object: {username: $username, password: $password}) {
@@ -2144,3 +2355,36 @@ export type GetUsersByUsernameQueryHookResult = ReturnType<typeof useGetUsersByU
 export type GetUsersByUsernameLazyQueryHookResult = ReturnType<typeof useGetUsersByUsernameLazyQuery>;
 export type GetUsersByUsernameSuspenseQueryHookResult = ReturnType<typeof useGetUsersByUsernameSuspenseQuery>;
 export type GetUsersByUsernameQueryResult = Apollo.QueryResult<GetUsersByUsernameQuery, GetUsersByUsernameQueryVariables>;
+export const DeleteUserDocument = gql`
+    mutation deleteUser($uuid: uuid!) {
+  delete_user_by_pk(uuid: $uuid) {
+    uuid
+  }
+}
+    `;
+export type DeleteUserMutationFn = Apollo.MutationFunction<DeleteUserMutation, DeleteUserMutationVariables>;
+
+/**
+ * __useDeleteUserMutation__
+ *
+ * To run a mutation, you first call `useDeleteUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteUserMutation, { data, loading, error }] = useDeleteUserMutation({
+ *   variables: {
+ *      uuid: // value for 'uuid'
+ *   },
+ * });
+ */
+export function useDeleteUserMutation(baseOptions?: Apollo.MutationHookOptions<DeleteUserMutation, DeleteUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteUserMutation, DeleteUserMutationVariables>(DeleteUserDocument, options);
+      }
+export type DeleteUserMutationHookResult = ReturnType<typeof useDeleteUserMutation>;
+export type DeleteUserMutationResult = Apollo.MutationResult<DeleteUserMutation>;
+export type DeleteUserMutationOptions = Apollo.BaseMutationOptions<DeleteUserMutation, DeleteUserMutationVariables>;
