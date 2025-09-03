@@ -2,6 +2,7 @@ import express from "express";
 import jwt from "jsonwebtoken";
 import { sdk as graphql } from "./index";
 import nodemailer from "nodemailer";
+import crypto from "crypto";
 
 interface userJWTPayload {
   uuid: string;
@@ -24,7 +25,8 @@ router.post("/login", async (req, res) => {
       return res.status(404).send("404 Not Found: User does not exist");
     }
     const user = queryResult.user[0];
-    if (user.password !== password) {
+    const hashedPassword = crypto.createHash("md5").update(password).digest("hex");
+    if (user.password !== hashedPassword) {
       return res.status(401).send("401 Unauthorized: Password does not match");
     }
     const payload: userJWTPayload = {
@@ -54,7 +56,8 @@ router.post("/register", async (req, res) => {
     if (queryResult.user.length !== 0) {
       return res.status(409).send("409 Conflict: User already exists");
     }
-    const mutationResult = await graphql.addUser({ username: username, password: password, email: email });
+    const hashedPassword = crypto.createHash("md5").update(password).digest("hex");
+    const mutationResult = await graphql.addUser({ username: username, password: hashedPassword, email: email ?? null });
     const payload: userJWTPayload = {
       uuid: mutationResult.insert_user_one?.uuid,
       "https://hasura.io/jwt/claims": {
@@ -123,7 +126,8 @@ router.post("/change-password/action", async (req, res) => {
 
   // 修改数据库密码
   try {
-    await graphql.updateUserPassword({ username: payload.username, password: newPassword });
+    const hashedPassword = crypto.createHash("md5").update(newPassword).digest("hex");
+    await graphql.updateUserPassword({ username: payload.username, password: hashedPassword });
     res.status(200).json({ message: "Password updated" });
   } catch {
     res.status(500).json({ error: "Database error" });

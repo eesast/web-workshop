@@ -1839,8 +1839,8 @@ export type JoinRoomMutationHookResult = ReturnType<typeof useJoinRoomMutation>;
 export type JoinRoomMutationResult = Apollo.MutationResult<JoinRoomMutation>;
 export type JoinRoomMutationOptions = Apollo.BaseMutationOptions<JoinRoomMutation, JoinRoomMutationVariables>;
 export const AddUserDocument = gql`
-    mutation addUser($username: String!, $password: String!) {
-  insert_user_one(object: {username: $username, password: $password}) {
+    mutation addUser($username: String!, $password: String!, $email: String) {
+  insert_user_one(object: {username: $username, password: $password, email: $email}) {
     uuid
   }
 }

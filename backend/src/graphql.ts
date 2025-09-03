@@ -1597,7 +1597,7 @@ export type JoinRoomMutation = { __typename?: 'mutation_root', insert_user_room_
 export type AddUserMutationVariables = Exact<{
   username: Scalars['String']['input'];
   password: Scalars['String']['input'];
-  email: Scalars['String']['input'];
+  email: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -1677,12 +1677,12 @@ export const JoinRoomDocument = gql`
 }
     `;
 export const AddUserDocument = gql`
-    mutation addUser($username: String!, $password: String!, $email: String!) {
+  mutation addUser($username: String!, $password: String!, $email: String) {
   insert_user_one(object: {username: $username, password: $password, email: $email}) {
-    uuid
+  uuid
   }
 }
-    `;
+  `;
 export const GetUsersByUsernameDocument = gql`
     query getUsersByUsername($username: String!) {
   user(where: {username: {_eq: $username}}) {

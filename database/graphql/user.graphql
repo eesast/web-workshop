@@ -1,4 +1,4 @@
-mutation addUser($username: String!, $password: String!， $email: String!) {
+mutation addUser($username: String!, $password: String!， $email: String) {
   insert_user_one(object: {username: $username, password: $password, email: $email}) {
     uuid
   }
