@@ -1,0 +1,108 @@
+/* 基础样式 */
+body {
+  height: 100%;
+  margin: 0;
+  background-image: url("./assets/background.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+
+}
+
+/* 滚动动画 */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 平滑滚动 */
+html {
+  scroll-behavior: smooth;
+}
+
+
+/* 表单元素焦点样式 */
+input:focus,
+textarea:focus {
+  outline: none;
+}
+
+/* 博客文章图片悬停效果 */
+.card-hover img {
+  transition: transform 0.3s ease;
+}
+
+.card-hover:hover img {
+  transform: scale(1.05);
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .prose-lg {
+    font-size: 1rem;
+  }
+
+  #root {
+    padding-top: 16px;
+  }
+
+  header {
+    margin-bottom: 10px;
+  }
+}
+
+/* 按钮和链接交互效果 */
+a, button {
+  transition: all 0.2s ease;
+}
+
+button:hover, a:hover {
+  transform: translateY(-2px);
+}
+
+/* 卡片阴影效果 */
+.shadow-xl {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* 消息提示样式 */
+.message-toast {
+  position: fixed;
+  top: 46px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #f0f9ff;
+  color: #1890ff;
+  padding: 11px 24px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-left: 3px solid #1890ff;
+  z-index: 9999;
+  transition: all 0.3s ease;
+}
+
+/* 音乐播放器样式 */
+#musicPlayerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(-10px);
+  height: 0;
+  overflow: hidden;
+}
+#musicPlayerContainer.show {
+  opacity: 1;
+  transform: translateY(0);
+  height: auto;
+  margin-top: 1rem;
+}

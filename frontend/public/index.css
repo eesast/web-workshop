@@ -6,9 +6,10 @@
 }
 
 #main-background-music {
-  position: absolute;
+  position: fixed;
   right: 12px;
   bottom: 12px;
+  z-index: 100;
 }
 
 #about-main-frame {
@@ -61,4 +62,19 @@
 
 .styled-list li {
   line-height: 2em;
+}
+
+#clock {
+  position: absolute;
+  bottom: 0;
+  left: 12px;
+  width: 40vw;
+}
+
+#motto {
+  position: absolute;
+  bottom: 0;
+  right: 12px;
+  text-align: right;
+  width: 40vw;
 }
