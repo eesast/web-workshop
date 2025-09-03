@@ -11,7 +11,8 @@ alter table public.message
 add constraint message_user_uuid_fkey foreign key (user_uuid) references public.user (uuid) on update cascade on delete cascade;
 alter table public.message
 add constraint message_room_uuid_fkey foreign key (room_uuid) references public.room (uuid) on update cascade on delete cascade;
-
+alter table public.message
+add column reply_to_uuid uuid references public.message(uuid) on update cascade on delete cascade;
 insert into public.message (user_uuid, room_uuid, content) values
 ('00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-100000000001', '大家好，我叫张三'),
 ('00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-100000000001', '大家好，我是李四'),
