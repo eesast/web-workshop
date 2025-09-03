@@ -94,13 +94,23 @@
         清华大学 | 笃实书院 | 菜狗 | prompt大师 | 别看了，没了...
       </p>
 
-      <div class="flex justify-center gap-4 mt-8">
+    <!-- 按钮组 -->
+      <div class="flex flex-wrap justify-center gap-4 mt-8">
         <a href="#contact" class="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-full transition-all shadow-lg hover:shadow-xl flex items-center gap-2">
           <i class="fa fa-envelope"></i> 联系我
         </a>
         <a href="#blog" class="bg-white/90 hover:bg-white text-gray-800 px-6 py-3 rounded-full transition-all shadow-lg hover:shadow-xl flex items-center gap-2">
           <i class="fa fa-book"></i> 查看博客
         </a>
+        <!-- 听点音乐按钮 -->
+        <button id="musicToggleBtn" class="bg-accent hover:bg-accent/90 text-white px-6 py-3 rounded-full transition-all shadow-lg hover:shadow-xl flex items-center gap-2">
+          <i class="fa fa-music"></i> 听点音乐
+        </button>
+      </div>
+
+      <!-- 音乐播放器容器（默认隐藏） -->
+      <div id="musicPlayerContainer" class="flex justify-center mt-4">
+        <iframe src="https://enamscard.pages.dev/?playlist=14239174797&theme=dark&themeColor=%23008eff" width="280" height="130" style="border: none; border-radius: 8px;" frameborder="0"></iframe>
       </div>
     </header>
 
@@ -458,6 +468,6 @@
     </div>
   </footer>
 
-  <script src="./about-me.js"></script>
+  <script  src="./about-me.js"></script>
 </body>
 </html>
