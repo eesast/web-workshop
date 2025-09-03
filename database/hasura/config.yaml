@@ -1,2 +1,5 @@
 version: 3
+endpoint: https://intimate-tiger-95.hasura.app
+admin_secret: 3mJJBsnvjLlgFZOBzjpzq80q0K1e8PVs9ZzdvsJdicCoREz7Ibm0NchiS6NV10pM
 metadata_directory: metadata
+migrations_directory: migrations
