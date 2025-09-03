@@ -10,3 +10,20 @@ query getUsersByUsername($username: String!) {
     password
   }
 }
+
+query getUserByUsername($username: String!) {
+  user(where: {username: {_eq: $username}}) {
+    uuid
+    username
+  }
+}
+
+mutation updateUserPassword($uuid: uuid!, $newPasswordHash: String!) {
+  update_user(where: {uuid: {_eq: $uuid}}, _set: {password: $newPasswordHash}) {
+    affected_rows
+    returning {
+      uuid
+      username
+    }
+  }
+}
