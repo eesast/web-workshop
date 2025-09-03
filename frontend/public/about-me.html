@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/me.jpg" />
+  <title>关于我 - 王瀚森的个人主页</title>
+  <!-- 引入外部资源 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <!-- 引入外部样式表 -->
+  <link rel="stylesheet" href="./about-me.css">
+
+  <!-- 配置Tailwind自定义颜色和字体 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#3B82F6',
+            secondary: '#10B981',
+            accent: '#8B5CF6',
+            dark: '#1E293B',
+            light: '#F8FAFC'
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
+
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .text-shadow {
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      .card-hover {
+        transition: all 0.3s ease;
+      }
+      .card-hover:hover {
+        transform: translateY(-5px);
+      }
+    }
+  </style>
+</head>
+
+<body class="font-sans text-gray-800">
+  <!-- 导航栏 -->
+  <nav class="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md shadow-sm z-50 transition-all duration-300">
+    <div class="container mx-auto px-4 py-1 flex justify-between items-center">
+      <a href="./index.html" class="text-xl font-bold text-primary flex items-center gap-2">
+        <i class="fa fa-home"></i>
+        <span>返回首页</span>
+      </a>
+
+      <div class="hidden md:flex items-center gap-4">
+        <a href="#about" class="hover:text-primary transition-colors">关于我</a>
+        <a href="#skills" class="hover:text-primary transition-colors">技能</a>
+        <a href="#blog" class="hover:text-primary transition-colors">博客</a>
+        <a href="#contact" class="hover:text-primary transition-colors">联系方式</a>
+      </div>
+
+      <!-- 移动端菜单按钮 -->
+      <button id="menuBtn" class="md:hidden text-gray-700 focus:outline-none">
+        <i class="fa fa-bars text-xl"></i>
+      </button>
+    </div>
+
+    <!-- 移动端菜单 -->
+    <div id="mobileMenu" class="hidden md:hidden bg-white border-t">
+      <div class="container mx-auto px-4 py-2 flex flex-col gap-3">
+        <a href="#about" class="py-2 hover:text-primary transition-colors">关于我</a>
+        <a href="#skills" class="py-2 hover:text-primary transition-colors">技能</a>
+        <a href="#blog" class="py-2 hover:text-primary transition-colors">博客</a>
+        <a href="#contact" class="py-2 hover:text-primary transition-colors">联系方式</a>
+      </div>
+    </div>
+  </nav>
+
+  <div id="root" class="container mx-auto px-4 pt-24 pb-16">
+    <!-- 个人资料头部 -->
+    <header class="text-center mb-16 fade-in">
+      <div class="w-40 h-40 rounded-full mx-auto overflow-hidden border-4 border- shadow-lg mb-6">
+        <img src="./assets/me.jpg" alt="我的头像" class="w-full h-full object-cover">
+      </div>
+      <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold text-white text-shadow mb-4">王瀚森</h1>
+      <p class="text-[clamp(1rem,2vw,1.25rem)] font-bold text-blue-600 max-w-2xl mx-auto">
+        清华大学 | 笃实书院 | 菜狗 | prompt大师 | 别看了，没了...
+      </p>
+
+    <!-- 按钮组 -->
+      <div class="flex flex-wrap justify-center gap-4 mt-8">
+        <a href="#contact" class="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-full transition-all shadow-lg hover:shadow-xl flex items-center gap-2">
+          <i class="fa fa-envelope"></i> 联系我
+        </a>
+        <a href="#blog" class="bg-white/90 hover:bg-white text-gray-800 px-6 py-3 rounded-full transition-all shadow-lg hover:shadow-xl flex items-center gap-2">
+          <i class="fa fa-book"></i> 查看博客
+        </a>
+        <!-- 听点音乐按钮 -->
+        <button id="musicToggleBtn" class="bg-accent hover:bg-accent/90 text-white px-6 py-3 rounded-full transition-all shadow-lg hover:shadow-xl flex items-center gap-2">
+          <i class="fa fa-music"></i> 听点音乐
+        </button>
+      </div>
+
+      <!-- 音乐播放器容器（默认隐藏） -->
+      <div id="musicPlayerContainer" class="flex justify-center mt-4">
+        <iframe src="https://enamscard.pages.dev/?playlist=14239174797&theme=dark&themeColor=%23008eff" width="280" height="130" style="border: none; border-radius: 8px;" frameborder="0"></iframe>
+      </div>
+    </header>
+
+    <!-- 关于我部分 -->
+    <section id="about" class="bg-white/90 backdrop-blur-sm rounded-2xl p-8 md:p-12 shadow-xl mb-16 max-w-4xl mx-auto fade-in">
+      <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-dark mb-6 flex items-center">
+        <i class="fa fa-user-circle text-primary mr-3"></i>关于我
+      </h2>
+
+      <div class="prose lg:prose-xl max-w-none">
+        <p class="text-gray-700 mb-4">
+          你好！我是王瀚森，来自于山东淄博，目前就读于清华大学笃实书院。我对计算机科学有着浓厚的兴趣，并在尝试自学以提高相关能力。
+        </p>
+        <p class="text-gray-700 mb-4">
+          我还有很多其他爱好。读书是我的精神寄托，我希望能够通过书籍走向万千的远方，倾听圣贤的思想，读万卷书。旅行则让我能够拓宽视野，
+          感受不同地方的风土人情，行万里路。
+        </p>
+        <p class="text-gray-700 mb-4">
+          同时，我对话剧也有着浓厚的兴趣，目前我是清华大学艺术团话剧队的一员。2025-fall学期，我将参演话剧《日出》，期待与大家的见面！
+        </p>
+        <p class="text-gray-700 mb-4">
+          未来，我希望能够在计算机科学领域有所作为，继续探索和学习，不断提升自己的技能和知识储备。
+          欢迎通过各种方式与我交流和合作，共同进步！
+        </p>
+      </div>
+
+      <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="text-center">
+          <div class="text-3xl font-bold text-primary mb-1">10+</div>
+          <div class="text-gray-600">项目经验（打过的游戏）</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl font-bold text-primary mb-1">5</div>
+          <div class="text-gray-600">掌握语言(听说过的）</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl font-bold text-primary mb-1">6</div>
+          <div class="text-gray-600">技术框架（各种AI）</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl font-bold text-primary mb-1">4+</div>
+          <div class="text-gray-600">合作项目（摆烂大作业）</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 技能部分 -->
+    <section id="skills" class="bg-white/90 backdrop-blur-sm rounded-2xl p-8 md:p-12 shadow-xl mb-16 max-w-4xl mx-auto fade-in">
+      <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-dark mb-8 flex items-center">
+        <i class="fa fa-code text-primary mr-3"></i>我的技能（我是菜狗(っ╥╯﹏╰╥c)）
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- 编程语言 -->
+        <div>
+          <h3 class="text-xl font-semibold mb-4 text-gray-800 flex items-center">
+            <i class="fa fa-laptop text-accent mr-2"></i>编程语言
+          </h3>
+          <div class="space-y-4">
+            <div>
+              <div class="flex justify-between mb-1">
+                <span class="font-medium">Python</span>
+                <span>2%</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2.5">
+                <div class="bg-primary h-2.5 rounded-full" style="width: 2%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1">
+                <span class="font-medium">C#</span>
+                <span>1%</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2.5">
+                <div class="bg-primary h-2.5 rounded-full" style="width: 1%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1">
+                <span class="font-medium">C/C++</span>
+                <span>10%</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2.5">
+                <div class="bg-primary h-2.5 rounded-full" style="width: 10%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1">
+                <span class="font-medium">AI Based Coding</span>
+                <span>100%</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2.5">
+                <div class="bg-primary h-2.5 rounded-full" style="width: 100%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 框架和工具 -->
+        <div>
+          <h3 class="text-xl font-semibold mb-4 text-gray-800 flex items-center">
+            <i class="fa fa-wrench text-accent mr-2"></i>框架和工具
+          </h3>
+          <div class="space-y-4">
+            <div>
+              <div class="flex justify-between mb-1">
+                <span class="font-medium">React</span>
+                <span>0%</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2.5">
+                <div class="bg-secondary h-2.5 rounded-full" style="width: 0%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1">
+                <span class="font-medium">Git</span>
+                <span>10%</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2.5">
+                <div class="bg-secondary h-2.5 rounded-full" style="width: 10%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1">
+                <span class="font-medium">Docker</span>
+                <span>5%</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2.5">
+                <div class="bg-secondary h-2.5 rounded-full" style="width: 5%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1">
+                <span class="font-medium">AI</span>
+                <span>90%</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2.5">
+                <div class="bg-secondary h-2.5 rounded-full" style="width: 90%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 技能标签 -->
+      <div class="mt-10">
+        <h3 class="text-xl font-semibold mb-4 text-gray-800 flex items-center">
+          <i class="fa fa-tags text-accent mr-2"></i>其他技能
+        </h3>
+        <div class="flex flex-wrap gap-2">
+          <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">多线程&异步</span>
+          <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">Avalonia</span>
+          <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">MDesign</span>
+          <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">Linux</span>
+          <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm">Qt</span>
+          <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm">深度学习</span>
+          <span class="bg-pink-100 text-pink-800 px-3 py-1 rounded-full text-sm">Markdown</span>
+          <span class="bg-teal-100 text-teal-800 px-3 py-1 rounded-full text-sm">数据结构</span>
+          <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm">RTFC</span>
+          <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm">STFW</span>
+          <span class="bg-blue-800 text-white px-3 py-1 rounded-full text-sm">以上其实都不会</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 博客部分 -->
+    <section id="blog" class="bg-white/90 backdrop-blur-sm rounded-2xl p-8 md:p-12 shadow-xl mb-16 max-w-4xl mx-auto fade-in">
+      <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-dark mb-8 flex items-center">
+        <i class="fa fa-pencil text-primary mr-3"></i>我的博客
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- 博客文章1 -->
+        <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover border border-gray-100">
+          <img src="./assets/qin.jpg" alt="" class="w-full h-48 object-cover">
+          <div class="p-5">
+            <div class="text-sm text-gray-500 mb-2">259年1月27日</div>
+            <h3 class="text-xl font-semibold mb-2 hover:text-primary transition-colors">
+              <a href="#">秦始皇出生了！</a>
+            </h3>
+            <p class="text-gray-600 text-sm mb-4 line-clamp-3">
+              你真的的以为我写了博客吗，不如信我是秦始皇
+            </p>
+            <a href="#" class="text-primary hover:text-primary/80 text-sm font-medium flex items-center">
+              阅读更多 <i class="fa fa-arrow-right ml-1"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- 博客文章2 -->
+        <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover border border-gray-100">
+          <img src="./assets/2.jpg" alt="" class="w-full h-48 object-cover">
+          <div class="p-5">
+            <div class="text-sm text-gray-500 mb-2">？？年？月？日</div>
+            <h3 class="text-xl font-semibold mb-2 hover:text-primary transition-colors">
+              <a href="#">别再看了</a>
+            </h3>
+            <p class="text-gray-600 text-sm mb-4 line-clamp-3">
+              底下真的什么都没有
+            </p>
+            <a href="#" class="text-primary hover:text-primary/80 text-sm font-medium flex items-center">
+              阅读更多 <i class="fa fa-arrow-right ml-1"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- 博客文章3 -->
+        <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover border border-gray-100">
+          <img src="./assets/3.jpg" alt="" class="w-full h-48 object-cover">
+          <div class="p-5">
+            <div class="text-sm text-gray-500 mb-2">2077年13月32日</div>
+            <h3 class="text-xl font-semibold mb-2 hover:text-primary transition-colors">
+              <a href="#">好吧你赢了</a>
+            </h3>
+            <p class="text-gray-600 text-sm mb-4 line-clamp-3">
+              好吧 你太犟了 你赢了 我承认还有东西
+            </p>
+            <a href="#" class="text-primary hover:text-primary/80 text-sm font-medium flex items-center">
+              阅读更多 <i class="fa fa-arrow-right ml-1"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- 博客文章4 -->
+        <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover border border-gray-100">
+          <img src="./assets/yuan.jpg" alt="" class="w-full h-48 object-cover">
+          <div class="p-5">
+            <div class="text-sm text-gray-500 mb-2">0年0月0日</div>
+            <h3 class="text-xl font-semibold mb-2 hover:text-primary transition-colors">
+              <a href="#">你说得对，但是...</a>
+            </h3>
+            <p class="text-gray-600 text-sm mb-4 line-clamp-3">
+              《原神》是由上海米哈游网络科技股份有限公司制作发行的一款开放世界冒险游戏，游戏发生在一个被称作“提瓦特大陆”的幻想世界，在这里，被神选中的人将被授予“神之眼”，导引元素之力。玩家将扮演一位名为“旅行者”的神秘角色，在自由的旅行中邂逅性格各异、能力独特的同伴们，和他们一起击败强敌，找回失散的亲人——同时，逐步发掘“原神”的真相。
+            </p>
+            <a href="#" class="text-primary hover:text-primary/80 text-sm font-medium flex items-center">
+              阅读更多 <i class="fa fa-arrow-right ml-1"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-8">
+        <a href="#" class="inline-block bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-full transition-all shadow-md hover:shadow-lg">
+          查看所有博客文章 <i class="fa fa-long-arrow-right ml-2"></i>
+        </a>
+      </div>
+    </section>
+
+    <!-- 联系方式部分 -->
+    <section id="contact" class="bg-white/90 backdrop-blur-sm rounded-2xl p-8 md:p-12 shadow-xl max-w-4xl mx-auto fade-in">
+      <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-dark mb-8 flex items-center">
+        <i class="fa fa-comments text-primary mr-3"></i>联系我
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div>
+          <p class="text-gray-700 mb-6">
+            如果你有任何问题、合作意向或者想一起交流学习，欢迎通过以下方式联系我，我会尽快回复你！
+          </p>
+
+          <div class="space-y-4">
+            <div class="flex items-start">
+              <div class="bg-primary/10 p-3 rounded-full mr-4">
+                <i class="fa fa-envelope text-primary"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-800">邮箱</h3>
+                <p class="text-gray-600">whs24@mails.tsinghua.edu.cn</p>
+              </div>
+            </div>
+
+            <div class="flex items-start">
+              <div class="bg-primary/10 p-3 rounded-full mr-4">
+                <i class="fa fa-weixin text-primary"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-800">微信</h3>
+                <p class="text-gray-600">wanghansen0624</p>
+              </div>
+            </div>
+
+            <div class="flex items-start">
+              <div class="bg-primary/10 p-3 rounded-full mr-4">
+                <i class="fa fa-github text-primary"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-800">GitHub</h3>
+                <p class="text-gray-600">https://github.com/whs24</p>
+              </div>
+            </div>
+
+            <div class="flex items-start">
+              <div class="bg-primary/10 p-3 rounded-full mr-4">
+                <i class="fa fa-map-marker text-primary"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-800">地址</h3>
+                <p class="text-gray-600">水星</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8">
+            <h3 class="font-semibold text-gray-800 mb-4">社交媒体</h3>
+            <div class="flex gap-4">
+              <a href="https://mp.weixin.qq.com/s/-bMf2Px4RK-tByBR3cXWCg" class="bg-green-500 hover:bg-green-600 text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                <i class="fa fa-weixin"></i>
+              </a>
+              <a href="https://github.com/whs24" class="bg-gray-800 hover:bg-gray-900 text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                <i class="fa fa-github"></i>
+              </a>
+              <a href="https://git.tsinghua.edu.cn/whs24" class="bg-red-500 hover:bg-red-500 text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                <i class="fa fa-gitlab"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <form class="space-y-4">
+            <div>
+              <label for="name" class="block text-gray-700 font-medium mb-1">姓名</label>
+              <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors" placeholder="请输入你的姓名">
+            </div>
+
+            <div>
+              <label for="email" class="block text-gray-700 font-medium mb-1">邮箱</label>
+              <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors" placeholder="请输入你的邮箱">
+            </div>
+
+            <div>
+              <label for="subject" class="block text-gray-700 font-medium mb-1">主题</label>
+              <input type="text" id="subject" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors" placeholder="请输入主题">
+            </div>
+
+            <div>
+              <label for="message" class="block text-gray-700 font-medium mb-1">留言</label>
+              <textarea id="message" rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors" placeholder="请输入你的留言内容"></textarea>
+            </div>
+
+            <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-lg transition-all shadow-md hover:shadow-lg font-medium">
+              发送消息 <i class="fa fa-paper-plane ml-2"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- 页脚 -->
+  <footer class="bg-dark/80 backdrop-blur-sm text-white/80 py-8">
+    <div class="container mx-auto px-4 text-center">
+      <p>© 2025 王瀚森的个人主页. 保留所有权利.</p>
+      <p class="mt-2 text-sm">开发中...</p>
+    </div>
+  </footer>
+
+  <script  src="./about-me.js"></script>
+</body>
+</html>
