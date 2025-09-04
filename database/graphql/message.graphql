@@ -15,3 +15,20 @@ subscription getMessagesByRoom($room_uuid: uuid!) {
     created_at
   }
 }
+
+query getMessagesByUser($user_uuid: uuid!, $limit: Int = 100, $offset: Int = 0) {
+  message(
+    where: { user_uuid: { _eq: $user_uuid } },
+    order_by: { created_at: desc },
+    limit: $limit,
+    offset: $offset
+  ) {
+    uuid
+    content
+    created_at
+    room {
+      name
+      uuid
+    }
+  }
+}
