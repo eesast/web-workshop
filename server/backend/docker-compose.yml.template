@@ -1,6 +1,6 @@
 services:
   backend:
-    image: <your-docker-tag>
+    image: rosalindbell3117/mypage:latest
     restart: always
     ports:
       - 20248:8888
