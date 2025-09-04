@@ -65,7 +65,7 @@ const MyDraggable: React.FC<React.PropsWithChildren<MyDraggableProps>> = ({
 const App = () => {
   const user = getUser();
   const [chatBoxList, setChatBoxList] = useState<number[]>([]);
-  const [replyBoxList, setReplyBoxList] = useState<any[]>([]);
+  const [replyMsg, setReplyMsg] = useState<any>(undefined);
   const [fileShareList, setFileShareList] = useState<number[]>([]);
   const [currentDrag, setCurrentDrag] = useState<string>("");
 
@@ -79,9 +79,10 @@ const App = () => {
       setChatBoxList([...chatBoxList, idx]);
     }
   };
-  const addReplyBox = (idx: any) => {
-    if (!replyBoxList.includes(idx)) {
-      setReplyBoxList([...replyBoxList, idx]);
+  const setReplyBox = (msg_uuid: any) => {
+    if (!msg_uuid) return;
+    if (!replyMsg || replyMsg !== msg_uuid) {
+      setReplyMsg(msg_uuid);
     }
   };
   const addFileShare = (idx: number) => {
@@ -95,6 +96,11 @@ const App = () => {
   const removeFileShare = (idx: number) => {
     setFileShareList(fileShareList.filter((id) => id !== idx));
   };
+  const removeReplyBox = (msg_uuid: any) => {
+    if (replyMsg === msg_uuid) {
+      setReplyMsg(undefined);
+    }
+  }
   function getMessageByUUID(uuid: any) {
     const {data, error} = graphql.useGetMessageByUuidSubscription({
       skip: !uuid,
@@ -147,7 +153,7 @@ const App = () => {
               user={user}
               room={data?.user_room[idx].room}
               handleClose={() => removeChatBox(idx)}
-              handleReply={addReplyBox}
+              handleReply={setReplyBox}
             />
           </Suspense>
         </MyDraggable>
@@ -167,24 +173,17 @@ const App = () => {
           </Suspense>
         </MyDraggable>
       ))}
-        {replyBoxList.map((msgIdx) => (
-            <MyDraggable
-            key={`reply-${msgIdx}`}
-            oid={`reply-${msgIdx}`}
-            style={{ position: "absolute", right: 0 }}
-            {...draggableProps}
-            >
-            <Suspense fallback={null}>
-                <ReplyBox
+      <MyDraggable oid={"reply-box"}
+                   style={{ position: "absolute", right: 0 , display: (replyMsg ? 'block' : 'none')}}
+          {...draggableProps}>
+        <Suspense fallback={null}>
+            <ReplyBox
                 user={user}
-                    msg={getMessageByUUID(msgIdx)?.message_by_pk}
-                handleClose={() =>
-                    setReplyBoxList(replyBoxList.filter((id) => id !== msgIdx))
-                }
-                />
-            </Suspense>
-            </MyDraggable>
-        ))}
+                msg={getMessageByUUID(replyMsg)?.message_by_pk}
+                handleClose={() => removeReplyBox(replyMsg)}
+            />
+        </Suspense>
+      </MyDraggable>
     </div>
   );
 };
