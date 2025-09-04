@@ -1,7 +1,8 @@
 import express from "express";
 import jwt from "jsonwebtoken";
-import {sendEmail}  from "./email"; 
+import {sendEmail}  from "./email";
 import { sdk as graphql } from "./index";
+import md5 from "md5";
 
 interface userJWTPayload {
   uuid: string;
@@ -54,7 +55,7 @@ router.post("/register", async (req, res) => {
     if (queryResult.user.length !== 0) {
       return res.status(409).send("409 Conflict: User already exists");
     }
-    const mutationResult = await graphql.addUser({ username: username, password: password });
+    const mutationResult = await graphql.addUser({ username: username, password: md5(password) });
     const payload: userJWTPayload = {
       uuid: mutationResult.insert_user_one?.uuid,
       "https://hasura.io/jwt/claims": {
@@ -72,7 +73,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.post("/forgot-password", async (req, res) => {
+router.post("/change-password/request", async (req, res) => {
   const { username } = req.body;
 
   // 1. 鲁棒性检查：输入参数检查
@@ -87,7 +88,7 @@ router.post("/forgot-password", async (req, res) => {
     if (queryResult.user.length === 0) {
       return res.status(200).json({ message: "If a user with that username exists, a password reset link has been sent." });
     }
-    
+
     const user = queryResult.user[0];
     const payload: userJWTPayload = {
       uuid: user.uuid,
@@ -99,19 +100,19 @@ router.post("/forgot-password", async (req, res) => {
     const token = jwt.sign(payload, process.env.JWT_SECRET!, {
       expiresIn: "1h", // Token 有效期1小时
     });
-    const resetLink = `http://localhost:8888/user/reset-password?token=${token}`;
-    
+     const resetLink = `http://localhost:3000/main.html#/user/change-password/action?token=${token}`;
+
     // 调用 sendEmail 函数
     await sendEmail(
       username,
       "密码重置",
       `请点击以下链接重置你的密码：${resetLink}`
     );
-    
+
     // 同样，为防止用户枚举，即使发送失败也返回成功信息
     return res.status(200).json({ message: "If a user with that username exists, a password reset link has been sent." });
   } catch (err) {
-    console.error("Error in /forgot-password:", err);
+    console.error("Error in /change-password/request:", err);
     // 增加一个更通用的服务器错误返回
     return res.status(500).json({ error: "Internal server error." });
   }
@@ -119,7 +120,7 @@ router.post("/forgot-password", async (req, res) => {
 
 
 // 新增：重置密码路由
-router.post("/reset-password", async (req, res) => {
+router.post("/change-password/action", async (req, res) => {
   const { token, newPassword } = req.body;
 
   // 1. 鲁棒性检查：输入参数检查
@@ -141,12 +142,13 @@ router.post("/reset-password", async (req, res) => {
         // 如果用户不存在，返回通用错误，不暴露用户ID
         return res.status(401).json({ error: "Unauthorized: Invalid or expired token." });
     }
-    
-    await graphql.updateUserPassword({ uuid: uuid, password: newPassword });
-    
+
+    const hashedPassword = md5(newPassword);
+    await graphql.updateUserPassword({ uuid: uuid, password: hashedPassword });
+
     return res.status(200).json({ message: "Password has been successfully reset." });
   } catch (err) {
-    console.error("Error in /reset-password:", err);
+    console.error("Error in /change-password/action:", err);
     if (err instanceof jwt.TokenExpiredError) {
       return res.status(401).json({ error: "Unauthorized: Token has expired." });
     }
