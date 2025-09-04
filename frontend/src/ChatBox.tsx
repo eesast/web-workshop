@@ -182,7 +182,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ user, message, handleRepl
   }
   // @ts-ignore
   const handleItemClick = (args: ItemParams<any, any>) => {
-    const { id, event, props } = args;
+    const { id } = args;
     switch (id) {
       case "reply":
         handleReply();

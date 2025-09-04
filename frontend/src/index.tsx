@@ -102,7 +102,7 @@ const App = () => {
     }
   }
   function getMessageByUUID(uuid: any) {
-    const {data, error} = graphql.useGetMessageByUuidSubscription({
+    const {data} = graphql.useGetMessageByUuidSubscription({
       skip: !uuid,
       variables: {
         uuid: uuid,
