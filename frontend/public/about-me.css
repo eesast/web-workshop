@@ -2,9 +2,12 @@
   height: 100%;
   /* 垂直居中 */
   display: flex;
+  flex-direction: column;
   align-items: center;
+  padding-top: 100px;
+  box-sizing: border-box;
   /* 好看的渐变色网站：https://color.oulu.me/ */
-  background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+  background: var(--bg-color);
 }
 
 #outer {
@@ -23,6 +26,8 @@
   width: 700px;
   display: inline-block;
   position: relative;
+  background-color: var(--right-bg);
+  color: var(--text-color);
 }
 
 .card {
@@ -30,7 +35,7 @@
   /* 圆角矩形 */
   border-radius: 8px;
   /* 毛玻璃特效 */
-  background-color: rgba(255, 255, 255, 0.25);
+  background-color: var(--card-bg);
   box-shadow: 0 0 18px rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(12px);
 }
@@ -48,6 +53,41 @@
   border-radius: 50%;
 }
 
+#theme-color-change {
+  display: block;
+  margin: 40px auto 0;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s;
+}
+
+#theme-color-change:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+#weather {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  padding: 10px 18px;
+  border-radius: 10px;
+  background: var(--weather-bg);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.6), 0 0 8px rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  font-size: 14px;
+  line-height: 1.6em;
+  color: var(--text-color);
+  white-space: pre-line;
+  z-index: 1000;
+}
+
 .styled-table {
   border-collapse: collapse;
 }
@@ -58,4 +98,20 @@
 
 .styled-list li {
   line-height: 2em;
+}
+
+body.light {
+  --bg-color: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+  --card-bg: rgba(255, 255, 255, 0.25);
+  --right-bg: rgba(255, 255, 255, 0.6);
+  --text-color: #000;
+  --weather-bg: rgba(255, 255, 255, 0.6);
+}
+
+body.dark {
+  --bg-color: linear-gradient(60deg, #433e3e 0%, #1e1b1b 100%);
+  --card-bg: rgba(255, 255, 255, 0.6);
+  --right-bg: rgba(0, 0, 0, 0.65);
+  --text-color: #dcdcdc;
+  --weather-bg: linear-gradient(145deg, rgba(50, 50, 50, 0.95), rgba(20, 20, 20, 0.9));
 }
