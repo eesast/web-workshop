@@ -1,0 +1,17 @@
+mutation addReply($user_uuid: uuid!, $msg_uuid: uuid!, $content: String!) {
+  insert_reply_one(object: {user_uuid: $user_uuid, msg_uuid: $msg_uuid, content: $content}) {
+    uuid
+  }
+}
+
+subscription getReplyByMessage($msg_uuid: uuid!) {
+  reply(where: {msg_uuid: {_eq: $msg_uuid}}) {
+    uuid
+    user {
+      uuid
+      username
+    }
+    content
+    created_at
+  }
+}
