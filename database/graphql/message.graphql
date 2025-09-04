@@ -26,3 +26,18 @@ subscription getMessagesByUser($user_uuid: uuid!) {
     created_at
   }
 }
+
+subscription getMessageByUUID($uuid: uuid!) {
+  message_by_pk(uuid: $uuid) {
+    uuid
+    user {
+      uuid
+      username
+    }
+    room {
+      uuid
+    }
+    content
+    created_at
+  }
+}

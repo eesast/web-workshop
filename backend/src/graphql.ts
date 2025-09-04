@@ -1829,6 +1829,13 @@ export type GetMessagesByUserSubscriptionVariables = Exact<{
 
 export type GetMessagesByUserSubscription = { __typename?: 'subscription_root', message: Array<{ __typename?: 'message', uuid: any, content: string, created_at: any, room: { __typename?: 'room', uuid: any } }> };
 
+export type GetMessageByUuidSubscriptionVariables = Exact<{
+  uuid: Scalars['uuid']['input'];
+}>;
+
+
+export type GetMessageByUuidSubscription = { __typename?: 'subscription_root', message_by_pk?: { __typename?: 'message', uuid: any, content: string, created_at: any, user: { __typename?: 'user', uuid: any, username: string }, room: { __typename?: 'room', uuid: any } } | null };
+
 export type AddReplyMutationVariables = Exact<{
   user_uuid: Scalars['uuid']['input'];
   msg_uuid: Scalars['uuid']['input'];
@@ -1941,6 +1948,22 @@ export const GetMessagesByUserDocument = gql`
   }
 }
     `;
+export const GetMessageByUuidDocument = gql`
+    subscription getMessageByUUID($uuid: uuid!) {
+  message_by_pk(uuid: $uuid) {
+    uuid
+    user {
+      uuid
+      username
+    }
+    room {
+      uuid
+    }
+    content
+    created_at
+  }
+}
+    `;
 export const AddReplyDocument = gql`
     mutation addReply($user_uuid: uuid!, $msg_uuid: uuid!, $content: String!) {
   insert_reply_one(
@@ -2045,6 +2068,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     getMessagesByUser(variables: GetMessagesByUserSubscriptionVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetMessagesByUserSubscription> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetMessagesByUserSubscription>(GetMessagesByUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getMessagesByUser', 'subscription', variables);
+    },
+    getMessageByUUID(variables: GetMessageByUuidSubscriptionVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetMessageByUuidSubscription> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetMessageByUuidSubscription>(GetMessageByUuidDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getMessageByUUID', 'subscription', variables);
     },
     addReply(variables: AddReplyMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<AddReplyMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<AddReplyMutation>(AddReplyDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'addReply', 'mutation', variables);

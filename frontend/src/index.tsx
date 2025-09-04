@@ -15,6 +15,7 @@ import getUser from "./getUser";
 const MainPanel = React.lazy(() => import("./MainPanel"));
 const LoginPage = React.lazy(() => import("./LoginPage"));
 const ChatBox = React.lazy(() => import("./ChatBox"));
+const ReplyBox = React.lazy(() => import("./ReplyBox"));
 const FileShare = React.lazy(() => import("./FileShare"));
 
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL!;
@@ -64,6 +65,7 @@ const MyDraggable: React.FC<React.PropsWithChildren<MyDraggableProps>> = ({
 const App = () => {
   const user = getUser();
   const [chatBoxList, setChatBoxList] = useState<number[]>([]);
+  const [replyBoxList, setReplyBoxList] = useState<any[]>([]);
   const [fileShareList, setFileShareList] = useState<number[]>([]);
   const [currentDrag, setCurrentDrag] = useState<string>("");
 
@@ -77,6 +79,11 @@ const App = () => {
       setChatBoxList([...chatBoxList, idx]);
     }
   };
+  const addReplyBox = (idx: any) => {
+    if (!replyBoxList.includes(idx)) {
+      setReplyBoxList([...replyBoxList, idx]);
+    }
+  };
   const addFileShare = (idx: number) => {
     if (!fileShareList.includes(idx)) {
       setFileShareList([...fileShareList, idx]);
@@ -88,6 +95,15 @@ const App = () => {
   const removeFileShare = (idx: number) => {
     setFileShareList(fileShareList.filter((id) => id !== idx));
   };
+  function getMessageByUUID(uuid: any) {
+    const {data, error} = graphql.useGetMessageByUuidSubscription({
+      skip: !uuid,
+      variables: {
+        uuid: uuid,
+      },
+    });
+    return data;
+  }
 
   const { data, error, refetch } = graphql.useGetJoinedRoomsQuery({
     skip: !user,
@@ -131,6 +147,7 @@ const App = () => {
               user={user}
               room={data?.user_room[idx].room}
               handleClose={() => removeChatBox(idx)}
+              handleReply={addReplyBox}
             />
           </Suspense>
         </MyDraggable>
@@ -150,6 +167,24 @@ const App = () => {
           </Suspense>
         </MyDraggable>
       ))}
+        {replyBoxList.map((msgIdx) => (
+            <MyDraggable
+            key={`reply-${msgIdx}`}
+            oid={`reply-${msgIdx}`}
+            style={{ position: "absolute", right: 0 }}
+            {...draggableProps}
+            >
+            <Suspense fallback={null}>
+                <ReplyBox
+                user={user}
+                    msg={getMessageByUUID(msgIdx)?.message_by_pk}
+                handleClose={() =>
+                    setReplyBoxList(replyBoxList.filter((id) => id !== msgIdx))
+                }
+                />
+            </Suspense>
+            </MyDraggable>
+        ))}
     </div>
   );
 };
