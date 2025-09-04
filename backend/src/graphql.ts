@@ -212,6 +212,13 @@ export type Message_Mutation_Response = {
   returning: Array<Message>;
 };
 
+/** input type for inserting object relation for remote table "message" */
+export type Message_Obj_Rel_Insert_Input = {
+  data: Message_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Message_On_Conflict>;
+};
+
 /** on_conflict condition type for table "message" */
 export type Message_On_Conflict = {
   constraint: Message_Constraint;
@@ -303,6 +310,10 @@ export type Mutation_Root = {
   delete_message?: Maybe<Message_Mutation_Response>;
   /** delete single row from the table: "message" */
   delete_message_by_pk?: Maybe<Message>;
+  /** delete data from the table: "reply" */
+  delete_reply?: Maybe<Reply_Mutation_Response>;
+  /** delete single row from the table: "reply" */
+  delete_reply_by_pk?: Maybe<Reply>;
   /** delete data from the table: "room" */
   delete_room?: Maybe<Room_Mutation_Response>;
   /** delete single row from the table: "room" */
@@ -319,6 +330,10 @@ export type Mutation_Root = {
   insert_message?: Maybe<Message_Mutation_Response>;
   /** insert a single row into the table: "message" */
   insert_message_one?: Maybe<Message>;
+  /** insert data into the table: "reply" */
+  insert_reply?: Maybe<Reply_Mutation_Response>;
+  /** insert a single row into the table: "reply" */
+  insert_reply_one?: Maybe<Reply>;
   /** insert data into the table: "room" */
   insert_room?: Maybe<Room_Mutation_Response>;
   /** insert a single row into the table: "room" */
@@ -337,6 +352,12 @@ export type Mutation_Root = {
   update_message_by_pk?: Maybe<Message>;
   /** update multiples rows of table: "message" */
   update_message_many?: Maybe<Array<Maybe<Message_Mutation_Response>>>;
+  /** update data of the table: "reply" */
+  update_reply?: Maybe<Reply_Mutation_Response>;
+  /** update single row of the table: "reply" */
+  update_reply_by_pk?: Maybe<Reply>;
+  /** update multiples rows of table: "reply" */
+  update_reply_many?: Maybe<Array<Maybe<Reply_Mutation_Response>>>;
   /** update data of the table: "room" */
   update_room?: Maybe<Room_Mutation_Response>;
   /** update single row of the table: "room" */
@@ -366,6 +387,18 @@ export type Mutation_RootDelete_MessageArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Message_By_PkArgs = {
+  uuid: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_ReplyArgs = {
+  where: Reply_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Reply_By_PkArgs = {
   uuid: Scalars['uuid']['input'];
 };
 
@@ -418,6 +451,20 @@ export type Mutation_RootInsert_MessageArgs = {
 export type Mutation_RootInsert_Message_OneArgs = {
   object: Message_Insert_Input;
   on_conflict?: InputMaybe<Message_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_ReplyArgs = {
+  objects: Array<Reply_Insert_Input>;
+  on_conflict?: InputMaybe<Reply_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Reply_OneArgs = {
+  object: Reply_Insert_Input;
+  on_conflict?: InputMaybe<Reply_On_Conflict>;
 };
 
 
@@ -480,6 +527,26 @@ export type Mutation_RootUpdate_Message_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Message_ManyArgs = {
   updates: Array<Message_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_ReplyArgs = {
+  _set?: InputMaybe<Reply_Set_Input>;
+  where: Reply_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Reply_By_PkArgs = {
+  _set?: InputMaybe<Reply_Set_Input>;
+  pk_columns: Reply_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Reply_ManyArgs = {
+  updates: Array<Reply_Updates>;
 };
 
 
@@ -566,6 +633,12 @@ export type Query_Root = {
   message_aggregate: Message_Aggregate;
   /** fetch data from the table: "message" using primary key columns */
   message_by_pk?: Maybe<Message>;
+  /** fetch data from the table: "reply" */
+  reply: Array<Reply>;
+  /** fetch aggregated fields from the table: "reply" */
+  reply_aggregate: Reply_Aggregate;
+  /** fetch data from the table: "reply" using primary key columns */
+  reply_by_pk?: Maybe<Reply>;
   /** fetch data from the table: "room" */
   room: Array<Room>;
   /** fetch aggregated fields from the table: "room" */
@@ -606,6 +679,29 @@ export type Query_RootMessage_AggregateArgs = {
 
 
 export type Query_RootMessage_By_PkArgs = {
+  uuid: Scalars['uuid']['input'];
+};
+
+
+export type Query_RootReplyArgs = {
+  distinct_on?: InputMaybe<Array<Reply_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Reply_Order_By>>;
+  where?: InputMaybe<Reply_Bool_Exp>;
+};
+
+
+export type Query_RootReply_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Reply_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Reply_Order_By>>;
+  where?: InputMaybe<Reply_Bool_Exp>;
+};
+
+
+export type Query_RootReply_By_PkArgs = {
   uuid: Scalars['uuid']['input'];
 };
 
@@ -677,6 +773,186 @@ export type Query_RootUser_Room_AggregateArgs = {
 export type Query_RootUser_Room_By_PkArgs = {
   room_uuid: Scalars['uuid']['input'];
   user_uuid: Scalars['uuid']['input'];
+};
+
+/** columns and relationships of "reply" */
+export type Reply = {
+  __typename?: 'reply';
+  content: Scalars['String']['output'];
+  created_at: Scalars['timestamp']['output'];
+  /** An object relationship */
+  message?: Maybe<Message>;
+  msg_uuid?: Maybe<Scalars['uuid']['output']>;
+  /** An object relationship */
+  user?: Maybe<User>;
+  user_uuid?: Maybe<Scalars['uuid']['output']>;
+  uuid: Scalars['uuid']['output'];
+};
+
+/** aggregated selection of "reply" */
+export type Reply_Aggregate = {
+  __typename?: 'reply_aggregate';
+  aggregate?: Maybe<Reply_Aggregate_Fields>;
+  nodes: Array<Reply>;
+};
+
+/** aggregate fields of "reply" */
+export type Reply_Aggregate_Fields = {
+  __typename?: 'reply_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Reply_Max_Fields>;
+  min?: Maybe<Reply_Min_Fields>;
+};
+
+
+/** aggregate fields of "reply" */
+export type Reply_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Reply_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Boolean expression to filter rows from the table "reply". All fields are combined with a logical 'AND'. */
+export type Reply_Bool_Exp = {
+  _and?: InputMaybe<Array<Reply_Bool_Exp>>;
+  _not?: InputMaybe<Reply_Bool_Exp>;
+  _or?: InputMaybe<Array<Reply_Bool_Exp>>;
+  content?: InputMaybe<String_Comparison_Exp>;
+  created_at?: InputMaybe<Timestamp_Comparison_Exp>;
+  message?: InputMaybe<Message_Bool_Exp>;
+  msg_uuid?: InputMaybe<Uuid_Comparison_Exp>;
+  user?: InputMaybe<User_Bool_Exp>;
+  user_uuid?: InputMaybe<Uuid_Comparison_Exp>;
+  uuid?: InputMaybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "reply" */
+export enum Reply_Constraint {
+  /** unique or primary key constraint on columns "uuid" */
+  ReplyPkey = 'reply_pkey'
+}
+
+/** input type for inserting data into table "reply" */
+export type Reply_Insert_Input = {
+  content?: InputMaybe<Scalars['String']['input']>;
+  created_at?: InputMaybe<Scalars['timestamp']['input']>;
+  message?: InputMaybe<Message_Obj_Rel_Insert_Input>;
+  msg_uuid?: InputMaybe<Scalars['uuid']['input']>;
+  user?: InputMaybe<User_Obj_Rel_Insert_Input>;
+  user_uuid?: InputMaybe<Scalars['uuid']['input']>;
+  uuid?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** aggregate max on columns */
+export type Reply_Max_Fields = {
+  __typename?: 'reply_max_fields';
+  content?: Maybe<Scalars['String']['output']>;
+  created_at?: Maybe<Scalars['timestamp']['output']>;
+  msg_uuid?: Maybe<Scalars['uuid']['output']>;
+  user_uuid?: Maybe<Scalars['uuid']['output']>;
+  uuid?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** aggregate min on columns */
+export type Reply_Min_Fields = {
+  __typename?: 'reply_min_fields';
+  content?: Maybe<Scalars['String']['output']>;
+  created_at?: Maybe<Scalars['timestamp']['output']>;
+  msg_uuid?: Maybe<Scalars['uuid']['output']>;
+  user_uuid?: Maybe<Scalars['uuid']['output']>;
+  uuid?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** response of any mutation on the table "reply" */
+export type Reply_Mutation_Response = {
+  __typename?: 'reply_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Reply>;
+};
+
+/** on_conflict condition type for table "reply" */
+export type Reply_On_Conflict = {
+  constraint: Reply_Constraint;
+  update_columns?: Array<Reply_Update_Column>;
+  where?: InputMaybe<Reply_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "reply". */
+export type Reply_Order_By = {
+  content?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  message?: InputMaybe<Message_Order_By>;
+  msg_uuid?: InputMaybe<Order_By>;
+  user?: InputMaybe<User_Order_By>;
+  user_uuid?: InputMaybe<Order_By>;
+  uuid?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: reply */
+export type Reply_Pk_Columns_Input = {
+  uuid: Scalars['uuid']['input'];
+};
+
+/** select columns of table "reply" */
+export enum Reply_Select_Column {
+  /** column name */
+  Content = 'content',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  MsgUuid = 'msg_uuid',
+  /** column name */
+  UserUuid = 'user_uuid',
+  /** column name */
+  Uuid = 'uuid'
+}
+
+/** input type for updating data in table "reply" */
+export type Reply_Set_Input = {
+  content?: InputMaybe<Scalars['String']['input']>;
+  created_at?: InputMaybe<Scalars['timestamp']['input']>;
+  msg_uuid?: InputMaybe<Scalars['uuid']['input']>;
+  user_uuid?: InputMaybe<Scalars['uuid']['input']>;
+  uuid?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** Streaming cursor of the table "reply" */
+export type Reply_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Reply_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Reply_Stream_Cursor_Value_Input = {
+  content?: InputMaybe<Scalars['String']['input']>;
+  created_at?: InputMaybe<Scalars['timestamp']['input']>;
+  msg_uuid?: InputMaybe<Scalars['uuid']['input']>;
+  user_uuid?: InputMaybe<Scalars['uuid']['input']>;
+  uuid?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** update columns of table "reply" */
+export enum Reply_Update_Column {
+  /** column name */
+  Content = 'content',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  MsgUuid = 'msg_uuid',
+  /** column name */
+  UserUuid = 'user_uuid',
+  /** column name */
+  Uuid = 'uuid'
+}
+
+export type Reply_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Reply_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Reply_Bool_Exp;
 };
 
 /** columns and relationships of "room" */
@@ -926,6 +1202,14 @@ export type Subscription_Root = {
   message_by_pk?: Maybe<Message>;
   /** fetch data from the table in a streaming manner: "message" */
   message_stream: Array<Message>;
+  /** fetch data from the table: "reply" */
+  reply: Array<Reply>;
+  /** fetch aggregated fields from the table: "reply" */
+  reply_aggregate: Reply_Aggregate;
+  /** fetch data from the table: "reply" using primary key columns */
+  reply_by_pk?: Maybe<Reply>;
+  /** fetch data from the table in a streaming manner: "reply" */
+  reply_stream: Array<Reply>;
   /** fetch data from the table: "room" */
   room: Array<Room>;
   /** fetch aggregated fields from the table: "room" */
@@ -980,6 +1264,36 @@ export type Subscription_RootMessage_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Message_Stream_Cursor_Input>>;
   where?: InputMaybe<Message_Bool_Exp>;
+};
+
+
+export type Subscription_RootReplyArgs = {
+  distinct_on?: InputMaybe<Array<Reply_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Reply_Order_By>>;
+  where?: InputMaybe<Reply_Bool_Exp>;
+};
+
+
+export type Subscription_RootReply_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Reply_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Reply_Order_By>>;
+  where?: InputMaybe<Reply_Bool_Exp>;
+};
+
+
+export type Subscription_RootReply_By_PkArgs = {
+  uuid: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootReply_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Reply_Stream_Cursor_Input>>;
+  where?: InputMaybe<Reply_Bool_Exp>;
 };
 
 
@@ -1319,7 +1633,7 @@ export type User_Room_Bool_Exp = {
 
 /** unique or primary key constraints on table "user_room" */
 export enum User_Room_Constraint {
-  /** unique or primary key constraint on columns "user_uuid", "room_uuid" */
+  /** unique or primary key constraint on columns "room_uuid", "user_uuid" */
   UserRoomPkey = 'user_room_pkey'
 }
 
@@ -1508,6 +1822,36 @@ export type GetMessagesByRoomSubscriptionVariables = Exact<{
 
 export type GetMessagesByRoomSubscription = { __typename?: 'subscription_root', message: Array<{ __typename?: 'message', uuid: any, content: string, created_at: any, user: { __typename?: 'user', uuid: any, username: string } }> };
 
+export type GetMessagesByUserSubscriptionVariables = Exact<{
+  user_uuid: Scalars['uuid']['input'];
+}>;
+
+
+export type GetMessagesByUserSubscription = { __typename?: 'subscription_root', message: Array<{ __typename?: 'message', uuid: any, content: string, created_at: any, room: { __typename?: 'room', uuid: any } }> };
+
+export type GetMessageByUuidSubscriptionVariables = Exact<{
+  uuid: Scalars['uuid']['input'];
+}>;
+
+
+export type GetMessageByUuidSubscription = { __typename?: 'subscription_root', message_by_pk?: { __typename?: 'message', uuid: any, content: string, created_at: any, user: { __typename?: 'user', uuid: any, username: string }, room: { __typename?: 'room', uuid: any } } | null };
+
+export type AddReplyMutationVariables = Exact<{
+  user_uuid: Scalars['uuid']['input'];
+  msg_uuid: Scalars['uuid']['input'];
+  content: Scalars['String']['input'];
+}>;
+
+
+export type AddReplyMutation = { __typename?: 'mutation_root', insert_reply_one?: { __typename?: 'reply', uuid: any } | null };
+
+export type GetReplyByMessageSubscriptionVariables = Exact<{
+  msg_uuid: Scalars['uuid']['input'];
+}>;
+
+
+export type GetReplyByMessageSubscription = { __typename?: 'subscription_root', reply: Array<{ __typename?: 'reply', uuid: any, content: string, created_at: any, user?: { __typename?: 'user', uuid: any, username: string } | null }> };
+
 export type AddRoomMutationVariables = Exact<{
   name: Scalars['String']['input'];
   intro: Scalars['String']['input'];
@@ -1539,6 +1883,14 @@ export type JoinRoomMutationVariables = Exact<{
 
 export type JoinRoomMutation = { __typename?: 'mutation_root', insert_user_room_one?: { __typename?: 'user_room', user_uuid: any, room_uuid: any } | null };
 
+export type QuitRoomMutationVariables = Exact<{
+  user_uuid: Scalars['uuid']['input'];
+  room_uuid: Scalars['uuid']['input'];
+}>;
+
+
+export type QuitRoomMutation = { __typename?: 'mutation_root', delete_user_room?: { __typename?: 'user_room_mutation_response', affected_rows: number } | null };
+
 export type AddUserMutationVariables = Exact<{
   username: Scalars['String']['input'];
   password: Scalars['String']['input'];
@@ -1554,6 +1906,13 @@ export type GetUsersByUsernameQueryVariables = Exact<{
 
 export type GetUsersByUsernameQuery = { __typename?: 'query_root', user: Array<{ __typename?: 'user', uuid: any, password: string }> };
 
+export type DeleteUserMutationVariables = Exact<{
+  uuid: Scalars['uuid']['input'];
+}>;
+
+
+export type DeleteUserMutation = { __typename?: 'mutation_root', delete_user_by_pk?: { __typename?: 'user', uuid: any } | null };
+
 
 export const AddMessageDocument = gql`
     mutation addMessage($user_uuid: uuid!, $room_uuid: uuid!, $content: String!) {
@@ -1567,6 +1926,56 @@ export const AddMessageDocument = gql`
 export const GetMessagesByRoomDocument = gql`
     subscription getMessagesByRoom($room_uuid: uuid!) {
   message(where: {room_uuid: {_eq: $room_uuid}}) {
+    uuid
+    user {
+      uuid
+      username
+    }
+    content
+    created_at
+  }
+}
+    `;
+export const GetMessagesByUserDocument = gql`
+    subscription getMessagesByUser($user_uuid: uuid!) {
+  message(where: {user_uuid: {_eq: $user_uuid}}) {
+    uuid
+    room {
+      uuid
+    }
+    content
+    created_at
+  }
+}
+    `;
+export const GetMessageByUuidDocument = gql`
+    subscription getMessageByUUID($uuid: uuid!) {
+  message_by_pk(uuid: $uuid) {
+    uuid
+    user {
+      uuid
+      username
+    }
+    room {
+      uuid
+    }
+    content
+    created_at
+  }
+}
+    `;
+export const AddReplyDocument = gql`
+    mutation addReply($user_uuid: uuid!, $msg_uuid: uuid!, $content: String!) {
+  insert_reply_one(
+    object: {user_uuid: $user_uuid, msg_uuid: $msg_uuid, content: $content}
+  ) {
+    uuid
+  }
+}
+    `;
+export const GetReplyByMessageDocument = gql`
+    subscription getReplyByMessage($msg_uuid: uuid!) {
+  reply(where: {msg_uuid: {_eq: $msg_uuid}}) {
     uuid
     user {
       uuid
@@ -1612,6 +2021,15 @@ export const JoinRoomDocument = gql`
   }
 }
     `;
+export const QuitRoomDocument = gql`
+    mutation quitRoom($user_uuid: uuid!, $room_uuid: uuid!) {
+  delete_user_room(
+    where: {user_uuid: {_eq: $user_uuid}, room_uuid: {_eq: $room_uuid}}
+  ) {
+    affected_rows
+  }
+}
+    `;
 export const AddUserDocument = gql`
     mutation addUser($username: String!, $password: String!) {
   insert_user_one(object: {username: $username, password: $password}) {
@@ -1624,6 +2042,13 @@ export const GetUsersByUsernameDocument = gql`
   user(where: {username: {_eq: $username}}) {
     uuid
     password
+  }
+}
+    `;
+export const DeleteUserDocument = gql`
+    mutation deleteUser($uuid: uuid!) {
+  delete_user_by_pk(uuid: $uuid) {
+    uuid
   }
 }
     `;
@@ -1641,6 +2066,18 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     getMessagesByRoom(variables: GetMessagesByRoomSubscriptionVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetMessagesByRoomSubscription> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetMessagesByRoomSubscription>(GetMessagesByRoomDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getMessagesByRoom', 'subscription', variables);
     },
+    getMessagesByUser(variables: GetMessagesByUserSubscriptionVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetMessagesByUserSubscription> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetMessagesByUserSubscription>(GetMessagesByUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getMessagesByUser', 'subscription', variables);
+    },
+    getMessageByUUID(variables: GetMessageByUuidSubscriptionVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetMessageByUuidSubscription> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetMessageByUuidSubscription>(GetMessageByUuidDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getMessageByUUID', 'subscription', variables);
+    },
+    addReply(variables: AddReplyMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<AddReplyMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<AddReplyMutation>(AddReplyDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'addReply', 'mutation', variables);
+    },
+    getReplyByMessage(variables: GetReplyByMessageSubscriptionVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetReplyByMessageSubscription> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetReplyByMessageSubscription>(GetReplyByMessageDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getReplyByMessage', 'subscription', variables);
+    },
     addRoom(variables: AddRoomMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<AddRoomMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<AddRoomMutation>(AddRoomDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'addRoom', 'mutation', variables);
     },
@@ -1653,11 +2090,17 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     joinRoom(variables: JoinRoomMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<JoinRoomMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<JoinRoomMutation>(JoinRoomDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'joinRoom', 'mutation', variables);
     },
+    quitRoom(variables: QuitRoomMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<QuitRoomMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<QuitRoomMutation>(QuitRoomDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'quitRoom', 'mutation', variables);
+    },
     addUser(variables: AddUserMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<AddUserMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<AddUserMutation>(AddUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'addUser', 'mutation', variables);
     },
     getUsersByUsername(variables: GetUsersByUsernameQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetUsersByUsernameQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetUsersByUsernameQuery>(GetUsersByUsernameDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getUsersByUsername', 'query', variables);
+    },
+    deleteUser(variables: DeleteUserMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<DeleteUserMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<DeleteUserMutation>(DeleteUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'deleteUser', 'mutation', variables);
     }
   };
 }
