@@ -1,0 +1,5 @@
+mutation addReply($user_uuid: uuid!, $msg_uuid: uuid!, $content: String!) {
+  insert_reply_one(object: {user_uuid: $user_uuid, msg_uuid: $msg_uuid, content: $content}) {
+    uuid
+  }
+}

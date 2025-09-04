@@ -1,5 +1,5 @@
 {
-  "resource_version": 14,
+  "resource_version": 17,
   "metadata": {
     "version": 3,
     "sources": [
@@ -71,6 +71,67 @@
                   ],
                   "filter": {},
                   "check": {}
+                },
+                "comment": ""
+              }
+            ],
+            "delete_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "filter": {}
+                },
+                "comment": ""
+              }
+            ]
+          },
+          {
+            "table": {
+              "name": "reply",
+              "schema": "public"
+            },
+            "insert_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "check": {},
+                  "columns": [
+                    "content",
+                    "msg_uuid",
+                    "user_uuid",
+                    "uuid"
+                  ]
+                },
+                "comment": ""
+              }
+            ],
+            "select_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "columns": [
+                    "content",
+                    "msg_uuid",
+                    "user_uuid",
+                    "uuid"
+                  ],
+                  "filter": {}
+                },
+                "comment": ""
+              }
+            ],
+            "update_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "columns": [
+                    "content",
+                    "msg_uuid",
+                    "user_uuid",
+                    "uuid"
+                  ],
+                  "filter": {},
+                  "check": null
                 },
                 "comment": ""
               }
