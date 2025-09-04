@@ -11,23 +11,26 @@
       body {
         height: 100vh;
         margin: 0;
-        background-image: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.8)),
+        background-image: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.8)),
           url("./about_me_resource/suika_bg.jpg");
         background-size: cover;
         background-repeat: no-repeat;
+        color:#11587b
       }
       comment{
         color: #677bfa;
         font-size: 15px;
       }
       stress{
-        color:rgb(246, 75, 166);
+        color:#ac67faff;
         font-size:20px;
       }
       p{
         font-size: 20px;
       }
     </style>
+
+    <script src="./about_me.js"></script>
 </head>
 
 <body>
@@ -40,7 +43,7 @@
             例如<a href=https://www.bilibili.com/video/BV1XW411b7gT>东方project系列</a>的stg类游戏及其众多二次创作游戏，以及剧情向的RPG游戏<br>
         </p>
 
-        
+
             <comment>试图向批改作业的学长传教（逃）</comment><br>
         <p>
             转来之后发生了一些比较有趣的事<br>
@@ -54,9 +57,14 @@
             这阵子又恰逢班委换届，想起我原先那个班级的氛围和状况<br>
             我选择出任我们班的班长，也得到了同学们的拥护与支持（好耶）
             <img src="about_me_resource\suika.gif" alt=“这是东方project里面我最喜欢的角色：伊吹萃香” width="100" height="100"/><br>
-            <comment>单击下面的按钮回到主页</comment><br>
             <button onclick="window.location.href='./index.html'">回到主页</button>
+            <button id="ColorBtn" onclick="ChangeColor()">切换到暖色风格</button><br>
         </p>
+
+        <p>
+          <comment>我的github公共仓库</comment><br>
+        </p>
+        <p id="GithubDiv">加载中... </p>
     </div>
 </body>
 
