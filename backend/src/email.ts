@@ -1,5 +1,7 @@
 import express from "express";
 import nodemailer from "nodemailer";
+import { body, validationResult } from 'express-validator';
+import { UserInputError } from 'apollo-server-express';
 
 const router = express.Router();
 
@@ -22,7 +24,28 @@ const sendEmail = async (to: string, subject: string, text: string) => {
   }
 }
 
+const validateContactForm = [
+  body('email')
+    .isEmail().withMessage('请提供有效的电子邮件地址')
+    .normalizeEmail(),
+  body('name')
+    .isLength({ min: 2, max: 50 }).withMessage('姓名长度必须在2-50个字符之间')
+    .trim(),
+  body('message')
+    .isLength({ min: 10, max: 2000 }).withMessage('消息长度必须在10-2000个字符之间')
+    .trim()
+];
+
 router.post("/contact-us", async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({
+      errors: errors.array().map(err => ({
+        message: err.msg,
+        field: err.param
+      }))
+    });
+  }
   const { email, name, message } = req.body;
   if (!email || !name || !message) {
     return res.status(422).send("422 Unprocessable Entity: Missing email, name, or message");
