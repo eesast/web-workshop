@@ -3,25 +3,21 @@ import { Button, Input, message, Spin } from "antd";
 import { user } from "./getUser";
 import * as graphql from "./graphql";
 import { Bubble, Card, Container, Scroll, Text } from "./Components";
-import { Menu, Item, useContextMenu } from 'react-contexify';
-import 'react-contexify/ReactContexify.css';
-const MENU_ID = 'reply-menu';
 
-interface ChatBoxProps {
+interface ReplyBoxProps {
   user: user | null;
-  room: graphql.GetJoinedRoomsQuery["user_room"][0]["room"] | undefined;
+  msg: graphql.GetMessageByUuidSubscription["message_by_pk"] | undefined;
   handleClose: () => void;
-  handleReply: (msg_uuid: any) => void;
 }
 
-const ChatBox: React.FC<ChatBoxProps> = ({ user, room, handleClose, handleReply }) => {
+const ReplyBox: React.FC<ReplyBoxProps> = ({ user, msg, handleClose }) => {
   const [text, setText] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
-  const { data, error } = graphql.useGetMessagesByRoomSubscription({
-    skip: !room,
+  const { data, error } = graphql.useGetReplyByMessageSubscription({
+    skip: !msg,
     variables: {
-      room_uuid: room?.uuid,
+      msg_uuid: msg?.uuid,
     },
   });
   useEffect(() => {
@@ -31,24 +27,24 @@ const ChatBox: React.FC<ChatBoxProps> = ({ user, room, handleClose, handleReply 
     }
   }, [error]);
 
-  const [addMessageMutation] = graphql.useAddMessageMutation();
+  const [addReplyMutation] = graphql.useAddReplyMutation();
 
   const handleSend = async () => {
     setLoading(true);
     if (!text) {
-      message.error("消息不能为空！");
+      message.error("回复不能为空！");
       return setLoading(false);
     }
-    const result = await addMessageMutation({
+    const result = await addReplyMutation({
       variables: {
         user_uuid: user?.uuid,
-        room_uuid: room?.uuid,
+        msg_uuid: msg?.uuid,
         content: text,
       },
     });
     if (result.errors) {
       console.error(result.errors);
-      message.error("发送消息失败！");
+      message.error("回复发送失败！");
     }
     setText("");
     setLoading(false);
@@ -72,7 +68,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ user, room, handleClose, handleReply 
     </Button>
   );
 
-  if (!user || !room) {
+  if (!user || !msg) {
     return null;
   }
   return (
@@ -80,13 +76,13 @@ const ChatBox: React.FC<ChatBoxProps> = ({ user, room, handleClose, handleReply 
       <Close />
       <Container style={{ margin: "6px" }}>
         <Text>
-          <strong>{room.name}</strong>
+          <strong>回复</strong>
         </Text>
         <Text size="small" style={{ marginTop: "6px", marginBottom: "6px" }}>
-          {room.intro}
+            {msg.content}
         </Text>
       </Container>
-      <MessageFeed user={user} messages={data?.message} handleReply={handleReply}/>
+      <ReplyFeed user={user} replies={data?.reply} />
       <div
         className="need-interaction"
         style={{
@@ -96,7 +92,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ user, room, handleClose, handleReply 
         }}
       >
         <Input
-          placeholder="输入消息"
+          placeholder="输入回复"
           value={text}
           onChange={(e) => setText(e.target.value)}
           style={{ fontSize: "18px", height: "40px" }}
@@ -114,27 +110,26 @@ const ChatBox: React.FC<ChatBoxProps> = ({ user, room, handleClose, handleReply 
   );
 };
 
-interface MessageFeedProps {
+interface ReplyFeedProps {
   user: user;
-  messages: graphql.GetMessagesByRoomSubscription["message"] | undefined;
-  handleReply: (msg_uuid: any) => void;
+  replies: graphql.GetReplyByMessageSubscription["reply"] | undefined;
 }
 
-const MessageFeed: React.FC<MessageFeedProps> = ({ user, messages, handleReply }) => {
+const ReplyFeed: React.FC<ReplyFeedProps> = ({ user, replies }) => {
   const bottomRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  }, [replies]);
 
   return (
     <Scroll>
-      {messages ? (
-        messages.map((message, index) => (
+      {replies ? (
+        replies.map((reply, index) => (
           <div
-            ref={index === messages.length - 1 ? bottomRef : null}
+            ref={index === replies.length - 1 ? bottomRef : null}
             key={index}
           >
-            <MessageBubble user={user} message={message} handleReply={() => {handleReply(message.uuid)}}/>
+            <ReplyBubble user={user} reply={reply} />
           </div>
         ))
       ) : (
@@ -146,53 +141,17 @@ const MessageFeed: React.FC<MessageFeedProps> = ({ user, messages, handleReply }
   );
 };
 
-interface MessageBubbleProps {
+interface ReplyBubbleProps {
   user: user;
-  message: graphql.GetMessagesByRoomSubscription["message"][0];
-  handleReply: () => void;
+  reply: graphql.GetReplyByMessageSubscription["reply"][0];
 }
 
-const MessageBubble: React.FC<MessageBubbleProps> = ({ user, message, handleReply }) => {
-  const isSelf = user.uuid === message.user.uuid;
-  const dateUTC = new Date(message.created_at);
+const ReplyBubble: React.FC<ReplyBubbleProps> = ({ user, reply }) => {
+  const isSelf = user.uuid === reply.user?.uuid;
+  const dateUTC = new Date(reply.created_at);
   const date = new Date(
     dateUTC.getTime() - dateUTC.getTimezoneOffset() * 60000
   );
-
-  const { show } = useContextMenu({
-    id: `${MENU_ID}-${message.uuid}`,
-  });
-
-  function handleContextMenu(event: any){
-      const rect = event.currentTarget.getBoundingClientRect();
-      if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) {
-        return;
-      }
-      event.preventDefault();
-      show({
-        event,
-        props: {
-            key: 'value'
-        },
-        position: {
-            x: 0,
-            y: 0
-        },
-      })
-  }
-  // @ts-ignore
-  const handleItemClick = (args: ItemParams<any, any>) => {
-    const { id, event, props } = args;
-    switch (id) {
-      case "reply":
-        handleReply();
-        break;
-      default:
-        break;
-      //etc...
-    }
-  }
-
 
   return (
     <div
@@ -203,10 +162,9 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ user, message, handleRepl
         flexWrap: "nowrap",
         alignItems: isSelf ? "flex-end" : "flex-start",
       }}
-      onContextMenu={handleContextMenu}
     >
       <div style={{ marginLeft: "12px", marginRight: "12px" }}>
-        <Text size="small">{message.user.username}</Text>
+        <Text size="small">{reply.user?.username}</Text>
         <Text size="small" style={{ marginLeft: "6px" }}>
           {date.toLocaleString("zh-CN")}
         </Text>
@@ -221,13 +179,10 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ user, message, handleRepl
             : "rgba(255, 255, 255, 0.25)",
         }}
       >
-          <Menu id={`${MENU_ID}-${message.uuid}`}>
-              <Item id="reply" onClick={handleItemClick}>Reply</Item>
-          </Menu>
-        <Text style={{ wordBreak: "break-all" }}>{message.content}</Text>
+        <Text style={{ wordBreak: "break-all" }}>{reply.content}</Text>
       </Bubble>
     </div>
   );
 };
 
-export default ChatBox;
+export default ReplyBox;

@@ -1829,6 +1829,13 @@ export type GetMessagesByUserSubscriptionVariables = Exact<{
 
 export type GetMessagesByUserSubscription = { __typename?: 'subscription_root', message: Array<{ __typename?: 'message', uuid: any, content: string, created_at: any, room: { __typename?: 'room', uuid: any } }> };
 
+export type GetMessageByUuidSubscriptionVariables = Exact<{
+  uuid: Scalars['uuid']['input'];
+}>;
+
+
+export type GetMessageByUuidSubscription = { __typename?: 'subscription_root', message_by_pk?: { __typename?: 'message', uuid: any, content: string, created_at: any, user: { __typename?: 'user', uuid: any, username: string }, room: { __typename?: 'room', uuid: any } } | null };
+
 export type AddReplyMutationVariables = Exact<{
   user_uuid: Scalars['uuid']['input'];
   msg_uuid: Scalars['uuid']['input'];
@@ -2015,6 +2022,45 @@ export function useGetMessagesByUserSubscription(baseOptions: Apollo.Subscriptio
       }
 export type GetMessagesByUserSubscriptionHookResult = ReturnType<typeof useGetMessagesByUserSubscription>;
 export type GetMessagesByUserSubscriptionResult = Apollo.SubscriptionResult<GetMessagesByUserSubscription>;
+export const GetMessageByUuidDocument = gql`
+    subscription getMessageByUUID($uuid: uuid!) {
+  message_by_pk(uuid: $uuid) {
+    uuid
+    user {
+      uuid
+      username
+    }
+    room {
+      uuid
+    }
+    content
+    created_at
+  }
+}
+    `;
+
+/**
+ * __useGetMessageByUuidSubscription__
+ *
+ * To run a query within a React component, call `useGetMessageByUuidSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useGetMessageByUuidSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMessageByUuidSubscription({
+ *   variables: {
+ *      uuid: // value for 'uuid'
+ *   },
+ * });
+ */
+export function useGetMessageByUuidSubscription(baseOptions: Apollo.SubscriptionHookOptions<GetMessageByUuidSubscription, GetMessageByUuidSubscriptionVariables> & ({ variables: GetMessageByUuidSubscriptionVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<GetMessageByUuidSubscription, GetMessageByUuidSubscriptionVariables>(GetMessageByUuidDocument, options);
+      }
+export type GetMessageByUuidSubscriptionHookResult = ReturnType<typeof useGetMessageByUuidSubscription>;
+export type GetMessageByUuidSubscriptionResult = Apollo.SubscriptionResult<GetMessageByUuidSubscription>;
 export const AddReplyDocument = gql`
     mutation addReply($user_uuid: uuid!, $msg_uuid: uuid!, $content: String!) {
   insert_reply_one(
