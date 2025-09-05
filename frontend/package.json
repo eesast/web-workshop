@@ -35,7 +35,7 @@
     "electron": "yarn build && electron .",
     "electron:build": "electron-builder",
     "deploy": "gh-pages -d build",
-    "predeploy": "npm run build",
+    "predeploy": "npm run build"
   },
   "eslintConfig": {
     "extends": [
