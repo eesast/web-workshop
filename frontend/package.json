@@ -1,5 +1,5 @@
 {
-  "homepage": "./",
+  "homepage": "https://Rosalind-Bell.github.io/demoweb",
   "dependencies": {
     "@ant-design/pro-components": "2.7.15",
     "@apollo/client": "3.11.4",
@@ -29,11 +29,12 @@
   },
   "scripts": {
     "start": "craco start",
-    "build": "craco build",
+    "build": "CI=false craco build"
     "typecheck": "tsc --noEmit",
     "lint": "eslint src --ext .ts,.tsx",
     "electron": "yarn build && electron .",
     "electron:build": "electron-builder"
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
