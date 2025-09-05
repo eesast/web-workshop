@@ -20,7 +20,7 @@ const RequestPasswordPage = React.lazy(() => import("./RequestPassword")); // �
 const ActionPasswordPage = React.lazy(() => import("./ActionPassword")); // 添加这一行
 
 
-axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL!;
+axios.defaults.baseURL = "https://zsbngnmqddf.site";
 axios.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
   if (token) {
