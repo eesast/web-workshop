@@ -33,7 +33,7 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint src --ext .ts,.tsx",
     "electron": "yarn build && electron .",
-    "electron:build": "electron-builder"
+    "electron:build": "electron-builder",
     "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
