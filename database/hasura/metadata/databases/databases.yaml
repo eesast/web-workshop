@@ -2,8 +2,7 @@
   kind: postgres
   configuration:
     connection_info:
-      database_url:
-        from_env: PG_DATABASE_URL
+      database_url: postgresql://neondb_owner:npg_t3RKwxMyWO8e@ep-raspy-sunset-a1gw201d-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
       isolation_level: read-committed
       use_prepared_statements: false
   tables: "!include workshop/tables/tables.yaml"

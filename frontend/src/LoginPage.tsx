@@ -22,7 +22,7 @@ const LoginPage: React.FC = () => {
       localStorage.setItem("token", token);
       localStorage.setItem("username", values.username);
       message.success("登录成功！");
-      return navigate(-1);
+      return navigate("/");
     } catch (error) {
       const err = error as AxiosError;
       if (
@@ -36,7 +36,7 @@ const LoginPage: React.FC = () => {
           localStorage.setItem("token", token);
           localStorage.setItem("username", values.username);
           message.success("注册成功！");
-          return navigate(-1);
+          return navigate("/");
         } catch (error) {
           console.error(error);
           message.error("注册失败！");
@@ -48,8 +48,8 @@ const LoginPage: React.FC = () => {
   };
 
   const handleForgetPassword = () => {
-    message.info("暂未实现");
-  };
+    navigate("/user/change-password/request");
+};
 
   return (
     <LoginFormPage
@@ -85,9 +85,7 @@ const LoginPage: React.FC = () => {
         <ProFormCheckbox noStyle name="autoRegister" initialValue={true}>
           自动创建新用户
         </ProFormCheckbox>
-        <Link style={{ float: "right" }} onClick={handleForgetPassword}>
-          忘记密码
-        </Link>
+        <Link onClick={handleForgetPassword}>忘记密码</Link>
       </div>
     </LoginFormPage>
   );
