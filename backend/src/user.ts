@@ -25,7 +25,7 @@ router.post("/login", async (req, res) => {
       return res.status(404).send("404 Not Found: User does not exist");
     }
     const user = queryResult.user[0];
-    if (user.password !== password) {
+    if (user.password !== md5(password)) {
       return res.status(401).send("401 Unauthorized: Password does not match");
     }
     const payload: userJWTPayload = {
