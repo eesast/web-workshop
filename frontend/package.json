@@ -29,7 +29,7 @@
   },
   "scripts": {
     "start": "craco start",
-    "build": "CI=false craco build"
+    "build": "CI=false craco build",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src --ext .ts,.tsx",
     "electron": "yarn build && electron .",
