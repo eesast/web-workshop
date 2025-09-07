@@ -71,4 +71,23 @@ router.post("/register", async (req, res) => {
   }
 });
 
+router.get("/delete", authenticate, async (req, res) => {
+  try {
+    // 从 JWT 中获取当前用户 UUID（假设 authenticate 中间件已将解析后的 payload 挂载到 req.user）
+    const userId = req.user.uuid;
+
+    // 调用 Hasura SDK 删除用户
+    const result = await graphql.delete_user_by_pk({ uuid: userId });
+
+    if (!result.delete_user_by_pk) {
+      return res.status(404).send("404 Not Found: User not found");
+    }
+
+    return res.status(200).send("User deleted successfully");
+  } catch (err) {
+    console.error(err);
+    return res.sendStatus(500);
+  }
+});
+
 export default router;
