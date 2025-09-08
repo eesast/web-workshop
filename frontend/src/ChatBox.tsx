@@ -5,7 +5,7 @@ import * as graphql from "./graphql";
 import { Bubble, Card, Container, Scroll, Text } from "./Components";
 
 // 新增库react-contexify 用来右键回复某一条消息
-import { Menu, Item, useContextMenu } from 'react-contexify';
+import { useContextMenu } from 'react-contexify';
 import 'react-contexify/ReactContexify.css';
 
 // 创建一个自定义的右键菜单组件 以确保右键菜单的位置正确
