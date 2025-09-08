@@ -2,7 +2,7 @@ name: backend
 
 on:
   push:
-    branches: [ main ]
+    branches: [ "06-Deployment" ]
 
 permissions:
   packages: write
