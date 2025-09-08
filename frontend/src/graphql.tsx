@@ -1319,7 +1319,7 @@ export type User_Room_Bool_Exp = {
 
 /** unique or primary key constraints on table "user_room" */
 export enum User_Room_Constraint {
-  /** unique or primary key constraint on columns "user_uuid", "room_uuid" */
+  /** unique or primary key constraint on columns "room_uuid", "user_uuid" */
   UserRoomPkey = 'user_room_pkey'
 }
 
@@ -1508,6 +1508,13 @@ export type GetMessagesByRoomSubscriptionVariables = Exact<{
 
 export type GetMessagesByRoomSubscription = { __typename?: 'subscription_root', message: Array<{ __typename?: 'message', uuid: any, content: string, created_at: any, user: { __typename?: 'user', uuid: any, username: string } }> };
 
+export type GetMessageByUserQueryVariables = Exact<{
+  user_uuid?: InputMaybe<Scalars['uuid']['input']>;
+}>;
+
+
+export type GetMessageByUserQuery = { __typename?: 'query_root', message: Array<{ __typename?: 'message', user_uuid: any, room_uuid: any, content: string }> };
+
 export type AddRoomMutationVariables = Exact<{
   name: Scalars['String']['input'];
   intro: Scalars['String']['input'];
@@ -1539,6 +1546,14 @@ export type JoinRoomMutationVariables = Exact<{
 
 export type JoinRoomMutation = { __typename?: 'mutation_root', insert_user_room_one?: { __typename?: 'user_room', user_uuid: any, room_uuid: any } | null };
 
+export type QuitRoomMutationVariables = Exact<{
+  room_uuid?: InputMaybe<Scalars['uuid']['input']>;
+  user_uuid?: InputMaybe<Scalars['uuid']['input']>;
+}>;
+
+
+export type QuitRoomMutation = { __typename?: 'mutation_root', delete_user_room?: { __typename?: 'user_room_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'user_room', room_uuid: any, user_uuid: any }> } | null };
+
 export type AddUserMutationVariables = Exact<{
   username: Scalars['String']['input'];
   password: Scalars['String']['input'];
@@ -1553,6 +1568,13 @@ export type GetUsersByUsernameQueryVariables = Exact<{
 
 
 export type GetUsersByUsernameQuery = { __typename?: 'query_root', user: Array<{ __typename?: 'user', uuid: any, password: string }> };
+
+export type DeleteUserMutationVariables = Exact<{
+  uuid: Scalars['uuid']['input'];
+}>;
+
+
+export type DeleteUserMutation = { __typename?: 'mutation_root', delete_user?: { __typename?: 'user_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'user', username: string, uuid: any }> } | null };
 
 
 export const AddMessageDocument = gql`
@@ -1628,6 +1650,48 @@ export function useGetMessagesByRoomSubscription(baseOptions: Apollo.Subscriptio
       }
 export type GetMessagesByRoomSubscriptionHookResult = ReturnType<typeof useGetMessagesByRoomSubscription>;
 export type GetMessagesByRoomSubscriptionResult = Apollo.SubscriptionResult<GetMessagesByRoomSubscription>;
+export const GetMessageByUserDocument = gql`
+    query getMessageByUser($user_uuid: uuid = "") {
+  message(where: {user_uuid: {_eq: $user_uuid}}) {
+    user_uuid
+    room_uuid
+    content
+  }
+}
+    `;
+
+/**
+ * __useGetMessageByUserQuery__
+ *
+ * To run a query within a React component, call `useGetMessageByUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMessageByUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMessageByUserQuery({
+ *   variables: {
+ *      user_uuid: // value for 'user_uuid'
+ *   },
+ * });
+ */
+export function useGetMessageByUserQuery(baseOptions?: Apollo.QueryHookOptions<GetMessageByUserQuery, GetMessageByUserQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMessageByUserQuery, GetMessageByUserQueryVariables>(GetMessageByUserDocument, options);
+      }
+export function useGetMessageByUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMessageByUserQuery, GetMessageByUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMessageByUserQuery, GetMessageByUserQueryVariables>(GetMessageByUserDocument, options);
+        }
+export function useGetMessageByUserSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetMessageByUserQuery, GetMessageByUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetMessageByUserQuery, GetMessageByUserQueryVariables>(GetMessageByUserDocument, options);
+        }
+export type GetMessageByUserQueryHookResult = ReturnType<typeof useGetMessageByUserQuery>;
+export type GetMessageByUserLazyQueryHookResult = ReturnType<typeof useGetMessageByUserLazyQuery>;
+export type GetMessageByUserSuspenseQueryHookResult = ReturnType<typeof useGetMessageByUserSuspenseQuery>;
+export type GetMessageByUserQueryResult = Apollo.QueryResult<GetMessageByUserQuery, GetMessageByUserQueryVariables>;
 export const AddRoomDocument = gql`
     mutation addRoom($name: String!, $intro: String!, $invite_code: String!) {
   insert_room_one(object: {name: $name, intro: $intro, invite_code: $invite_code}) {
@@ -1784,6 +1848,46 @@ export function useJoinRoomMutation(baseOptions?: Apollo.MutationHookOptions<Joi
 export type JoinRoomMutationHookResult = ReturnType<typeof useJoinRoomMutation>;
 export type JoinRoomMutationResult = Apollo.MutationResult<JoinRoomMutation>;
 export type JoinRoomMutationOptions = Apollo.BaseMutationOptions<JoinRoomMutation, JoinRoomMutationVariables>;
+export const QuitRoomDocument = gql`
+    mutation quitRoom($room_uuid: uuid = "", $user_uuid: uuid = "") {
+  delete_user_room(
+    where: {room_uuid: {_eq: $room_uuid}, user_uuid: {_eq: $user_uuid}}
+  ) {
+    returning {
+      room_uuid
+      user_uuid
+    }
+    affected_rows
+  }
+}
+    `;
+export type QuitRoomMutationFn = Apollo.MutationFunction<QuitRoomMutation, QuitRoomMutationVariables>;
+
+/**
+ * __useQuitRoomMutation__
+ *
+ * To run a mutation, you first call `useQuitRoomMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useQuitRoomMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [quitRoomMutation, { data, loading, error }] = useQuitRoomMutation({
+ *   variables: {
+ *      room_uuid: // value for 'room_uuid'
+ *      user_uuid: // value for 'user_uuid'
+ *   },
+ * });
+ */
+export function useQuitRoomMutation(baseOptions?: Apollo.MutationHookOptions<QuitRoomMutation, QuitRoomMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<QuitRoomMutation, QuitRoomMutationVariables>(QuitRoomDocument, options);
+      }
+export type QuitRoomMutationHookResult = ReturnType<typeof useQuitRoomMutation>;
+export type QuitRoomMutationResult = Apollo.MutationResult<QuitRoomMutation>;
+export type QuitRoomMutationOptions = Apollo.BaseMutationOptions<QuitRoomMutation, QuitRoomMutationVariables>;
 export const AddUserDocument = gql`
     mutation addUser($username: String!, $password: String!) {
   insert_user_one(object: {username: $username, password: $password}) {
@@ -1859,3 +1963,40 @@ export type GetUsersByUsernameQueryHookResult = ReturnType<typeof useGetUsersByU
 export type GetUsersByUsernameLazyQueryHookResult = ReturnType<typeof useGetUsersByUsernameLazyQuery>;
 export type GetUsersByUsernameSuspenseQueryHookResult = ReturnType<typeof useGetUsersByUsernameSuspenseQuery>;
 export type GetUsersByUsernameQueryResult = Apollo.QueryResult<GetUsersByUsernameQuery, GetUsersByUsernameQueryVariables>;
+export const DeleteUserDocument = gql`
+    mutation deleteUser($uuid: uuid!) {
+  delete_user(where: {uuid: {_eq: $uuid}}) {
+    affected_rows
+    returning {
+      username
+      uuid
+    }
+  }
+}
+    `;
+export type DeleteUserMutationFn = Apollo.MutationFunction<DeleteUserMutation, DeleteUserMutationVariables>;
+
+/**
+ * __useDeleteUserMutation__
+ *
+ * To run a mutation, you first call `useDeleteUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteUserMutation, { data, loading, error }] = useDeleteUserMutation({
+ *   variables: {
+ *      uuid: // value for 'uuid'
+ *   },
+ * });
+ */
+export function useDeleteUserMutation(baseOptions?: Apollo.MutationHookOptions<DeleteUserMutation, DeleteUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteUserMutation, DeleteUserMutationVariables>(DeleteUserDocument, options);
+      }
+export type DeleteUserMutationHookResult = ReturnType<typeof useDeleteUserMutation>;
+export type DeleteUserMutationResult = Apollo.MutationResult<DeleteUserMutation>;
+export type DeleteUserMutationOptions = Apollo.BaseMutationOptions<DeleteUserMutation, DeleteUserMutationVariables>;
