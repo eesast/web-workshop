@@ -64,4 +64,4 @@ jobs:
           push: true
           tags: |
             ${{ vars.DOCKERHUB_USERNAME }}/${{ vars.IMAGE_NAME }}:latest
-            ghcr.io/${{ gtoLower(github.repository_owner) }}/${{ vars.IMAGE_NAME }}:latest
+            ghcr.io/${{ toLower(github.repository_owner) }}/${{ vars.IMAGE_NAME }}:latest
