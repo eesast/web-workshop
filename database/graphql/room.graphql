@@ -1,30 +1,56 @@
-mutation addRoom($name: String!, $intro: String!, $invite_code: String!) {
-  insert_room_one(object: {name: $name, intro: $intro, invite_code: $invite_code}) {
+# 房间查询
+query GetRoomById($uuid: uuid!) {
+  room_by_pk(uuid: $uuid) {
     uuid
+    name
+    description
+    creator
+    created_at
   }
 }
 
-query getJoinedRooms($user_uuid: uuid!) {
-  user_room(where: {user_uuid: {_eq: $user_uuid}}) {
+query GetRoomsByCreator($creator: uuid!) {
+  room(where: {creator: {_eq: $creator}}) {
+    uuid
+    name
+    description
+    created_at
+  }
+}
+
+query GetUserRooms($user: uuid!) {
+  user_room(where: {user: {_eq: $user}}) {
     room {
       uuid
       name
-      intro
-      invite_code
+      description
       created_at
     }
+    joined_at
   }
 }
 
-query getRoomByInviteCode($invite_code: String!) {
-  room(where: {invite_code: {_eq: $invite_code}}) {
+# 房间变更
+mutation CreateRoom($name: String!, $description: String, $creator: uuid!) {
+  insert_room_one(object: {name: $name, description: $description, creator: $creator}) {
     uuid
+    name
+    description
+    creator
   }
 }
 
-mutation joinRoom($user_uuid: uuid!, $room_uuid: uuid!) {
-  insert_user_room_one(object: {user_uuid: $user_uuid, room_uuid: $room_uuid}) {
-    user_uuid
-    room_uuid
+mutation JoinRoom($user: uuid!, $room: uuid!) {
+  insert_user_room_one(object: {user: $user, room: $room}) {
+    uuid
+    user
+    room
+    joined_at
+  }
+}
+
+mutation LeaveRoom($user: uuid!, $room: uuid!) {
+  delete_user_room(where: {user: {_eq: $user}, room: {_eq: $room}}) {
+    affected_rows
   }
 }

@@ -1,0 +1,6 @@
+version: 3
+endpoint: https://apm-23.hasura.app
+admin_secret: ZjJIjbt0oalXvue7bKX5HX1idlmUmhw0ygEuSjfauKdhi1iVpONLKNkXDwDkvVIJ
+actions:
+  kind: synchronous
+  handler_webhook_baseurl: http://localhost:3000
