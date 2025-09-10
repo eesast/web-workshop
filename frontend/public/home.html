@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>我的首页</title>
+  <style>
+    html,body{height:100%;margin:0;}
+    body{
+      background:url('https://i.ibb.co/t1WZsMD/301e4a1856b68d86f90271f769c1c942.png') center/cover no-repeat fixed;
+      position:relative;            
+      color:#fff;                     
+      font:32px/1.4 Arial,sans-serif;
+      text-align:center;
+      display:table;              
+      width:100%;
+    }
+    body::before{               
+      content:"";
+      position:absolute;
+      inset:0;
+      background:rgba(0,0,0,.5);
+    }
+    .center{                         
+      display:table-cell;
+      vertical-align:middle;
+      position:relative;           
+      z-index:1;
+    }
+    a{color:#1e90ff;text-decoration:none;}
+    a:hover{text-decoration:underline;}
+  </style>
+</head>
+<body>
+  <div class="center">
+    <h1>欢迎来到我的主页</h1>
+    <p>点击这里查看 <a href="about-me.html">关于我</a></p>
+  </div>
+</body>
+</html>
