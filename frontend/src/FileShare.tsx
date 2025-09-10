@@ -4,6 +4,7 @@ import {
   InboxOutlined,
   DownloadOutlined,
   ReloadOutlined,
+  DeleteOutlined
 } from "@ant-design/icons";
 import axios from "axios";
 import * as graphql from "./graphql";
@@ -44,6 +45,25 @@ const downloadFile = async (roomUUID: string, filename: string) => {
   } catch (error) {
     console.error(error);
     message.error("下载文件失败！");
+  }
+};
+
+//hw：删除文件
+const DeleteFile = async (roomUUID: string, filename: string) => {
+  try {
+    message.info("正在请求删除...");
+    const token = localStorage.getItem("token");
+    const response = await axios.post(
+      "/file/delete",
+      { room: roomUUID, filename: filename }, // body 数据
+      { headers: { Authorization: `Bearer ${token}` } } // headers 数据
+    );
+    message.success("删除文件成功！");
+    return response.data.fileList;
+  } catch (error) {
+    console.error(error);
+    message.error("删除文件失败！");
+    return [];
   }
 };
 
@@ -172,13 +192,26 @@ const FileList: React.FC<FileListProps> = ({ roomUUID, filelist }) => {
       <DownloadOutlined />
     </Button>
   );
+
+  //hw:删除文件
+  const Delete = (filename: string) => (
+    <Button
+      type="link"
+      style={{ fontSize: "18px", width: "18px", height: "18px", padding: 0 }}
+      onClick={async () => {
+        const newFileList = await DeleteFile(roomUUID, filename);
+      }}
+      >
+      <DeleteOutlined />
+     </Button>);
+
   return (
     <Scroll>
       <List
         size="small"
         dataSource={filelist}
         renderItem={(filename) => (
-          <List.Item style={{ padding: "8px" }} actions={[Download(filename)]}>
+          <List.Item style={{ padding: "8px" }} actions={[Download(filename), Delete(filename)]}>
             <Text style={{ wordBreak: "break-all" }}>{filename}</Text>
           </List.Item>
         )}

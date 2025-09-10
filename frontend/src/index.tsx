@@ -95,6 +95,8 @@ const App = () => {
       user_uuid: user?.uuid,
     },
   });
+  console.log(data);
+  console.log(error);
   useEffect(() => {
     if (error) {
       console.error(error);
