@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/png" sizes="32x32" href="about_me_resource\icon.png" />
+    <title>About Me</title>
+
+    <style>
+      body {
+        height: 100vh;
+        margin: 0;
+        background-image: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.8)),
+          url("./about_me_resource/suika_bg.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        color:#11587b
+      }
+      comment{
+        color: #677bfa;
+        font-size: 15px;
+      }
+      stress{
+        color:#ac67faff;
+        font-size:20px;
+      }
+      p{
+        font-size: 20px;
+      }
+    </style>
+
+    <script src="./about_me.js"></script>
+</head>
+
+<body>
+    <div style="text-align:center;margin-top:150px;">
+        <h1>About Me</h1>
+        <p>我是肖裕杰，来自笃实44班,是今年5月初刚从化学系转来的</p>
+
+        <p> 兴趣爱好比较偏艺术类，例如<strong>作曲、绘画、文学写作</strong>，喜欢阅读哲学和文艺理论相关的书籍<br>
+            有比较喜欢的游戏作品，不过都比较冷门，
+            例如<a href=https://www.bilibili.com/video/BV1XW411b7gT>东方project系列</a>的stg类游戏及其众多二次创作游戏，以及剧情向的RPG游戏<br>
+        </p>
+
+
+            <comment>试图向批改作业的学长传教（逃）</comment><br>
+        <p>
+            转来之后发生了一些比较有趣的事<br>
+            因为在转入班级里恰好有个认识的东方厨哥们，所以顺理成章的有更多机会借助他熟悉班里的同学<br>
+            在对他们近距离观察，和和他们近距离相处，尤其是看了他们学生节表演的节目之后，<br>
+            感觉这些小朋友们（相对与我而言）好活泼可爱，好有生命力和活力，和他们相处几天之后感觉自己身上的尸气都变淡了<br>
+        </p>
+            <stress>同学之间的关系不太像是“同学”，而是“哥们”</stress><br>
+        <p>
+            让我想起了东方project社团里那群活泼可爱的群友们（我是这个社团的主催）<br>
+            这阵子又恰逢班委换届，想起我原先那个班级的氛围和状况<br>
+            我选择出任我们班的班长，也得到了同学们的拥护与支持（好耶）
+            <img src="about_me_resource\suika.gif" alt=“这是东方project里面我最喜欢的角色：伊吹萃香” width="100" height="100"/><br>
+            <button onclick="window.location.href='./index.html'">回到主页</button>
+            <button id="ColorBtn" onclick="ChangeColor()">切换到暖色风格</button><br>
+        </p>
+
+        <p>
+          <comment>我的github公共仓库</comment><br>
+        </p>
+        <p id="GithubDiv">加载中... </p>
+    </div>
+</body>
+
+</html>
