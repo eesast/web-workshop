@@ -1,0 +1,10 @@
+services:
+  backend:
+    image: flyingpointer2/webworkshop:latest
+    restart: always
+    ports:
+      - 5909:8888
+    env_file:
+      - .local.env
+    volumes:
+      - /data/upload:/data/upload

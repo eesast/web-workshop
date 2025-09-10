@@ -33,7 +33,7 @@
 5. 在该文件夹中执行 docker compose
 
    ```bash
-   docker compose up -d
+   sudo docker compose up -d
    ```
 
 6. 如果后续拉取镜像时遇到网络问题，可以配置 docker hub 的国内镜像源（[Docker Hub 国内镜像源配置 - 飞仔 FeiZai - 博客园 (cnblogs.com)](https://www.cnblogs.com/yuzhihui/p/17461781.html)）
@@ -48,13 +48,13 @@
 8. 确认 docker 容器已启动
 
    ```bash
-   docker ps
+   sudo docker ps
    ```
 
 9. 查找对应的 Docker ID，查看其日志。若出现`Server running at http://localhost:8888/`，则说明成功启动
 
    ```bash
-   docker logs <docker-id>
+   sudo docker logs <docker-id>
    ```
 
 10. 使用 Postman 执行任意请求（需要换成`<address>:<port>`，给出的`docker-compose.yml`使用端口 20248），若行为表现与本地后端相同，则说明部署成功

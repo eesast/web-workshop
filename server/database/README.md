@@ -64,3 +64,6 @@
 13. 数据库名称随意自取，使用环境变量连接数据库（Connect Database via Environment variable），环境变量是之前`docker-compose.yml`中定义的`PG_DATABASE_URL`，其他设置无需调整，点击 Connect Database
 
 14. 数据库连接完成，后续操作参照`/tutorials/03-Database.md`
+
+注意：由于我们在`message`表中新增了`replied_to_uuid`以及relationship `replied_to_message`，因此需要在服务器的hasura控制台上进行权限调整（用户对`replied_to_uuid`的权限），并且增加相应的relationship。
+
