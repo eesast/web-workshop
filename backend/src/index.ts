@@ -10,7 +10,7 @@ import emailRouter from "./email";
 
 const app = express();
 const address = "http://localhost";
-const port = 8888;
+const port =8888;
 
 dotenv.config({
   path: path.resolve(process.cwd(), ".local.env"),
