@@ -1319,7 +1319,7 @@ export type User_Room_Bool_Exp = {
 
 /** unique or primary key constraints on table "user_room" */
 export enum User_Room_Constraint {
-  /** unique or primary key constraint on columns "user_uuid", "room_uuid" */
+  /** unique or primary key constraint on columns "room_uuid", "user_uuid" */
   UserRoomPkey = 'user_room_pkey'
 }
 
@@ -1547,12 +1547,34 @@ export type AddUserMutationVariables = Exact<{
 
 export type AddUserMutation = { __typename?: 'mutation_root', insert_user_one?: { __typename?: 'user', uuid: any } | null };
 
+export type DeleteUserMutationVariables = Exact<{
+  uuid: Scalars['uuid']['input'];
+}>;
+
+
+export type DeleteUserMutation = { __typename?: 'mutation_root', delete_user?: { __typename?: 'user_mutation_response', affected_rows: number } | null };
+
+export type UpdateUserPasswordMutationVariables = Exact<{
+  uuid: Scalars['uuid']['input'];
+  password: Scalars['String']['input'];
+}>;
+
+
+export type UpdateUserPasswordMutation = { __typename?: 'mutation_root', update_user_by_pk?: { __typename?: 'user', uuid: any } | null };
+
 export type GetUsersByUsernameQueryVariables = Exact<{
   username: Scalars['String']['input'];
 }>;
 
 
 export type GetUsersByUsernameQuery = { __typename?: 'query_root', user: Array<{ __typename?: 'user', uuid: any, password: string }> };
+
+export type GetUsersByUuidQueryVariables = Exact<{
+  uuid: Scalars['uuid']['input'];
+}>;
+
+
+export type GetUsersByUuidQuery = { __typename?: 'query_root', user: Array<{ __typename?: 'user', username: string, password: string }> };
 
 
 export const AddMessageDocument = gql`
@@ -1619,10 +1641,32 @@ export const AddUserDocument = gql`
   }
 }
     `;
+export const DeleteUserDocument = gql`
+    mutation deleteUser($uuid: uuid!) {
+  delete_user(where: {uuid: {_eq: $uuid}}) {
+    affected_rows
+  }
+}
+    `;
+export const UpdateUserPasswordDocument = gql`
+    mutation updateUserPassword($uuid: uuid!, $password: String!) {
+  update_user_by_pk(pk_columns: {uuid: $uuid}, _set: {password: $password}) {
+    uuid
+  }
+}
+    `;
 export const GetUsersByUsernameDocument = gql`
     query getUsersByUsername($username: String!) {
   user(where: {username: {_eq: $username}}) {
     uuid
+    password
+  }
+}
+    `;
+export const GetUsersByUuidDocument = gql`
+    query getUsersByUuid($uuid: uuid!) {
+  user(where: {uuid: {_eq: $uuid}}) {
+    username
     password
   }
 }
@@ -1656,8 +1700,17 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     addUser(variables: AddUserMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<AddUserMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<AddUserMutation>(AddUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'addUser', 'mutation', variables);
     },
+    deleteUser(variables: DeleteUserMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<DeleteUserMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<DeleteUserMutation>(DeleteUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'deleteUser', 'mutation', variables);
+    },
+    updateUserPassword(variables: UpdateUserPasswordMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<UpdateUserPasswordMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<UpdateUserPasswordMutation>(UpdateUserPasswordDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'updateUserPassword', 'mutation', variables);
+    },
     getUsersByUsername(variables: GetUsersByUsernameQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetUsersByUsernameQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetUsersByUsernameQuery>(GetUsersByUsernameDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getUsersByUsername', 'query', variables);
+    },
+    getUsersByUuid(variables: GetUsersByUuidQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetUsersByUuidQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetUsersByUuidQuery>(GetUsersByUuidDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getUsersByUuid', 'query', variables);
     }
   };
 }

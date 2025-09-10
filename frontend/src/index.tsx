@@ -16,8 +16,11 @@ const MainPanel = React.lazy(() => import("./MainPanel"));
 const LoginPage = React.lazy(() => import("./LoginPage"));
 const ChatBox = React.lazy(() => import("./ChatBox"));
 const FileShare = React.lazy(() => import("./FileShare"));
+const RequestPasswordPage = React.lazy(() => import("./RequestPassword")); // 添加这一行
+const ActionPasswordPage = React.lazy(() => import("./ActionPassword")); // 添加这一行
 
-axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL!;
+
+axios.defaults.baseURL = "https://zsbngnmqddf.site";
 axios.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
   if (token) {
@@ -158,8 +161,11 @@ const domNode = document.getElementById("root");
 const root = createRoot(domNode!);
 const router = createHashRouter([
   { path: "/login", element: <LoginPage /> },
+  { path: "/user/change-password/request", element: <RequestPasswordPage /> }, 
+  { path: "/user/change-password/action", element: <ActionPasswordPage /> },
   { path: "*", element: <App /> },
 ]);
+
 root.render(
   <React.StrictMode>
     <Suspense fallback={null}>
