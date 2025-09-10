@@ -11,13 +11,23 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons";
 
 const { Link } = Typography;
 
+const getHeaders = () => {
+  const token = localStorage.getItem("token");
+  return {
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": token ? `Bearer ${token}` : "",
+    },
+  };
+};
+
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
 
   const handleSumbit = async (values: any) => {
     try {
       values.password = md5(values.password);
-      const response = await axios.post("/user/login", values);
+      const response = await axios.post(`/user/login`, values,getHeaders());
       const { token } = response.data;
       localStorage.setItem("token", token);
       localStorage.setItem("username", values.username);

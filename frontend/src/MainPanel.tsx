@@ -1,15 +1,20 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Form, Input, List, message, Modal } from "antd";
+
+
+//删除用户使用deleteoutlined
 import {
   UserOutlined,
   LoginOutlined,
   LogoutOutlined,
   PlusOutlined,
+  DeleteOutlined
 } from "@ant-design/icons";
 import * as graphql from "./graphql";
 import { Bubble, Card, Link, Scroll, Text } from "./Components";
 import { user } from "./getUser";
+import axios from "axios";
 
 interface MainPanelProps {
   user: user | null;
@@ -23,9 +28,61 @@ const MainPanel: React.FC<MainPanelProps> = (props) => {
   return (
     <Card style={{ width: "300px", height: "fit-content", zIndex: 100 }}>
       <User {...props} />
+      <DeleteUser {...props} />
       {props.rooms && <JoinRoom {...props} />}
       {props.rooms && <RoomList {...props} />}
     </Card>
+  );
+};
+
+const DeleteUser: React.FC<MainPanelProps> = ({ user}) => {
+  if(!user)
+    return null;
+
+  const handleClick = () => {
+    Modal.confirm({
+      title: "确认删除用户？",
+      content: "删除后将无法恢复，请谨慎操作！",
+      onOk: async () => {
+        try {
+          const token= localStorage.getItem("token");
+          const result = await axios.get("/user/delete",{headers:{Authorization: `Bearer ${token}`}} );
+          message.success("删除用户成功！");
+          localStorage.removeItem("token");
+          window.location.reload();
+        } catch (error) {
+          console.error(error);
+          message.error("删除用户失败！");
+        }
+      },
+    });
+  }
+
+  return (
+    <Bubble
+      style={{
+        width: "276px",
+        height: "48px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Button
+        type="link"
+        danger
+        onClick={handleClick}
+        style={{
+          height: "40px",
+          fontSize: "18px",
+          marginLeft: "12px",
+          marginRight: "4px",
+        }}
+      >
+        <DeleteOutlined />
+        <strong>删除用户</strong>
+      </Button>
+    </Bubble>
   );
 };
 
@@ -192,10 +249,14 @@ const RoomList: React.FC<MainPanelProps> = ({
 
   const handleCreateRoom = async (values: any) => {
     setLoading(true);
+
+    //debug：原先的框架有bug，values.intro为undefined时会报错
+    const intro = values.intro || "No description";
+
     const result1 = await addRoomMutation({
       variables: {
         name: values.name,
-        intro: values.intro,
+        intro: intro,
         invite_code: Math.random().toString(36).slice(2, 8).toUpperCase(),
       },
     });

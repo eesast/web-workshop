@@ -1319,7 +1319,7 @@ export type User_Room_Bool_Exp = {
 
 /** unique or primary key constraints on table "user_room" */
 export enum User_Room_Constraint {
-  /** unique or primary key constraint on columns "user_uuid", "room_uuid" */
+  /** unique or primary key constraint on columns "room_uuid", "user_uuid" */
   UserRoomPkey = 'user_room_pkey'
 }
 
@@ -1508,6 +1508,20 @@ export type GetMessagesByRoomSubscriptionVariables = Exact<{
 
 export type GetMessagesByRoomSubscription = { __typename?: 'subscription_root', message: Array<{ __typename?: 'message', uuid: any, content: string, created_at: any, user: { __typename?: 'user', uuid: any, username: string } }> };
 
+export type GetMessageByUserQueryVariables = Exact<{
+  user_uuid?: InputMaybe<Scalars['uuid']['input']>;
+}>;
+
+
+export type GetMessageByUserQuery = { __typename?: 'query_root', message: Array<{ __typename?: 'message', user_uuid: any, room_uuid: any, content: string }> };
+
+export type DeleteMessageByUsernameMutationVariables = Exact<{
+  user_uuid?: InputMaybe<Scalars['uuid']['input']>;
+}>;
+
+
+export type DeleteMessageByUsernameMutation = { __typename?: 'mutation_root', delete_message?: { __typename?: 'message_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'message', content: string, user_uuid: any }> } | null };
+
 export type AddRoomMutationVariables = Exact<{
   name: Scalars['String']['input'];
   intro: Scalars['String']['input'];
@@ -1539,6 +1553,14 @@ export type JoinRoomMutationVariables = Exact<{
 
 export type JoinRoomMutation = { __typename?: 'mutation_root', insert_user_room_one?: { __typename?: 'user_room', user_uuid: any, room_uuid: any } | null };
 
+export type QuitRoomMutationVariables = Exact<{
+  room_uuid?: InputMaybe<Scalars['uuid']['input']>;
+  user_uuid?: InputMaybe<Scalars['uuid']['input']>;
+}>;
+
+
+export type QuitRoomMutation = { __typename?: 'mutation_root', delete_user_room?: { __typename?: 'user_room_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'user_room', room_uuid: any, user_uuid: any }> } | null };
+
 export type AddUserMutationVariables = Exact<{
   username: Scalars['String']['input'];
   password: Scalars['String']['input'];
@@ -1553,6 +1575,13 @@ export type GetUsersByUsernameQueryVariables = Exact<{
 
 
 export type GetUsersByUsernameQuery = { __typename?: 'query_root', user: Array<{ __typename?: 'user', uuid: any, password: string }> };
+
+export type DeleteUserMutationVariables = Exact<{
+  uuid: Scalars['uuid']['input'];
+}>;
+
+
+export type DeleteUserMutation = { __typename?: 'mutation_root', delete_user?: { __typename?: 'user_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'user', username: string, uuid: any }> } | null };
 
 
 export const AddMessageDocument = gql`
@@ -1574,6 +1603,26 @@ export const GetMessagesByRoomDocument = gql`
     }
     content
     created_at
+  }
+}
+    `;
+export const GetMessageByUserDocument = gql`
+    query getMessageByUser($user_uuid: uuid = "") {
+  message(where: {user_uuid: {_eq: $user_uuid}}) {
+    user_uuid
+    room_uuid
+    content
+  }
+}
+    `;
+export const DeleteMessageByUsernameDocument = gql`
+    mutation deleteMessageByUsername($user_uuid: uuid = "") {
+  delete_message(where: {user_uuid: {_eq: $user_uuid}}) {
+    affected_rows
+    returning {
+      content
+      user_uuid
+    }
   }
 }
     `;
@@ -1612,6 +1661,19 @@ export const JoinRoomDocument = gql`
   }
 }
     `;
+export const QuitRoomDocument = gql`
+    mutation quitRoom($room_uuid: uuid = "", $user_uuid: uuid = "") {
+  delete_user_room(
+    where: {room_uuid: {_eq: $room_uuid}, user_uuid: {_eq: $user_uuid}}
+  ) {
+    returning {
+      room_uuid
+      user_uuid
+    }
+    affected_rows
+  }
+}
+    `;
 export const AddUserDocument = gql`
     mutation addUser($username: String!, $password: String!) {
   insert_user_one(object: {username: $username, password: $password}) {
@@ -1624,6 +1686,17 @@ export const GetUsersByUsernameDocument = gql`
   user(where: {username: {_eq: $username}}) {
     uuid
     password
+  }
+}
+    `;
+export const DeleteUserDocument = gql`
+    mutation deleteUser($uuid: uuid!) {
+  delete_user(where: {uuid: {_eq: $uuid}}) {
+    affected_rows
+    returning {
+      username
+      uuid
+    }
   }
 }
     `;
@@ -1641,6 +1714,12 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     getMessagesByRoom(variables: GetMessagesByRoomSubscriptionVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetMessagesByRoomSubscription> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetMessagesByRoomSubscription>(GetMessagesByRoomDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getMessagesByRoom', 'subscription', variables);
     },
+    getMessageByUser(variables?: GetMessageByUserQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetMessageByUserQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetMessageByUserQuery>(GetMessageByUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getMessageByUser', 'query', variables);
+    },
+    deleteMessageByUsername(variables?: DeleteMessageByUsernameMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<DeleteMessageByUsernameMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<DeleteMessageByUsernameMutation>(DeleteMessageByUsernameDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'deleteMessageByUsername', 'mutation', variables);
+    },
     addRoom(variables: AddRoomMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<AddRoomMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<AddRoomMutation>(AddRoomDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'addRoom', 'mutation', variables);
     },
@@ -1653,11 +1732,17 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     joinRoom(variables: JoinRoomMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<JoinRoomMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<JoinRoomMutation>(JoinRoomDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'joinRoom', 'mutation', variables);
     },
+    quitRoom(variables?: QuitRoomMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<QuitRoomMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<QuitRoomMutation>(QuitRoomDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'quitRoom', 'mutation', variables);
+    },
     addUser(variables: AddUserMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<AddUserMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<AddUserMutation>(AddUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'addUser', 'mutation', variables);
     },
     getUsersByUsername(variables: GetUsersByUsernameQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetUsersByUsernameQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetUsersByUsernameQuery>(GetUsersByUsernameDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getUsersByUsername', 'query', variables);
+    },
+    deleteUser(variables: DeleteUserMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<DeleteUserMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<DeleteUserMutation>(DeleteUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'deleteUser', 'mutation', variables);
     }
   };
 }
