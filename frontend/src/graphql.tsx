@@ -1515,6 +1515,13 @@ export type GetMessageByUserQueryVariables = Exact<{
 
 export type GetMessageByUserQuery = { __typename?: 'query_root', message: Array<{ __typename?: 'message', user_uuid: any, room_uuid: any, content: string }> };
 
+export type DeleteMessageByUsernameMutationVariables = Exact<{
+  user_uuid?: InputMaybe<Scalars['uuid']['input']>;
+}>;
+
+
+export type DeleteMessageByUsernameMutation = { __typename?: 'mutation_root', delete_message?: { __typename?: 'message_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'message', content: string, user_uuid: any }> } | null };
+
 export type AddRoomMutationVariables = Exact<{
   name: Scalars['String']['input'];
   intro: Scalars['String']['input'];
@@ -1692,6 +1699,43 @@ export type GetMessageByUserQueryHookResult = ReturnType<typeof useGetMessageByU
 export type GetMessageByUserLazyQueryHookResult = ReturnType<typeof useGetMessageByUserLazyQuery>;
 export type GetMessageByUserSuspenseQueryHookResult = ReturnType<typeof useGetMessageByUserSuspenseQuery>;
 export type GetMessageByUserQueryResult = Apollo.QueryResult<GetMessageByUserQuery, GetMessageByUserQueryVariables>;
+export const DeleteMessageByUsernameDocument = gql`
+    mutation deleteMessageByUsername($user_uuid: uuid = "") {
+  delete_message(where: {user_uuid: {_eq: $user_uuid}}) {
+    affected_rows
+    returning {
+      content
+      user_uuid
+    }
+  }
+}
+    `;
+export type DeleteMessageByUsernameMutationFn = Apollo.MutationFunction<DeleteMessageByUsernameMutation, DeleteMessageByUsernameMutationVariables>;
+
+/**
+ * __useDeleteMessageByUsernameMutation__
+ *
+ * To run a mutation, you first call `useDeleteMessageByUsernameMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteMessageByUsernameMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteMessageByUsernameMutation, { data, loading, error }] = useDeleteMessageByUsernameMutation({
+ *   variables: {
+ *      user_uuid: // value for 'user_uuid'
+ *   },
+ * });
+ */
+export function useDeleteMessageByUsernameMutation(baseOptions?: Apollo.MutationHookOptions<DeleteMessageByUsernameMutation, DeleteMessageByUsernameMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteMessageByUsernameMutation, DeleteMessageByUsernameMutationVariables>(DeleteMessageByUsernameDocument, options);
+      }
+export type DeleteMessageByUsernameMutationHookResult = ReturnType<typeof useDeleteMessageByUsernameMutation>;
+export type DeleteMessageByUsernameMutationResult = Apollo.MutationResult<DeleteMessageByUsernameMutation>;
+export type DeleteMessageByUsernameMutationOptions = Apollo.BaseMutationOptions<DeleteMessageByUsernameMutation, DeleteMessageByUsernameMutationVariables>;
 export const AddRoomDocument = gql`
     mutation addRoom($name: String!, $intro: String!, $invite_code: String!) {
   insert_room_one(object: {name: $name, intro: $intro, invite_code: $invite_code}) {

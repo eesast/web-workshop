@@ -126,6 +126,12 @@ router.get("/delete",authenticate,async(req,res)=>
     if (!validateUUID(userUuid)) {
       return res.status(422).send("422 Unprocessable Entity: Invalid uuid");
     }
+
+    //先删除信息，退出房间
+    const mutationResult1 = await graphql.deleteMessageByUsername({user_uuid: userUuid });
+    const mutationResult2 = await graphql.quitRoom({user_uuid: userUuid });
+
+    //最后再删除用户
     const mutationResult = await graphql.deleteUser({ uuid: userUuid });
     if (mutationResult.delete_user?.affected_rows === 0) {
       return res.status(404).send("404 Not Found: User does not exist");

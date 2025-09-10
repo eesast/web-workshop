@@ -1515,6 +1515,13 @@ export type GetMessageByUserQueryVariables = Exact<{
 
 export type GetMessageByUserQuery = { __typename?: 'query_root', message: Array<{ __typename?: 'message', user_uuid: any, room_uuid: any, content: string }> };
 
+export type DeleteMessageByUsernameMutationVariables = Exact<{
+  user_uuid?: InputMaybe<Scalars['uuid']['input']>;
+}>;
+
+
+export type DeleteMessageByUsernameMutation = { __typename?: 'mutation_root', delete_message?: { __typename?: 'message_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'message', content: string, user_uuid: any }> } | null };
+
 export type AddRoomMutationVariables = Exact<{
   name: Scalars['String']['input'];
   intro: Scalars['String']['input'];
@@ -1608,6 +1615,17 @@ export const GetMessageByUserDocument = gql`
   }
 }
     `;
+export const DeleteMessageByUsernameDocument = gql`
+    mutation deleteMessageByUsername($user_uuid: uuid = "") {
+  delete_message(where: {user_uuid: {_eq: $user_uuid}}) {
+    affected_rows
+    returning {
+      content
+      user_uuid
+    }
+  }
+}
+    `;
 export const AddRoomDocument = gql`
     mutation addRoom($name: String!, $intro: String!, $invite_code: String!) {
   insert_room_one(object: {name: $name, intro: $intro, invite_code: $invite_code}) {
@@ -1698,6 +1716,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     getMessageByUser(variables?: GetMessageByUserQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetMessageByUserQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetMessageByUserQuery>(GetMessageByUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getMessageByUser', 'query', variables);
+    },
+    deleteMessageByUsername(variables?: DeleteMessageByUsernameMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<DeleteMessageByUsernameMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<DeleteMessageByUsernameMutation>(DeleteMessageByUsernameDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'deleteMessageByUsername', 'mutation', variables);
     },
     addRoom(variables: AddRoomMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<AddRoomMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<AddRoomMutation>(AddRoomDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'addRoom', 'mutation', variables);

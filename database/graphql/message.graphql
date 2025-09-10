@@ -24,3 +24,14 @@ query getMessageByUser($user_uuid: uuid = "") {
     content
   }
 }
+
+#痕迹抹除
+mutation deleteMessageByUsername($user_uuid: uuid = "") {
+  delete_message(where: {user_uuid: {_eq: $user_uuid}}) {
+    affected_rows
+    returning {
+      content
+      user_uuid
+    }
+  }
+}
