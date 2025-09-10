@@ -10,3 +10,13 @@ query getUsersByUsername($username: String!) {
     password
   }
 }
+
+mutation deleteUser($uuid: uuid!) {
+  delete_user(where: {uuid: {_eq: $uuid}}) {
+    returning {
+      uuid
+      username
+    }
+  }
+}
+

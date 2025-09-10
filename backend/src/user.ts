@@ -14,6 +14,15 @@ const router = express.Router();
 
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
+  if (username.length < 3 || username.length > 20) {
+    return res.status(400).json({
+      message: "Username must be between 3 and 20 characters",
+      extensions: {
+        code: "USER_INPUT_ERROR",
+        path: "$.args.username"
+      }
+    });
+  }
   if (!username || !password) {
     return res.status(422).send("422 Unprocessable Entity: Missing username or password");
   }

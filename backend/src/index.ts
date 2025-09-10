@@ -42,6 +42,38 @@ app.use("/user", userRouter);
 app.use("/file", fileRouter);
 app.use("/email", emailRouter);
 
+// 要添加的新接口
+app.post("/sendMessage", async (req, res) => {
+  // 从 Hasura Action 的请求体中获取参数
+  const { user_uuid, room_uuid, content } = req.body.input;
+
+  // 输入验证
+  if (!content || content.trim() === "") {
+    return res.status(400).json({
+      message: "Content cannot be empty",
+    });
+  }
+
+  // 调用 Hasura GraphQL API 来插入数据
+  try {
+    const data = await sdk.addMessage({
+      user_uuid: user_uuid,
+      room_uuid: room_uuid,
+      content: content,
+    });
+
+    // 返回成功响应
+    return res.json({
+      uuid: data.insert_message_one?.uuid,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({
+      message: "Failed to send message",
+    });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server running at ${address}:${port}/`);
 });

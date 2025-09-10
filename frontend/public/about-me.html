@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>关于我</title>
+  <style>
+    body {
+      background-color: #f0f8ff;
+      color: #333;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      transition: background .3s, color .3s;
+    }
+    h1 { color: #2c3e50; }
+    img { border-radius: 10px; margin-top: 20px; }
+    a { color: #1e90ff; text-decoration: none; }
+
+    body.dark {
+      background-color: #121212 !important;
+      color: #e0e0e0 !important;
+    }
+    body.dark a { color: #81c784; }
+    body.dark img { filter: brightness(.8) contrast(1.2); }
+
+    #toggleBtn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+      padding: 6px 12px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>关于我</h1>
+  <p>你好！我叫<strong>懒人</strong>，是电子系一名学生。</p>
+
+  <h2>我的爱好</h2>
+  <ul>
+    <li>睡懒觉！</li>
+    <li>睡懒觉！</li>
+    <li>睡懒觉！</li>
+  </ul>
+
+  <h2>一件趣事</h2>
+  <p>前天有个会要开，完全忘记了！</p>
+
+  <h2>个人照片</h2>
+  <img src="https://i.ibb.co/1tvkMhX5/c5b601e47c27c660243aeb20b2ee8b26.png" alt="我的照片">
+
+  <p>想回首页？<a href="index.html">点这里</a></p>
+
+  <button id="toggleBtn">🌓 切换暗色模式</button>
+  <section id="githubSec">
+    <h2>GitHub 实时数据</h2>
+    <p>加载中…</p>
+  </section>
+
+  <script>
+    const toggleBtn = document.getElementById('toggleBtn');
+    toggleBtn.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      toggleBtn.textContent = document.body.classList.contains('dark')
+        ? '☀️ 亮色模式'
+        : '🌓 切换暗色模式';
+    });
+
+    const githubUser = 'like017';
+    const box = document.getElementById('githubSec');
+    fetch(`https://api.github.com/users/${githubUser}`)
+      .then(r => r.json())
+      .then(d => {
+        box.innerHTML = `
+          <h2>GitHub 实时数据</h2>
+          <img src="${d.avatar_url}" width="80" style="border-radius:50%">
+          <p>用户名：${d.login}</p>
+          <p>公开仓库：${d.public_repos}</p>
+          <p>粉丝数：${d.followers}</p>
+        `;
+      })
+      .catch(() => {
+        box.innerHTML = '<h2>GitHub 实时数据</h2><p>获取失败，请检查网络</p>';
+      });
+  </script>
+</body>
+</html>
