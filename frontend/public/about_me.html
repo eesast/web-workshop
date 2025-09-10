@@ -1,0 +1,45 @@
+<!DOCTYPE html>>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon.png" />
+    <title>关于我</title>
+    <link rel="stylesheet" href="./about_me.css" />
+    <script src="./about_me.js" type="module" defer></script>
+  </head>
+  <body>
+    <header>
+      <label class="theme-switch">
+        <input type="checkbox" id="theme-toggle" />
+        <span class="slider"></span>
+        <p class="the-switch">切换主题</p>
+      </label>
+    </header>
+    <h1>这里是关于我的页面，欢迎来到我的个人主页!</h1>
+    <p>大家好，我是高星蕊，目前是电子系的一名学生。</p>
+    <p>我对网页开发充满兴趣，期待在这个领域不断学习和成长。</p>
+    <p>在业余时间，我喜欢呆在家里。</p>
+    <h2>联系方式</h2>
+    <button id="contact-btn">点击查看联系方式</button>
+    <p id="contact-info" style="display:none;">
+      邮箱:1506168660@qq.com
+      <br>
+      电话:18888888888
+      <br>
+      地址：北京市海淀区清华大学
+    </p>
+    <script>
+      document.getElementById('contact-btn').addEventListener('click', function() {
+        const contactInfo = document.getElementById('contact-info');
+        if (contactInfo.style.display === 'none') {
+          contactInfo.style.display = 'block';
+          this.textContent = '隐藏联系方式';
+        } else {
+          contactInfo.style.display = 'none';
+          this.textContent = '点击查看联系方式';
+        }
+      });
+    </script>
+  </body>
+</html>
