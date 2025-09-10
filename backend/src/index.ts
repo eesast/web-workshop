@@ -10,7 +10,7 @@ import emailRouter from "./email";
 
 const app = express();
 const address = "http://localhost";
-const port = 8888;
+const port =8888;
 
 dotenv.config({
   path: path.resolve(process.cwd(), ".local.env"),
@@ -41,6 +41,33 @@ app.use(express.json());
 app.use("/user", userRouter);
 app.use("/file", fileRouter);
 app.use("/email", emailRouter);
+
+//databaseHW:2.3.2
+app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+  console.error("未处理的错误:", err);
+
+  if (err.name === "JsonWebTokenError") {
+    return res.status(401).json({
+      error: "AUTHENTICATION_ERROR",
+      message: "无效的令牌",
+      code: "INVALID_TOKEN"
+    });
+  }
+
+  if (err.name === "TokenExpiredError") {
+    return res.status(401).json({
+      error: "AUTHENTICATION_ERROR",
+      message: "令牌已过期",
+      code: "TOKEN_EXPIRED"
+    });
+  }
+
+  res.status(500).json({
+    error: "INTERNAL_SERVER_ERROR",
+    message: "服务器内部错误",
+    code: "UNHANDLED_ERROR"
+  });
+});
 
 app.listen(port, () => {
   console.log(`Server running at ${address}:${port}/`);

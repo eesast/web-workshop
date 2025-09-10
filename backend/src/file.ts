@@ -74,4 +74,32 @@ router.get("/download", authenticate, (req, res) => {
   }
 });
 
+router.post("/delete", authenticate, (req, res) => {
+  const { room, filename }= req.body;
+
+  //databaseHW:3.2
+  if (!room || !filename) {
+    return res.status(422).send("422 Unprocessable Entity: Missing room or filename");
+  }
+
+try {
+    const filePath = path.resolve(baseDir, room, filename);
+    if (!fs.existsSync(filePath)) {
+      return res.status(422).send("422 Unprocessable Entity: Missing file");
+    }
+    fs.unlinkSync(filePath);
+
+    return res.status(200).json({
+      message: "文件删除成功"
+    });
+  } catch (err) {
+    console.error("文件删除错误:", err);
+    return res.status(500).json({
+      error: "INTERNAL_SERVER_ERROR",
+      message: "服务器内部错误，请稍后重试",
+      code: "SERVER_ERROR"
+    });
+  }
+})
+
 export default router;
