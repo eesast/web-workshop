@@ -7,8 +7,10 @@
 3. 等待十几分钟 DNS 传播，此时你应当已经可以通过如下 URL 访问后端服务（仅将 IP 地址改为域名）
 
    ```http
-   POST http://<your-domain>:20248/user/login
+   // POST http://<your-domain>:20248/user/login
    ```
+
+   实际上不行，需要先进行下面的步骤，才能用上述域名的方式访问后端。
 
 4. 接下来，我们希望使用 HTTPS 通信（TLS/SSL 加密）来使访问更安全，需要生成 SSL 证书（即带有授权的一对密钥）。我们使用 Let's Encrypt 提供的免费证书及其自助签发软件 certbot
 
@@ -51,7 +53,7 @@
 9. 在该文件夹中执行 docker compose
 
    ```bash
-   docker compose up -d
+   sudo docker compose up -d
    ```
 
 10. 如果后续拉取镜像时遇到网络问题，可以配置 docker hub 的国内镜像源（[Docker Hub 国内镜像源配置 - 飞仔 FeiZai - 博客园 (cnblogs.com)](https://www.cnblogs.com/yuzhihui/p/17461781.html)）
@@ -66,7 +68,7 @@
 12. 确认 docker 容器已启动
 
     ```bash
-    docker ps
+    sudo docker ps
     ```
 
 13. 查找对应的 Docker ID，查看其日志。若没有报错，则说明成功启动
