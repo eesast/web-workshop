@@ -15,7 +15,7 @@
 2. 创建`/data/postgresql`文件夹或其他用于存储数据库数据的文件夹（并相应修改`docker-compose.yml`中的挂载点）
 
    ```bash
-   mkdir /data/postgresql
+   sudo mkdir /data/postgresql
    ```
 
 3. 在本地电脑的仓库中使用 scp 或其他工具将`docker-compose.yml`和`.local.env`复制到服务器任意文件夹
@@ -35,7 +35,7 @@
 5. 在该文件夹中执行 docker compose
 
    ```bash
-   docker compose up -d
+   sudo docker compose up -d
    ```
 
 6. 如果后续拉取镜像时遇到网络问题，可以配置 docker hub 的国内镜像源（[Docker Hub 国内镜像源配置 - 飞仔 FeiZai - 博客园 (cnblogs.com)](https://www.cnblogs.com/yuzhihui/p/17461781.html)）
@@ -50,12 +50,12 @@
 8. 确认 docker 容器已启动
 
    ```bash
-   docker ps
+   sudo docker ps
    ```
 
 9. 浏览器访问`<address>:<port>/console`，给出的`docker-compose.yml`使用端口 20247
 
-10. 如果无法访问，且服务器在国内地域（或在国外地域但其他网站访问正常），则很可能是服务器端口没放通，新增规则放通 TCP 协议的 20247 端口即可
+10. 如果无法访问，且服务器在国内地域（或在国外地域但其他网站访问正常），则很可能是服务器端口没放通，新增规则放通 TCP 协议的 20247 端口即可（**注意**：需要在服务器供应商页面进行端口放通！如果新增放通端口还TM的需要实名，你又嫌麻烦，就用一个已经开通的、你之后不会混淆的端口，并修改`docker-compose.yml`中的`ports`，将20247更换即可。完成后，重新执行：`sudo docker compose up -d` 命令。）
 
 11. 使用`docker-compose.yml`中定义的`HASURA_GRAPHQL_ADMIN_SECRET`登录 Hasura 后台
 
@@ -64,3 +64,6 @@
 13. 数据库名称随意自取，使用环境变量连接数据库（Connect Database via Environment variable），环境变量是之前`docker-compose.yml`中定义的`PG_DATABASE_URL`，其他设置无需调整，点击 Connect Database
 
 14. 数据库连接完成，后续操作参照`/tutorials/03-Database.md`
+
+注意：由于我们在`message`表中新增了`replied_to_uuid`以及relationship `replied_to_message`，因此需要在服务器的hasura控制台上进行权限调整（用户对`replied_to_uuid`的权限），并且增加相应的relationship。
+

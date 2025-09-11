@@ -1,4 +1,4 @@
-import md5 from "md5";
+// import md5 from "md5";
 import axios, { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { message, Typography } from "antd";
@@ -16,7 +16,7 @@ const LoginPage: React.FC = () => {
 
   const handleSumbit = async (values: any) => {
     try {
-      values.password = md5(values.password);
+      // values.password = md5(values.password);
       const response = await axios.post("/user/login", values);
       const { token } = response.data;
       localStorage.setItem("token", token);
