@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Form, Input, List, message, Modal } from "antd";
+import { gql, useMutation } from "@apollo/client";
 import {
   UserOutlined,
   LoginOutlined,
@@ -248,6 +249,8 @@ const RoomList: React.FC<MainPanelProps> = ({
               room={item.room}
               handleOpenChat={() => addChatBox(index)}
               handleOpenFileShare={() => addFileShare(index)}
+              user={user}
+              refetchRooms={refetchRooms}
             />
           )}
         />
@@ -287,20 +290,57 @@ interface RoomListItemProps {
   room: graphql.GetJoinedRoomsQuery["user_room"][0]["room"];
   handleOpenChat: () => void;
   handleOpenFileShare: () => void;
+  user: user | null;
+  refetchRooms: () => void;
 }
+
+const DELETE_USER_ROOM_BY_PK = gql`
+  mutation DeleteUserRoomByPk($room_uuid: uuid!, $user_uuid: uuid!) {
+    delete_user_room_by_pk(room_uuid: $room_uuid, user_uuid: $user_uuid) {
+      room_uuid
+      user_uuid
+    }
+  }
+`;
 
 const RoomListItem: React.FC<RoomListItemProps> = ({
   room,
   handleOpenChat,
   handleOpenFileShare,
+  user,
+  refetchRooms,
 }) => {
   const dateUTC = new Date(room.created_at);
   const date = new Date(
     dateUTC.getTime() - dateUTC.getTimezoneOffset() * 60000
   );
 
+  const [deleteUserRoom] = useMutation(DELETE_USER_ROOM_BY_PK);
+
   const handleQuit = () => {
-    message.info("暂未实现");
+    Modal.confirm({
+      title: `确认退出会议 "${room.name}" 吗？`,
+      content: "退出后此会议将不会再出现在你的会议列表中，确定要退出吗？",
+      okText: "退出",
+      okType: "danger",
+      cancelText: "取消",
+      onOk: async () => {
+        if (!user) {
+          message.error("未登录，无法退出会议");
+          return;
+        }
+        try {
+          await deleteUserRoom({
+            variables: { room_uuid: room.uuid, user_uuid: user.uuid },
+          });
+          message.success("已退出会议");
+          if (refetchRooms) refetchRooms();
+        } catch (err) {
+          console.error(err);
+          message.error("退出会议失败");
+        }
+      },
+    });
   };
 
   return (
