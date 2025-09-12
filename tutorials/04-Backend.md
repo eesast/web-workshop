@@ -43,6 +43,8 @@ yarn # 是 yarn install 的简写
 
 大家需要根据自己情况填写变量值，删去多余注释，并将`.local.env.template`更名为`.local.env`（或新建文件复制过去），即可被项目正确识别。
 
+> 注意：切勿将 `.local.env` 提交到 Git。仓库中已提供一个快速检查脚本 `backend/scripts/check_env.ps1`，可在 `backend` 目录运行以验证必需变量已正确设置。
+
 此外，有关`JWT_SECRET`的说明详见下方的“注意事项”。
 
 ### 运行方式
