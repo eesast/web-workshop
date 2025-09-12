@@ -3,6 +3,7 @@ import multer from "multer";
 import fs from "fs";
 import path from "path";
 import authenticate from "./authenticate";
+import { sdk as graphql } from "./index";
 
 const router = express.Router();
 
@@ -68,6 +69,33 @@ router.get("/download", authenticate, (req, res) => {
     } else {
       return res.status(404).send("404 Not Found: File does not exist");
     }
+  } catch (err) {
+    console.error(err);
+    return res.sendStatus(500);
+  }
+});
+
+router.post("/delete", authenticate, (req, res) => {
+  const { room, filename } = req.body;
+  if (!room || !filename) {
+    return res.status(422).send("422 Unprocessable Entity: Missing room or filename");
+  }
+  const filePath = path.resolve(baseDir, room as string, filename as string);
+  try {
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath);
+    } else {
+      return res.status(404).send("404 Not Found: File does not exist");
+    }
+    // Optionally remove DB references if schema tracks files. Attempt safe call.
+    try {
+      if ((graphql as any).delete_message) {
+        // no-op: placeholder for custom deletion logic if needed
+      }
+    } catch (err) {
+      console.error("GraphQL cleanup failed", err);
+    }
+    return res.sendStatus(200);
   } catch (err) {
     console.error(err);
     return res.sendStatus(500);
