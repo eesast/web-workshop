@@ -29,7 +29,9 @@ export const sdk = getSdk(client);
 
 // Log all requests to the console, optional.
 app.use(morgan(process.env.NODE_ENV === "production" ? "combined" : "dev"));
-
+app.get("/", (req, res) => {
+  res.send("Server is running!");
+});
 app.all("*", (req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "*");
