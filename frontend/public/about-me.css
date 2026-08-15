@@ -1,0 +1,59 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: #263238;
+  background-color: #eef3f7;
+  font-family: Arial, "Microsoft YaHei", sans-serif;
+}
+
+.profile-page {
+  width: min(860px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 40px 0;
+}
+
+.profile-header,
+.profile-section,
+.profile-footer {
+  margin-bottom: 20px;
+  padding: 24px;
+  background-color: #ffffff;
+  border: 1px solid #d7e0e8;
+  border-radius: 8px;
+}
+
+.profile-header {
+  border-top: 5px solid #3973ac;
+}
+
+.profile-header a,
+.profile-footer a {
+  color: #2563a6;
+}
+
+.profile-section h2 {
+  margin-top: 0;
+  color: #315a7d;
+}
+
+.profile-section li {
+  margin: 10px 0;
+}
+
+blockquote {
+  margin: 0;
+  padding-left: 16px;
+  color: #52616b;
+  border-left: 4px solid #70a1c8;
+}
+
+@media (max-width: 600px) {
+  .profile-page {
+    width: calc(100% - 20px);
+    padding: 20px 0;
+  }
+}
