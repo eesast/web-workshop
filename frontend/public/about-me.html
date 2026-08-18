@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <link rel="stylesheet" href="./about-me.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="./about-me.js" defer></script>
+  <title>关于我</title>
+</head>
+
+<body>
+  <main class="card">
+    <button id="theme-toggle" type="button">切换暗色模式</button>
+    <h1>关于我</h1>
+    <p>我是一名热爱编程的非专业学生，来自秀钟书院三字班</p>
+    <h2>我的爱好</h2>
+    <ul>
+      <li>打台球</li>
+      <li>打麻将</li>
+      <li>健身</li>
+    </ul>
+    <h2>我的学习目标</h2>
+    <ol>
+      <li>学会web开发</li>
+    </ol>
+    <section class="github-section">
+      <h2>我的 GitHub</h2>
+      <p id="github-status">正在加载 GitHub 信息...</p>
+
+      <div id="github-profile" hidden>
+        <img
+          id="github-avatar"
+          width="80"
+          height="80"
+          alt="GitHub 头像"
+        />
+
+        <div>
+          <a
+            id="github-link"
+            target="_blank"
+            rel="noopener noreferrer"
+          ></a>
+          <p>
+            公开仓库数量：
+            <span id="github-repo-count"></span>
+          </p>
+        </div>
+      </div>
+    </section>
+    <a href="./index.html">返回首页</a>
+  </main>
+</body>
+
+</html>

@@ -1,0 +1,154 @@
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 40px 20px;
+  box-sizing: border-box;
+  font-family: Arial, "microsoft YaHei", sans-serif;
+  color: #1f2937;
+  background-color: #f4f5f7;
+}
+
+.card {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 32px;
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  margin-top: 0;
+  color: #2563eb;
+}
+
+h2 {
+  margin-top: 28px;
+  padding-left: 10px;
+  color: #374151;
+  border-left: 4px solid #2563eb;
+}
+
+ul,
+ol {
+  padding-left: 24px;
+  line-height: 1.8;
+}
+
+li {
+  margin-bottom: 6px;
+}
+
+a {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 16px;
+  color: white;
+  background-color: #2563eb;
+  text-decoration: none;
+  border-radius: 8px;
+}
+
+a:hover {
+  background-color: #1d4ed8;
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 20px 12px;
+  }
+
+  .card {
+    padding: 24px 20px;
+    border-radius: 12px;
+  }
+
+  h1 {
+    font-size: 28px;
+  }
+}
+
+#theme-toggle {
+  float: right;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  color: #1f2937;
+  background-color: #e5e7eb;
+  font: inherit;
+  cursor: pointer;
+}
+
+body,
+.card,
+h1,
+h2,
+#theme-toggle {
+  transition: color 0.3s, background-color 0.3s, border-color 0.3s;
+}
+
+body.dark-theme {
+  color: #e5e7eb;
+  background-color: #111827;
+}
+
+body.dark-theme .card {
+  background-color: #1f2937;
+}
+
+body.dark-theme h1 {
+  color: #60a5fa;
+}
+
+body.dark-theme h2 {
+  color: #e5e7eb;
+  border-left-color: #60a5fa;
+}
+
+body.dark-theme #theme-toggle {
+  color: #f9fafb;
+  background-color: #374151;
+}
+
+.github-section {
+  margin-top: 28px;
+}
+
+#github-profile {
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  background-color: #f9fafb;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+#github-profile:not([hidden]) {
+  display: flex;
+}
+
+#github-avatar {
+  flex-shrink: 0;
+  border-radius: 50%;
+}
+
+#github-profile p {
+  margin: 8px 0 0;
+}
+
+#github-link {
+  margin-top: 0;
+}
+
+body.dark-theme #github-profile {
+  border-color: #4b5563;
+  background-color: #111827;
+}
+
+@media (max-width: 600px) {
+  #github-profile:not([hidden]) {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
