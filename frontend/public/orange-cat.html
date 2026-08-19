@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon.png" />
+    <title>关于一只橘猫</title>
+    <style>
+      body {
+        height: 100vh;
+        margin: 0;
+      }
+    </style>
+    <link rel="stylesheet" href="./index.css" />
+    <script src="./orange-cat.js" defer></script>
+  </head>
+  <body>
+    <div id="cat-main-frame">
+      <div class="card" id="cat-outer">
+        <!-- 返回首页 -->
+        <a href="./index.html">返回首页</a>
+
+        <hr />
+
+        <!-- 大标题 -->
+        <h1><em>咪咪</em></h1>
+
+        <!-- 自己的橘猫照片 -->
+        <img
+          class="card"
+          id="cat-img"
+          src="./assets/cat.jpg"
+          alt="KING"
+          width="320"
+        />
+
+        <!-- 基本档案：表格 -->
+        <h2>基本档案</h2>
+        <table border="1px" class="styled-table">
+          <tr>
+            <th>名字</th>
+            <td>咪咪</td>
+          </tr>
+          <tr>
+            <th>年龄</th>
+            <td>[1,2]</td>
+          </tr>
+          <tr>
+            <th>体重</th>
+            <td>≥10.5斤</td>
+          </tr>
+          <tr>
+            <th>花色</th>
+            <td>橘条纹，白围巾，白手套</td>
+          </tr>
+          <tr>
+            <th>绝育</th>
+            <td>是</td>
+          </tr>
+        </table>
+
+        <!-- 爱好：无序列表 -->
+        <h2>我的爱好</h2>
+        <ul class="styled-list">
+          <li>跟小猫打架</li>
+          <li>在人吃饭的时候求投喂</li>
+          <li>在竹编的猫窝里面睡觉</li>
+          <li>在书柜顶部俯瞰众生</li>
+        </ul>
+
+        <!-- 趣事：段落 -->
+        <h2>关于我的趣事</h2>
+        <p>
+          曾经从家里出逃
+        </p>
+
+        <!-- 猫咪冷知识（来自网络） -->
+        <p id="cat-fact" class="cat-subtitle">猫咪冷知识加载中... ...</p>
+
+        <!-- 留言 / 投喂表单 -->
+        <div class="card">
+          <form id="cat-leave-message" method="post" action="#">
+            <h3>给橘猫留言 / 投喂</h3>
+            <p>
+              你的称呼：<input name="name" type="text" required />
+            </p>
+            <p>
+              你想对我说：<br /><br />
+              <textarea name="message" rows="4" cols="32" required></textarea>
+            </p>
+            <p>
+              你是猫派还是狗派？
+              <input type="radio" value="cat" name="faction" required />猫派
+              <input type="radio" value="dog" name="faction" required />狗派
+            </p>
+            <p>
+              <input type="submit" value="投喂" />
+              <input type="reset" value="清空" />
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
