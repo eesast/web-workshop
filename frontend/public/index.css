@@ -6,9 +6,10 @@
 }
 
 #main-background-music {
-  position: absolute;
+  position: fixed;
   right: 12px;
   bottom: 12px;
+  z-index: 100;
 }
 
 #about-main-frame {
@@ -76,4 +77,34 @@
   right: 12px;
   text-align: right;
   width: 40vw;
+}
+
+/* 橘猫页面（“关于我”作业） */
+#cat-main-frame {
+  min-height: 100%;
+  box-sizing: border-box;
+  padding: 24px;
+  /* 垂直 + 水平居中 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* 橘色系渐变背景，参考 https://color.oulu.me/ */
+  background: linear-gradient(to top, #ffd89b 0%, #ff9a44 100%);
+}
+
+#cat-outer {
+  width: 640px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.cat-subtitle {
+  font-size: 1.1em;
+  color: #8a4b00;
+}
+
+#cat-img {
+  display: block;
+  margin: 0 auto;
+  padding: 0;
 }
