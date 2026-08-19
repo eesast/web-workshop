@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon.png" />
+    <title>关于我</title>
+    <style>
+      body {
+        min-height: 100vh;
+        margin: 0;
+        background: linear-gradient(to bottom, #a6c1ee 0%, #fbc2eb 100%);
+      }
+      #about-me-main-frame {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 48px 16px;
+      }
+      .card {
+        padding: 16px;
+        border-radius: 8px;
+        background-color: rgba(255, 255, 255, 0.3);
+        box-shadow: 0 0 18px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(12px);
+        margin-bottom: 16px;
+      }
+      #header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      #avatar {
+        width: 96px;
+        height: 96px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #fff;
+      }
+      h1 {
+        margin: 0;
+        color: #3a3a8c;
+      }
+      .motto {
+        color: #555;
+        font-style: italic;
+      }
+      .styled-table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      .styled-table th,
+      .styled-table td {
+        padding: 8px 12px;
+        text-align: left;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      }
+      .styled-table th {
+        color: #3a3a8c;
+        width: 120px;
+      }
+      .styled-list li {
+        line-height: 2em;
+      }
+      #footer {
+        text-align: center;
+        color: #555;
+      }
+      a {
+        color: #3a3a8c;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="about-me-main-frame">
+      <div class="card" id="header">
+        <img id="avatar" src="./assets/tsinghua-fall.jpg" alt="我的头像" title="头像" />
+        <div>
+          <h1>你好，我是龚伯熙</h1>
+          <p class="motto">「深刻而不深沉，平淡而不平庸」</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>基本信息</h2>
+        <table class="styled-table">
+          <tr>
+            <th>院系</th>
+            <td>笃实书院</td>
+          </tr>
+          <tr>
+            <th>年级</th>
+            <td>2025 级本科生</td>
+          </tr>
+          <tr>
+            <th>家乡</th>
+            <td>湖北仙桃</td>
+          </tr>
+          <tr>
+            <th>联系方式</th>
+            <td><a href="mailto:gbx25@mails.tsinghua.edu.cn">gbx25@mails.tsinghua.edu.cn</a></td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h2>兴趣爱好</h2>
+        <ul class="styled-list">
+          <li><strong>音乐</strong>：摇滚，后朋</li>
+          <li><strong>运动</strong>：篮球，台球</li>
+        </ul>
+      </div>
+
+      <div id="footer">
+        <hr />
+        <p><a href="./index.html">返回首页</a></p>
+      </div>
+    </div>
+  </body>
+</html>
