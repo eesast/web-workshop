@@ -1,3 +1,4 @@
+- "!include public_meeting_record.yaml"
 - "!include public_message.yaml"
 - "!include public_room.yaml"
 - "!include public_user.yaml"

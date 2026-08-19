@@ -1,0 +1,51 @@
+mutation addMeetingRecord($room_uuid: uuid!, $content: String!) {
+  insert_meeting_record_one(
+    object: {
+      room_uuid: $room_uuid
+      content: $content
+    }
+  ) {
+    uuid
+    room_uuid
+    content
+    created_at
+    updated_at
+  }
+}
+
+subscription getMeetingRecordsByRoom($room_uuid: uuid!) {
+  meeting_record(
+    where: {room_uuid: {_eq: $room_uuid}}
+    order_by: {created_at: asc}
+  ) {
+    uuid
+    room_uuid
+    content
+    created_at
+    updated_at
+  }
+}
+
+mutation updateMeetingRecord(
+  $uuid: uuid!
+  $content: String!
+  $updated_at: timestamp!
+) {
+  update_meeting_record_by_pk(
+    pk_columns: {uuid: $uuid}
+    _set: {
+      content: $content
+      updated_at: $updated_at
+    }
+  ) {
+    uuid
+    content
+    updated_at
+  }
+}
+
+mutation deleteMeetingRecord($uuid: uuid!) {
+  delete_meeting_record_by_pk(uuid: $uuid) {
+    uuid
+  }
+}
