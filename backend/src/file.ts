@@ -8,6 +8,15 @@ const router = express.Router();
 
 const baseDir = process.env.FILE_DIR || path.resolve(process.cwd(), "upload");
 
+// Guard against path traversal: the resolved path must stay inside baseDir
+const safeResolve = (...segments: string[]) => {
+  const resolved = path.resolve(baseDir, ...segments);
+  if (!resolved.startsWith(baseDir + path.sep)) {
+    throw new Error("Path escapes base directory");
+  }
+  return resolved;
+};
+
 const limits = {
   parts: 2, // 1 file and 0 fields
   fileSize: 10 * 1024 * 1024, // 10 MB
@@ -68,6 +77,32 @@ router.get("/download", authenticate, (req, res) => {
     } else {
       return res.status(404).send("404 Not Found: File does not exist");
     }
+  } catch (err) {
+    console.error(err);
+    return res.sendStatus(500);
+  }
+});
+
+router.post("/delete", authenticate, (req, res) => {
+  const { room, filename } = req.body;
+  if (!room || !filename) {
+    return res.status(422).send("422 Unprocessable Entity: Missing room or filename");
+  }
+  let dir: string;
+  try {
+    dir = safeResolve(room, filename);
+  } catch (err) {
+    return res.status(422).send("422 Unprocessable Entity: Invalid room or filename");
+  }
+  try {
+    if (!fs.existsSync(dir)) {
+      return res.status(404).send("404 Not Found: File does not exist");
+    }
+    if (!fs.statSync(dir).isFile()) {
+      return res.status(422).send("422 Unprocessable Entity: Not a file");
+    }
+    fs.rmSync(dir);
+    return res.status(200).send("File deleted successfully");
   } catch (err) {
     console.error(err);
     return res.sendStatus(500);

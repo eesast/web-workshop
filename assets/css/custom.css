@@ -1,0 +1,131 @@
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family:
+    Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal;
+}
+
+code {
+  font-family: "Source Code Pro", Consolas, monospace;
+}
+
+.head_wrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.extra-buttons {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.btn-extra {
+  display: inline-block;
+  margin: 5px;
+  white-space: nowrap;
+}
+
+@media screen and (max-width: 768px) {
+  .head_wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin: 1rem 0;
+  border-left: 0.25em solid;
+  background-color: transparent;
+}
+
+.markdown-alert > :first-child {
+  margin-top: 0;
+}
+
+.markdown-alert > :last-child {
+  margin-bottom: 0;
+}
+
+.markdown-alert-title {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.markdown-alert-icon {
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+.markdown-alert-note {
+  border-left-color: #0969da;
+}
+
+.markdown-alert-note .markdown-alert-title {
+  color: #0969da;
+}
+
+.markdown-alert-tip {
+  border-left-color: #1a7f37;
+}
+
+.markdown-alert-tip .markdown-alert-title {
+  color: #1a7f37;
+}
+
+.markdown-alert-important {
+  border-left-color: #8250df;
+}
+
+.markdown-alert-important .markdown-alert-title {
+  color: #8250df;
+}
+
+.markdown-alert-warning {
+  border-left-color: #9a6700;
+}
+
+.markdown-alert-warning .markdown-alert-title {
+  color: #9a6700;
+}
+
+.markdown-alert-caution {
+  border-left-color: #cf222e;
+}
+
+.markdown-alert-caution .markdown-alert-title {
+  color: #cf222e;
+}
+
+.toc {
+  padding: 1rem;
+  margin: 1rem 0 2rem;
+  border-left: 0.25rem solid #30363d;
+  background: rgba(110, 118, 129, 0.1);
+}
+
+.toc ul {
+  margin-bottom: 0;
+}
+
+.toc a {
+  text-decoration: none;
+}

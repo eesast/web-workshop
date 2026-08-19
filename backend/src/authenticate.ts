@@ -1,6 +1,14 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
+interface userJWTPayload {
+  uuid: string;
+  "https://hasura.io/jwt/claims": {
+    "x-hasura-allowed-roles": string[];
+    "x-hasura-default-role": string;
+  };
+}
+
 const authenticate: (req: Request, res: Response, next: NextFunction) => Response | void =
   (req, res, next) => {
     const authHeader = req.get("Authorization");
@@ -12,6 +20,7 @@ const authenticate: (req: Request, res: Response, next: NextFunction) => Respons
       if (err || !decoded) {
         return res.status(401).send("401 Unauthorized: Token expired or invalid");
       }
+      res.locals.user = decoded as userJWTPayload;
       return next();
     });
   };

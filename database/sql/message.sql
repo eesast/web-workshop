@@ -4,6 +4,7 @@ create table if not exists public.message (
   user_uuid uuid not null,
   room_uuid uuid not null,
   content text not null,
+  reply_to_uuid uuid,
   created_at timestamp default current_timestamp not null,
   primary key (uuid)
 );
@@ -11,6 +12,9 @@ alter table public.message
 add constraint message_user_uuid_fkey foreign key (user_uuid) references public.user (uuid) on update cascade on delete cascade;
 alter table public.message
 add constraint message_room_uuid_fkey foreign key (room_uuid) references public.room (uuid) on update cascade on delete cascade;
+-- 回复消息：可空自引用外键，为空表示不是回复；指向被回复的那条消息
+alter table public.message
+add constraint message_reply_to_uuid_fkey foreign key (reply_to_uuid) references public.message (uuid) on update cascade on delete set null;
 
 insert into public.message (user_uuid, room_uuid, content) values
 ('00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-100000000001', '大家好，我叫张三'),
@@ -42,3 +46,11 @@ insert into public.message (user_uuid, room_uuid, content) values
 ('00000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-100000000003', '好了，今天就到这里吧');
 
 update public.message set created_at = '2021-01-01 00:00:00' where room_uuid = '00000000-0000-0000-0000-100000000002';
+
+-- 回复消息测试数据（回复公共聊天室中的消息，均为单层回复）
+insert into public.message (user_uuid, room_uuid, content, reply_to_uuid)
+select '00000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-100000000001', '是呀，适合出去玩', m.uuid
+  from public.message m where m.content = '今天天气真好';
+insert into public.message (user_uuid, room_uuid, content, reply_to_uuid)
+select '00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-100000000001', '吃了，您呐', m.uuid
+  from public.message m where m.content = '吃了吗您';
