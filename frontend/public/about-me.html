@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html, lang="zh_cn">
+
+<head>
+  <meta charset="utf-8" />
+  <title>关于我</title>
+  <link rel="stylesheet" href="./about-me.css" />
+</head>
+
+<body>
+  <button id="theme-toggle" type="button">🌙</button>
+  <button id="lang-toggle" type="button">En</button>
+  <div id="basic-info">
+    <img src="./assets/sora_icon.jpg" id="avatar" width="80px" height="80px">
+    <div id="info-text">
+      <p><span data-i18n="email_label">邮箱</span>: hongjh25@mails.tsinghua.edu.cn</p>
+      <p><span data-i18n="github_label">GitHub账号</span>: <a href="https://github.com/Ricky1911">https://github.com/Ricky1911</a></p>
+      <p><span data-i18n="public_repo">公开仓库</span>: <span id="public_repo_count">...</span></p>
+    </div>
+  </div>
+  <div id="details">
+    <h3 data-i18n="personal_info">个人信息</h3>
+    <hr>
+    <p data-i18n="student_info">电子系无56班学生，软件部部员</p>
+    <h3 data-i18n="hobbies">兴趣</h3>
+    <hr>
+    <p data-i18n="hobbies_list">战雷、galgame、番剧</p>
+  </div>
+  <script src="./about-me.js"></script>
+</body>
+
+</html>
