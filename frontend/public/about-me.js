@@ -102,4 +102,189 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
   requestAnimationFrame(tick);
+
+  // ---------- 亮色 / 暗色模式 ----------
+  const themeToggle = document.getElementById('theme-toggle');
+  if (themeToggle) {
+    const syncTheme = () => {
+      themeToggle.setAttribute('aria-pressed', document.body.classList.contains('dark'));
+    };
+    themeToggle.addEventListener('click', () => {
+      const dark = document.body.classList.toggle('dark');
+      try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch (err) {}
+      syncTheme();
+    });
+    syncTheme();
+  }
+
+  // ---------- GitHub 信息与贡献绿墙 ----------
+  async function loadGitHub() {
+    const user = 'Pillowe582';
+    const metaEl = document.getElementById('github-meta');
+    const bioEl = document.getElementById('github-bio');
+    const wallEl = document.getElementById('contrib-wall');
+    const tipEl = document.getElementById('contrib-tip');
+    if (!metaEl || !wallEl || !tipEl) return;
+
+    let stats = '';
+    try {
+      const res = await fetch('https://api.github.com/users/' + user, {
+        headers: { Accept: 'application/vnd.github+json' },
+      });
+      if (res.ok) {
+        const d = await res.json();
+        stats = d.public_repos + ' 个公开仓库 · ' + d.followers + ' 位关注者';
+        if (d.bio) {
+          bioEl.textContent = d.bio;
+          bioEl.hidden = false;
+        }
+      }
+    } catch (err) { /* 断网时保持安静，只展示能拿到的部分 */ }
+
+    try {
+      // 官方 GraphQL 需要令牌，这里用公开镜像拿最近一年的贡献
+      const res = await fetch('https://github-contributions-api.jogruber.de/v4/' + user + '?y=last');
+      if (res.ok) {
+        const data = await res.json();
+        const days = data.contributions || [];
+        if (days.length) {
+          wallEl.textContent = '';
+          const frag = document.createDocumentFragment();
+          for (let i = 0; i < days.length; i += 7) {
+            const week = document.createElement('div');
+            week.className = 'contrib-week';
+            for (let j = i; j < Math.min(i + 7, days.length); j++) {
+              const day = days[j];
+              const cell = document.createElement('span');
+              cell.className = 'contrib-cell c' + (day.level || 0);
+              cell.title = day.date + ' · ' + day.count + ' 次贡献';
+              week.appendChild(cell);
+            }
+            frag.appendChild(week);
+          }
+          wallEl.appendChild(frag);
+          const total = days.reduce((sum, d) => sum + (d.count || 0), 0);
+          metaEl.textContent = (stats ? stats + ' · ' : '') + '过去一年 ' + total + ' 次贡献';
+          tipEl.textContent = '最近一年的贡献';
+          return;
+        }
+      }
+    } catch (err) {}
+
+    metaEl.textContent = stats;
+    tipEl.innerHTML = '贡献数据暂时取不到，<a href="https://github.com/Pillowe582" target="_blank" rel="noopener">去 GitHub 直接看</a>。';
+  }
+  loadGitHub();
+  window.setInterval(loadGitHub, 5 * 60 * 1000);
+
+  // ---------- 音乐浮窗 ----------
+  function initPlayer() {
+    const netease = (id) => 'https://music.163.com/song/media/outer/url?id=' + id + '.mp3';
+    // 网易云直链池；歌曲可能因版权下架，加载失败会自动跳下一首
+    const songs = [
+      { title: '风息的离别诗', src: netease('3411268934') },
+      { title: '永夜的悼挽', src: netease('3411268292') },
+      { title: '须臾的舒闲', src: netease('3411268918') },
+      { title: 'Flower Dance', src: netease('552194857') },
+      { title: 'Por Una Cabeza', src: netease('1424286681') },
+    ];
+    // 全部失败时的保底曲目
+    const fallback = { title: '李健 · 风吹麦浪', src: './assets/李健-风吹麦浪.mp3' };
+
+    const dock = document.getElementById('music-dock');
+    const audio = document.getElementById('music-audio');
+    const titleEl = document.getElementById('music-title');
+    const playBtn = document.getElementById('music-play');
+    const nextBtn = document.getElementById('music-next');
+    const loopBtn = document.getElementById('music-loop');
+    const toggleBtn = document.getElementById('music-toggle');
+    if (!dock || !audio || !titleEl || !playBtn || !nextBtn || !loopBtn || !toggleBtn) return;
+
+    let index = -1;
+    let failures = 0;
+    let dead = false;
+    let blocked = false; // 自动播放被浏览器拦下时，等第一次交互再续上
+
+    const pick = () => {
+      let i = index;
+      while (i === index && songs.length > 1) {
+        i = Math.floor(Math.random() * songs.length);
+      }
+      return i;
+    };
+
+    function load(song, i, autoplay) {
+      index = i;
+      audio.src = song.src;
+      titleEl.textContent = song.title;
+      if (autoplay) {
+        audio.play().then(() => { blocked = false; }).catch(() => { blocked = true; });
+      }
+    }
+
+    function next() {
+      if (failures >= songs.length) {
+        failures = 0;
+        load(fallback, -1, true);
+        return;
+      }
+      const i = pick();
+      load(songs[i], i, true);
+    }
+
+    function togglePlay() {
+      if (!audio.src || dead) {
+        dead = false;
+        failures = 0;
+        next();
+        return;
+      }
+      if (audio.paused) {
+        blocked = false;
+        audio.play().catch(() => {});
+      } else {
+        audio.pause();
+      }
+    }
+
+    playBtn.addEventListener('click', togglePlay);
+    toggleBtn.addEventListener('click', togglePlay);
+    nextBtn.addEventListener('click', () => {
+      failures = 0;
+      next();
+    });
+    loopBtn.addEventListener('click', () => {
+      audio.loop = !audio.loop;
+      loopBtn.classList.toggle('active', audio.loop);
+      loopBtn.setAttribute('aria-pressed', String(audio.loop));
+    });
+
+    audio.addEventListener('ended', () => {
+      if (!audio.loop) next();
+    });
+    audio.addEventListener('error', () => {
+      if (dead) return;
+      failures += 1;
+      if (failures > songs.length + 1) {
+        dead = true;
+        titleEl.textContent = '歌都放不出来，歇一会儿…';
+        return;
+      }
+      next();
+    });
+    audio.addEventListener('play', () => dock.classList.add('playing'));
+    audio.addEventListener('pause', () => dock.classList.remove('playing'));
+
+    // 页面加载后立即随机起一首；被自动播放策略拦住时，等第一次交互继续
+    next();
+
+    const unlock = () => {
+      if (blocked && audio.src && audio.paused) {
+        audio.play().then(() => { blocked = false; }).catch(() => {});
+      }
+    };
+    window.addEventListener('pointerdown', unlock, true);
+    window.addEventListener('keydown', unlock, true);
+  }
+  initPlayer();
 })();

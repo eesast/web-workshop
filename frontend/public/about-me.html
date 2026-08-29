@@ -9,12 +9,39 @@
   <script src="about-me.js" defer></script>
 </head>
 <body>
+  <script>
+    // 先于渲染上色，避免刷新时闪一下白底
+    try {
+      var saved = localStorage.getItem('theme');
+      if (saved === 'dark' || (!saved && matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.body.classList.add('dark');
+      }
+    } catch (e) {}
+  </script>
   <header class="page-header">
     <a class="back" href="./index.html">
       <span class="arrow" aria-hidden="true">&larr;</span>返回
     </a>
     <h1 class="title">关于我</h1>
-    <img class="header-avatar" src="./assets/pillowe.jpg" alt="Itz Pillowe">
+    <div class="header-right">
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换亮色 / 暗色模式" aria-pressed="false">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.5"/>
+          <line x1="12" y1="2" x2="12" y2="4"/>
+          <line x1="12" y1="20" x2="12" y2="22"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="2" y1="12" x2="4" y2="12"/>
+          <line x1="20" y1="12" x2="22" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+      </button>
+      <img class="header-avatar" src="./assets/pillowe.jpg" alt="Itz Pillowe">
+    </div>
   </header>
   <div id="page">
     <main>
@@ -23,8 +50,8 @@
           <source srcset="./assets/pillowe.jpg" type="image/jpg">
           <img src="./assets/pillowe.jpg" alt="Itz Pillowe" class="profile-image">
         </picture>
-        <h2 class="name">Itz Pillowe.</h2>
-        <p class="bio">这里是 Pillowe 的个人页面，内容不会慢慢补充。</p>
+        <h2 class="name">Pillowe</h2>
+        <p class="bio">Itz Pillowe! 这里是 Pillowe 的个人页面，内容不会慢慢补充。</p>
       </section>
 
       <section class="page-content">
@@ -108,6 +135,18 @@
           <h3 class="section-title">闲话</h3>
           <p>芜湖！</p>
         </div>
+        <div class="page-section" id="github-section">
+          <h3 class="section-title">GitHub</h3>
+          <p class="github-line">
+            <a class="github-link" href="https://github.com/Pillowe582" target="_blank" rel="noopener">Pillowe582</a>
+            <span class="github-meta" id="github-meta">正在拉取 GitHub 数据…</span>
+          </p>
+          <p class="github-bio" id="github-bio" hidden></p>
+          <div class="contrib-wall-wrap">
+            <div class="contrib-wall" id="contrib-wall" role="img" aria-label="过去一年的 GitHub 贡献绿墙"></div>
+          </div>
+          <p class="contrib-tip" id="contrib-tip">贡献绿墙加载中…</p>
+        </div>
       </section>
     </main>
 
@@ -115,5 +154,36 @@
       <p>&copy; 2026 EESAST</p>
     </footer>
   </div>
+  <div class="music-dock" id="music-dock" role="region" aria-label="音乐播放器">
+    <div class="music-panel">
+      <p class="music-title" id="music-title">随机播放</p>
+      <div class="music-controls">
+        <button id="music-play" type="button" aria-label="播放 / 暂停">
+          <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="7 4 20 12 7 20"/></svg>
+          <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
+        </button>
+        <button id="music-next" type="button" aria-label="切一首">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5 4 16 12 5 20"/><rect x="17" y="4" width="3" height="16" rx="1"/></svg>
+        </button>
+        <button id="music-loop" type="button" aria-label="单曲循环" aria-pressed="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="17 1 21 5 17 9"/>
+            <path d="M3 11V9a4 4 0 0 1 4-4h14"/>
+            <polyline points="7 23 3 19 7 15"/>
+            <path d="M21 13v2a4 4 0 0 1-4 4H3"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <button class="music-toggle" id="music-toggle" type="button" aria-label="播放音乐">
+      <svg class="icon-note" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M9 18V5l12-2v13"/>
+        <circle cx="6" cy="18" r="3"/>
+        <circle cx="18" cy="16" r="3"/>
+      </svg>
+      <span class="eq" aria-hidden="true"><i></i><i></i><i></i></span>
+    </button>
+  </div>
+  <audio id="music-audio" preload="none"></audio>
 </body>
 </html>
