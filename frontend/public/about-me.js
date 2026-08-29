@@ -41,6 +41,7 @@
     // 滚过阈值后，小头像吸附到标题栏最右侧
     headerAvatar.style.opacity = docked;
     headerAvatar.style.transform = 'scale(' + (0.55 + 0.45 * docked) + ')';
+    headerAvatar.classList.toggle('shown', docked > 0);
 
     page.style.transform = pull > 0.05 ? 'translateY(' + pull.toFixed(2) + 'px)' : '';
   }

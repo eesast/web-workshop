@@ -69,14 +69,22 @@ body {
 }
 
 .header-avatar {
-  width: 38px;
+  width: 0;
+  min-width: 0;
   height: 38px;
   border-radius: 50%;
   object-fit: cover;
   opacity: 0;
   transform: scale(0.55);
+  margin-left: -0.7em; /* 隐藏时抵消 gap，主题按钮贴到最右 */
   pointer-events: none;
   will-change: transform, opacity;
+  transition: width 0.22s ease, margin-left 0.22s ease;
+}
+
+.header-avatar.shown {
+  width: 38px;
+  margin-left: 0;
 }
 
 .header-right {
@@ -246,7 +254,7 @@ body.dark .icon-moon {
 }
 
 .contrib-wall-wrap {
-  margin: 1.2em calc(-1 * clamp(1.2em, 6vw, 4em));
+  margin: 1.2em 0;
   overflow-x: auto;
   padding-bottom: 0.4em;
 }
