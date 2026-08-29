@@ -1,0 +1,594 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #fbfaf8;
+  color: #22252a;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Source Han Sans SC",
+    "Microsoft YaHei", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.page-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: clamp(1.2em, 5vw, 2.5em);
+  padding: 1.1em clamp(1.2em, 6vw, 4em);
+  border-bottom: 1px solid #e7e4de;
+  background: #fbfaf8;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  color: #73767c;
+  font-size: 1.2em;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  transition: color 0.16s ease;
+}
+
+.back .arrow {
+  margin-right: 0.45em;
+  transition: transform 0.16s ease;
+}
+
+.back:hover,
+.back:active {
+  color: #22252a;
+}
+
+.back:hover .arrow {
+  transform: translateX(-2px);
+}
+
+.back:focus-visible {
+  outline: 1px solid #22252a;
+  outline-offset: 4px;
+  color: #22252a;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #22252a;
+}
+
+.header-avatar {
+  width: 0;
+  min-width: 0;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(0.55);
+  margin-left: -0.7em; /* 隐藏时抵消 gap，主题按钮贴到最右 */
+  pointer-events: none;
+  will-change: transform, opacity;
+  transition: width 0.22s ease, margin-left 0.22s ease;
+}
+
+.header-avatar.shown {
+  width: 38px;
+  margin-left: 0;
+}
+
+.header-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+}
+
+.theme-toggle {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e7e4de;
+  border-radius: 50%;
+  background: transparent;
+  color: #73767c;
+  cursor: pointer;
+  transition: color 0.18s ease, border-color 0.18s ease;
+}
+
+.theme-toggle:hover {
+  color: #22252a;
+  border-color: #c9c5bd;
+}
+
+.theme-toggle:focus-visible {
+  outline: 1px solid #22252a;
+  outline-offset: 3px;
+}
+
+.theme-toggle svg {
+  width: 16px;
+  height: 16px;
+}
+
+.icon-sun {
+  display: none;
+}
+
+body.dark .icon-sun {
+  display: block;
+}
+
+body.dark .icon-moon {
+  display: none;
+}
+
+#page {
+  padding-top: 86px;
+  will-change: transform;
+}
+
+.page-content {
+  max-width: 40em;
+  margin: 0 auto;
+  padding: 0 clamp(1.2em, 6vw, 4em) 6em;
+}
+
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4em clamp(1.2em, 6vw, 4em);
+}
+
+.profile-image {
+  display: block;
+  width: clamp(96px, 18vw, 160px);
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 50%;
+  margin: 0 0 1.6em;
+  will-change: transform;
+}
+
+.name {
+  margin: 0 0 0.5em;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: #22252a;
+}
+
+.bio {
+  margin: 0;
+  max-width: 30em;
+  color: #73767c;
+  line-height: 2;
+  letter-spacing: 0.02em;
+}
+
+.page-section {
+  margin-top: 3em;
+  padding-top: 2.6em;
+  border-top: 1px solid #e7e4de;
+}
+
+.page-section:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.section-title {
+  margin: 0 0 1em;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: #22252a;
+}
+
+.page-section p {
+  margin: 0;
+  color: #73767c;
+  line-height: 2;
+  letter-spacing: 0.02em;
+}
+
+.section-list {
+  margin: 0;
+  padding-left: 1.4em;
+  color: #73767c;
+  line-height: 2;
+  letter-spacing: 0.02em;
+}
+
+.page-footer {
+  padding: 1.3em clamp(1.2em, 6vw, 4em);
+  border-top: 1px solid #e7e4de;
+  color: #9a9da2;
+  font-size: 0.8em;
+  letter-spacing: 0.06em;
+}
+
+.page-footer p {
+  margin: 0;
+  text-align: center;
+}
+
+
+/* ---------- GitHub ---------- */
+
+.github-line {
+  margin: 0 0 0.8em;
+}
+
+.github-link {
+  color: #22252a;
+  text-decoration: none;
+  border-bottom: 1px solid #c9c5bd;
+  padding-bottom: 1px;
+}
+
+.github-link:hover {
+  border-bottom-color: #22252a;
+}
+
+.github-bio {
+  margin: 0 0 1em;
+}
+
+.contrib-wall-wrap {
+  margin: 1.2em 0;
+  overflow-x: auto;
+  padding-bottom: 0.4em;
+}
+
+.contrib-wall-wrap::-webkit-scrollbar {
+  height: 4px;
+}
+
+.contrib-wall-wrap::-webkit-scrollbar-thumb {
+  background: #e7e4de;
+  border-radius: 2px;
+}
+
+.contrib-wall {
+  display: flex;
+  gap: 3px;
+  width: max-content;
+}
+
+.contrib-week {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.contrib-cell {
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  background: #ebedf0;
+}
+
+.contrib-cell.c1 { background: #9be9a8; }
+.contrib-cell.c2 { background: #40c463; }
+.contrib-cell.c3 { background: #30a14e; }
+.contrib-cell.c4 { background: #216e39; }
+
+.contrib-tip {
+  margin: 0.8em 0 0;
+  font-size: 0.8em;
+  color: #9a9da2;
+  letter-spacing: 0.05em;
+}
+
+.contrib-tip a {
+  color: inherit;
+}
+
+/* ---------- 音乐浮窗 ---------- */
+
+.music-dock {
+  position: fixed;
+  right: 18px;
+  bottom: 34px;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.music-panel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 8px 7px 14px;
+  border: 1px solid #e7e4de;
+  border-radius: 999px;
+  background: #fbfaf8;
+  box-shadow: 0 2px 10px rgba(34, 37, 42, 0.08);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(10px);
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s,
+    background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.music-dock:hover .music-panel,
+.music-dock:focus-within .music-panel {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+.music-title {
+  margin: 0;
+  max-width: 10em;
+  font-size: 0.78rem;
+  color: #73767c;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.music-controls {
+  display: flex;
+}
+
+.music-controls button {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #73767c;
+  cursor: pointer;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.music-controls button:hover {
+  color: #22252a;
+  background: rgba(34, 37, 42, 0.06);
+}
+
+.music-controls button.active {
+  color: #22252a;
+  background: rgba(34, 37, 42, 0.08);
+}
+
+.music-controls svg {
+  width: 14px;
+  height: 14px;
+}
+
+#music-play .icon-pause {
+  display: none;
+}
+
+.music-dock.playing #music-play .icon-pause {
+  display: block;
+}
+
+.music-dock.playing #music-play .icon-play {
+  display: none;
+}
+
+.music-toggle {
+  position: relative;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid #e7e4de;
+  background: #fbfaf8;
+  color: #73767c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(34, 37, 42, 0.08);
+  transition: color 0.18s ease, border-color 0.18s ease,
+    background-color 0.25s ease;
+}
+
+.music-toggle:hover {
+  color: #22252a;
+}
+
+.music-toggle:focus-visible {
+  outline: 1px solid #22252a;
+  outline-offset: 3px;
+}
+
+.music-toggle svg.icon-note {
+  width: 18px;
+  height: 18px;
+}
+
+.eq {
+  display: none;
+  align-items: flex-end;
+  gap: 2px;
+  height: 16px;
+}
+
+.eq i {
+  display: block;
+  width: 2px;
+  height: 5px;
+  background: currentColor;
+  border-radius: 1px;
+  animation: music-eq 1.1s ease-in-out infinite;
+}
+
+.eq i:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.eq i:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+.music-dock.playing .eq {
+  display: flex;
+}
+
+.music-dock.playing .icon-note {
+  display: none;
+}
+
+@keyframes music-eq {
+  0%, 100% { height: 5px; }
+  50% { height: 15px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eq i {
+    animation: none;
+  }
+}
+
+/* ---------- 暗色模式（颜色值直接写，不用变量） ---------- */
+body.dark .title {
+  color: #e7e6e1;
+}
+
+body.dark .name {
+  color: #e7e6e1;
+}
+
+body.dark {
+  background: #16181d;
+  color: #e7e6e1;
+}
+
+body.dark .page-header {
+  background: #16181d;
+  border-bottom-color: #2a2d33;
+}
+
+body.dark .back {
+  color: #9a9da4;
+}
+
+body.dark .back:hover,
+body.dark .back:active {
+  color: #e7e6e1;
+}
+
+body.dark .back:focus-visible {
+  outline-color: #e7e6e1;
+  color: #e7e6e1;
+}
+
+body.dark .section-title {
+  color: #e7e6e1;
+}
+
+body.dark .page-section {
+  border-top-color: #2a2d33;
+}
+
+body.dark .page-section p,
+body.dark .section-list,
+body.dark .bio {
+  color: #9a9da4;
+}
+
+body.dark .page-footer {
+  border-top-color: #2a2d33;
+  color: #6d7076;
+}
+
+body.dark .theme-toggle {
+  border-color: #2a2d33;
+  color: #9a9da4;
+}
+
+body.dark .theme-toggle:hover {
+  color: #e7e6e1;
+  border-color: #43464d;
+}
+
+body.dark .theme-toggle:focus-visible {
+  outline-color: #e7e6e1;
+}
+
+body.dark .github-link {
+  color: #e7e6e1;
+  border-bottom-color: #43464d;
+}
+
+body.dark .github-link:hover {
+  border-bottom-color: #e7e6e1;
+}
+
+body.dark .contrib-wall-wrap::-webkit-scrollbar-thumb {
+  background: #2a2d33;
+}
+
+body.dark .contrib-cell {
+  background: #1d2127;
+}
+
+body.dark .contrib-cell.c1 { background: #0e4429; }
+body.dark .contrib-cell.c2 { background: #006d32; }
+body.dark .contrib-cell.c3 { background: #26a641; }
+body.dark .contrib-cell.c4 { background: #39d353; }
+
+body.dark .music-toggle {
+  background: #16181d;
+  border-color: #2a2d33;
+  color: #9a9da4;
+}
+
+body.dark .music-toggle:hover {
+  color: #e7e6e1;
+}
+
+body.dark .music-toggle:focus-visible {
+  outline-color: #e7e6e1;
+}
+
+body.dark .music-panel {
+  background: #16181d;
+  border-color: #2a2d33;
+}
+
+body.dark .music-title {
+  color: #9a9da4;
+}
+
+body.dark .music-controls button {
+  color: #9a9da4;
+}
+
+body.dark .music-controls button:hover {
+  color: #e7e6e1;
+  background: rgba(231, 230, 225, 0.06);
+}
+
+body.dark .music-controls button.active {
+  color: #e7e6e1;
+  background: rgba(231, 230, 225, 0.1);
+}
