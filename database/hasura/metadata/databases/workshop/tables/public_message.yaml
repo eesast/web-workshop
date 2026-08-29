@@ -2,12 +2,23 @@ table:
   name: message
   schema: public
 object_relationships:
+  - name: reply_to_message
+    using:
+      foreign_key_constraint_on: reply_to_id
   - name: room
     using:
       foreign_key_constraint_on: room_uuid
   - name: user
     using:
       foreign_key_constraint_on: user_uuid
+array_relationships:
+  - name: replies
+    using:
+      foreign_key_constraint_on:
+        column: reply_to_id
+        table:
+          name: message
+          schema: public
 insert_permissions:
   - role: user
     permission:

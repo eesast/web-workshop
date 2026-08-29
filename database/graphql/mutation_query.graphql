@@ -1,0 +1,40 @@
+# 1. 插入回复消息
+mutation SendReplyMessage($content: String!, $room_uuid: uuid!, $user_uuid: uuid!, $reply_to_id: uuid) {
+  insert_message_one(object: {
+    content: $content,
+    room_uuid: $room_uuid,
+    user_uuid: $user_uuid,
+    reply_to_id: $reply_to_id
+  }) {
+    uuid
+    content
+    reply_to_id
+    created_at
+  }
+}
+
+# 2. 查询房间消息及其回复
+query GetRoomMessagesWithReplies($room_uuid: uuid!) {
+  message(where: {room_uuid: {_eq: $room_uuid}}) {
+    uuid
+    content
+    created_at
+    user {
+      username
+    }
+    reply_to_message {
+      uuid
+      content
+      user {
+        username
+      }
+    }
+    replies {
+      uuid
+      content
+      user {
+        username
+      }
+    }
+  }
+}
