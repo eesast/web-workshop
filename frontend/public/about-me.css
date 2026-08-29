@@ -1,0 +1,31 @@
+#me_photo{
+  width: 32px;
+  margin: 0 auto;
+  padding: 6px;
+  text-align: center;
+  border-radius: 2px;
+  background-color: var(--card-bg);
+  box-shadow: 0 0 18px var(--shadow-color);
+  backdrop-filter: blur(12px);
+}
+
+body{
+  --text-color: #222222;
+  --bg-start: #fefefe;
+  --bg-end: #8a96ad;
+  --card-bg: rgba(255, 255, 255, 0.25);
+  --shadow-color: rgba(0, 0, 0, 0.25);
+
+  font-family: "Microsoft YaHei", sans-serif;
+  height: 100vh;
+  color: var(--text-color);
+  background: linear-gradient(to top, var(--bg-start) 0%, var(--bg-end) 100%);
+}
+
+body.dark{
+  --text-color: #eeeeee;
+  --bg-start: #111827;
+  --bg-end: #374151;
+  --card-bg: rgba(0, 0, 0, 0.25);
+  --shadow-color: rgba(0, 0, 0, 0.6);
+}
