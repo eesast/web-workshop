@@ -1,0 +1,65 @@
+
+body {
+    font-family: Arial, "Microsoft YaHei", sans-serif;
+    background-color: #f4f6f9;
+    color: #333;
+    padding: 30px;
+    max-width: 800px;
+    margin: 0 auto; 
+    background-color: #ffffff;
+    color: #333333;
+    transition: background-color 0.3s, color 0.3s;
+}
+body.dark-mode {
+  background-color: #1e1e2e;
+  color: #cdd6f4;
+}
+
+body.dark-mode .card {
+  background-color: #313244;
+  border-color: #45475a;
+}
+
+h1 {
+    color: #0056b3;
+    border-bottom: 2px solid #0056b3;
+    padding-bottom: 10px;
+}
+
+.avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%; 
+    border: 3px solid #0056b3;
+    margin: 15px 0;
+}
+
+.hobby-list li {
+    line-height: 1.8;
+    font-size: 16px;
+}
+
+.info-table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.info-table td {
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+.back-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 8px 16px;
+    background-color: #0056b3;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.back-btn:hover {
+    background-color: #003d82;
+}
