@@ -1,5 +1,5 @@
 {
-  "resource_version": 14,
+  "resource_version": 19,
   "metadata": {
     "version": 3,
     "sources": [
@@ -80,6 +80,78 @@
                 "role": "user",
                 "permission": {
                   "filter": {}
+                },
+                "comment": ""
+              }
+            ]
+          },
+          {
+            "table": {
+              "name": "note",
+              "schema": "public"
+            },
+            "insert_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "check": {
+                    "user_uuid": {
+                      "_eq": "X-Hasura-User-Id"
+                    }
+                  },
+                  "columns": [
+                    "content",
+                    "room_uuid",
+                    "user_uuid"
+                  ]
+                },
+                "comment": ""
+              }
+            ],
+            "select_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "columns": [
+                    "content",
+                    "created_at",
+                    "room_uuid"
+                  ],
+                  "filter": {
+                    "user_uuid": {
+                      "_eq": "X-Hasura-User-Id"
+                    }
+                  }
+                },
+                "comment": ""
+              }
+            ],
+            "update_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "columns": [
+                    "content"
+                  ],
+                  "filter": {
+                    "user_uuid": {
+                      "_eq": "X-Hasura-User-Id"
+                    }
+                  },
+                  "check": null
+                },
+                "comment": ""
+              }
+            ],
+            "delete_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "filter": {
+                    "user_uuid": {
+                      "_eq": "X-Hasura-User-Id"
+                    }
+                  }
                 },
                 "comment": ""
               }
@@ -309,11 +381,17 @@
         "mariadb": {
           "uri": "http://data-connector-agent:8081/api/v1/mariadb"
         },
+        "mongodb": {
+          "uri": "http://localhost:8082"
+        },
         "mysql8": {
           "uri": "http://data-connector-agent:8081/api/v1/mysql"
         },
         "oracle": {
           "uri": "http://data-connector-agent:8081/api/v1/oracle"
+        },
+        "redshift": {
+          "uri": "http://localhost:8081/api/v1/redshift"
         },
         "snowflake": {
           "uri": "http://data-connector-agent:8081/api/v1/snowflake"

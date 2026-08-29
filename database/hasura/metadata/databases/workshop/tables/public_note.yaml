@@ -1,0 +1,42 @@
+table:
+  name: note
+  schema: public
+insert_permissions:
+  - role: user
+    permission:
+      check:
+        user_uuid:
+          _eq: X-Hasura-User-Id
+      columns:
+        - content
+        - room_uuid
+        - user_uuid
+    comment: ""
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - content
+        - created_at
+        - room_uuid
+      filter:
+        user_uuid:
+          _eq: X-Hasura-User-Id
+    comment: ""
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - content
+      filter:
+        user_uuid:
+          _eq: X-Hasura-User-Id
+      check: null
+    comment: ""
+delete_permissions:
+  - role: user
+    permission:
+      filter:
+        user_uuid:
+          _eq: X-Hasura-User-Id
+    comment: ""

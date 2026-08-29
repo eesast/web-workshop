@@ -1,0 +1,28 @@
+mutation upsertNote($user_uuid: uuid!, $room_uuid: uuid!, $content: String!) {
+  insert_note_one(
+    object: {user_uuid:$user_uuid, room_uuid: $room_uuid, content: $content}
+    on_conflict: {
+      constraint: note_pkey
+      update_columns: [content]
+    }
+  ) {
+    user_uuid
+    room_uuid
+    content
+  }
+}
+
+query getNote($room_uuid: uuid!) {
+  note(where: {room_uuid: {_eq:$room_uuid}}){
+    content
+    created_at
+  }
+}
+
+query getNotes{
+  note {
+    room_uuid
+    content
+    created_at
+  }
+}
