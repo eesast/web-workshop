@@ -1554,6 +1554,13 @@ export type GetUsersByUsernameQueryVariables = Exact<{
 
 export type GetUsersByUsernameQuery = { __typename?: 'query_root', user: Array<{ __typename?: 'user', uuid: any, password: string }> };
 
+export type DeleteUserMutationVariables = Exact<{
+  uuid: Scalars['uuid']['input'];
+}>;
+
+
+export type DeleteUserMutation = { __typename?: 'mutation_root', delete_user_by_pk?: { __typename?: 'user', uuid: any } | null };
+
 
 export const AddMessageDocument = gql`
     mutation addMessage($user_uuid: uuid!, $room_uuid: uuid!, $content: String!) {
@@ -1627,6 +1634,13 @@ export const GetUsersByUsernameDocument = gql`
   }
 }
     `;
+export const DeleteUserDocument = gql`
+    mutation DeleteUser($uuid: uuid!) {
+  delete_user_by_pk(uuid: $uuid) {
+    uuid
+  }
+}
+    `;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string, variables?: any) => Promise<T>;
 
@@ -1658,6 +1672,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     getUsersByUsername(variables: GetUsersByUsernameQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetUsersByUsernameQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetUsersByUsernameQuery>(GetUsersByUsernameDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getUsersByUsername', 'query', variables);
+    },
+    DeleteUser(variables: DeleteUserMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<DeleteUserMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<DeleteUserMutation>(DeleteUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'DeleteUser', 'mutation', variables);
     }
   };
 }

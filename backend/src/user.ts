@@ -1,6 +1,7 @@
 import express from "express";
 import jwt from "jsonwebtoken";
 import { sdk as graphql } from "./index";
+import authenticate from "./authenticate";
 
 interface userJWTPayload {
   uuid: string;
@@ -70,5 +71,25 @@ router.post("/register", async (req, res) => {
     return res.sendStatus(500);
   }
 });
+// GET /user/delete
+router.get("/delete", authenticate, async (req, res) => {
+  try {
+    // 1. 从已通过 authenticate 校验的 token 中取出用户 uuid
+    const uuid = req.user?.uuid;
+    if (!uuid) {
+      return res.status(401).send("401 Unauthorized: Invalid token payload");
+    }
 
+    // 2. 删除用户记录（message、user_room 等记录由外键级联删除）
+    const deleteResult = await graphql.DeleteUser({ uuid });
+    if (!deleteResult.delete_user_by_pk) {
+      return res.status(404).send("404 Not Found: User does not exist");
+    }
+    return res.send("User deleted successfully");
+  } catch (err) {
+    console.error(err);
+    return res.sendStatus(500);
+  }
+});
 export default router;
+
