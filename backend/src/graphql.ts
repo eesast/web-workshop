@@ -73,11 +73,232 @@ export enum Cursor_Ordering {
   Desc = 'DESC'
 }
 
+/** columns and relationships of "log" */
+export type Log = {
+  __typename?: 'log';
+  content: Scalars['String']['output'];
+  created_at: Scalars['timestamp']['output'];
+  /** An object relationship */
+  room: Room;
+  room_uuid: Scalars['uuid']['output'];
+  updated_at: Scalars['timestamp']['output'];
+  uuid: Scalars['uuid']['output'];
+};
+
+/** aggregated selection of "log" */
+export type Log_Aggregate = {
+  __typename?: 'log_aggregate';
+  aggregate?: Maybe<Log_Aggregate_Fields>;
+  nodes: Array<Log>;
+};
+
+export type Log_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Log_Aggregate_Bool_Exp_Count>;
+};
+
+export type Log_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Log_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Log_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "log" */
+export type Log_Aggregate_Fields = {
+  __typename?: 'log_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Log_Max_Fields>;
+  min?: Maybe<Log_Min_Fields>;
+};
+
+
+/** aggregate fields of "log" */
+export type Log_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Log_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "log" */
+export type Log_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Log_Max_Order_By>;
+  min?: InputMaybe<Log_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "log" */
+export type Log_Arr_Rel_Insert_Input = {
+  data: Array<Log_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Log_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "log". All fields are combined with a logical 'AND'. */
+export type Log_Bool_Exp = {
+  _and?: InputMaybe<Array<Log_Bool_Exp>>;
+  _not?: InputMaybe<Log_Bool_Exp>;
+  _or?: InputMaybe<Array<Log_Bool_Exp>>;
+  content?: InputMaybe<String_Comparison_Exp>;
+  created_at?: InputMaybe<Timestamp_Comparison_Exp>;
+  room?: InputMaybe<Room_Bool_Exp>;
+  room_uuid?: InputMaybe<Uuid_Comparison_Exp>;
+  updated_at?: InputMaybe<Timestamp_Comparison_Exp>;
+  uuid?: InputMaybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "log" */
+export enum Log_Constraint {
+  /** unique or primary key constraint on columns "uuid" */
+  LogPkey = 'log_pkey'
+}
+
+/** input type for inserting data into table "log" */
+export type Log_Insert_Input = {
+  content?: InputMaybe<Scalars['String']['input']>;
+  created_at?: InputMaybe<Scalars['timestamp']['input']>;
+  room?: InputMaybe<Room_Obj_Rel_Insert_Input>;
+  room_uuid?: InputMaybe<Scalars['uuid']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamp']['input']>;
+  uuid?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** aggregate max on columns */
+export type Log_Max_Fields = {
+  __typename?: 'log_max_fields';
+  content?: Maybe<Scalars['String']['output']>;
+  created_at?: Maybe<Scalars['timestamp']['output']>;
+  room_uuid?: Maybe<Scalars['uuid']['output']>;
+  updated_at?: Maybe<Scalars['timestamp']['output']>;
+  uuid?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** order by max() on columns of table "log" */
+export type Log_Max_Order_By = {
+  content?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  room_uuid?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+  uuid?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Log_Min_Fields = {
+  __typename?: 'log_min_fields';
+  content?: Maybe<Scalars['String']['output']>;
+  created_at?: Maybe<Scalars['timestamp']['output']>;
+  room_uuid?: Maybe<Scalars['uuid']['output']>;
+  updated_at?: Maybe<Scalars['timestamp']['output']>;
+  uuid?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** order by min() on columns of table "log" */
+export type Log_Min_Order_By = {
+  content?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  room_uuid?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+  uuid?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "log" */
+export type Log_Mutation_Response = {
+  __typename?: 'log_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Log>;
+};
+
+/** on_conflict condition type for table "log" */
+export type Log_On_Conflict = {
+  constraint: Log_Constraint;
+  update_columns?: Array<Log_Update_Column>;
+  where?: InputMaybe<Log_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "log". */
+export type Log_Order_By = {
+  content?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  room?: InputMaybe<Room_Order_By>;
+  room_uuid?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+  uuid?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: log */
+export type Log_Pk_Columns_Input = {
+  uuid: Scalars['uuid']['input'];
+};
+
+/** select columns of table "log" */
+export enum Log_Select_Column {
+  /** column name */
+  Content = 'content',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  RoomUuid = 'room_uuid',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  Uuid = 'uuid'
+}
+
+/** input type for updating data in table "log" */
+export type Log_Set_Input = {
+  content?: InputMaybe<Scalars['String']['input']>;
+  created_at?: InputMaybe<Scalars['timestamp']['input']>;
+  room_uuid?: InputMaybe<Scalars['uuid']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamp']['input']>;
+  uuid?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** Streaming cursor of the table "log" */
+export type Log_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Log_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Log_Stream_Cursor_Value_Input = {
+  content?: InputMaybe<Scalars['String']['input']>;
+  created_at?: InputMaybe<Scalars['timestamp']['input']>;
+  room_uuid?: InputMaybe<Scalars['uuid']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamp']['input']>;
+  uuid?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** update columns of table "log" */
+export enum Log_Update_Column {
+  /** column name */
+  Content = 'content',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  RoomUuid = 'room_uuid',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  Uuid = 'uuid'
+}
+
+export type Log_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Log_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Log_Bool_Exp;
+};
+
 /** columns and relationships of "message" */
 export type Message = {
   __typename?: 'message';
   content: Scalars['String']['output'];
   created_at: Scalars['timestamp']['output'];
+  /** An object relationship */
+  reply?: Maybe<Message>;
+  reply_uuid?: Maybe<Scalars['uuid']['output']>;
   /** An object relationship */
   room: Room;
   room_uuid: Scalars['uuid']['output'];
@@ -141,6 +362,8 @@ export type Message_Bool_Exp = {
   _or?: InputMaybe<Array<Message_Bool_Exp>>;
   content?: InputMaybe<String_Comparison_Exp>;
   created_at?: InputMaybe<Timestamp_Comparison_Exp>;
+  reply?: InputMaybe<Message_Bool_Exp>;
+  reply_uuid?: InputMaybe<Uuid_Comparison_Exp>;
   room?: InputMaybe<Room_Bool_Exp>;
   room_uuid?: InputMaybe<Uuid_Comparison_Exp>;
   user?: InputMaybe<User_Bool_Exp>;
@@ -158,6 +381,8 @@ export enum Message_Constraint {
 export type Message_Insert_Input = {
   content?: InputMaybe<Scalars['String']['input']>;
   created_at?: InputMaybe<Scalars['timestamp']['input']>;
+  reply?: InputMaybe<Message_Obj_Rel_Insert_Input>;
+  reply_uuid?: InputMaybe<Scalars['uuid']['input']>;
   room?: InputMaybe<Room_Obj_Rel_Insert_Input>;
   room_uuid?: InputMaybe<Scalars['uuid']['input']>;
   user?: InputMaybe<User_Obj_Rel_Insert_Input>;
@@ -170,6 +395,7 @@ export type Message_Max_Fields = {
   __typename?: 'message_max_fields';
   content?: Maybe<Scalars['String']['output']>;
   created_at?: Maybe<Scalars['timestamp']['output']>;
+  reply_uuid?: Maybe<Scalars['uuid']['output']>;
   room_uuid?: Maybe<Scalars['uuid']['output']>;
   user_uuid?: Maybe<Scalars['uuid']['output']>;
   uuid?: Maybe<Scalars['uuid']['output']>;
@@ -179,6 +405,7 @@ export type Message_Max_Fields = {
 export type Message_Max_Order_By = {
   content?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
+  reply_uuid?: InputMaybe<Order_By>;
   room_uuid?: InputMaybe<Order_By>;
   user_uuid?: InputMaybe<Order_By>;
   uuid?: InputMaybe<Order_By>;
@@ -189,6 +416,7 @@ export type Message_Min_Fields = {
   __typename?: 'message_min_fields';
   content?: Maybe<Scalars['String']['output']>;
   created_at?: Maybe<Scalars['timestamp']['output']>;
+  reply_uuid?: Maybe<Scalars['uuid']['output']>;
   room_uuid?: Maybe<Scalars['uuid']['output']>;
   user_uuid?: Maybe<Scalars['uuid']['output']>;
   uuid?: Maybe<Scalars['uuid']['output']>;
@@ -198,6 +426,7 @@ export type Message_Min_Fields = {
 export type Message_Min_Order_By = {
   content?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
+  reply_uuid?: InputMaybe<Order_By>;
   room_uuid?: InputMaybe<Order_By>;
   user_uuid?: InputMaybe<Order_By>;
   uuid?: InputMaybe<Order_By>;
@@ -212,6 +441,13 @@ export type Message_Mutation_Response = {
   returning: Array<Message>;
 };
 
+/** input type for inserting object relation for remote table "message" */
+export type Message_Obj_Rel_Insert_Input = {
+  data: Message_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Message_On_Conflict>;
+};
+
 /** on_conflict condition type for table "message" */
 export type Message_On_Conflict = {
   constraint: Message_Constraint;
@@ -223,6 +459,8 @@ export type Message_On_Conflict = {
 export type Message_Order_By = {
   content?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
+  reply?: InputMaybe<Message_Order_By>;
+  reply_uuid?: InputMaybe<Order_By>;
   room?: InputMaybe<Room_Order_By>;
   room_uuid?: InputMaybe<Order_By>;
   user?: InputMaybe<User_Order_By>;
@@ -242,6 +480,8 @@ export enum Message_Select_Column {
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
+  ReplyUuid = 'reply_uuid',
+  /** column name */
   RoomUuid = 'room_uuid',
   /** column name */
   UserUuid = 'user_uuid',
@@ -253,6 +493,7 @@ export enum Message_Select_Column {
 export type Message_Set_Input = {
   content?: InputMaybe<Scalars['String']['input']>;
   created_at?: InputMaybe<Scalars['timestamp']['input']>;
+  reply_uuid?: InputMaybe<Scalars['uuid']['input']>;
   room_uuid?: InputMaybe<Scalars['uuid']['input']>;
   user_uuid?: InputMaybe<Scalars['uuid']['input']>;
   uuid?: InputMaybe<Scalars['uuid']['input']>;
@@ -270,6 +511,7 @@ export type Message_Stream_Cursor_Input = {
 export type Message_Stream_Cursor_Value_Input = {
   content?: InputMaybe<Scalars['String']['input']>;
   created_at?: InputMaybe<Scalars['timestamp']['input']>;
+  reply_uuid?: InputMaybe<Scalars['uuid']['input']>;
   room_uuid?: InputMaybe<Scalars['uuid']['input']>;
   user_uuid?: InputMaybe<Scalars['uuid']['input']>;
   uuid?: InputMaybe<Scalars['uuid']['input']>;
@@ -281,6 +523,8 @@ export enum Message_Update_Column {
   Content = 'content',
   /** column name */
   CreatedAt = 'created_at',
+  /** column name */
+  ReplyUuid = 'reply_uuid',
   /** column name */
   RoomUuid = 'room_uuid',
   /** column name */
@@ -299,6 +543,10 @@ export type Message_Updates = {
 /** mutation root */
 export type Mutation_Root = {
   __typename?: 'mutation_root';
+  /** delete data from the table: "log" */
+  delete_log?: Maybe<Log_Mutation_Response>;
+  /** delete single row from the table: "log" */
+  delete_log_by_pk?: Maybe<Log>;
   /** delete data from the table: "message" */
   delete_message?: Maybe<Message_Mutation_Response>;
   /** delete single row from the table: "message" */
@@ -307,6 +555,10 @@ export type Mutation_Root = {
   delete_room?: Maybe<Room_Mutation_Response>;
   /** delete single row from the table: "room" */
   delete_room_by_pk?: Maybe<Room>;
+  /** delete data from the table: "sticker" */
+  delete_sticker?: Maybe<Sticker_Mutation_Response>;
+  /** delete single row from the table: "sticker" */
+  delete_sticker_by_pk?: Maybe<Sticker>;
   /** delete data from the table: "user" */
   delete_user?: Maybe<User_Mutation_Response>;
   /** delete single row from the table: "user" */
@@ -315,6 +567,10 @@ export type Mutation_Root = {
   delete_user_room?: Maybe<User_Room_Mutation_Response>;
   /** delete single row from the table: "user_room" */
   delete_user_room_by_pk?: Maybe<User_Room>;
+  /** insert data into the table: "log" */
+  insert_log?: Maybe<Log_Mutation_Response>;
+  /** insert a single row into the table: "log" */
+  insert_log_one?: Maybe<Log>;
   /** insert data into the table: "message" */
   insert_message?: Maybe<Message_Mutation_Response>;
   /** insert a single row into the table: "message" */
@@ -323,6 +579,10 @@ export type Mutation_Root = {
   insert_room?: Maybe<Room_Mutation_Response>;
   /** insert a single row into the table: "room" */
   insert_room_one?: Maybe<Room>;
+  /** insert data into the table: "sticker" */
+  insert_sticker?: Maybe<Sticker_Mutation_Response>;
+  /** insert a single row into the table: "sticker" */
+  insert_sticker_one?: Maybe<Sticker>;
   /** insert data into the table: "user" */
   insert_user?: Maybe<User_Mutation_Response>;
   /** insert a single row into the table: "user" */
@@ -331,6 +591,12 @@ export type Mutation_Root = {
   insert_user_room?: Maybe<User_Room_Mutation_Response>;
   /** insert a single row into the table: "user_room" */
   insert_user_room_one?: Maybe<User_Room>;
+  /** update data of the table: "log" */
+  update_log?: Maybe<Log_Mutation_Response>;
+  /** update single row of the table: "log" */
+  update_log_by_pk?: Maybe<Log>;
+  /** update multiples rows of table: "log" */
+  update_log_many?: Maybe<Array<Maybe<Log_Mutation_Response>>>;
   /** update data of the table: "message" */
   update_message?: Maybe<Message_Mutation_Response>;
   /** update single row of the table: "message" */
@@ -343,6 +609,12 @@ export type Mutation_Root = {
   update_room_by_pk?: Maybe<Room>;
   /** update multiples rows of table: "room" */
   update_room_many?: Maybe<Array<Maybe<Room_Mutation_Response>>>;
+  /** update data of the table: "sticker" */
+  update_sticker?: Maybe<Sticker_Mutation_Response>;
+  /** update single row of the table: "sticker" */
+  update_sticker_by_pk?: Maybe<Sticker>;
+  /** update multiples rows of table: "sticker" */
+  update_sticker_many?: Maybe<Array<Maybe<Sticker_Mutation_Response>>>;
   /** update data of the table: "user" */
   update_user?: Maybe<User_Mutation_Response>;
   /** update single row of the table: "user" */
@@ -355,6 +627,18 @@ export type Mutation_Root = {
   update_user_room_by_pk?: Maybe<User_Room>;
   /** update multiples rows of table: "user_room" */
   update_user_room_many?: Maybe<Array<Maybe<User_Room_Mutation_Response>>>;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_LogArgs = {
+  where: Log_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Log_By_PkArgs = {
+  uuid: Scalars['uuid']['input'];
 };
 
 
@@ -383,6 +667,18 @@ export type Mutation_RootDelete_Room_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDelete_StickerArgs = {
+  where: Sticker_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Sticker_By_PkArgs = {
+  uuid: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
 export type Mutation_RootDelete_UserArgs = {
   where: User_Bool_Exp;
 };
@@ -404,6 +700,20 @@ export type Mutation_RootDelete_User_RoomArgs = {
 export type Mutation_RootDelete_User_Room_By_PkArgs = {
   room_uuid: Scalars['uuid']['input'];
   user_uuid: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_LogArgs = {
+  objects: Array<Log_Insert_Input>;
+  on_conflict?: InputMaybe<Log_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Log_OneArgs = {
+  object: Log_Insert_Input;
+  on_conflict?: InputMaybe<Log_On_Conflict>;
 };
 
 
@@ -436,6 +746,20 @@ export type Mutation_RootInsert_Room_OneArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_StickerArgs = {
+  objects: Array<Sticker_Insert_Input>;
+  on_conflict?: InputMaybe<Sticker_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Sticker_OneArgs = {
+  object: Sticker_Insert_Input;
+  on_conflict?: InputMaybe<Sticker_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_UserArgs = {
   objects: Array<User_Insert_Input>;
   on_conflict?: InputMaybe<User_On_Conflict>;
@@ -460,6 +784,26 @@ export type Mutation_RootInsert_User_RoomArgs = {
 export type Mutation_RootInsert_User_Room_OneArgs = {
   object: User_Room_Insert_Input;
   on_conflict?: InputMaybe<User_Room_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_LogArgs = {
+  _set?: InputMaybe<Log_Set_Input>;
+  where: Log_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Log_By_PkArgs = {
+  _set?: InputMaybe<Log_Set_Input>;
+  pk_columns: Log_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Log_ManyArgs = {
+  updates: Array<Log_Updates>;
 };
 
 
@@ -500,6 +844,26 @@ export type Mutation_RootUpdate_Room_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Room_ManyArgs = {
   updates: Array<Room_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_StickerArgs = {
+  _set?: InputMaybe<Sticker_Set_Input>;
+  where: Sticker_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Sticker_By_PkArgs = {
+  _set?: InputMaybe<Sticker_Set_Input>;
+  pk_columns: Sticker_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Sticker_ManyArgs = {
+  updates: Array<Sticker_Updates>;
 };
 
 
@@ -560,6 +924,12 @@ export enum Order_By {
 
 export type Query_Root = {
   __typename?: 'query_root';
+  /** fetch data from the table: "log" */
+  log: Array<Log>;
+  /** fetch aggregated fields from the table: "log" */
+  log_aggregate: Log_Aggregate;
+  /** fetch data from the table: "log" using primary key columns */
+  log_by_pk?: Maybe<Log>;
   /** fetch data from the table: "message" */
   message: Array<Message>;
   /** fetch aggregated fields from the table: "message" */
@@ -572,6 +942,12 @@ export type Query_Root = {
   room_aggregate: Room_Aggregate;
   /** fetch data from the table: "room" using primary key columns */
   room_by_pk?: Maybe<Room>;
+  /** fetch data from the table: "sticker" */
+  sticker: Array<Sticker>;
+  /** fetch aggregated fields from the table: "sticker" */
+  sticker_aggregate: Sticker_Aggregate;
+  /** fetch data from the table: "sticker" using primary key columns */
+  sticker_by_pk?: Maybe<Sticker>;
   /** fetch data from the table: "user" */
   user: Array<User>;
   /** fetch aggregated fields from the table: "user" */
@@ -584,6 +960,29 @@ export type Query_Root = {
   user_room_aggregate: User_Room_Aggregate;
   /** fetch data from the table: "user_room" using primary key columns */
   user_room_by_pk?: Maybe<User_Room>;
+};
+
+
+export type Query_RootLogArgs = {
+  distinct_on?: InputMaybe<Array<Log_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Log_Order_By>>;
+  where?: InputMaybe<Log_Bool_Exp>;
+};
+
+
+export type Query_RootLog_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Log_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Log_Order_By>>;
+  where?: InputMaybe<Log_Bool_Exp>;
+};
+
+
+export type Query_RootLog_By_PkArgs = {
+  uuid: Scalars['uuid']['input'];
 };
 
 
@@ -629,6 +1028,29 @@ export type Query_RootRoom_AggregateArgs = {
 
 
 export type Query_RootRoom_By_PkArgs = {
+  uuid: Scalars['uuid']['input'];
+};
+
+
+export type Query_RootStickerArgs = {
+  distinct_on?: InputMaybe<Array<Sticker_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Sticker_Order_By>>;
+  where?: InputMaybe<Sticker_Bool_Exp>;
+};
+
+
+export type Query_RootSticker_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Sticker_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Sticker_Order_By>>;
+  where?: InputMaybe<Sticker_Bool_Exp>;
+};
+
+
+export type Query_RootSticker_By_PkArgs = {
   uuid: Scalars['uuid']['input'];
 };
 
@@ -686,15 +1108,43 @@ export type Room = {
   intro: Scalars['String']['output'];
   invite_code: Scalars['String']['output'];
   /** An array relationship */
+  logs: Array<Log>;
+  /** An aggregate relationship */
+  logs_aggregate: Log_Aggregate;
+  /** An array relationship */
   messages: Array<Message>;
   /** An aggregate relationship */
   messages_aggregate: Message_Aggregate;
   name: Scalars['String']['output'];
   /** An array relationship */
+  stickers: Array<Sticker>;
+  /** An aggregate relationship */
+  stickers_aggregate: Sticker_Aggregate;
+  /** An array relationship */
   user_rooms: Array<User_Room>;
   /** An aggregate relationship */
   user_rooms_aggregate: User_Room_Aggregate;
   uuid: Scalars['uuid']['output'];
+};
+
+
+/** columns and relationships of "room" */
+export type RoomLogsArgs = {
+  distinct_on?: InputMaybe<Array<Log_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Log_Order_By>>;
+  where?: InputMaybe<Log_Bool_Exp>;
+};
+
+
+/** columns and relationships of "room" */
+export type RoomLogs_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Log_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Log_Order_By>>;
+  where?: InputMaybe<Log_Bool_Exp>;
 };
 
 
@@ -715,6 +1165,26 @@ export type RoomMessages_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Message_Order_By>>;
   where?: InputMaybe<Message_Bool_Exp>;
+};
+
+
+/** columns and relationships of "room" */
+export type RoomStickersArgs = {
+  distinct_on?: InputMaybe<Array<Sticker_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Sticker_Order_By>>;
+  where?: InputMaybe<Sticker_Bool_Exp>;
+};
+
+
+/** columns and relationships of "room" */
+export type RoomStickers_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Sticker_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Sticker_Order_By>>;
+  where?: InputMaybe<Sticker_Bool_Exp>;
 };
 
 
@@ -767,9 +1237,13 @@ export type Room_Bool_Exp = {
   created_at?: InputMaybe<Timestamp_Comparison_Exp>;
   intro?: InputMaybe<String_Comparison_Exp>;
   invite_code?: InputMaybe<String_Comparison_Exp>;
+  logs?: InputMaybe<Log_Bool_Exp>;
+  logs_aggregate?: InputMaybe<Log_Aggregate_Bool_Exp>;
   messages?: InputMaybe<Message_Bool_Exp>;
   messages_aggregate?: InputMaybe<Message_Aggregate_Bool_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
+  stickers?: InputMaybe<Sticker_Bool_Exp>;
+  stickers_aggregate?: InputMaybe<Sticker_Aggregate_Bool_Exp>;
   user_rooms?: InputMaybe<User_Room_Bool_Exp>;
   user_rooms_aggregate?: InputMaybe<User_Room_Aggregate_Bool_Exp>;
   uuid?: InputMaybe<Uuid_Comparison_Exp>;
@@ -790,8 +1264,10 @@ export type Room_Insert_Input = {
   created_at?: InputMaybe<Scalars['timestamp']['input']>;
   intro?: InputMaybe<Scalars['String']['input']>;
   invite_code?: InputMaybe<Scalars['String']['input']>;
+  logs?: InputMaybe<Log_Arr_Rel_Insert_Input>;
   messages?: InputMaybe<Message_Arr_Rel_Insert_Input>;
   name?: InputMaybe<Scalars['String']['input']>;
+  stickers?: InputMaybe<Sticker_Arr_Rel_Insert_Input>;
   user_rooms?: InputMaybe<User_Room_Arr_Rel_Insert_Input>;
   uuid?: InputMaybe<Scalars['uuid']['input']>;
 };
@@ -844,8 +1320,10 @@ export type Room_Order_By = {
   created_at?: InputMaybe<Order_By>;
   intro?: InputMaybe<Order_By>;
   invite_code?: InputMaybe<Order_By>;
+  logs_aggregate?: InputMaybe<Log_Aggregate_Order_By>;
   messages_aggregate?: InputMaybe<Message_Aggregate_Order_By>;
   name?: InputMaybe<Order_By>;
+  stickers_aggregate?: InputMaybe<Sticker_Aggregate_Order_By>;
   user_rooms_aggregate?: InputMaybe<User_Room_Aggregate_Order_By>;
   uuid?: InputMaybe<Order_By>;
 };
@@ -916,8 +1394,255 @@ export type Room_Updates = {
   where: Room_Bool_Exp;
 };
 
+/** columns and relationships of "sticker" */
+export type Sticker = {
+  __typename?: 'sticker';
+  content: Scalars['String']['output'];
+  created_at: Scalars['timestamp']['output'];
+  /** An object relationship */
+  room: Room;
+  room_uuid: Scalars['uuid']['output'];
+  updated_at: Scalars['timestamp']['output'];
+  /** An object relationship */
+  user: User;
+  user_uuid: Scalars['uuid']['output'];
+  uuid: Scalars['uuid']['output'];
+};
+
+/** aggregated selection of "sticker" */
+export type Sticker_Aggregate = {
+  __typename?: 'sticker_aggregate';
+  aggregate?: Maybe<Sticker_Aggregate_Fields>;
+  nodes: Array<Sticker>;
+};
+
+export type Sticker_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Sticker_Aggregate_Bool_Exp_Count>;
+};
+
+export type Sticker_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Sticker_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Sticker_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "sticker" */
+export type Sticker_Aggregate_Fields = {
+  __typename?: 'sticker_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Sticker_Max_Fields>;
+  min?: Maybe<Sticker_Min_Fields>;
+};
+
+
+/** aggregate fields of "sticker" */
+export type Sticker_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Sticker_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "sticker" */
+export type Sticker_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Sticker_Max_Order_By>;
+  min?: InputMaybe<Sticker_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "sticker" */
+export type Sticker_Arr_Rel_Insert_Input = {
+  data: Array<Sticker_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Sticker_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "sticker". All fields are combined with a logical 'AND'. */
+export type Sticker_Bool_Exp = {
+  _and?: InputMaybe<Array<Sticker_Bool_Exp>>;
+  _not?: InputMaybe<Sticker_Bool_Exp>;
+  _or?: InputMaybe<Array<Sticker_Bool_Exp>>;
+  content?: InputMaybe<String_Comparison_Exp>;
+  created_at?: InputMaybe<Timestamp_Comparison_Exp>;
+  room?: InputMaybe<Room_Bool_Exp>;
+  room_uuid?: InputMaybe<Uuid_Comparison_Exp>;
+  updated_at?: InputMaybe<Timestamp_Comparison_Exp>;
+  user?: InputMaybe<User_Bool_Exp>;
+  user_uuid?: InputMaybe<Uuid_Comparison_Exp>;
+  uuid?: InputMaybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "sticker" */
+export enum Sticker_Constraint {
+  /** unique or primary key constraint on columns "uuid" */
+  StickerPkey = 'sticker_pkey',
+  /** unique or primary key constraint on columns "room_uuid", "user_uuid" */
+  StickerUserUuidRoomUuidKey = 'sticker_user_uuid_room_uuid_key'
+}
+
+/** input type for inserting data into table "sticker" */
+export type Sticker_Insert_Input = {
+  content?: InputMaybe<Scalars['String']['input']>;
+  created_at?: InputMaybe<Scalars['timestamp']['input']>;
+  room?: InputMaybe<Room_Obj_Rel_Insert_Input>;
+  room_uuid?: InputMaybe<Scalars['uuid']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamp']['input']>;
+  user?: InputMaybe<User_Obj_Rel_Insert_Input>;
+  user_uuid?: InputMaybe<Scalars['uuid']['input']>;
+  uuid?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** aggregate max on columns */
+export type Sticker_Max_Fields = {
+  __typename?: 'sticker_max_fields';
+  content?: Maybe<Scalars['String']['output']>;
+  created_at?: Maybe<Scalars['timestamp']['output']>;
+  room_uuid?: Maybe<Scalars['uuid']['output']>;
+  updated_at?: Maybe<Scalars['timestamp']['output']>;
+  user_uuid?: Maybe<Scalars['uuid']['output']>;
+  uuid?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** order by max() on columns of table "sticker" */
+export type Sticker_Max_Order_By = {
+  content?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  room_uuid?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+  user_uuid?: InputMaybe<Order_By>;
+  uuid?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Sticker_Min_Fields = {
+  __typename?: 'sticker_min_fields';
+  content?: Maybe<Scalars['String']['output']>;
+  created_at?: Maybe<Scalars['timestamp']['output']>;
+  room_uuid?: Maybe<Scalars['uuid']['output']>;
+  updated_at?: Maybe<Scalars['timestamp']['output']>;
+  user_uuid?: Maybe<Scalars['uuid']['output']>;
+  uuid?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** order by min() on columns of table "sticker" */
+export type Sticker_Min_Order_By = {
+  content?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  room_uuid?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+  user_uuid?: InputMaybe<Order_By>;
+  uuid?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "sticker" */
+export type Sticker_Mutation_Response = {
+  __typename?: 'sticker_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Sticker>;
+};
+
+/** on_conflict condition type for table "sticker" */
+export type Sticker_On_Conflict = {
+  constraint: Sticker_Constraint;
+  update_columns?: Array<Sticker_Update_Column>;
+  where?: InputMaybe<Sticker_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "sticker". */
+export type Sticker_Order_By = {
+  content?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  room?: InputMaybe<Room_Order_By>;
+  room_uuid?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+  user?: InputMaybe<User_Order_By>;
+  user_uuid?: InputMaybe<Order_By>;
+  uuid?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: sticker */
+export type Sticker_Pk_Columns_Input = {
+  uuid: Scalars['uuid']['input'];
+};
+
+/** select columns of table "sticker" */
+export enum Sticker_Select_Column {
+  /** column name */
+  Content = 'content',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  RoomUuid = 'room_uuid',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserUuid = 'user_uuid',
+  /** column name */
+  Uuid = 'uuid'
+}
+
+/** input type for updating data in table "sticker" */
+export type Sticker_Set_Input = {
+  content?: InputMaybe<Scalars['String']['input']>;
+  created_at?: InputMaybe<Scalars['timestamp']['input']>;
+  room_uuid?: InputMaybe<Scalars['uuid']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamp']['input']>;
+  user_uuid?: InputMaybe<Scalars['uuid']['input']>;
+  uuid?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** Streaming cursor of the table "sticker" */
+export type Sticker_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Sticker_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Sticker_Stream_Cursor_Value_Input = {
+  content?: InputMaybe<Scalars['String']['input']>;
+  created_at?: InputMaybe<Scalars['timestamp']['input']>;
+  room_uuid?: InputMaybe<Scalars['uuid']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamp']['input']>;
+  user_uuid?: InputMaybe<Scalars['uuid']['input']>;
+  uuid?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** update columns of table "sticker" */
+export enum Sticker_Update_Column {
+  /** column name */
+  Content = 'content',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  RoomUuid = 'room_uuid',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserUuid = 'user_uuid',
+  /** column name */
+  Uuid = 'uuid'
+}
+
+export type Sticker_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Sticker_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Sticker_Bool_Exp;
+};
+
 export type Subscription_Root = {
   __typename?: 'subscription_root';
+  /** fetch data from the table: "log" */
+  log: Array<Log>;
+  /** fetch aggregated fields from the table: "log" */
+  log_aggregate: Log_Aggregate;
+  /** fetch data from the table: "log" using primary key columns */
+  log_by_pk?: Maybe<Log>;
+  /** fetch data from the table in a streaming manner: "log" */
+  log_stream: Array<Log>;
   /** fetch data from the table: "message" */
   message: Array<Message>;
   /** fetch aggregated fields from the table: "message" */
@@ -934,6 +1659,14 @@ export type Subscription_Root = {
   room_by_pk?: Maybe<Room>;
   /** fetch data from the table in a streaming manner: "room" */
   room_stream: Array<Room>;
+  /** fetch data from the table: "sticker" */
+  sticker: Array<Sticker>;
+  /** fetch aggregated fields from the table: "sticker" */
+  sticker_aggregate: Sticker_Aggregate;
+  /** fetch data from the table: "sticker" using primary key columns */
+  sticker_by_pk?: Maybe<Sticker>;
+  /** fetch data from the table in a streaming manner: "sticker" */
+  sticker_stream: Array<Sticker>;
   /** fetch data from the table: "user" */
   user: Array<User>;
   /** fetch aggregated fields from the table: "user" */
@@ -950,6 +1683,36 @@ export type Subscription_Root = {
   user_room_stream: Array<User_Room>;
   /** fetch data from the table in a streaming manner: "user" */
   user_stream: Array<User>;
+};
+
+
+export type Subscription_RootLogArgs = {
+  distinct_on?: InputMaybe<Array<Log_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Log_Order_By>>;
+  where?: InputMaybe<Log_Bool_Exp>;
+};
+
+
+export type Subscription_RootLog_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Log_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Log_Order_By>>;
+  where?: InputMaybe<Log_Bool_Exp>;
+};
+
+
+export type Subscription_RootLog_By_PkArgs = {
+  uuid: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootLog_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Log_Stream_Cursor_Input>>;
+  where?: InputMaybe<Log_Bool_Exp>;
 };
 
 
@@ -1010,6 +1773,36 @@ export type Subscription_RootRoom_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Room_Stream_Cursor_Input>>;
   where?: InputMaybe<Room_Bool_Exp>;
+};
+
+
+export type Subscription_RootStickerArgs = {
+  distinct_on?: InputMaybe<Array<Sticker_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Sticker_Order_By>>;
+  where?: InputMaybe<Sticker_Bool_Exp>;
+};
+
+
+export type Subscription_RootSticker_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Sticker_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Sticker_Order_By>>;
+  where?: InputMaybe<Sticker_Bool_Exp>;
+};
+
+
+export type Subscription_RootSticker_By_PkArgs = {
+  uuid: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootSticker_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Sticker_Stream_Cursor_Input>>;
+  where?: InputMaybe<Sticker_Bool_Exp>;
 };
 
 
@@ -1095,6 +1888,10 @@ export type User = {
   messages_aggregate: Message_Aggregate;
   password: Scalars['String']['output'];
   /** An array relationship */
+  stickers: Array<Sticker>;
+  /** An aggregate relationship */
+  stickers_aggregate: Sticker_Aggregate;
+  /** An array relationship */
   user_rooms: Array<User_Room>;
   /** An aggregate relationship */
   user_rooms_aggregate: User_Room_Aggregate;
@@ -1120,6 +1917,26 @@ export type UserMessages_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Message_Order_By>>;
   where?: InputMaybe<Message_Bool_Exp>;
+};
+
+
+/** columns and relationships of "user" */
+export type UserStickersArgs = {
+  distinct_on?: InputMaybe<Array<Sticker_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Sticker_Order_By>>;
+  where?: InputMaybe<Sticker_Bool_Exp>;
+};
+
+
+/** columns and relationships of "user" */
+export type UserStickers_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Sticker_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Sticker_Order_By>>;
+  where?: InputMaybe<Sticker_Bool_Exp>;
 };
 
 
@@ -1172,6 +1989,8 @@ export type User_Bool_Exp = {
   messages?: InputMaybe<Message_Bool_Exp>;
   messages_aggregate?: InputMaybe<Message_Aggregate_Bool_Exp>;
   password?: InputMaybe<String_Comparison_Exp>;
+  stickers?: InputMaybe<Sticker_Bool_Exp>;
+  stickers_aggregate?: InputMaybe<Sticker_Aggregate_Bool_Exp>;
   user_rooms?: InputMaybe<User_Room_Bool_Exp>;
   user_rooms_aggregate?: InputMaybe<User_Room_Aggregate_Bool_Exp>;
   username?: InputMaybe<String_Comparison_Exp>;
@@ -1190,6 +2009,7 @@ export enum User_Constraint {
 export type User_Insert_Input = {
   messages?: InputMaybe<Message_Arr_Rel_Insert_Input>;
   password?: InputMaybe<Scalars['String']['input']>;
+  stickers?: InputMaybe<Sticker_Arr_Rel_Insert_Input>;
   user_rooms?: InputMaybe<User_Room_Arr_Rel_Insert_Input>;
   username?: InputMaybe<Scalars['String']['input']>;
   uuid?: InputMaybe<Scalars['uuid']['input']>;
@@ -1238,6 +2058,7 @@ export type User_On_Conflict = {
 export type User_Order_By = {
   messages_aggregate?: InputMaybe<Message_Aggregate_Order_By>;
   password?: InputMaybe<Order_By>;
+  stickers_aggregate?: InputMaybe<Sticker_Aggregate_Order_By>;
   user_rooms_aggregate?: InputMaybe<User_Room_Aggregate_Order_By>;
   username?: InputMaybe<Order_By>;
   uuid?: InputMaybe<Order_By>;
@@ -1319,7 +2140,7 @@ export type User_Room_Bool_Exp = {
 
 /** unique or primary key constraints on table "user_room" */
 export enum User_Room_Constraint {
-  /** unique or primary key constraint on columns "user_uuid", "room_uuid" */
+  /** unique or primary key constraint on columns "room_uuid", "user_uuid" */
   UserRoomPkey = 'user_room_pkey'
 }
 
@@ -1492,10 +2313,34 @@ export type Uuid_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['uuid']['input']>>;
 };
 
+export type AddLogMutationVariables = Exact<{
+  room_uuid: Scalars['uuid']['input'];
+  content: Scalars['String']['input'];
+}>;
+
+
+export type AddLogMutation = { __typename?: 'mutation_root', insert_log_one?: { __typename?: 'log', uuid: any } | null };
+
+export type UpdateLogMutationVariables = Exact<{
+  uuid: Scalars['uuid']['input'];
+  content: Scalars['String']['input'];
+}>;
+
+
+export type UpdateLogMutation = { __typename?: 'mutation_root', update_log_by_pk?: { __typename?: 'log', uuid: any, updated_at: any } | null };
+
+export type GetLogsByRoomSubscriptionVariables = Exact<{
+  room_uuid: Scalars['uuid']['input'];
+}>;
+
+
+export type GetLogsByRoomSubscription = { __typename?: 'subscription_root', log: Array<{ __typename?: 'log', uuid: any, content: string, created_at: any, updated_at: any }> };
+
 export type AddMessageMutationVariables = Exact<{
   user_uuid: Scalars['uuid']['input'];
   room_uuid: Scalars['uuid']['input'];
   content: Scalars['String']['input'];
+  reply_uuid?: InputMaybe<Scalars['uuid']['input']>;
 }>;
 
 
@@ -1506,7 +2351,7 @@ export type GetMessagesByRoomSubscriptionVariables = Exact<{
 }>;
 
 
-export type GetMessagesByRoomSubscription = { __typename?: 'subscription_root', message: Array<{ __typename?: 'message', uuid: any, content: string, created_at: any, user: { __typename?: 'user', uuid: any, username: string } }> };
+export type GetMessagesByRoomSubscription = { __typename?: 'subscription_root', message: Array<{ __typename?: 'message', uuid: any, reply_uuid?: any | null, content: string, created_at: any, user: { __typename?: 'user', uuid: any, username: string }, reply?: { __typename?: 'message', uuid: any, content: string, user: { __typename?: 'user', uuid: any, username: string } } | null }> };
 
 export type AddRoomMutationVariables = Exact<{
   name: Scalars['String']['input'];
@@ -1539,6 +2384,23 @@ export type JoinRoomMutationVariables = Exact<{
 
 export type JoinRoomMutation = { __typename?: 'mutation_root', insert_user_room_one?: { __typename?: 'user_room', user_uuid: any, room_uuid: any } | null };
 
+export type UpsertStickerMutationVariables = Exact<{
+  user_uuid: Scalars['uuid']['input'];
+  room_uuid: Scalars['uuid']['input'];
+  content: Scalars['String']['input'];
+}>;
+
+
+export type UpsertStickerMutation = { __typename?: 'mutation_root', insert_sticker_one?: { __typename?: 'sticker', uuid: any, updated_at: any } | null };
+
+export type GetStickerQueryVariables = Exact<{
+  user_uuid: Scalars['uuid']['input'];
+  room_uuid: Scalars['uuid']['input'];
+}>;
+
+
+export type GetStickerQuery = { __typename?: 'query_root', sticker: Array<{ __typename?: 'sticker', uuid: any, content: string, created_at: any, updated_at: any }> };
+
 export type AddUserMutationVariables = Exact<{
   username: Scalars['String']['input'];
   password: Scalars['String']['input'];
@@ -1554,11 +2416,51 @@ export type GetUsersByUsernameQueryVariables = Exact<{
 
 export type GetUsersByUsernameQuery = { __typename?: 'query_root', user: Array<{ __typename?: 'user', uuid: any, password: string }> };
 
+export type UpdateUserPasswordMutationVariables = Exact<{
+  uuid: Scalars['uuid']['input'];
+  password: Scalars['String']['input'];
+}>;
 
+
+export type UpdateUserPasswordMutation = { __typename?: 'mutation_root', update_user_by_pk?: { __typename?: 'user', uuid: any } | null };
+
+export type DeleteUserMutationVariables = Exact<{
+  uuid: Scalars['uuid']['input'];
+}>;
+
+
+export type DeleteUserMutation = { __typename?: 'mutation_root', delete_user_by_pk?: { __typename?: 'user', uuid: any } | null };
+
+
+export const AddLogDocument = gql`
+    mutation addLog($room_uuid: uuid!, $content: String!) {
+  insert_log_one(object: {room_uuid: $room_uuid, content: $content}) {
+    uuid
+  }
+}
+    `;
+export const UpdateLogDocument = gql`
+    mutation updateLog($uuid: uuid!, $content: String!) {
+  update_log_by_pk(pk_columns: {uuid: $uuid}, _set: {content: $content}) {
+    uuid
+    updated_at
+  }
+}
+    `;
+export const GetLogsByRoomDocument = gql`
+    subscription getLogsByRoom($room_uuid: uuid!) {
+  log(where: {room_uuid: {_eq: $room_uuid}}, order_by: {created_at: asc}) {
+    uuid
+    content
+    created_at
+    updated_at
+  }
+}
+    `;
 export const AddMessageDocument = gql`
-    mutation addMessage($user_uuid: uuid!, $room_uuid: uuid!, $content: String!) {
+    mutation addMessage($user_uuid: uuid!, $room_uuid: uuid!, $content: String!, $reply_uuid: uuid) {
   insert_message_one(
-    object: {user_uuid: $user_uuid, room_uuid: $room_uuid, content: $content}
+    object: {user_uuid: $user_uuid, room_uuid: $room_uuid, content: $content, reply_uuid: $reply_uuid}
   ) {
     uuid
   }
@@ -1571,6 +2473,15 @@ export const GetMessagesByRoomDocument = gql`
     user {
       uuid
       username
+    }
+    reply_uuid
+    reply {
+      uuid
+      content
+      user {
+        uuid
+        username
+      }
     }
     content
     created_at
@@ -1612,6 +2523,27 @@ export const JoinRoomDocument = gql`
   }
 }
     `;
+export const UpsertStickerDocument = gql`
+    mutation upsertSticker($user_uuid: uuid!, $room_uuid: uuid!, $content: String!) {
+  insert_sticker_one(
+    object: {user_uuid: $user_uuid, room_uuid: $room_uuid, content: $content}
+    on_conflict: {constraint: sticker_user_uuid_room_uuid_key, update_columns: [content]}
+  ) {
+    uuid
+    updated_at
+  }
+}
+    `;
+export const GetStickerDocument = gql`
+    query getSticker($user_uuid: uuid!, $room_uuid: uuid!) {
+  sticker(where: {user_uuid: {_eq: $user_uuid}, room_uuid: {_eq: $room_uuid}}) {
+    uuid
+    content
+    created_at
+    updated_at
+  }
+}
+    `;
 export const AddUserDocument = gql`
     mutation addUser($username: String!, $password: String!) {
   insert_user_one(object: {username: $username, password: $password}) {
@@ -1627,6 +2559,20 @@ export const GetUsersByUsernameDocument = gql`
   }
 }
     `;
+export const UpdateUserPasswordDocument = gql`
+    mutation updateUserPassword($uuid: uuid!, $password: String!) {
+  update_user_by_pk(pk_columns: {uuid: $uuid}, _set: {password: $password}) {
+    uuid
+  }
+}
+    `;
+export const DeleteUserDocument = gql`
+    mutation deleteUser($uuid: uuid!) {
+  delete_user_by_pk(uuid: $uuid) {
+    uuid
+  }
+}
+    `;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string, variables?: any) => Promise<T>;
 
@@ -1635,6 +2581,15 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
+    addLog(variables: AddLogMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<AddLogMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<AddLogMutation>(AddLogDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'addLog', 'mutation', variables);
+    },
+    updateLog(variables: UpdateLogMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<UpdateLogMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<UpdateLogMutation>(UpdateLogDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'updateLog', 'mutation', variables);
+    },
+    getLogsByRoom(variables: GetLogsByRoomSubscriptionVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetLogsByRoomSubscription> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetLogsByRoomSubscription>(GetLogsByRoomDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getLogsByRoom', 'subscription', variables);
+    },
     addMessage(variables: AddMessageMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<AddMessageMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<AddMessageMutation>(AddMessageDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'addMessage', 'mutation', variables);
     },
@@ -1653,11 +2608,23 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     joinRoom(variables: JoinRoomMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<JoinRoomMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<JoinRoomMutation>(JoinRoomDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'joinRoom', 'mutation', variables);
     },
+    upsertSticker(variables: UpsertStickerMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<UpsertStickerMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<UpsertStickerMutation>(UpsertStickerDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'upsertSticker', 'mutation', variables);
+    },
+    getSticker(variables: GetStickerQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetStickerQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetStickerQuery>(GetStickerDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getSticker', 'query', variables);
+    },
     addUser(variables: AddUserMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<AddUserMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<AddUserMutation>(AddUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'addUser', 'mutation', variables);
     },
     getUsersByUsername(variables: GetUsersByUsernameQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetUsersByUsernameQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetUsersByUsernameQuery>(GetUsersByUsernameDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getUsersByUsername', 'query', variables);
+    },
+    updateUserPassword(variables: UpdateUserPasswordMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<UpdateUserPasswordMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<UpdateUserPasswordMutation>(UpdateUserPasswordDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'updateUserPassword', 'mutation', variables);
+    },
+    deleteUser(variables: DeleteUserMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<DeleteUserMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<DeleteUserMutation>(DeleteUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'deleteUser', 'mutation', variables);
     }
   };
 }
