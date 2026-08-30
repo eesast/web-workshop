@@ -2,6 +2,13 @@ table:
   name: room
   schema: public
 array_relationships:
+  - name: logs
+    using:
+      foreign_key_constraint_on:
+        column: room_uuid
+        table:
+          name: log
+          schema: public
   - name: messages
     using:
       foreign_key_constraint_on:
@@ -15,6 +22,13 @@ array_relationships:
         column: room_uuid
         table:
           name: user_room
+          schema: public
+  - name: stickers
+    using:
+      foreign_key_constraint_on:
+        column: room_uuid
+        table:
+          name: sticker
           schema: public
 insert_permissions:
   - role: user

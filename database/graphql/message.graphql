@@ -1,5 +1,5 @@
-mutation addMessage($user_uuid: uuid!, $room_uuid: uuid!, $content: String!) {
-  insert_message_one(object: {user_uuid: $user_uuid, room_uuid: $room_uuid, content: $content}) {
+mutation addMessage($user_uuid: uuid!, $room_uuid: uuid!, $content: String!, $reply_uuid: uuid) {
+  insert_message_one(object: {user_uuid: $user_uuid, room_uuid: $room_uuid, content: $content, reply_uuid: $reply_uuid}) {
     uuid
   }
 }
@@ -10,6 +10,16 @@ subscription getMessagesByRoom($room_uuid: uuid!) {
     user {
       uuid
       username
+    }
+    # 被回复的消息，只展开一层（没有多层回复）
+    reply_uuid
+    reply {
+      uuid
+      content
+      user {
+        uuid
+        username
+      }
     }
     content
     created_at
