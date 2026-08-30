@@ -74,4 +74,31 @@ router.get("/download", authenticate, (req, res) => {
   }
 });
 
+// 删除某个文件
+router.post("/delete", authenticate, (req, res) => {
+  const { room, filename } = req.body;
+  if (!room || !filename) {
+    return res.status(422).send("422 Unprocessable Entity: Missing room or filename");
+  }
+  // room 应为 uuid，同时避免它成为绕过目录检查的子路径
+  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(room)) {
+    return res.status(422).send("422 Unprocessable Entity: Invalid room");
+  }
+  const filePath = path.resolve(baseDir, room, filename);
+  // 防止 room/filename 中包含 ../ 之类的路径
+  if (!filePath.startsWith(path.resolve(baseDir) + path.sep)) {
+    return res.status(422).send("422 Unprocessable Entity: Invalid room or filename");
+  }
+  try {
+    if (!fs.existsSync(filePath)) {
+      return res.status(404).send("404 Not Found: File does not exist");
+    }
+    fs.rmSync(filePath);
+    return res.send("File deleted successfully");
+  } catch (err) {
+    console.error(err);
+    return res.sendStatus(500);
+  }
+});
+
 export default router;

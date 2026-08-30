@@ -10,3 +10,15 @@ query getUsersByUsername($username: String!) {
     password
   }
 }
+
+mutation updateUserPassword($uuid: uuid!, $password: String!) {
+  update_user_by_pk(pk_columns: {uuid: $uuid}, _set: {password: $password}) {
+    uuid
+  }
+}
+
+mutation deleteUser($uuid: uuid!) {
+  delete_user_by_pk(uuid: $uuid) {
+    uuid
+  }
+}

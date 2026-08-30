@@ -1,16 +1,25 @@
 -- PostgreSQL
+-- 依赖 user.sql、room.sql 先执行
 create table if not exists public.message (
   uuid uuid default gen_random_uuid() not null,
   user_uuid uuid not null,
   room_uuid uuid not null,
+  -- 回复的消息，可以为空（即不是回复任何消息）
+  reply_uuid uuid,
   content text not null,
   created_at timestamp default current_timestamp not null,
   primary key (uuid)
 );
+-- 兼容旧版本：表已存在但尚无 reply_uuid 列时补充该列
+alter table public.message
+add column if not exists reply_uuid uuid;
 alter table public.message
 add constraint message_user_uuid_fkey foreign key (user_uuid) references public.user (uuid) on update cascade on delete cascade;
 alter table public.message
 add constraint message_room_uuid_fkey foreign key (room_uuid) references public.room (uuid) on update cascade on delete cascade;
+-- 被回复的消息被删除时，回复降级为普通消息，而不是连带删除
+alter table public.message
+add constraint message_reply_uuid_fkey foreign key (reply_uuid) references public.message (uuid) on update cascade on delete set null;
 
 insert into public.message (user_uuid, room_uuid, content) values
 ('00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-100000000001', '大家好，我叫张三'),

@@ -1,0 +1,458 @@
+﻿{
+    "version":  3,
+    "sources":  [
+                    {
+                        "name":  "Pillatabawe",
+                        "kind":  "postgres",
+                        "tables":  [
+                                       {
+                                           "table":  {
+                                                         "name":  "log",
+                                                         "schema":  "public"
+                                                     },
+                                           "object_relationships":  [
+                                                                        {
+                                                                            "name":  "room",
+                                                                            "using":  {
+                                                                                          "foreign_key_constraint_on":  "room_uuid"
+                                                                                      }
+                                                                        }
+                                                                    ],
+                                           "select_permissions":  [
+                                                                      {
+                                                                          "role":  "user",
+                                                                          "permission":  {
+                                                                                             "columns":  [
+                                                                                                             "content"
+                                                                                                         ],
+                                                                                             "filter":  {
+                                                                                                            "room":  {
+                                                                                                                         "user_rooms":  {
+                                                                                                                                            "user_uuid":  {
+                                                                                                                                                              "_eq":  "X-Hasura-User-Id"
+                                                                                                                                                          }
+                                                                                                                                        }
+                                                                                                                     }
+                                                                                                        }
+                                                                                         },
+                                                                          "comment":  ""
+                                                                      }
+                                                                  ]
+                                       },
+                                       {
+                                           "table":  {
+                                                         "name":  "message",
+                                                         "schema":  "public"
+                                                     },
+                                           "object_relationships":  [
+                                                                        {
+                                                                            "name":  "message",
+                                                                            "using":  {
+                                                                                          "foreign_key_constraint_on":  "reply_uuid"
+                                                                                      }
+                                                                        },
+                                                                        {
+                                                                            "name":  "room",
+                                                                            "using":  {
+                                                                                          "foreign_key_constraint_on":  "room_uuid"
+                                                                                      }
+                                                                        },
+                                                                        {
+                                                                            "name":  "user",
+                                                                            "using":  {
+                                                                                          "foreign_key_constraint_on":  "user_uuid"
+                                                                                      }
+                                                                        }
+                                                                    ],
+                                           "array_relationships":  [
+                                                                       {
+                                                                           "name":  "messages",
+                                                                           "using":  {
+                                                                                         "foreign_key_constraint_on":  {
+                                                                                                                           "column":  "reply_uuid",
+                                                                                                                           "table":  {
+                                                                                                                                         "name":  "message",
+                                                                                                                                         "schema":  "public"
+                                                                                                                                     }
+                                                                                                                       }
+                                                                                     }
+                                                                       }
+                                                                   ],
+                                           "insert_permissions":  [
+                                                                      {
+                                                                          "role":  "user",
+                                                                          "permission":  {
+                                                                                             "check":  {
+                                                                                                           "user_uuid":  {
+                                                                                                                             "_eq":  "X-Hasura-User-Id"
+                                                                                                                         }
+                                                                                                       },
+                                                                                             "columns":  [
+                                                                                                             "content"
+                                                                                                         ]
+                                                                                         },
+                                                                          "comment":  ""
+                                                                      }
+                                                                  ],
+                                           "select_permissions":  [
+                                                                      {
+                                                                          "role":  "user",
+                                                                          "permission":  {
+                                                                                             "columns":  [
+                                                                                                             "content",
+                                                                                                             "created_at",
+                                                                                                             "room_uuid",
+                                                                                                             "user_uuid"
+                                                                                                         ],
+                                                                                             "filter":  {
+                                                                                                            "user_uuid":  {
+                                                                                                                              "_eq":  "X-Hasura-User-Id"
+                                                                                                                          }
+                                                                                                        }
+                                                                                         },
+                                                                          "comment":  ""
+                                                                      }
+                                                                  ]
+                                       },
+                                       {
+                                           "table":  {
+                                                         "name":  "room",
+                                                         "schema":  "public"
+                                                     },
+                                           "array_relationships":  [
+                                                                       {
+                                                                           "name":  "logs",
+                                                                           "using":  {
+                                                                                         "foreign_key_constraint_on":  {
+                                                                                                                           "column":  "room_uuid",
+                                                                                                                           "table":  {
+                                                                                                                                         "name":  "log",
+                                                                                                                                         "schema":  "public"
+                                                                                                                                     }
+                                                                                                                       }
+                                                                                     }
+                                                                       },
+                                                                       {
+                                                                           "name":  "messages",
+                                                                           "using":  {
+                                                                                         "foreign_key_constraint_on":  {
+                                                                                                                           "column":  "room_uuid",
+                                                                                                                           "table":  {
+                                                                                                                                         "name":  "message",
+                                                                                                                                         "schema":  "public"
+                                                                                                                                     }
+                                                                                                                       }
+                                                                                     }
+                                                                       },
+                                                                       {
+                                                                           "name":  "stickers",
+                                                                           "using":  {
+                                                                                         "foreign_key_constraint_on":  {
+                                                                                                                           "column":  "room_uuid",
+                                                                                                                           "table":  {
+                                                                                                                                         "name":  "sticker",
+                                                                                                                                         "schema":  "public"
+                                                                                                                                     }
+                                                                                                                       }
+                                                                                     }
+                                                                       },
+                                                                       {
+                                                                           "name":  "user_rooms",
+                                                                           "using":  {
+                                                                                         "foreign_key_constraint_on":  {
+                                                                                                                           "column":  "room_uuid",
+                                                                                                                           "table":  {
+                                                                                                                                         "name":  "user_room",
+                                                                                                                                         "schema":  "public"
+                                                                                                                                     }
+                                                                                                                       }
+                                                                                     }
+                                                                       }
+                                                                   ]
+                                       },
+                                       {
+                                           "table":  {
+                                                         "name":  "sticker",
+                                                         "schema":  "public"
+                                                     },
+                                           "object_relationships":  [
+                                                                        {
+                                                                            "name":  "room",
+                                                                            "using":  {
+                                                                                          "foreign_key_constraint_on":  "room_uuid"
+                                                                                      }
+                                                                        },
+                                                                        {
+                                                                            "name":  "user",
+                                                                            "using":  {
+                                                                                          "foreign_key_constraint_on":  "user_uuid"
+                                                                                      }
+                                                                        }
+                                                                    ],
+                                           "insert_permissions":  [
+                                                                      {
+                                                                          "role":  "user",
+                                                                          "permission":  {
+                                                                                             "check":  {
+                                                                                                           "_and":  [
+                                                                                                                        {
+                                                                                                                            "user_uuid":  {
+                                                                                                                                              "_eq":  "X-Hasura-User-Id"
+                                                                                                                                          }
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                            "room":  {
+                                                                                                                                         "user_rooms":  {
+                                                                                                                                                            "user_uuid":  {
+                                                                                                                                                                              "_eq":  "X-Hasura-User-Id"
+                                                                                                                                                                          }
+                                                                                                                                                        }
+                                                                                                                                     }
+                                                                                                                        }
+                                                                                                                    ]
+                                                                                                       },
+                                                                                             "set":  {
+                                                                                                         "user_uuid":  "x-hasura-User-Id"
+                                                                                                     },
+                                                                                             "columns":  [
+                                                                                                             "content"
+                                                                                                         ]
+                                                                                         },
+                                                                          "comment":  ""
+                                                                      }
+                                                                  ],
+                                           "select_permissions":  [
+                                                                      {
+                                                                          "role":  "user",
+                                                                          "permission":  {
+                                                                                             "columns":  [
+                                                                                                             "content",
+                                                                                                             "created_at",
+                                                                                                             "room_uuid",
+                                                                                                             "updated_at"
+                                                                                                         ],
+                                                                                             "filter":  {
+                                                                                                            "_and":  [
+                                                                                                                         {
+                                                                                                                             "user_uuid":  {
+                                                                                                                                               "_eq":  "X-Hasura-User-Id"
+                                                                                                                                           }
+                                                                                                                         },
+                                                                                                                         {
+                                                                                                                             "room":  {
+                                                                                                                                          "user_rooms":  {
+                                                                                                                                                             "user_uuid":  {
+                                                                                                                                                                               "_eq":  "X-Hasura-User-Id"
+                                                                                                                                                                           }
+                                                                                                                                                         }
+                                                                                                                                      }
+                                                                                                                         }
+                                                                                                                     ]
+                                                                                                        }
+                                                                                         },
+                                                                          "comment":  ""
+                                                                      }
+                                                                  ],
+                                           "update_permissions":  [
+                                                                      {
+                                                                          "role":  "user",
+                                                                          "permission":  {
+                                                                                             "columns":  [
+                                                                                                             "content"
+                                                                                                         ],
+                                                                                             "filter":  {
+                                                                                                            "_and":  [
+                                                                                                                         {
+                                                                                                                             "user_uuid":  {
+                                                                                                                                               "_eq":  "X-Hasura-User-Id"
+                                                                                                                                           }
+                                                                                                                         },
+                                                                                                                         {
+                                                                                                                             "room":  {
+                                                                                                                                          "user_rooms":  {
+                                                                                                                                                             "user_uuid":  {
+                                                                                                                                                                               "_eq":  "X-Hasura-User-Id"
+                                                                                                                                                                           }
+                                                                                                                                                         }
+                                                                                                                                      }
+                                                                                                                         }
+                                                                                                                     ]
+                                                                                                        },
+                                                                                             "check":  {
+                                                                                                           "_and":  [
+                                                                                                                        {
+                                                                                                                            "user_uuid":  {
+                                                                                                                                              "_eq":  "X-Hasura-User-Id"
+                                                                                                                                          }
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                            "room":  {
+                                                                                                                                         "user_rooms":  {
+                                                                                                                                                            "user_uuid":  {
+                                                                                                                                                                              "_eq":  "X-Hasura-User-Id"
+                                                                                                                                                                          }
+                                                                                                                                                        }
+                                                                                                                                     }
+                                                                                                                        }
+                                                                                                                    ]
+                                                                                                       }
+                                                                                         },
+                                                                          "comment":  ""
+                                                                      }
+                                                                  ]
+                                       },
+                                       {
+                                           "table":  {
+                                                         "name":  "user",
+                                                         "schema":  "public"
+                                                     },
+                                           "array_relationships":  [
+                                                                       {
+                                                                           "name":  "messages",
+                                                                           "using":  {
+                                                                                         "foreign_key_constraint_on":  {
+                                                                                                                           "column":  "user_uuid",
+                                                                                                                           "table":  {
+                                                                                                                                         "name":  "message",
+                                                                                                                                         "schema":  "public"
+                                                                                                                                     }
+                                                                                                                       }
+                                                                                     }
+                                                                       },
+                                                                       {
+                                                                           "name":  "stickers",
+                                                                           "using":  {
+                                                                                         "foreign_key_constraint_on":  {
+                                                                                                                           "column":  "user_uuid",
+                                                                                                                           "table":  {
+                                                                                                                                         "name":  "sticker",
+                                                                                                                                         "schema":  "public"
+                                                                                                                                     }
+                                                                                                                       }
+                                                                                     }
+                                                                       },
+                                                                       {
+                                                                           "name":  "user_rooms",
+                                                                           "using":  {
+                                                                                         "foreign_key_constraint_on":  {
+                                                                                                                           "column":  "user_uuid",
+                                                                                                                           "table":  {
+                                                                                                                                         "name":  "user_room",
+                                                                                                                                         "schema":  "public"
+                                                                                                                                     }
+                                                                                                                       }
+                                                                                     }
+                                                                       }
+                                                                   ],
+                                           "insert_permissions":  [
+                                                                      {
+                                                                          "role":  "user",
+                                                                          "permission":  {
+                                                                                             "check":  {
+                                                                                                           "uuid":  {
+                                                                                                                        "_eq":  "X-Hasura-User-Id"
+                                                                                                                    }
+                                                                                                       },
+                                                                                             "columns":  [
+                                                                                                             "username",
+                                                                                                             "uuid"
+                                                                                                         ]
+                                                                                         },
+                                                                          "comment":  ""
+                                                                      }
+                                                                  ],
+                                           "select_permissions":  [
+                                                                      {
+                                                                          "role":  "user",
+                                                                          "permission":  {
+                                                                                             "columns":  [
+                                                                                                             "username",
+                                                                                                             "uuid"
+                                                                                                         ],
+                                                                                             "filter":  {
+                                                                                                            "uuid":  {
+                                                                                                                         "_eq":  "X-Hasura-User-Id"
+                                                                                                                     }
+                                                                                                        }
+                                                                                         },
+                                                                          "comment":  ""
+                                                                      }
+                                                                  ],
+                                           "update_permissions":  [
+                                                                      {
+                                                                          "role":  "user",
+                                                                          "permission":  {
+                                                                                             "columns":  [
+                                                                                                             "username"
+                                                                                                         ],
+                                                                                             "filter":  {
+                                                                                                            "uuid":  {
+                                                                                                                         "_eq":  "X-Hasura-User-Id"
+                                                                                                                     }
+                                                                                                        },
+                                                                                             "check":  {
+                                                                                                           "uuid":  {
+                                                                                                                        "_eq":  "X-Hasura-User-Id"
+                                                                                                                    }
+                                                                                                       }
+                                                                                         },
+                                                                          "comment":  ""
+                                                                      }
+                                                                  ]
+                                       },
+                                       {
+                                           "table":  {
+                                                         "name":  "user_room",
+                                                         "schema":  "public"
+                                                     },
+                                           "object_relationships":  [
+                                                                        {
+                                                                            "name":  "room",
+                                                                            "using":  {
+                                                                                          "foreign_key_constraint_on":  "room_uuid"
+                                                                                      }
+                                                                        },
+                                                                        {
+                                                                            "name":  "user",
+                                                                            "using":  {
+                                                                                          "foreign_key_constraint_on":  "user_uuid"
+                                                                                      }
+                                                                        }
+                                                                    ]
+                                       }
+                                   ],
+                        "configuration":  {
+                                              "connection_info":  {
+                                                                      "database_url":  "postgresql://neondb_owner:npg_EXl2UtYmx9Ki@ep-fancy-thunder-azuj6qjh-pooler.c-3.ap-southeast-1.aws.neon.tech/neondb?sslmode=require\u0026channel_binding=require",
+                                                                      "isolation_level":  "read-committed",
+                                                                      "use_prepared_statements":  false
+                                                                  }
+                                          }
+                    }
+                ],
+    "backend_configs":  {
+                            "dataconnector":  {
+                                                  "athena":  {
+                                                                 "uri":  "http://localhost:8081/api/v1/athena"
+                                                             },
+                                                  "mariadb":  {
+                                                                  "uri":  "http://localhost:8081/api/v1/mariadb"
+                                                              },
+                                                  "mongodb":  {
+                                                                  "uri":  "http://localhost:8082"
+                                                              },
+                                                  "mysql8":  {
+                                                                 "uri":  "http://localhost:8081/api/v1/mysql"
+                                                             },
+                                                  "oracle":  {
+                                                                 "uri":  "http://localhost:8081/api/v1/oracle"
+                                                             },
+                                                  "redshift":  {
+                                                                   "uri":  "http://localhost:8081/api/v1/redshift"
+                                                               },
+                                                  "snowflake":  {
+                                                                    "uri":  "http://localhost:8081/api/v1/snowflake"
+                                                                }
+                                              }
+                        }
+}

@@ -1,0 +1,22 @@
+mutation addLog($room_uuid: uuid!, $content: String!) {
+  insert_log_one(object: {room_uuid: $room_uuid, content: $content}) {
+    uuid
+  }
+}
+
+mutation updateLog($uuid: uuid!, $content: String!) {
+  update_log_by_pk(pk_columns: {uuid: $uuid}, _set: {content: $content}) {
+    uuid
+    updated_at
+  }
+}
+
+# 会议记录实时更新
+subscription getLogsByRoom($room_uuid: uuid!) {
+  log(where: {room_uuid: {_eq: $room_uuid}}, order_by: {created_at: asc}) {
+    uuid
+    content
+    created_at
+    updated_at
+  }
+}
