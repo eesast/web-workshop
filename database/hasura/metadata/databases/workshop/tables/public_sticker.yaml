@@ -1,0 +1,55 @@
+table:
+  name: sticker
+  schema: public
+object_relationships:
+  - name: room
+    using:
+      foreign_key_constraint_on: room_uuid
+  - name: user
+    using:
+      foreign_key_constraint_on: user_uuid
+insert_permissions:
+  # 便签纸仅自己可见：生产环境应将 check 改为
+  # {user_uuid: {_eq: X-Hasura-User-Id}}（需要后端传递会话变量）
+  - role: user
+    permission:
+      check: {}
+      columns:
+        - content
+        - created_at
+        - room_uuid
+        - updated_at
+        - user_uuid
+        - uuid
+    comment: ""
+select_permissions:
+  # 便签纸仅自己可见：生产环境应将 filter 改为
+  # {user_uuid: {_eq: X-Hasura-User-Id}}（需要后端传递会话变量）
+  - role: user
+    permission:
+      columns:
+        - content
+        - created_at
+        - room_uuid
+        - updated_at
+        - user_uuid
+        - uuid
+      filter: {}
+    comment: ""
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - content
+        - room_uuid
+        - updated_at
+        - user_uuid
+        - uuid
+      filter: {}
+      check: {}
+    comment: ""
+delete_permissions:
+  - role: user
+    permission:
+      filter: {}
+    comment: ""
