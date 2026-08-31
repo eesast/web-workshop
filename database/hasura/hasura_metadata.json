@@ -4,7 +4,7 @@
     "version": 3,
     "sources": [
       {
-        "name": "workshop",
+        "name": "web-workshop",
         "kind": "postgres",
         "tables": [
           {
@@ -13,6 +13,12 @@
               "schema": "public"
             },
             "object_relationships": [
+              {
+                "name": "replied_to",
+                "using": {
+                  "foreign_key_constraint_on": "reply_to"
+                }
+              },
               {
                 "name": "room",
                 "using": {
@@ -26,6 +32,20 @@
                 }
               }
             ],
+            "array_relationships": [
+              {
+                "name": "replies",
+                "using": {
+                  "foreign_key_constraint_on": {
+                    "column": "reply_to",
+                    "table": {
+                      "name": "message",
+                      "schema": "public"
+                    }
+                  }
+                }
+              }
+            ],
             "insert_permissions": [
               {
                 "role": "user",
@@ -34,6 +54,7 @@
                   "columns": [
                     "content",
                     "created_at",
+                    "reply_to",
                     "room_uuid",
                     "user_uuid",
                     "uuid"
@@ -49,6 +70,7 @@
                   "columns": [
                     "content",
                     "created_at",
+                    "reply_to",
                     "room_uuid",
                     "user_uuid",
                     "uuid"
@@ -65,6 +87,7 @@
                   "columns": [
                     "content",
                     "created_at",
+                    "reply_to",
                     "room_uuid",
                     "user_uuid",
                     "uuid"
