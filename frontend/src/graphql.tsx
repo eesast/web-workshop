@@ -79,6 +79,9 @@ export type Message = {
   content: Scalars['String']['output'];
   created_at: Scalars['timestamp']['output'];
   /** An object relationship */
+  replied_to?: Maybe<Message>;
+  reply_to?: Maybe<Scalars['uuid']['output']>;
+  /** An object relationship */
   room: Room;
   room_uuid: Scalars['uuid']['output'];
   /** An object relationship */
@@ -158,6 +161,7 @@ export enum Message_Constraint {
 export type Message_Insert_Input = {
   content?: InputMaybe<Scalars['String']['input']>;
   created_at?: InputMaybe<Scalars['timestamp']['input']>;
+  reply_to?: InputMaybe<Scalars['uuid']['input']>;
   room?: InputMaybe<Room_Obj_Rel_Insert_Input>;
   room_uuid?: InputMaybe<Scalars['uuid']['input']>;
   user?: InputMaybe<User_Obj_Rel_Insert_Input>;
@@ -1496,6 +1500,7 @@ export type AddMessageMutationVariables = Exact<{
   user_uuid: Scalars['uuid']['input'];
   room_uuid: Scalars['uuid']['input'];
   content: Scalars['String']['input'];
+  reply_to?: InputMaybe<Scalars['uuid']['input']>;
 }>;
 
 
@@ -1506,7 +1511,7 @@ export type GetMessagesByRoomSubscriptionVariables = Exact<{
 }>;
 
 
-export type GetMessagesByRoomSubscription = { __typename?: 'subscription_root', message: Array<{ __typename?: 'message', uuid: any, content: string, created_at: any, user: { __typename?: 'user', uuid: any, username: string } }> };
+export type GetMessagesByRoomSubscription = { __typename?: 'subscription_root', message: Array<{ __typename?: 'message', uuid: any, content: string, created_at: any, reply_to?: any | null, replied_to?: { __typename?: 'message', uuid: any, content: string, user: { __typename?: 'user', username: string } } | null, user: { __typename?: 'user', uuid: any, username: string } }> };
 
 export type AddRoomMutationVariables = Exact<{
   name: Scalars['String']['input'];
@@ -1556,9 +1561,9 @@ export type GetUsersByUsernameQuery = { __typename?: 'query_root', user: Array<{
 
 
 export const AddMessageDocument = gql`
-    mutation addMessage($user_uuid: uuid!, $room_uuid: uuid!, $content: String!) {
+    mutation addMessage($user_uuid: uuid!, $room_uuid: uuid!, $content: String!, $reply_to: uuid) {
   insert_message_one(
-    object: {user_uuid: $user_uuid, room_uuid: $room_uuid, content: $content}
+    object: {user_uuid: $user_uuid, room_uuid: $room_uuid, content: $content, reply_to: $reply_to}
   ) {
     uuid
   }
@@ -1602,6 +1607,14 @@ export const GetMessagesByRoomDocument = gql`
     }
     content
     created_at
+    reply_to
+    replied_to {
+      uuid
+      content
+      user {
+        username
+      }
+    }
   }
 }
     `;

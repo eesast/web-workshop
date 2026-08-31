@@ -10,9 +10,12 @@ interface ChatBoxProps {
   handleClose: () => void;
 }
 
+type Message = graphql.GetMessagesByRoomSubscription["message"][0];
+
 const ChatBox: React.FC<ChatBoxProps> = ({ user, room, handleClose }) => {
   const [text, setText] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const [replyTo, setReplyTo] = useState<Message | null>(null);
 
   const { data, error } = graphql.useGetMessagesByRoomSubscription({
     skip: !room,
@@ -40,6 +43,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ user, room, handleClose }) => {
         user_uuid: user?.uuid,
         room_uuid: room?.uuid,
         content: text,
+        reply_to: replyTo?.uuid,
       },
     });
     if (result.errors) {
@@ -47,6 +51,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ user, room, handleClose }) => {
       message.error("发送消息失败！");
     }
     setText("");
+    setReplyTo(null);
     setLoading(false);
   };
 
@@ -82,7 +87,29 @@ const ChatBox: React.FC<ChatBoxProps> = ({ user, room, handleClose }) => {
           {room.intro}
         </Text>
       </Container>
-      <MessageFeed user={user} messages={data?.message} />
+      <MessageFeed
+        user={user}
+        messages={data?.message}
+        setReplyTo={setReplyTo}
+      />
+      {replyTo && (
+        <div
+          className="need-interaction"
+          style={{
+            marginTop: "6px",
+            display: "flex",
+            alignItems: "center",
+            width: "100%",
+          }}
+        >
+          <Text size="small" style={{ wordBreak: "break-all", flex: 1 }}>
+            回复 {replyTo.user.username}：{replyTo.content}
+          </Text>
+          <Button type="link" size="small" onClick={() => setReplyTo(null)}>
+            取消
+          </Button>
+        </div>
+      )}
       <div
         className="need-interaction"
         style={{
@@ -113,9 +140,14 @@ const ChatBox: React.FC<ChatBoxProps> = ({ user, room, handleClose }) => {
 interface MessageFeedProps {
   user: user;
   messages: graphql.GetMessagesByRoomSubscription["message"] | undefined;
+  setReplyTo: (message: Message) => void;
 }
 
-const MessageFeed: React.FC<MessageFeedProps> = ({ user, messages }) => {
+const MessageFeed: React.FC<MessageFeedProps> = ({
+  user,
+  messages,
+  setReplyTo,
+}) => {
   const bottomRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -129,7 +161,11 @@ const MessageFeed: React.FC<MessageFeedProps> = ({ user, messages }) => {
             ref={index === messages.length - 1 ? bottomRef : null}
             key={index}
           >
-            <MessageBubble user={user} message={message} />
+            <MessageBubble
+              user={user}
+              message={message}
+              setReplyTo={setReplyTo}
+            />
           </div>
         ))
       ) : (
@@ -143,10 +179,15 @@ const MessageFeed: React.FC<MessageFeedProps> = ({ user, messages }) => {
 
 interface MessageBubbleProps {
   user: user;
-  message: graphql.GetMessagesByRoomSubscription["message"][0];
+  message: Message;
+  setReplyTo: (message: Message) => void;
 }
 
-const MessageBubble: React.FC<MessageBubbleProps> = ({ user, message }) => {
+const MessageBubble: React.FC<MessageBubbleProps> = ({
+  user,
+  message,
+  setReplyTo,
+}) => {
   const isSelf = user.uuid === message.user.uuid;
   const dateUTC = new Date(message.created_at);
   const date = new Date(
@@ -154,6 +195,10 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ user, message }) => {
   );
   return (
     <div
+      onContextMenu={(e) => {
+        e.preventDefault();
+        setReplyTo(message);
+      }}
       style={{
         margin: "6px 0",
         display: "flex",
@@ -168,11 +213,27 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ user, message }) => {
           {date.toLocaleString("zh-CN")}
         </Text>
       </div>
+      {message.replied_to && (
+        <Bubble
+          style={{
+            minHeight: "20px",
+            width: "fit-content",
+            maxWidth: "80%",
+            marginTop: "2px",
+            backgroundColor: "rgba(255, 255, 255, 0.15)",
+          }}
+        >
+          <Text size="small" style={{ wordBreak: "break-all" }}>
+            回复 {message.replied_to.user.username}：{message.replied_to.content}
+          </Text>
+        </Bubble>
+      )}
       <Bubble
         style={{
           minHeight: "24px",
           width: "fit-content",
           maxWidth: "80%",
+          marginTop: message.replied_to ? "2px" : "0",
           backgroundColor: isSelf
             ? "rgba(4, 190, 2, 0.25)"
             : "rgba(255, 255, 255, 0.25)",
