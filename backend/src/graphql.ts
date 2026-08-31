@@ -1627,6 +1627,45 @@ export const GetUsersByUsernameDocument = gql`
   }
 }
     `;
+export const GetNoteDocument = gql`
+    query getNote($user_uuid: uuid!, $room_uuid: uuid!) {
+  note(where: {user_uuid: {_eq: $user_uuid}, room_uuid: {_eq: $room_uuid}}) {
+    user_uuid
+    room_uuid
+    content
+    created_at
+    updated_at
+  }
+}
+    `;
+export const UpsertNoteDocument = gql`
+    mutation upsertNote($user_uuid: uuid!, $room_uuid: uuid!, $content: String!) {
+  insert_note_one(
+    object: {user_uuid: $user_uuid, room_uuid: $room_uuid, content: $content}
+    on_conflict: {constraint: note_pkey, update_columns: [content]}
+  ) {
+    user_uuid
+    room_uuid
+    content
+    updated_at
+  }
+}
+    `;
+
+export type GetNoteQueryVariables = Exact<{
+  user_uuid: Scalars['uuid']['input'];
+  room_uuid: Scalars['uuid']['input'];
+}>;
+
+export type GetNoteQuery = { note: Array<{ user_uuid: any, room_uuid: any, content: string, created_at: any, updated_at: any }> };
+
+export type UpsertNoteMutationVariables = Exact<{
+  user_uuid: Scalars['uuid']['input'];
+  room_uuid: Scalars['uuid']['input'];
+  content: Scalars['String']['input'];
+}>;
+
+export type UpsertNoteMutation = { insert_note_one?: { user_uuid: any, room_uuid: any, content: string, updated_at: any } | null };
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string, variables?: any) => Promise<T>;
 
@@ -1658,6 +1697,12 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     getUsersByUsername(variables: GetUsersByUsernameQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetUsersByUsernameQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetUsersByUsernameQuery>(GetUsersByUsernameDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getUsersByUsername', 'query', variables);
+    },
+    getNote(variables: GetNoteQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetNoteQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetNoteQuery>(GetNoteDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getNote', 'query', variables);
+    },
+    upsertNote(variables: UpsertNoteMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<UpsertNoteMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<UpsertNoteMutation>(UpsertNoteDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'upsertNote', 'mutation', variables);
     }
   };
 }

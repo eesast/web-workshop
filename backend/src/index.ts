@@ -7,6 +7,7 @@ import { getSdk } from "./graphql";
 import userRouter from "./user";
 import fileRouter from "./file";
 import emailRouter from "./email";
+import noteRouter from "./note";
 
 const app = express();
 const address = "http://localhost";
@@ -41,6 +42,7 @@ app.use(express.json());
 app.use("/user", userRouter);
 app.use("/file", fileRouter);
 app.use("/email", emailRouter);
+app.use("/note", noteRouter);
 
 app.listen(port, () => {
   console.log(`Server running at ${address}:${port}/`);
