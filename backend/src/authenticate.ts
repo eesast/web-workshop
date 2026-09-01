@@ -12,6 +12,7 @@ const authenticate: (req: Request, res: Response, next: NextFunction) => Respons
       if (err || !decoded) {
         return res.status(401).send("401 Unauthorized: Token expired or invalid");
       }
+      res.locals.uuid = (decoded as { uuid?: string }).uuid;
       return next();
     });
   };
