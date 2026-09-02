@@ -3,6 +3,7 @@ create table if not exists public.message (
   uuid uuid default gen_random_uuid() not null,
   user_uuid uuid not null,
   room_uuid uuid not null,
+  reply_to_id uuid,
   content text not null,
   created_at timestamp default current_timestamp not null,
   primary key (uuid)
@@ -11,6 +12,8 @@ alter table public.message
 add constraint message_user_uuid_fkey foreign key (user_uuid) references public.user (uuid) on update cascade on delete cascade;
 alter table public.message
 add constraint message_room_uuid_fkey foreign key (room_uuid) references public.room (uuid) on update cascade on delete cascade;
+alter table public.message
+add constraint message_reply_to_id_fkey foreign key (reply_to_id) references public.message (uuid) on update restrict on delete restrict;
 
 insert into public.message (user_uuid, room_uuid, content) values
 ('00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-100000000001', '大家好，我叫张三'),

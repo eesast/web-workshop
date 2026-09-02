@@ -1,11 +1,23 @@
-mutation addMessage($user_uuid: uuid!, $room_uuid: uuid!, $content: String!) {
-  insert_message_one(object: {user_uuid: $user_uuid, room_uuid: $room_uuid, content: $content}) {
+mutation addMessage(
+  $user_uuid: uuid!
+  $room_uuid: uuid!
+  $content: String!
+  $reply_to_id: uuid
+) {
+  insert_message_one(
+    object: {
+      user_uuid: $user_uuid
+      room_uuid: $room_uuid
+      content: $content
+      reply_to_id: $reply_to_id
+    }
+  ) {
     uuid
   }
 }
 
 subscription getMessagesByRoom($room_uuid: uuid!) {
-  message(where: {room_uuid: {_eq: $room_uuid}}) {
+  message(where: { room_uuid: { _eq: $room_uuid } }) {
     uuid
     user {
       uuid
@@ -13,5 +25,14 @@ subscription getMessagesByRoom($room_uuid: uuid!) {
     }
     content
     created_at
+    reply_to_id
+    replied_message {
+      uuid
+      content
+      user {
+        uuid
+        username
+      }
+    }
   }
 }
