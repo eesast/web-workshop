@@ -1,0 +1,34 @@
+table:
+  name: room_record
+  schema: public
+object_relationships:
+  - name: room
+    using:
+      foreign_key_constraint_on: room_uuid
+insert_permissions:
+  - role: user
+    permission:
+      check: {}
+      columns:
+        - content
+        - room_uuid
+    comment: ""
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - content
+        - created_at
+        - room_uuid
+        - updated_at
+        - uuid
+      filter: {}
+    comment: ""
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - content
+      filter: {}
+      check: {}
+    comment: ""

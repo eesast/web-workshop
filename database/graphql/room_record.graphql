@@ -1,0 +1,48 @@
+mutation addRoomRecord($room_uuid: uuid!, $content: String!) {
+  insert_room_record_one(
+    object: {room_uuid: $room_uuid, content: $content}
+  ) {
+    uuid
+    room_uuid
+    content
+    created_at
+    updated_at
+  }
+}
+
+query getRoomRecords($room_uuid: uuid!) {
+  room_by_pk(uuid: $room_uuid) {
+    uuid
+    name
+    room_records(order_by: {created_at: asc}) {
+      uuid
+      content
+      created_at
+      updated_at
+    }
+  }
+}
+
+mutation updateRoomRecord($uuid: uuid!, $content: String!) {
+  update_room_record_by_pk(
+    pk_columns: {uuid: $uuid}
+    _set: {content: $content}
+  ) {
+    uuid
+    content
+    created_at
+    updated_at
+  }
+}
+
+subscription watchRoomRecords($room_uuid: uuid!) {
+  room_record(
+    where: {room_uuid: {_eq: $room_uuid}}
+    order_by: {created_at: asc}
+  ) {
+    uuid
+    content
+    created_at
+    updated_at
+  }
+}

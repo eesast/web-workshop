@@ -9,6 +9,13 @@ array_relationships:
         table:
           name: message
           schema: public
+  - name: room_records
+    using:
+      foreign_key_constraint_on:
+        column: room_uuid
+        table:
+          name: room_record
+          schema: public
   - name: user_rooms
     using:
       foreign_key_constraint_on:

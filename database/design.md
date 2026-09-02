@@ -25,6 +25,7 @@ _需求中的所有“不可分拆物”，及它们的属性。_
 - 用户（用户名、密码）
 - 会议（名称、介绍、邀请码、创建时间）
 - 消息（消息体，创建时间）
+- 会议记录（记录内容、创建时间、修改时间）
 
 ### 2.2 标识关系（Relation）
 
@@ -32,6 +33,7 @@ _与两个或多个实体有关系的信息。_
 
 - 用户加入会议（用户——会议）
 - 用户在会议中发出消息（用户——会议——消息，可分拆为 用户——消息 + 会议——消息）
+- 会议包含多条会议记录（会议——会议记录）
 
 ### 2.3 E-R 图
 
@@ -51,9 +53,15 @@ erDiagram
 		String content
 		Time created_at
 	}
+	room_record{
+		String content
+		Time created_at
+		Time updated_at
+	}
 	user }|--o{ room : join
 	user ||--o{ message : send
 	room ||--o{ message : contain
+	room ||--o{ room_record : contain
 ```
 
 ### 3.0 设计范式
@@ -83,5 +91,10 @@ _一般来说，一个实体对应一张表，多对多的关系也可对应一�
 |           | room_uuid   | uuid      |      | room.uuid |
 |           | content     | text      |      |           |
 |           | created_at  | timestamp |      |           |
+| room_record | uuid      | uuid      | 是   |           |
+|             | room_uuid | uuid      |      | room.uuid |
+|             | content   | text      |      |           |
+|             | created_at | timestamptz |   |           |
+|             | updated_at | timestamptz |   |           |
 
 注：由于使用的是 PostgreSQL，其`text`类型指长度可变的字符串，与其他数据库可能不同（[PostgreSQL: Documentation: 16: Chapter 8. Data Types](https://www.postgresql.org/docs/current/datatype.html)）
