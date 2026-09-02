@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于我 - 动态版</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #f0f4f8;
+            color: #1e293b;
+            line-height: 1.8;
+        }
+        h1 {
+            color: #0f172a;
+            border-bottom: 4px solid #3b82f6;
+            padding-bottom: 8px;
+        }
+        .avatar {
+            width: 120px;
+            border-radius: 50%;
+            border: 3px solid #3b82f6;
+        }
+        .tag {
+            background-color: #dbeafe;
+            color: #1e40af;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        ul {
+            list-style-type: square;
+            padding-left: 20px;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+        button {
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        button:hover {
+            background-color: #2563eb;
+        }
+        .result-box {
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 12px;
+            border-left: 4px solid #3b82f6;
+            min-height: 30px;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+
+    <h1> 关于我</h1>
+    <img class="avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=ky183" alt="头像">
+    <p>大家好，我是 <strong>ky183</strong>！</p>
+    <p>我现在正在跟着 Web Workshop 学习全栈开发，这是我自己做的第一个动态页面。</p>
+    <hr>
+    <h2> 兴趣爱好</h2>
+    <ul>
+        <li> 跑步 </li>
+        <li> 打羽毛球</li>
+    </ul>
+    <p>我的格言：<span class="tag">保持好奇，持续学习</span></p>
+    <hr>
+
+    <!-- =========================================================
+        “新增内容”（第10讲作业）：时间显示 + 名言API
+        ========================================================= -->
+
+    <!-- 功能一：显示当前时间 -->
+    <div class="card">
+        <h2> 当前时间</h2>
+        <p>点击下方按钮，获取此刻的精确时间：</p>
+        <button onclick="showTime()">显示当前时间</button>
+        <div id="timeDisplay" class="result-box">等待点击...</div>
+    </div>
+
+    <!-- 功能二：获取名人名言（使用国内稳定的“一言”API） -->
+    <div class="card">
+        <h2> 名言 / 语录</h2>
+        <p>点击按钮，从网络获取一句经典语录（含出处）：</p>
+        <button onclick="fetchQuote()">获取一句名言</button>
+        <div id="quoteDisplay" class="result-box">等待点击...</div>
+    </div>
+
+    <!-- 返回首页（旧内容保留） -->
+    <a class="back-link" href="index.html"> 返回首页</a>
+
+    <script>
+        /**
+         * 功能一：显示当前时间
+         * 实现原理：JS 内置的 Date 对象可以获取浏览器本地时间
+         */
+        function showTime() {
+            var now = new Date();
+            var timeStr = now.toLocaleString();
+            document.getElementById('timeDisplay').innerHTML = timeStr;
+        }
+
+        /**
+         * 功能二：从网络 API 获取名言
+         */
+        async function fetchQuote() {
+            // 把显示框改成“加载中...”
+            document.getElementById('quoteDisplay').innerHTML = ' 加载中，请稍候...';
+
+            try {
+                const response = await fetch('https://v1.hitokoto.cn/');
+
+                //  response.ok 检查“电话是否接通了”。如果 !ok (没接通)，直接报错跳转到 catch。
+                if (!response.ok) {
+                    throw new Error('网络请求失败');
+                }
+
+                // response.json() 把返回的数据（JSON格式）转换成 JS 能直接用的对象。
+                const data = await response.json();
+
+                //  数据解析：
+                //    hitokoto API 返回的格式是：{ "hitokoto": "内容", "from": "出处", ... }
+                //  把它拼接成 "内容 —— 出处" 的格式。
+                //   如果出处为空（比如佚名），就显示“佚名”。
+                const quoteText = `"${data.hitokoto}" —— ${data.from || '佚名'}`;
+
+                // 把拼接好的文字，填到页面的显示框里。
+                document.getElementById('quoteDisplay').innerHTML = quoteText;
+
+            } catch (error) {
+                // 如果上面 try 里的任何一步出错了执行这里。
+                // 显示友好的错误提示，而不是让页面崩掉。
+                document.getElementById('quoteDisplay').innerHTML = ' 名言加载失败，请检查网络或稍后重试。';
+                console.error('获取名言出错:', error);
+            }
+        }
+    </script>
+
+</body>
+</html>
