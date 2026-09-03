@@ -4,6 +4,12 @@ mutation addUser($username: String!, $password: String!) {
   }
 }
 
+mutation deleteUserByUuid($uuid: uuid!) {
+  delete_user_by_pk(uuid: $uuid) {
+    uuid
+  }
+}
+
 query getUsersByUsername($username: String!) {
   user(where: {username: {_eq: $username}}) {
     uuid

@@ -1,0 +1,53 @@
+# 便签纸由 Hasura 的 insert set 自动写入当前登录用户（见 public_note.yaml），
+# 客户端无需也不能传 user_uuid，因此仅需要 room_uuid 与 content。
+
+mutation createNote($room_uuid: uuid!, $content: String!) {
+  insert_note_one(object: {room_uuid: $room_uuid, content: $content}) {
+    id
+    room_uuid
+    content
+    created_at
+    updated_at
+  }
+}
+
+query getMyNoteInRoom($room_uuid: uuid!) {
+  note(where: {room_uuid: {_eq: $room_uuid}}) {
+    id
+    content
+    created_at
+    updated_at
+    room {
+      uuid
+      name
+    }
+  }
+}
+
+query getMyNotes {
+  note(order_by: {updated_at: desc}) {
+    id
+    room_uuid
+    content
+    created_at
+    updated_at
+    room {
+      uuid
+      name
+    }
+  }
+}
+
+mutation updateNote($id: uuid!, $content: String!) {
+  update_note_by_pk(pk_columns: {id: $id}, _set: {content: $content}) {
+    id
+    content
+    updated_at
+  }
+}
+
+mutation deleteNote($id: uuid!) {
+  delete_note_by_pk(id: $id) {
+    id
+  }
+}

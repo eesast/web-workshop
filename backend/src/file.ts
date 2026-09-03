@@ -74,4 +74,35 @@ router.get("/download", authenticate, (req, res) => {
   }
 });
 
+// “痕迹抹除”：删除指定房间中的某个文件
+router.post("/delete", authenticate, (req, res) => {
+  const room = req.body?.room;
+  const filename = req.body?.filename;
+  if (!room || typeof room !== "string" || !filename || typeof filename !== "string") {
+    return res.status(422).send("422 Unprocessable Entity: Missing room or filename");
+  }
+  const baseDirResolved = path.resolve(baseDir);
+  const roomDir = path.resolve(baseDirResolved, room);
+  const target = path.resolve(roomDir, filename);
+  try {
+    // 防止路径穿越：room 和 filename 解析后必须仍落在上传根目录之内
+    const roomRel = path.relative(baseDirResolved, roomDir);
+    const fileRel = path.relative(roomDir, target);
+    if (roomRel.startsWith("..") || fileRel.startsWith("..")) {
+      return res.status(400).send("400 Bad Request: room or filename escapes the upload directory");
+    }
+    if (!fs.existsSync(target)) {
+      return res.status(404).send("404 Not Found: File does not exist");
+    }
+    if (!fs.statSync(target).isFile()) {
+      return res.status(400).send("400 Bad Request: target is not a file");
+    }
+    fs.unlinkSync(target);
+    return res.send("File deleted successfully");
+  } catch (err) {
+    console.error(err);
+    return res.sendStatus(500);
+  }
+});
+
 export default router;
