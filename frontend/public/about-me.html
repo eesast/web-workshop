@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>关于我</title>
+    <style>
+      body {
+        color: black;
+        background-color: white;
+        font-family: 宋体;
+        text-align: center;
+      }
+
+      #page {
+        width: 700px;
+        margin: 20px;
+        padding: 20px;
+        background-color: white;
+        border: 2px solid blue;
+      }
+
+      h1 {
+        color: blue;
+        font-size: 36px;
+      }
+
+      h2 {
+        color: green;
+        font-size: 24px;
+      }
+
+      .section {
+        margin: 20px;
+        padding: 15px;
+        background-color: white;
+        border: 1px solid blue;
+      }
+
+      td {
+        padding: 8px;
+      }
+
+      a {
+        color: blue;
+        font-size: 18px;
+      }
+    </style>
+    <script src="./about-me.js" defer></script>
+  </head>
+  <body>
+    <div id="page">
+      <h1>你好，我是张以昶</h1>
+      <p>我是一名正在学习网页开发的学生。</p>
+
+      <hr />
+
+      <div class="section">
+        <h2>我的爱好</h2>
+        <p>
+          游泳<br>
+          交通<br>
+          美食
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>个人信息</h2>
+        <p>
+          from:浙江温州
+          grade:2025级，大二
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>我的学习计划</h2>
+        <table border="1">
+          <tr>
+            <td>学习内容</td>
+            <td>当前状态</td>
+          </tr>
+          <tr>
+            <td>HTML</td>
+            <td>能用元素组织内容</td>
+          </tr>
+          <tr>
+            <td>CSS</td>
+            <td>练习调整颜色和间距</td>
+          </tr>
+        </table>
+      </div>
+
+      <p>
+        <button id="theme-button">切换为暗色模式</button>
+      </p>
+
+      <div class="section">
+        <h2>网易云热歌榜</h2>
+        <p id="music-info">点击下面按钮，加载并播放一首热歌。</p>
+        <p><button id="music-button">加载并播放下一首热歌</button></p>
+        <audio id="music-player" controls></audio>
+      </div>
+
+      <p><a href="./index.html">返回首页</a></p>
+    </div>
+  </body>
+  </html>
