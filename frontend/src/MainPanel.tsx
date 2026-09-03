@@ -17,6 +17,7 @@ interface MainPanelProps {
   refetchRooms: () => void;
   addChatBox: (id: number) => void;
   addFileShare: (id: number) => void;
+  addNote: (id: number) => void;
 }
 
 const MainPanel: React.FC<MainPanelProps> = (props) => {
@@ -183,6 +184,7 @@ const RoomList: React.FC<MainPanelProps> = ({
   refetchRooms,
   addChatBox,
   addFileShare,
+  addNote,
 }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -248,6 +250,7 @@ const RoomList: React.FC<MainPanelProps> = ({
               room={item.room}
               handleOpenChat={() => addChatBox(index)}
               handleOpenFileShare={() => addFileShare(index)}
+              handleOpenNote={() => addNote(index)}
             />
           )}
         />
@@ -287,12 +290,14 @@ interface RoomListItemProps {
   room: graphql.GetJoinedRoomsQuery["user_room"][0]["room"];
   handleOpenChat: () => void;
   handleOpenFileShare: () => void;
+  handleOpenNote: () => void;
 }
 
 const RoomListItem: React.FC<RoomListItemProps> = ({
   room,
   handleOpenChat,
   handleOpenFileShare,
+  handleOpenNote,
 }) => {
   const dateUTC = new Date(room.created_at);
   const date = new Date(
@@ -331,6 +336,9 @@ const RoomListItem: React.FC<RoomListItemProps> = ({
         <br />
         <Link style={{ marginTop: "6px" }} onClick={handleOpenChat}>
           打开聊天室
+        </Link>
+        <Link style={{ marginLeft: "12px" }} onClick={handleOpenNote}>
+          打开便签纸
         </Link>
         <Link style={{ marginLeft: "12px" }} onClick={handleOpenFileShare}>
           打开文件共享空间
