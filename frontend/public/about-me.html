@@ -13,8 +13,10 @@
       <header>
         <h1>关于我</h1>
         <p class="subtitle">豆梓宁 · 清华大学电子工程系 · 软件部暑培学员</p>
+        <p class="clock" id="clock">正在加载时间…</p>
         <nav>
           <a href="./index.html">&#127968; 返回首页</a>
+          <button id="theme-toggle" type="button">&#127769; 夜间模式</button>
         </nav>
       </header>
 
@@ -113,6 +115,7 @@
             <input type="range" id="rate" name="rate" min="1" max="5" value="5" />
             <button type="submit">送出留言</button>
           </form>
+          <p id="form-tip" class="tip"></p>
         </section>
 
         <!-- 音乐分享：音频 audio -->
@@ -122,9 +125,19 @@
             你的浏览器不支持 <code>audio</code> 标签。
           </audio>
         </section>
+
+        <!-- GitHub 仓库：由 JS 通过 fetch 从网络实时获取 -->
+        <section class="card span-2" id="github">
+          <h2>我的 GitHub 仓库</h2>
+          <ul id="repo-list">
+            <li>正在从 GitHub 获取数据…</li>
+          </ul>
+          <p class="muted">由 JavaScript 调用 <code>api.github.com</code> 实时获取（第 10 讲网络资源作业）。</p>
+        </section>
       </main>
 
-      <footer>&copy; 2026 豆梓宁 · web-workshop 第 9 讲（HTML &amp; CSS）作业</footer>
+      <footer>&copy; 2026 豆梓宁 · web-workshop 第 9 / 10 讲作业</footer>
     </div>
+    <script src="./about-me.js" defer></script>
   </body>
 </html>

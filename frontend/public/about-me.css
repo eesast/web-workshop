@@ -200,6 +200,140 @@ footer {
   font-size: 13px;
 }
 
+/* ===== 第 10 讲作业新增样式 ===== */
+
+.clock {
+  color: #5a6b7b;
+  margin: 4px 0 0;
+  font-size: 14px;
+  min-height: 1.2em;
+}
+
+header nav button {
+  display: inline-block;
+  margin-top: 10px;
+  margin-left: 8px;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(45, 76, 107, 0.85);
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  transition: background 0.3s;
+}
+
+header nav button:hover {
+  background: #1e3a54;
+}
+
+#repo-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+  margin: 0 0 6px;
+}
+
+#repo-list li {
+  border: 1px solid #dbe4ec;
+  border-radius: 10px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+#repo-list a {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+#repo-list .lang {
+  float: right;
+  color: #6b7680;
+  font-size: 13px;
+}
+
+.muted {
+  color: #6b7680;
+  font-size: 13px;
+  margin: 4px 0 0;
+}
+
+.tip {
+  min-height: 1.4em;
+  margin: 10px 0 0;
+  font-weight: 600;
+  color: #1e7d4f;
+}
+
+/* 夜间模式 */
+body.dark {
+  background: linear-gradient(160deg, #141e30 0%, #243b55 60%, #2b5876 100%);
+  color: #dfe6ee;
+}
+
+body.dark .card {
+  background: rgba(22, 32, 48, 0.82);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+body.dark header h1,
+body.dark .card h2 {
+  color: #9fc2e8;
+}
+
+body.dark .subtitle,
+body.dark .clock,
+body.dark .muted {
+  color: #9aa7b6;
+}
+
+body.dark .card p,
+body.dark .card li {
+  color: #d3dce6;
+}
+
+body.dark th {
+  background: #1c2b3d;
+  color: #d3dce6;
+}
+
+body.dark th,
+body.dark td {
+  border-color: #3b4f66;
+}
+
+body.dark blockquote {
+  background: rgba(255, 255, 255, 0.05);
+  color: #d3dce6;
+  border-left-color: #5b8db8;
+}
+
+body.dark #repo-list li {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: #3b4f66;
+}
+
+body.dark form input[type="text"],
+body.dark form input[type="email"],
+body.dark form textarea {
+  background: #1c2b3d;
+  color: #e6ecf3;
+  border-color: #3b4f66;
+}
+
+body.dark a {
+  color: #8ec5f0;
+}
+
+body.dark .tip {
+  color: #7ad0a2;
+}
+
+body.dark footer {
+  color: #8a98a8;
+}
+
 @media (max-width: 700px) {
   .grid {
     grid-template-columns: 1fr;
