@@ -1,6 +1,26 @@
-mutation addMessage($user_uuid: uuid!, $room_uuid: uuid!, $content: String!) {
-  insert_message_one(object: {user_uuid: $user_uuid, room_uuid: $room_uuid, content: $content}) {
+query getReplyTarget($uuid: uuid!) {
+  message_by_pk(uuid: $uuid) {
     uuid
+    reply_to_message_uuid
+  }
+}
+
+mutation addMessage(
+  $user_uuid: uuid!
+  $room_uuid: uuid!
+  $content: String!
+  $reply_to_message_uuid: uuid
+) {
+  insert_message_one(
+    object: {
+      user_uuid: $user_uuid
+      room_uuid: $room_uuid
+      content: $content
+      reply_to_message_uuid: $reply_to_message_uuid
+    }
+  ) {
+    uuid
+    reply_to_message_uuid
   }
 }
 
@@ -13,5 +33,15 @@ subscription getMessagesByRoom($room_uuid: uuid!) {
     }
     content
     created_at
+    reply_to_message_uuid
+    reply_to_message {
+      uuid
+      user {
+        uuid
+        username
+      }
+      content
+      created_at
+    }
   }
 }
