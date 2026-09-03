@@ -78,10 +78,11 @@ _一般来说，一个实体对应一张表，多对多的关系也可对应一�
 |           | created_at  | timestamp |      |           |
 | user_room | user_uuid   | uuid      | 是   | user.uuid |
 |           | room_uuid   | uuid      | 是   | room.uuid |
-| message   | uuid        | uuid      | 是   |           |
-|           | user_uuid   | uuid      |      | user.uuid |
-|           | room_uuid   | uuid      |      | room.uuid |
-|           | content     | text      |      |           |
-|           | created_at  | timestamp |      |           |
+| message   | uuid        | uuid      | 是   |             |
+|           | user_uuid   | uuid      |      | user.uuid   |
+|           | room_uuid   | uuid      |      | room.uuid   |
+|           | reply_to_id | uuid      |      | message.uuid |
+|           | content     | text      |      |             |
+|           | created_at  | timestamp |      |             |
 
 注：由于使用的是 PostgreSQL，其`text`类型指长度可变的字符串，与其他数据库可能不同（[PostgreSQL: Documentation: 16: Chapter 8. Data Types](https://www.postgresql.org/docs/current/datatype.html)）
