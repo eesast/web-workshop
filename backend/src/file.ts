@@ -74,4 +74,47 @@ router.get("/download", authenticate, (req, res) => {
   }
 });
 
+// 删除文件接口
+router.delete("/delete/:room/:filename", authenticate, (req, res) => {
+  // 获取路径参数
+  const { room, filename } = req.params;
+
+  // 校验参数
+  if (!room || !filename) {
+    return res.status(422).send("422 Unprocessable Entity: Missing room or filename");
+  }
+
+  // 路径安全过滤
+  const safeRoom = path.normalize(room).replace(/^(\.\.[\/\\])+/, '');
+  const safeFilename = path.normalize(filename).replace(/^(\.\.[\/\\])+/, '');
+
+  if (safeRoom !== room || safeFilename !== filename) {
+    return res.status(403).send("403 Forbidden: Invalid file path");
+  }
+
+  // 拼接文件在服务器上的真实路径
+  const filePath = path.resolve(baseDir, safeRoom, safeFilename);
+
+  // 检查文件是否存在并删除
+  try {
+    if (!fs.existsSync(filePath)) {
+      return res.status(404).send("404 Not Found: File does not exist");
+    }
+
+    // fs.unlinkSync：同步删除文件
+    fs.unlinkSync(filePath);
+
+    // 返回删除成功消息
+    return res.status(200).json({
+      message: "File deleted successfully",
+      deletedFile: `${room}/${filename}`,
+    });
+
+  } catch (err) {
+    // 如果文件被占用、权限不足等，会进到这里
+    console.error(err);
+    return res.status(500).send("500 Internal Server Error");
+  }
+});
+
 export default router;
