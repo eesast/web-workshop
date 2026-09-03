@@ -27,6 +27,8 @@ const client = new GraphQLClient(
 );
 export const sdk = getSdk(client);
 
+export const graphqlClient = client;
+
 // Log all requests to the console, optional.
 app.use(morgan(process.env.NODE_ENV === "production" ? "combined" : "dev"));
 
