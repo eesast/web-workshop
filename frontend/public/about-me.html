@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon.png" />
+    <title>关于我 - 豆梓宁</title>
+    <!-- 外部样式表 -->
+    <link rel="stylesheet" href="./about-me.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <h1>关于我</h1>
+        <p class="subtitle">豆梓宁 · 清华大学电子工程系 · 软件部暑培学员</p>
+        <p class="clock" id="clock">正在加载时间…</p>
+        <nav>
+          <a href="./index.html">&#127968; 返回首页</a>
+          <button id="theme-toggle" type="button">&#127769; 夜间模式</button>
+        </nav>
+      </header>
+
+      <main class="grid">
+        <!-- 个人简介：标题 h2、段落 p、图片 img、加粗 strong、引用 blockquote -->
+        <section class="card" id="profile">
+          <h2>个人简介</h2>
+          <img class="avatar" src="./assets/tsinghua-fall.jpg" alt="清华之秋（占位头像）" />
+          <p>
+            你好！我是 <strong>豆梓宁</strong>，学号 <code>2025010355</code>。
+            目前正在参加电子系学生科协的暑期培训，从 Git、Linux、C#/.NET
+            一路学到现在的 Web 开发，目标是亲手做出一个完整的前后端项目。
+          </p>
+          <p>
+            这个页面是暑培 Web Workshop 第 9 讲（HTML &amp; CSS）的作业：
+            我尝试用最朴素的 HTML + CSS 画出一个属于自己的小天地。
+          </p>
+          <blockquote>「种一棵树最好的时间是十年前，其次是现在。」</blockquote>
+        </section>
+
+        <!-- 基本信息：表格 table/tr/th/td + 超链接 a -->
+        <section class="card" id="info">
+          <h2>基本信息</h2>
+          <table>
+            <tr>
+              <th>姓名</th>
+              <td>豆梓宁</td>
+            </tr>
+            <tr>
+              <th>学号</th>
+              <td>2025010355</td>
+            </tr>
+            <tr>
+              <th>邮箱</th>
+              <td>3094655597@qq.com</td>
+            </tr>
+            <tr>
+              <th>GitHub</th>
+              <td><a href="https://github.com/sililass" target="_blank">github.com/sililass</a></td>
+            </tr>
+            <tr>
+              <th>所在地</th>
+              <td>北京 · 清华大学</td>
+            </tr>
+          </table>
+        </section>
+
+        <!-- 兴趣爱好：无序列表 ul/li -->
+        <section class="card" id="hobbies">
+          <h2>兴趣爱好</h2>
+          <ul>
+            <li>写代码：喜欢把一个想法从 0 到 1 变成真实可用的东西</li>
+            <li>听音乐：最近在循环播放李健《风吹麦浪》</li>
+            <li>摄影：喜欢拍校园的四季，尤其是清华的秋天</li>
+            <li>桌游：是朋友局的"气氛组"常驻选手</li>
+          </ul>
+          <h2>最近的小目标</h2>
+          <ol>
+            <li>按时完成暑培全部作业并真正理解每一讲</li>
+            <li>和小伙伴一起完成一个完整的趣味会议小软件</li>
+            <li>维护一个属于自己的个人网站</li>
+          </ol>
+        </section>
+
+        <!-- 技能自评：进度条 meter 展示 -->
+        <section class="card" id="skill">
+          <h2>技能自评</h2>
+          <div class="skill-row">
+            <span class="skill-name">C# / .NET（暑培学习中）</span>
+            <meter min="0" max="100" low="30" high="75" optimum="90" value="55"></meter>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">Git 版本管理</span>
+            <meter min="0" max="100" low="30" high="75" optimum="90" value="60"></meter>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">Linux 基础</span>
+            <meter min="0" max="100" low="30" high="75" optimum="90" value="45"></meter>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">HTML / CSS（学习ing）</span>
+            <meter min="0" max="100" low="30" high="75" optimum="90" value="35"></meter>
+          </div>
+          <p>数值会随着暑培进度不断上涨，敬请期待～</p>
+        </section>
+
+        <!-- 给我留言：表单 form + 各种输入元素 -->
+        <section class="card" id="contact">
+          <h2>给我留言</h2>
+          <form action="#" method="post">
+            <label for="nickname">昵称</label>
+            <input type="text" id="nickname" name="nickname" placeholder="怎么称呼你？" required />
+            <label for="message">想对我说的话</label>
+            <textarea id="message" name="message" rows="4" placeholder="欢迎交流学习经验、约桌游…" required></textarea>
+            <label for="rate">打分（1 星到 5 星，会让我更有动力）</label>
+            <input type="range" id="rate" name="rate" min="1" max="5" value="5" />
+            <button type="submit">送出留言</button>
+          </form>
+          <p id="form-tip" class="tip"></p>
+        </section>
+
+        <!-- 音乐分享：音频 audio -->
+        <section class="card span-2" id="music">
+          <h2>循环中的一首歌</h2>
+          <audio controls src="./assets/李健-风吹麦浪.mp3">
+            你的浏览器不支持 <code>audio</code> 标签。
+          </audio>
+        </section>
+
+        <!-- GitHub 仓库：由 JS 通过 fetch 从网络实时获取 -->
+        <section class="card span-2" id="github">
+          <h2>我的 GitHub 仓库</h2>
+          <ul id="repo-list">
+            <li>正在从 GitHub 获取数据…</li>
+          </ul>
+          <p class="muted">由 JavaScript 调用 <code>api.github.com</code> 实时获取（第 10 讲网络资源作业）。</p>
+        </section>
+      </main>
+
+      <footer>&copy; 2026 豆梓宁 · web-workshop 第 9 / 10 讲作业</footer>
+    </div>
+    <script src="./about-me.js" defer></script>
+  </body>
+</html>
