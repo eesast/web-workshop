@@ -12,6 +12,15 @@ const authenticate: (req: Request, res: Response, next: NextFunction) => Respons
       if (err || !decoded) {
         return res.status(401).send("401 Unauthorized: Token expired or invalid");
       }
+      if (typeof decoded === "string") {
+        return res.status(401).send("401 Unauthorized: Token payload is invalid");
+      }
+      const uuid = (decoded as { uuid?: string }).uuid;
+      if (!uuid) {
+        return res.status(401).send("401 Unauthorized: Token payload is missing uuid");
+      }
+      // 将 token 中的用户身份暴露给后续路由使用（如删除当前用户）
+      res.locals.uuid = uuid;
       return next();
     });
   };
