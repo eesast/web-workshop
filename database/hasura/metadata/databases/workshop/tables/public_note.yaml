@@ -1,0 +1,53 @@
+table:
+  name: note
+  schema: public
+object_relationships:
+  - name: room
+    using:
+      foreign_key_constraint_on: room_uuid
+  - name: user
+    using:
+      foreign_key_constraint_on: user_uuid
+insert_permissions:
+  - role: user
+    permission:
+      check: {}
+      set:
+        user_uuid: X-Hasura-User-Id
+      columns:
+        - content
+        - room_uuid
+    comment: 便签仅能作为当前登录用户创建（user_uuid 由会话变量写入）
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - content
+        - created_at
+        - updated_at
+        - id
+        - room_uuid
+        - user_uuid
+      filter:
+        user_uuid:
+          _eq: X-Hasura-User-Id
+    comment: 只能看到自己创建的便签（仅自己可见）
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - content
+      filter:
+        user_uuid:
+          _eq: X-Hasura-User-Id
+      check:
+        user_uuid:
+          _eq: X-Hasura-User-Id
+    comment: 只能修改自己便签的内容
+delete_permissions:
+  - role: user
+    permission:
+      filter:
+        user_uuid:
+          _eq: X-Hasura-User-Id
+    comment: 只能删除自己的便签
