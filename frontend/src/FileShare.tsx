@@ -4,6 +4,7 @@ import {
   InboxOutlined,
   DownloadOutlined,
   ReloadOutlined,
+  DeleteOutlined,
 } from "@ant-design/icons";
 import axios from "axios";
 import * as graphql from "./graphql";
@@ -76,6 +77,17 @@ const FileShare: React.FC<FileShareProps> = ({ room, handleClose }) => {
     }
   };
 
+  const deleteFile = async (roomUUID: string, filename: string) => {
+    try {
+      await axios.post("/file/delete", { room: roomUUID, filename: filename });
+      await fetchFileList(room?.uuid).then(setFileList);
+      message.success("删除文件成功！")
+    } catch (error) {
+      console.error(error);
+      message.error("删除文件失败！");
+    }
+  };
+
   const handleRefresh = () => {
     setRefreshing(true);
     if (room) {
@@ -135,7 +147,7 @@ const FileShare: React.FC<FileShareProps> = ({ room, handleClose }) => {
           文件共享空间
         </Text>
       </Container>
-      <FileList roomUUID={room.uuid} filelist={fileList} />
+      <FileList roomUUID={room.uuid} filelist={fileList} onDelete={deleteFile} />
       <div
         className="need-interaction"
         style={{ marginTop: "12px", width: "100%" }}
@@ -160,9 +172,10 @@ const FileShare: React.FC<FileShareProps> = ({ room, handleClose }) => {
 interface FileListProps {
   roomUUID: string;
   filelist: string[];
+  onDelete: (roomUUID: string, filename: string) => Promise<void>;
 }
 
-const FileList: React.FC<FileListProps> = ({ roomUUID, filelist }) => {
+const FileList: React.FC<FileListProps> = ({ roomUUID, filelist, onDelete }) => {
   const Download = (filename: string) => (
     <Button
       type="link"
@@ -172,13 +185,22 @@ const FileList: React.FC<FileListProps> = ({ roomUUID, filelist }) => {
       <DownloadOutlined />
     </Button>
   );
+  const Delete = (filename: string) => (
+    <Button
+      type="link"
+      style={{ fontSize: "18px", width: "18px", height: "18px", padding: 0 }}
+      onClick={async () => await onDelete(roomUUID, filename)}
+    >
+      <DeleteOutlined />
+    </Button>
+  )
   return (
     <Scroll>
       <List
         size="small"
         dataSource={filelist}
         renderItem={(filename) => (
-          <List.Item style={{ padding: "8px" }} actions={[Download(filename)]}>
+          <List.Item style={{ padding: "8px" }} actions={[Download(filename), Delete(filename)]}>
             <Text style={{ wordBreak: "break-all" }}>{filename}</Text>
           </List.Item>
         )}

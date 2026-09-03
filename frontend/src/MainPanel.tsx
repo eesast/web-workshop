@@ -6,10 +6,12 @@ import {
   LoginOutlined,
   LogoutOutlined,
   PlusOutlined,
+  DeleteOutlined,
 } from "@ant-design/icons";
 import * as graphql from "./graphql";
 import { Bubble, Card, Link, Scroll, Text } from "./Components";
 import { user } from "./getUser";
+import axios from "axios";
 
 interface MainPanelProps {
   user: user | null;
@@ -41,6 +43,22 @@ const User: React.FC<MainPanelProps> = ({ user }) => {
     }
   };
 
+  const handleDelete = async () => {
+    if (!user) return;
+    try {
+      await axios.get("/user/delete");
+
+      localStorage.removeItem("token");
+      localStorage.removeItem("username");
+
+      message.success("用户已删除");
+      navigate(0);
+    } catch (error) {
+      console.error(error);
+      message.error("删除用户失败");
+    }
+  }
+
   return (
     <Bubble
       style={{
@@ -65,16 +83,29 @@ const User: React.FC<MainPanelProps> = ({ user }) => {
       >
         {user ? user.username : "未登录"}
       </Text>
+      {user && (<Button
+        style={{
+          width: "30px",
+          height: "30px",
+          fontSize: "30px",
+          marginRight: "2px",
+        }}
+        onClick={async () => await handleDelete()}
+        type="link"
+        danger={user ? true : false}
+      >
+        <DeleteOutlined />
+      </Button>)}
       <Button
         style={{
-          width: "36px",
-          height: "36px",
-          fontSize: "36px",
-          marginLeft: "12px",
+          width: "30px",
+          height: "30px",
+          fontSize: "30px",
+          marginRight: "2px",
         }}
         onClick={handleClick}
         type="link"
-        danger={user ? true : false}
+        danger
       >
         {user ? <LogoutOutlined /> : <LoginOutlined />}
       </Button>

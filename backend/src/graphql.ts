@@ -303,6 +303,10 @@ export type Mutation_Root = {
   delete_message?: Maybe<Message_Mutation_Response>;
   /** delete single row from the table: "message" */
   delete_message_by_pk?: Maybe<Message>;
+  /** delete data from the table: "note" */
+  delete_note?: Maybe<Note_Mutation_Response>;
+  /** delete single row from the table: "note" */
+  delete_note_by_pk?: Maybe<Note>;
   /** delete data from the table: "room" */
   delete_room?: Maybe<Room_Mutation_Response>;
   /** delete single row from the table: "room" */
@@ -319,6 +323,10 @@ export type Mutation_Root = {
   insert_message?: Maybe<Message_Mutation_Response>;
   /** insert a single row into the table: "message" */
   insert_message_one?: Maybe<Message>;
+  /** insert data into the table: "note" */
+  insert_note?: Maybe<Note_Mutation_Response>;
+  /** insert a single row into the table: "note" */
+  insert_note_one?: Maybe<Note>;
   /** insert data into the table: "room" */
   insert_room?: Maybe<Room_Mutation_Response>;
   /** insert a single row into the table: "room" */
@@ -337,6 +345,12 @@ export type Mutation_Root = {
   update_message_by_pk?: Maybe<Message>;
   /** update multiples rows of table: "message" */
   update_message_many?: Maybe<Array<Maybe<Message_Mutation_Response>>>;
+  /** update data of the table: "note" */
+  update_note?: Maybe<Note_Mutation_Response>;
+  /** update single row of the table: "note" */
+  update_note_by_pk?: Maybe<Note>;
+  /** update multiples rows of table: "note" */
+  update_note_many?: Maybe<Array<Maybe<Note_Mutation_Response>>>;
   /** update data of the table: "room" */
   update_room?: Maybe<Room_Mutation_Response>;
   /** update single row of the table: "room" */
@@ -367,6 +381,19 @@ export type Mutation_RootDelete_MessageArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Message_By_PkArgs = {
   uuid: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_NoteArgs = {
+  where: Note_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Note_By_PkArgs = {
+  room_uuid: Scalars['uuid']['input'];
+  user_uuid: Scalars['uuid']['input'];
 };
 
 
@@ -418,6 +445,20 @@ export type Mutation_RootInsert_MessageArgs = {
 export type Mutation_RootInsert_Message_OneArgs = {
   object: Message_Insert_Input;
   on_conflict?: InputMaybe<Message_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_NoteArgs = {
+  objects: Array<Note_Insert_Input>;
+  on_conflict?: InputMaybe<Note_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Note_OneArgs = {
+  object: Note_Insert_Input;
+  on_conflict?: InputMaybe<Note_On_Conflict>;
 };
 
 
@@ -484,6 +525,26 @@ export type Mutation_RootUpdate_Message_ManyArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_NoteArgs = {
+  _set?: InputMaybe<Note_Set_Input>;
+  where: Note_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Note_By_PkArgs = {
+  _set?: InputMaybe<Note_Set_Input>;
+  pk_columns: Note_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Note_ManyArgs = {
+  updates: Array<Note_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_RoomArgs = {
   _set?: InputMaybe<Room_Set_Input>;
   where: Room_Bool_Exp;
@@ -542,6 +603,206 @@ export type Mutation_RootUpdate_User_Room_ManyArgs = {
   updates: Array<User_Room_Updates>;
 };
 
+/** columns and relationships of "note" */
+export type Note = {
+  __typename?: 'note';
+  content: Scalars['String']['output'];
+  created_at: Scalars['timestamp']['output'];
+  room_uuid: Scalars['uuid']['output'];
+  user_uuid: Scalars['uuid']['output'];
+};
+
+/** aggregated selection of "note" */
+export type Note_Aggregate = {
+  __typename?: 'note_aggregate';
+  aggregate?: Maybe<Note_Aggregate_Fields>;
+  nodes: Array<Note>;
+};
+
+export type Note_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Note_Aggregate_Bool_Exp_Count>;
+};
+
+export type Note_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Note_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Note_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "note" */
+export type Note_Aggregate_Fields = {
+  __typename?: 'note_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Note_Max_Fields>;
+  min?: Maybe<Note_Min_Fields>;
+};
+
+
+/** aggregate fields of "note" */
+export type Note_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Note_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "note" */
+export type Note_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Note_Max_Order_By>;
+  min?: InputMaybe<Note_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "note" */
+export type Note_Arr_Rel_Insert_Input = {
+  data: Array<Note_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Note_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "note". All fields are combined with a logical 'AND'. */
+export type Note_Bool_Exp = {
+  _and?: InputMaybe<Array<Note_Bool_Exp>>;
+  _not?: InputMaybe<Note_Bool_Exp>;
+  _or?: InputMaybe<Array<Note_Bool_Exp>>;
+  content?: InputMaybe<String_Comparison_Exp>;
+  created_at?: InputMaybe<Timestamp_Comparison_Exp>;
+  room_uuid?: InputMaybe<Uuid_Comparison_Exp>;
+  user_uuid?: InputMaybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "note" */
+export enum Note_Constraint {
+  /** unique or primary key constraint on columns "room_uuid", "user_uuid" */
+  NotePkey = 'note_pkey'
+}
+
+/** input type for inserting data into table "note" */
+export type Note_Insert_Input = {
+  content?: InputMaybe<Scalars['String']['input']>;
+  created_at?: InputMaybe<Scalars['timestamp']['input']>;
+  room_uuid?: InputMaybe<Scalars['uuid']['input']>;
+  user_uuid?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** aggregate max on columns */
+export type Note_Max_Fields = {
+  __typename?: 'note_max_fields';
+  content?: Maybe<Scalars['String']['output']>;
+  created_at?: Maybe<Scalars['timestamp']['output']>;
+  room_uuid?: Maybe<Scalars['uuid']['output']>;
+  user_uuid?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** order by max() on columns of table "note" */
+export type Note_Max_Order_By = {
+  content?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  room_uuid?: InputMaybe<Order_By>;
+  user_uuid?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Note_Min_Fields = {
+  __typename?: 'note_min_fields';
+  content?: Maybe<Scalars['String']['output']>;
+  created_at?: Maybe<Scalars['timestamp']['output']>;
+  room_uuid?: Maybe<Scalars['uuid']['output']>;
+  user_uuid?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** order by min() on columns of table "note" */
+export type Note_Min_Order_By = {
+  content?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  room_uuid?: InputMaybe<Order_By>;
+  user_uuid?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "note" */
+export type Note_Mutation_Response = {
+  __typename?: 'note_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Note>;
+};
+
+/** on_conflict condition type for table "note" */
+export type Note_On_Conflict = {
+  constraint: Note_Constraint;
+  update_columns?: Array<Note_Update_Column>;
+  where?: InputMaybe<Note_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "note". */
+export type Note_Order_By = {
+  content?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  room_uuid?: InputMaybe<Order_By>;
+  user_uuid?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: note */
+export type Note_Pk_Columns_Input = {
+  room_uuid: Scalars['uuid']['input'];
+  user_uuid: Scalars['uuid']['input'];
+};
+
+/** select columns of table "note" */
+export enum Note_Select_Column {
+  /** column name */
+  Content = 'content',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  RoomUuid = 'room_uuid',
+  /** column name */
+  UserUuid = 'user_uuid'
+}
+
+/** input type for updating data in table "note" */
+export type Note_Set_Input = {
+  content?: InputMaybe<Scalars['String']['input']>;
+  created_at?: InputMaybe<Scalars['timestamp']['input']>;
+  room_uuid?: InputMaybe<Scalars['uuid']['input']>;
+  user_uuid?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** Streaming cursor of the table "note" */
+export type Note_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Note_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Note_Stream_Cursor_Value_Input = {
+  content?: InputMaybe<Scalars['String']['input']>;
+  created_at?: InputMaybe<Scalars['timestamp']['input']>;
+  room_uuid?: InputMaybe<Scalars['uuid']['input']>;
+  user_uuid?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** update columns of table "note" */
+export enum Note_Update_Column {
+  /** column name */
+  Content = 'content',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  RoomUuid = 'room_uuid',
+  /** column name */
+  UserUuid = 'user_uuid'
+}
+
+export type Note_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Note_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Note_Bool_Exp;
+};
+
 /** column ordering options */
 export enum Order_By {
   /** in ascending order, nulls last */
@@ -566,6 +827,12 @@ export type Query_Root = {
   message_aggregate: Message_Aggregate;
   /** fetch data from the table: "message" using primary key columns */
   message_by_pk?: Maybe<Message>;
+  /** fetch data from the table: "note" */
+  note: Array<Note>;
+  /** fetch aggregated fields from the table: "note" */
+  note_aggregate: Note_Aggregate;
+  /** fetch data from the table: "note" using primary key columns */
+  note_by_pk?: Maybe<Note>;
   /** fetch data from the table: "room" */
   room: Array<Room>;
   /** fetch aggregated fields from the table: "room" */
@@ -607,6 +874,30 @@ export type Query_RootMessage_AggregateArgs = {
 
 export type Query_RootMessage_By_PkArgs = {
   uuid: Scalars['uuid']['input'];
+};
+
+
+export type Query_RootNoteArgs = {
+  distinct_on?: InputMaybe<Array<Note_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Note_Order_By>>;
+  where?: InputMaybe<Note_Bool_Exp>;
+};
+
+
+export type Query_RootNote_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Note_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Note_Order_By>>;
+  where?: InputMaybe<Note_Bool_Exp>;
+};
+
+
+export type Query_RootNote_By_PkArgs = {
+  room_uuid: Scalars['uuid']['input'];
+  user_uuid: Scalars['uuid']['input'];
 };
 
 
@@ -691,6 +982,10 @@ export type Room = {
   messages_aggregate: Message_Aggregate;
   name: Scalars['String']['output'];
   /** An array relationship */
+  notes: Array<Note>;
+  /** An aggregate relationship */
+  notes_aggregate: Note_Aggregate;
+  /** An array relationship */
   user_rooms: Array<User_Room>;
   /** An aggregate relationship */
   user_rooms_aggregate: User_Room_Aggregate;
@@ -715,6 +1010,26 @@ export type RoomMessages_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Message_Order_By>>;
   where?: InputMaybe<Message_Bool_Exp>;
+};
+
+
+/** columns and relationships of "room" */
+export type RoomNotesArgs = {
+  distinct_on?: InputMaybe<Array<Note_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Note_Order_By>>;
+  where?: InputMaybe<Note_Bool_Exp>;
+};
+
+
+/** columns and relationships of "room" */
+export type RoomNotes_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Note_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Note_Order_By>>;
+  where?: InputMaybe<Note_Bool_Exp>;
 };
 
 
@@ -770,6 +1085,8 @@ export type Room_Bool_Exp = {
   messages?: InputMaybe<Message_Bool_Exp>;
   messages_aggregate?: InputMaybe<Message_Aggregate_Bool_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
+  notes?: InputMaybe<Note_Bool_Exp>;
+  notes_aggregate?: InputMaybe<Note_Aggregate_Bool_Exp>;
   user_rooms?: InputMaybe<User_Room_Bool_Exp>;
   user_rooms_aggregate?: InputMaybe<User_Room_Aggregate_Bool_Exp>;
   uuid?: InputMaybe<Uuid_Comparison_Exp>;
@@ -792,6 +1109,7 @@ export type Room_Insert_Input = {
   invite_code?: InputMaybe<Scalars['String']['input']>;
   messages?: InputMaybe<Message_Arr_Rel_Insert_Input>;
   name?: InputMaybe<Scalars['String']['input']>;
+  notes?: InputMaybe<Note_Arr_Rel_Insert_Input>;
   user_rooms?: InputMaybe<User_Room_Arr_Rel_Insert_Input>;
   uuid?: InputMaybe<Scalars['uuid']['input']>;
 };
@@ -846,6 +1164,7 @@ export type Room_Order_By = {
   invite_code?: InputMaybe<Order_By>;
   messages_aggregate?: InputMaybe<Message_Aggregate_Order_By>;
   name?: InputMaybe<Order_By>;
+  notes_aggregate?: InputMaybe<Note_Aggregate_Order_By>;
   user_rooms_aggregate?: InputMaybe<User_Room_Aggregate_Order_By>;
   uuid?: InputMaybe<Order_By>;
 };
@@ -926,6 +1245,14 @@ export type Subscription_Root = {
   message_by_pk?: Maybe<Message>;
   /** fetch data from the table in a streaming manner: "message" */
   message_stream: Array<Message>;
+  /** fetch data from the table: "note" */
+  note: Array<Note>;
+  /** fetch aggregated fields from the table: "note" */
+  note_aggregate: Note_Aggregate;
+  /** fetch data from the table: "note" using primary key columns */
+  note_by_pk?: Maybe<Note>;
+  /** fetch data from the table in a streaming manner: "note" */
+  note_stream: Array<Note>;
   /** fetch data from the table: "room" */
   room: Array<Room>;
   /** fetch aggregated fields from the table: "room" */
@@ -980,6 +1307,37 @@ export type Subscription_RootMessage_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Message_Stream_Cursor_Input>>;
   where?: InputMaybe<Message_Bool_Exp>;
+};
+
+
+export type Subscription_RootNoteArgs = {
+  distinct_on?: InputMaybe<Array<Note_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Note_Order_By>>;
+  where?: InputMaybe<Note_Bool_Exp>;
+};
+
+
+export type Subscription_RootNote_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Note_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Note_Order_By>>;
+  where?: InputMaybe<Note_Bool_Exp>;
+};
+
+
+export type Subscription_RootNote_By_PkArgs = {
+  room_uuid: Scalars['uuid']['input'];
+  user_uuid: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootNote_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Note_Stream_Cursor_Input>>;
+  where?: InputMaybe<Note_Bool_Exp>;
 };
 
 
@@ -1093,6 +1451,10 @@ export type User = {
   messages: Array<Message>;
   /** An aggregate relationship */
   messages_aggregate: Message_Aggregate;
+  /** An array relationship */
+  notes: Array<Note>;
+  /** An aggregate relationship */
+  notes_aggregate: Note_Aggregate;
   password: Scalars['String']['output'];
   /** An array relationship */
   user_rooms: Array<User_Room>;
@@ -1120,6 +1482,26 @@ export type UserMessages_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Message_Order_By>>;
   where?: InputMaybe<Message_Bool_Exp>;
+};
+
+
+/** columns and relationships of "user" */
+export type UserNotesArgs = {
+  distinct_on?: InputMaybe<Array<Note_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Note_Order_By>>;
+  where?: InputMaybe<Note_Bool_Exp>;
+};
+
+
+/** columns and relationships of "user" */
+export type UserNotes_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Note_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Note_Order_By>>;
+  where?: InputMaybe<Note_Bool_Exp>;
 };
 
 
@@ -1171,6 +1553,8 @@ export type User_Bool_Exp = {
   _or?: InputMaybe<Array<User_Bool_Exp>>;
   messages?: InputMaybe<Message_Bool_Exp>;
   messages_aggregate?: InputMaybe<Message_Aggregate_Bool_Exp>;
+  notes?: InputMaybe<Note_Bool_Exp>;
+  notes_aggregate?: InputMaybe<Note_Aggregate_Bool_Exp>;
   password?: InputMaybe<String_Comparison_Exp>;
   user_rooms?: InputMaybe<User_Room_Bool_Exp>;
   user_rooms_aggregate?: InputMaybe<User_Room_Aggregate_Bool_Exp>;
@@ -1189,6 +1573,7 @@ export enum User_Constraint {
 /** input type for inserting data into table "user" */
 export type User_Insert_Input = {
   messages?: InputMaybe<Message_Arr_Rel_Insert_Input>;
+  notes?: InputMaybe<Note_Arr_Rel_Insert_Input>;
   password?: InputMaybe<Scalars['String']['input']>;
   user_rooms?: InputMaybe<User_Room_Arr_Rel_Insert_Input>;
   username?: InputMaybe<Scalars['String']['input']>;
@@ -1237,6 +1622,7 @@ export type User_On_Conflict = {
 /** Ordering options when selecting data from "user". */
 export type User_Order_By = {
   messages_aggregate?: InputMaybe<Message_Aggregate_Order_By>;
+  notes_aggregate?: InputMaybe<Note_Aggregate_Order_By>;
   password?: InputMaybe<Order_By>;
   user_rooms_aggregate?: InputMaybe<User_Room_Aggregate_Order_By>;
   username?: InputMaybe<Order_By>;
@@ -1319,7 +1705,7 @@ export type User_Room_Bool_Exp = {
 
 /** unique or primary key constraints on table "user_room" */
 export enum User_Room_Constraint {
-  /** unique or primary key constraint on columns "user_uuid", "room_uuid" */
+  /** unique or primary key constraint on columns "room_uuid", "user_uuid" */
   UserRoomPkey = 'user_room_pkey'
 }
 
@@ -1554,6 +1940,13 @@ export type GetUsersByUsernameQueryVariables = Exact<{
 
 export type GetUsersByUsernameQuery = { __typename?: 'query_root', user: Array<{ __typename?: 'user', uuid: any, password: string }> };
 
+export type DeleteUserMutationVariables = Exact<{
+  uuid: Scalars['uuid']['input'];
+}>;
+
+
+export type DeleteUserMutation = { __typename?: 'mutation_root', delete_user_by_pk?: { __typename?: 'user', uuid: any } | null };
+
 
 export const AddMessageDocument = gql`
     mutation addMessage($user_uuid: uuid!, $room_uuid: uuid!, $content: String!) {
@@ -1627,6 +2020,13 @@ export const GetUsersByUsernameDocument = gql`
   }
 }
     `;
+export const DeleteUserDocument = gql`
+    mutation deleteUser($uuid: uuid!) {
+  delete_user_by_pk(uuid: $uuid) {
+    uuid
+  }
+}
+    `;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string, variables?: any) => Promise<T>;
 
@@ -1658,6 +2058,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     getUsersByUsername(variables: GetUsersByUsernameQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetUsersByUsernameQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetUsersByUsernameQuery>(GetUsersByUsernameDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getUsersByUsername', 'query', variables);
+    },
+    deleteUser(variables: DeleteUserMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<DeleteUserMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<DeleteUserMutation>(DeleteUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'deleteUser', 'mutation', variables);
     }
   };
 }
