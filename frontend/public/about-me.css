@@ -1,0 +1,213 @@
+/* about-me.css —— 第9讲作业：关于我页面的样式 */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+  color: #333;
+  background: linear-gradient(160deg, #a8edea 0%, #fed6e3 55%, #fbc2eb 100%);
+  background-attachment: fixed;
+}
+
+.page {
+  width: min(920px, 92vw);
+  margin: 0 auto;
+  padding: 32px 8px 24px;
+}
+
+/* 头部 */
+header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+header h1 {
+  font-size: 42px;
+  margin: 12px 0 6px;
+  color: #2d4c6b;
+  text-shadow: 0 2px 6px rgba(255, 255, 255, 0.6);
+  letter-spacing: 4px;
+}
+
+.subtitle {
+  color: #556;
+  margin-top: 0;
+}
+
+header nav a {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 20px;
+  border-radius: 999px;
+  background: rgba(45, 76, 107, 0.85);
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+header nav a:hover {
+  background: #1e3a54;
+}
+
+/* 卡片网格布局 */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.72);
+  border-radius: 16px;
+  padding: 20px 24px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(10px);
+}
+
+.card h2 {
+  margin-top: 4px;
+  margin-bottom: 12px;
+  font-size: 20px;
+  color: #2d4c6b;
+  border-bottom: 2px dashed #ffb6c1;
+  padding-bottom: 6px;
+}
+
+.span-2 {
+  grid-column: 1 / -1;
+}
+
+/* 个人简介 */
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  float: left;
+  margin: 0 18px 12px 0;
+}
+
+blockquote {
+  clear: both;
+  margin: 14px 0 0;
+  padding: 10px 16px;
+  border-left: 4px solid #f093a7;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 0 8px 8px 0;
+  color: #5a4a52;
+}
+
+/* 表格 */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+th,
+td {
+  border: 1px solid #c9d4de;
+  padding: 8px 10px;
+  text-align: left;
+}
+
+th {
+  background: #eef4fa;
+  width: 30%;
+  white-space: nowrap;
+}
+
+a {
+  color: #2778c4;
+}
+
+/* 列表 */
+ul,
+ol {
+  line-height: 1.9em;
+  padding-left: 22px;
+  margin: 6px 0;
+}
+
+/* 技能进度条 */
+meter {
+  width: 120px;
+  height: 16px;
+}
+
+.skill-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.skill-name {
+  font-weight: 600;
+  flex: 1;
+}
+
+/* 表单 */
+form label {
+  display: block;
+  margin: 10px 0 4px;
+  font-weight: 600;
+}
+
+form input[type="text"],
+form input[type="email"],
+form textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #b9c6d2;
+  border-radius: 8px;
+  font-family: inherit;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+form button {
+  margin-top: 12px;
+  padding: 8px 22px;
+  border: none;
+  border-radius: 999px;
+  background: #2d4c6b;
+  color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+form button:hover {
+  background: #1e3a54;
+}
+
+/* 音乐播放器区域 */
+audio {
+  width: 100%;
+}
+
+/* 页脚 */
+footer {
+  text-align: center;
+  color: #556;
+  margin-top: 24px;
+  font-size: 13px;
+}
+
+@media (max-width: 700px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .avatar {
+    float: none;
+    display: block;
+    margin: 0 auto 12px;
+  }
+}
