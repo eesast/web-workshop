@@ -5,6 +5,7 @@ import axios from "axios";
 import { ApolloProvider } from "@apollo/client";
 import { message } from "antd";
 import Draggable from "react-draggable";
+// @ts-ignore
 import "./index.css";
 import { client } from "./apollo";
 import * as graphql from "./graphql";
@@ -16,6 +17,7 @@ const MainPanel = React.lazy(() => import("./MainPanel"));
 const LoginPage = React.lazy(() => import("./LoginPage"));
 const ChatBox = React.lazy(() => import("./ChatBox"));
 const FileShare = React.lazy(() => import("./FileShare"));
+const StickyNote = React.lazy(() => import("./StickyNote"));
 
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL!;
 axios.interceptors.request.use((config) => {
@@ -65,6 +67,7 @@ const App = () => {
   const user = getUser();
   const [chatBoxList, setChatBoxList] = useState<number[]>([]);
   const [fileShareList, setFileShareList] = useState<number[]>([]);
+  const [stickyNoteList, setStickyNoteList] = useState<number[]>([]);
   const [currentDrag, setCurrentDrag] = useState<string>("");
 
   const draggableProps = {
@@ -87,6 +90,14 @@ const App = () => {
   };
   const removeFileShare = (idx: number) => {
     setFileShareList(fileShareList.filter((id) => id !== idx));
+  };
+  const addStickyNote = (idx: number) => {
+    if (!stickyNoteList.includes(idx)) {
+      setStickyNoteList([...stickyNoteList, idx]);
+    }
+  };
+  const removeStickyNote = (idx: number) => {
+    setStickyNoteList(stickyNoteList.filter((id) => id !== idx));
   };
 
   const { data, error, refetch } = graphql.useGetJoinedRoomsQuery({
@@ -111,6 +122,7 @@ const App = () => {
           refetchRooms={refetch}
           addChatBox={addChatBox}
           addFileShare={addFileShare}
+          addStickyNote={addStickyNote}  // 新增
         />
       </Suspense>
       <MyDraggable key="dice" oid="dice" {...draggableProps}>
@@ -148,6 +160,23 @@ const App = () => {
               handleClose={() => removeFileShare(idx)}
             />
           </Suspense>
+        </MyDraggable>
+      ))}
+      {/* ===== 新增便签纸渲染 ===== */}
+      {stickyNoteList.map((idx) => (
+        <MyDraggable
+          key={`sticky-${idx}`}
+          oid={`sticky-${idx}`}
+          style={{ position: "absolute", right: 0, top: 120 + idx * 20 }}
+          {...draggableProps}
+        >
+          <Suspense fallback={null}>
+            <StickyNote
+              room={data?.user_room[idx].room}
+              userUUID={user?.uuid}
+              handleClose={() => removeStickyNote(idx)}
+          />
+        </Suspense>
         </MyDraggable>
       ))}
     </div>

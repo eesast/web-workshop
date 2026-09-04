@@ -1859,3 +1859,79 @@ export type GetUsersByUsernameQueryHookResult = ReturnType<typeof useGetUsersByU
 export type GetUsersByUsernameLazyQueryHookResult = ReturnType<typeof useGetUsersByUsernameLazyQuery>;
 export type GetUsersByUsernameSuspenseQueryHookResult = ReturnType<typeof useGetUsersByUsernameSuspenseQuery>;
 export type GetUsersByUsernameQueryResult = Apollo.QueryResult<GetUsersByUsernameQuery, GetUsersByUsernameQueryVariables>;
+// ============================================================
+// 便签纸 (notes) 相关 GraphQL 定义
+// ============================================================
+
+// ---------- 查询便签列表 ----------
+export const NotesDocument = gql`
+  query notes($room_uid: uuid!) {
+    notes(where: { room_uid: { _eq: $room_uid } }) {
+      id
+      title
+      content
+      created_at
+    }
+  }
+`;
+
+export function useNotesQuery(
+  baseOptions: Apollo.QueryHookOptions<any, any> & { variables: { room_uid: string } }
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<any, any>(NotesDocument, options);
+}
+
+// ---------- 创建便签 ----------
+export const InsertNotesOneDocument = gql`
+  mutation insertNotesOne($object: notes_insert_input!) {
+    insert_notes_one(object: $object) {
+      id
+      title
+      content
+      created_at
+    }
+  }
+`;
+
+export function useInsertNotesOneMutation(
+  baseOptions?: Apollo.MutationHookOptions<any, any>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<any, any>(InsertNotesOneDocument, options);
+}
+
+// ---------- 更新便签 ----------
+export const UpdateNotesByPkDocument = gql`
+  mutation updateNotesByPk($pk_columns: notes_pk_columns_input!, $_set: notes_set_input!) {
+    update_notes_by_pk(pk_columns: $pk_columns, _set: $_set) {
+      id
+      title
+      content
+    }
+  }
+`;
+
+export function useUpdateNotesByPkMutation(
+  baseOptions?: Apollo.MutationHookOptions<any, any>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<any, any>(UpdateNotesByPkDocument, options);
+}
+
+// ---------- 删除便签 ----------
+export const DeleteNotesByPkDocument = gql`
+  mutation deleteNotesByPk($id: Int!) {
+    delete_notes_by_pk(id: $id) {
+      id
+      title
+    }
+  }
+`;
+
+export function useDeleteNotesByPkMutation(
+  baseOptions?: Apollo.MutationHookOptions<any, any>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<any, any>(DeleteNotesByPkDocument, options);
+}

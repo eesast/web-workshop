@@ -17,6 +17,7 @@ interface MainPanelProps {
   refetchRooms: () => void;
   addChatBox: (id: number) => void;
   addFileShare: (id: number) => void;
+  addStickyNote: (id: number) => void;  // 新增
 }
 
 const MainPanel: React.FC<MainPanelProps> = (props) => {
@@ -183,6 +184,7 @@ const RoomList: React.FC<MainPanelProps> = ({
   refetchRooms,
   addChatBox,
   addFileShare,
+  addStickyNote,  // 新增
 }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -192,10 +194,11 @@ const RoomList: React.FC<MainPanelProps> = ({
 
   const handleCreateRoom = async (values: any) => {
     setLoading(true);
+    const intro = values.intro || "默认会议简介"; 
     const result1 = await addRoomMutation({
       variables: {
         name: values.name,
-        intro: values.intro,
+        intro: intro,
         invite_code: Math.random().toString(36).slice(2, 8).toUpperCase(),
       },
     });
@@ -248,6 +251,7 @@ const RoomList: React.FC<MainPanelProps> = ({
               room={item.room}
               handleOpenChat={() => addChatBox(index)}
               handleOpenFileShare={() => addFileShare(index)}
+              handleOpenStickyNote={() => addStickyNote(index)}  // 新增
             />
           )}
         />
@@ -287,12 +291,14 @@ interface RoomListItemProps {
   room: graphql.GetJoinedRoomsQuery["user_room"][0]["room"];
   handleOpenChat: () => void;
   handleOpenFileShare: () => void;
+  handleOpenStickyNote: () => void;  // 新增
 }
 
 const RoomListItem: React.FC<RoomListItemProps> = ({
   room,
   handleOpenChat,
   handleOpenFileShare,
+  handleOpenStickyNote,  // 新增
 }) => {
   const dateUTC = new Date(room.created_at);
   const date = new Date(
@@ -334,6 +340,9 @@ const RoomListItem: React.FC<RoomListItemProps> = ({
         </Link>
         <Link style={{ marginLeft: "12px" }} onClick={handleOpenFileShare}>
           打开文件共享空间
+        </Link>
+        <Link style={{ marginLeft: "12px" }} onClick={handleOpenStickyNote}>
+          打开便签纸
         </Link>
         <Link danger style={{ marginLeft: "12px" }} onClick={handleQuit}>
           退出会议

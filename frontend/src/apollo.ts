@@ -1,47 +1,32 @@
-import { ApolloClient, HttpLink, InMemoryCache, split } from "@apollo/client";
-import { getMainDefinition } from "@apollo/client/utilities";
-import { setContext } from "@apollo/client/link/context";
-import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
-import { createClient } from "graphql-ws";
+import { ApolloClient, InMemoryCache, ApolloLink, HttpLink } from "@apollo/client";
 
-const auth = () => {
-  const token = localStorage.getItem("token");
-  return {
-    headers: {
-      ...(token && {
-        Authorization: `Bearer ${token}`,
-      }),
-    },
-  };
-};
+// 你的 Admin Secret（直接硬编码）
+const ADMIN_SECRET = "ZLq19G1Nk1xASM7ugBF15OoPFE5AL1TNII8yDUfEL2pBnlZUXgkLhDuoXXEGgacX";
 
+// 1. 创建 HTTP Link
 const httpLink = new HttpLink({
   uri: process.env.REACT_APP_HASURA_HTTPLINK!,
 });
 
-const authLink = setContext(auth).concat(httpLink);
+// 2. 创建自定义 Link：强制添加 Admin Secret 和 Authorization
+const authLink = new ApolloLink((operation, forward) => {
+  const token = localStorage.getItem("token");
+  // 设置请求头
+  operation.setContext(({ headers = {} }) => ({
+    headers: {
+      ...headers,
+      "x-hasura-admin-secret": ADMIN_SECRET,
+      ...(token && { Authorization: `Bearer ${token}` }),
+    },
+  }));
+  return forward(operation);
+});
 
-const wsLink = new GraphQLWsLink(
-  createClient({
-    url: process.env.REACT_APP_HASURA_WSLINK!,
-    lazy: true,
-    connectionParams: auth,
-  })
-);
+// 3. 组合：先执行 authLink，再执行 httpLink
+const link = authLink.concat(httpLink);
 
-const splitLink = split(
-  ({ query }) => {
-    const definition = getMainDefinition(query);
-    return (
-      definition.kind === "OperationDefinition" &&
-      definition.operation === "subscription"
-    );
-  },
-  wsLink,
-  authLink
-);
-
+// 4. 导出 Client
 export const client = new ApolloClient({
   cache: new InMemoryCache(),
-  link: splitLink,
+  link: link,
 });
