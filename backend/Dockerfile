@@ -4,7 +4,7 @@ WORKDIR /home/node/app
 
 # Install Dependencies
 COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile --no-cache
+RUN yarn config set registry https://registry.npmmirror.com && yarn install --frozen-lockfile --no-cache
 
 # Copy source code
 COPY . .
@@ -20,7 +20,7 @@ ENV NODE_ENV=production
 
 # Install Production Dependencies
 COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile --no-cache --production
+RUN yarn config set registry https://registry.npmmirror.com && yarn install --frozen-lockfile --no-cache --production
 
 # Copy build files
 COPY --from=builder /home/node/app/build ./build
