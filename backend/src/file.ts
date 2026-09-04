@@ -15,7 +15,7 @@ const limits = {
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     try {
-      const room = req.params.room;
+      const room = req.params.room as string;
       const dir = path.resolve(baseDir, room);
       fs.mkdirSync(dir, { recursive: true });
       return cb(null, dir);
@@ -29,7 +29,8 @@ const storage = multer.diskStorage({
 })
 const upload = multer({ storage, limits });
 
-router.post("/upload/:room", authenticate, upload.single("file"), (req, res) => {
+const uploadSingle = upload.single("file") as unknown as express.RequestHandler;
+router.post("/upload/:room", authenticate, uploadSingle, (req, res) => {
   const file = req.file;
   if (!file) {
     return res.status(422).send("422 Unprocessable Entity: Missing file");

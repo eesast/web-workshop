@@ -1,0 +1,15 @@
+services:
+  backend:
+    image: backend:latest
+    restart: always
+    ports:
+      - 20248:8888
+    env_file:
+      - .local.env
+    volumes:
+      - /data/upload:/data/upload
+
+networks:
+  default:
+    name: database_default
+    external: true
