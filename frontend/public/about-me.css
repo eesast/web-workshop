@@ -539,3 +539,105 @@ body::after {
     }
 
 }
+
+body.dark {
+  color: #d5d5d5;
+}
+
+body.dark::after {
+  background: rgba(0, 0, 0, 0.55);
+}
+
+body.dark .navbar {
+  background: rgba(24, 24, 28, 0.82);
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+body.dark .site-title {
+    color: #eaeaea;
+}
+
+body.dark .nav-item {
+    color: #a5a5a5;
+}
+
+body.dark .nav-item:hover {
+    color: #eaeaea;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+body.dark .nav-item.active {
+    color: #f0f0f0;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+body.dark .theme-button {
+    color: #bbbbbb;
+}
+
+body.dark .about-card {
+    background: rgba(30, 30, 36, 0.72);
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45), 0 4px 16px rgba(0, 0, 0, 0.30);
+}
+
+body.dark .about-card h1,
+body.dark .about-card h2 {
+    color: #f0f0f0;
+}
+
+body.dark .about-content p {
+    color: #c2c2c2;
+}
+
+body.dark .about-content em {
+    color: #e8e8e8;
+}
+
+body.dark .contact-list {
+    color: #b8b8b8;
+}
+
+body.dark .footer p {
+    color: rgba(220, 220, 220, 0.55);
+}
+
+.github-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 18px 20px;
+  border: 1px solid #eaeaea;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.github-card img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+}
+
+.github-card p {
+    color: #575757;
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+.github-name strong {
+    color: #333333;
+    font-size: 16px;
+}
+
+body.dark .github-card {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.10);
+}
+
+body.dark .github-card p {
+    color: #c2c2c2;
+}
+
+body.dark .github-name strong {
+    color: #f0f0f0;
+}
