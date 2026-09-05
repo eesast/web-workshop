@@ -1,0 +1,22 @@
+title: 科协暑培（网站部分）学习型工程
+description: EESAST Web Workshop
+theme: jekyll-theme-hacker
+plugins:
+  - jekyll-optional-front-matter
+  - jekyll-readme-index
+  - jekyll-default-layout
+  - jekyll-relative-links
+  - jekyll-seo-tag
+relative_links:
+  enabled: true
+  collections: true
+include:
+  - README.md
+  - tutorials
+  - database/design.md
+  - .github/workflows/README.md
+exclude:
+  - frontend
+  - backend/node_modules
+  - database/node_modules
+  - _site
