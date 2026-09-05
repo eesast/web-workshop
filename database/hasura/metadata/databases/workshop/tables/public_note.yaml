@@ -1,0 +1,42 @@
+table:
+  name: note
+  schema: public
+insert_permissions:
+  - role: user
+    permission:
+      check: {}
+      columns:
+        - content
+        - created_at
+        - room_uuid
+        - updated_at
+        - uuid
+    comment: ""
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - content
+        - created_at
+        - room_uuid
+        - updated_at
+        - uuid
+      filter: {}
+    comment: ""
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - content
+        - created_at
+        - room_uuid
+        - updated_at
+        - uuid
+      filter: {}
+      check: {}
+    comment: ""
+delete_permissions:
+  - role: user
+    permission:
+      filter: {}
+    comment: ""

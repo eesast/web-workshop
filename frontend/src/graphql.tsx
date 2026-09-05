@@ -79,6 +79,9 @@ export type Message = {
   content: Scalars['String']['output'];
   created_at: Scalars['timestamp']['output'];
   /** An object relationship */
+  replied_message?: Maybe<Message>;
+  reply_to_id?: Maybe<Scalars['uuid']['output']>;
+  /** An object relationship */
   room: Room;
   room_uuid: Scalars['uuid']['output'];
   /** An object relationship */
@@ -141,6 +144,8 @@ export type Message_Bool_Exp = {
   _or?: InputMaybe<Array<Message_Bool_Exp>>;
   content?: InputMaybe<String_Comparison_Exp>;
   created_at?: InputMaybe<Timestamp_Comparison_Exp>;
+  replied_message?: InputMaybe<Message_Bool_Exp>;
+  reply_to_id?: InputMaybe<Uuid_Comparison_Exp>;
   room?: InputMaybe<Room_Bool_Exp>;
   room_uuid?: InputMaybe<Uuid_Comparison_Exp>;
   user?: InputMaybe<User_Bool_Exp>;
@@ -158,6 +163,8 @@ export enum Message_Constraint {
 export type Message_Insert_Input = {
   content?: InputMaybe<Scalars['String']['input']>;
   created_at?: InputMaybe<Scalars['timestamp']['input']>;
+  replied_message?: InputMaybe<Message_Obj_Rel_Insert_Input>;
+  reply_to_id?: InputMaybe<Scalars['uuid']['input']>;
   room?: InputMaybe<Room_Obj_Rel_Insert_Input>;
   room_uuid?: InputMaybe<Scalars['uuid']['input']>;
   user?: InputMaybe<User_Obj_Rel_Insert_Input>;
@@ -170,6 +177,7 @@ export type Message_Max_Fields = {
   __typename?: 'message_max_fields';
   content?: Maybe<Scalars['String']['output']>;
   created_at?: Maybe<Scalars['timestamp']['output']>;
+  reply_to_id?: Maybe<Scalars['uuid']['output']>;
   room_uuid?: Maybe<Scalars['uuid']['output']>;
   user_uuid?: Maybe<Scalars['uuid']['output']>;
   uuid?: Maybe<Scalars['uuid']['output']>;
@@ -179,6 +187,7 @@ export type Message_Max_Fields = {
 export type Message_Max_Order_By = {
   content?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
+  reply_to_id?: InputMaybe<Order_By>;
   room_uuid?: InputMaybe<Order_By>;
   user_uuid?: InputMaybe<Order_By>;
   uuid?: InputMaybe<Order_By>;
@@ -189,6 +198,7 @@ export type Message_Min_Fields = {
   __typename?: 'message_min_fields';
   content?: Maybe<Scalars['String']['output']>;
   created_at?: Maybe<Scalars['timestamp']['output']>;
+  reply_to_id?: Maybe<Scalars['uuid']['output']>;
   room_uuid?: Maybe<Scalars['uuid']['output']>;
   user_uuid?: Maybe<Scalars['uuid']['output']>;
   uuid?: Maybe<Scalars['uuid']['output']>;
@@ -198,6 +208,7 @@ export type Message_Min_Fields = {
 export type Message_Min_Order_By = {
   content?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
+  reply_to_id?: InputMaybe<Order_By>;
   room_uuid?: InputMaybe<Order_By>;
   user_uuid?: InputMaybe<Order_By>;
   uuid?: InputMaybe<Order_By>;
@@ -212,6 +223,13 @@ export type Message_Mutation_Response = {
   returning: Array<Message>;
 };
 
+/** input type for inserting object relation for remote table "message" */
+export type Message_Obj_Rel_Insert_Input = {
+  data: Message_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Message_On_Conflict>;
+};
+
 /** on_conflict condition type for table "message" */
 export type Message_On_Conflict = {
   constraint: Message_Constraint;
@@ -223,6 +241,8 @@ export type Message_On_Conflict = {
 export type Message_Order_By = {
   content?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
+  replied_message?: InputMaybe<Message_Order_By>;
+  reply_to_id?: InputMaybe<Order_By>;
   room?: InputMaybe<Room_Order_By>;
   room_uuid?: InputMaybe<Order_By>;
   user?: InputMaybe<User_Order_By>;
@@ -242,6 +262,8 @@ export enum Message_Select_Column {
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
+  ReplyToId = 'reply_to_id',
+  /** column name */
   RoomUuid = 'room_uuid',
   /** column name */
   UserUuid = 'user_uuid',
@@ -253,6 +275,7 @@ export enum Message_Select_Column {
 export type Message_Set_Input = {
   content?: InputMaybe<Scalars['String']['input']>;
   created_at?: InputMaybe<Scalars['timestamp']['input']>;
+  reply_to_id?: InputMaybe<Scalars['uuid']['input']>;
   room_uuid?: InputMaybe<Scalars['uuid']['input']>;
   user_uuid?: InputMaybe<Scalars['uuid']['input']>;
   uuid?: InputMaybe<Scalars['uuid']['input']>;
@@ -270,6 +293,7 @@ export type Message_Stream_Cursor_Input = {
 export type Message_Stream_Cursor_Value_Input = {
   content?: InputMaybe<Scalars['String']['input']>;
   created_at?: InputMaybe<Scalars['timestamp']['input']>;
+  reply_to_id?: InputMaybe<Scalars['uuid']['input']>;
   room_uuid?: InputMaybe<Scalars['uuid']['input']>;
   user_uuid?: InputMaybe<Scalars['uuid']['input']>;
   uuid?: InputMaybe<Scalars['uuid']['input']>;
@@ -281,6 +305,8 @@ export enum Message_Update_Column {
   Content = 'content',
   /** column name */
   CreatedAt = 'created_at',
+  /** column name */
+  ReplyToId = 'reply_to_id',
   /** column name */
   RoomUuid = 'room_uuid',
   /** column name */
@@ -303,6 +329,10 @@ export type Mutation_Root = {
   delete_message?: Maybe<Message_Mutation_Response>;
   /** delete single row from the table: "message" */
   delete_message_by_pk?: Maybe<Message>;
+  /** delete data from the table: "note" */
+  delete_note?: Maybe<Note_Mutation_Response>;
+  /** delete single row from the table: "note" */
+  delete_note_by_pk?: Maybe<Note>;
   /** delete data from the table: "room" */
   delete_room?: Maybe<Room_Mutation_Response>;
   /** delete single row from the table: "room" */
@@ -319,6 +349,10 @@ export type Mutation_Root = {
   insert_message?: Maybe<Message_Mutation_Response>;
   /** insert a single row into the table: "message" */
   insert_message_one?: Maybe<Message>;
+  /** insert data into the table: "note" */
+  insert_note?: Maybe<Note_Mutation_Response>;
+  /** insert a single row into the table: "note" */
+  insert_note_one?: Maybe<Note>;
   /** insert data into the table: "room" */
   insert_room?: Maybe<Room_Mutation_Response>;
   /** insert a single row into the table: "room" */
@@ -337,6 +371,12 @@ export type Mutation_Root = {
   update_message_by_pk?: Maybe<Message>;
   /** update multiples rows of table: "message" */
   update_message_many?: Maybe<Array<Maybe<Message_Mutation_Response>>>;
+  /** update data of the table: "note" */
+  update_note?: Maybe<Note_Mutation_Response>;
+  /** update single row of the table: "note" */
+  update_note_by_pk?: Maybe<Note>;
+  /** update multiples rows of table: "note" */
+  update_note_many?: Maybe<Array<Maybe<Note_Mutation_Response>>>;
   /** update data of the table: "room" */
   update_room?: Maybe<Room_Mutation_Response>;
   /** update single row of the table: "room" */
@@ -366,6 +406,18 @@ export type Mutation_RootDelete_MessageArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Message_By_PkArgs = {
+  uuid: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_NoteArgs = {
+  where: Note_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Note_By_PkArgs = {
   uuid: Scalars['uuid']['input'];
 };
 
@@ -418,6 +470,20 @@ export type Mutation_RootInsert_MessageArgs = {
 export type Mutation_RootInsert_Message_OneArgs = {
   object: Message_Insert_Input;
   on_conflict?: InputMaybe<Message_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_NoteArgs = {
+  objects: Array<Note_Insert_Input>;
+  on_conflict?: InputMaybe<Note_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Note_OneArgs = {
+  object: Note_Insert_Input;
+  on_conflict?: InputMaybe<Note_On_Conflict>;
 };
 
 
@@ -484,6 +550,26 @@ export type Mutation_RootUpdate_Message_ManyArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_NoteArgs = {
+  _set?: InputMaybe<Note_Set_Input>;
+  where: Note_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Note_By_PkArgs = {
+  _set?: InputMaybe<Note_Set_Input>;
+  pk_columns: Note_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Note_ManyArgs = {
+  updates: Array<Note_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_RoomArgs = {
   _set?: InputMaybe<Room_Set_Input>;
   where: Room_Bool_Exp;
@@ -542,6 +628,176 @@ export type Mutation_RootUpdate_User_Room_ManyArgs = {
   updates: Array<User_Room_Updates>;
 };
 
+/** columns and relationships of "note" */
+export type Note = {
+  __typename?: 'note';
+  content: Scalars['String']['output'];
+  created_at: Scalars['timestamp']['output'];
+  room_uuid: Scalars['uuid']['output'];
+  updated_at: Scalars['timestamp']['output'];
+  uuid: Scalars['uuid']['output'];
+};
+
+/** aggregated selection of "note" */
+export type Note_Aggregate = {
+  __typename?: 'note_aggregate';
+  aggregate?: Maybe<Note_Aggregate_Fields>;
+  nodes: Array<Note>;
+};
+
+/** aggregate fields of "note" */
+export type Note_Aggregate_Fields = {
+  __typename?: 'note_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Note_Max_Fields>;
+  min?: Maybe<Note_Min_Fields>;
+};
+
+
+/** aggregate fields of "note" */
+export type Note_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Note_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Boolean expression to filter rows from the table "note". All fields are combined with a logical 'AND'. */
+export type Note_Bool_Exp = {
+  _and?: InputMaybe<Array<Note_Bool_Exp>>;
+  _not?: InputMaybe<Note_Bool_Exp>;
+  _or?: InputMaybe<Array<Note_Bool_Exp>>;
+  content?: InputMaybe<String_Comparison_Exp>;
+  created_at?: InputMaybe<Timestamp_Comparison_Exp>;
+  room_uuid?: InputMaybe<Uuid_Comparison_Exp>;
+  updated_at?: InputMaybe<Timestamp_Comparison_Exp>;
+  uuid?: InputMaybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "note" */
+export enum Note_Constraint {
+  /** unique or primary key constraint on columns "uuid" */
+  NotePkey = 'note_pkey'
+}
+
+/** input type for inserting data into table "note" */
+export type Note_Insert_Input = {
+  content?: InputMaybe<Scalars['String']['input']>;
+  created_at?: InputMaybe<Scalars['timestamp']['input']>;
+  room_uuid?: InputMaybe<Scalars['uuid']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamp']['input']>;
+  uuid?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** aggregate max on columns */
+export type Note_Max_Fields = {
+  __typename?: 'note_max_fields';
+  content?: Maybe<Scalars['String']['output']>;
+  created_at?: Maybe<Scalars['timestamp']['output']>;
+  room_uuid?: Maybe<Scalars['uuid']['output']>;
+  updated_at?: Maybe<Scalars['timestamp']['output']>;
+  uuid?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** aggregate min on columns */
+export type Note_Min_Fields = {
+  __typename?: 'note_min_fields';
+  content?: Maybe<Scalars['String']['output']>;
+  created_at?: Maybe<Scalars['timestamp']['output']>;
+  room_uuid?: Maybe<Scalars['uuid']['output']>;
+  updated_at?: Maybe<Scalars['timestamp']['output']>;
+  uuid?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** response of any mutation on the table "note" */
+export type Note_Mutation_Response = {
+  __typename?: 'note_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Note>;
+};
+
+/** on_conflict condition type for table "note" */
+export type Note_On_Conflict = {
+  constraint: Note_Constraint;
+  update_columns?: Array<Note_Update_Column>;
+  where?: InputMaybe<Note_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "note". */
+export type Note_Order_By = {
+  content?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  room_uuid?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+  uuid?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: note */
+export type Note_Pk_Columns_Input = {
+  uuid: Scalars['uuid']['input'];
+};
+
+/** select columns of table "note" */
+export enum Note_Select_Column {
+  /** column name */
+  Content = 'content',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  RoomUuid = 'room_uuid',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  Uuid = 'uuid'
+}
+
+/** input type for updating data in table "note" */
+export type Note_Set_Input = {
+  content?: InputMaybe<Scalars['String']['input']>;
+  created_at?: InputMaybe<Scalars['timestamp']['input']>;
+  room_uuid?: InputMaybe<Scalars['uuid']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamp']['input']>;
+  uuid?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** Streaming cursor of the table "note" */
+export type Note_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Note_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Note_Stream_Cursor_Value_Input = {
+  content?: InputMaybe<Scalars['String']['input']>;
+  created_at?: InputMaybe<Scalars['timestamp']['input']>;
+  room_uuid?: InputMaybe<Scalars['uuid']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamp']['input']>;
+  uuid?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** update columns of table "note" */
+export enum Note_Update_Column {
+  /** column name */
+  Content = 'content',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  RoomUuid = 'room_uuid',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  Uuid = 'uuid'
+}
+
+export type Note_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Note_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Note_Bool_Exp;
+};
+
 /** column ordering options */
 export enum Order_By {
   /** in ascending order, nulls last */
@@ -566,6 +822,12 @@ export type Query_Root = {
   message_aggregate: Message_Aggregate;
   /** fetch data from the table: "message" using primary key columns */
   message_by_pk?: Maybe<Message>;
+  /** fetch data from the table: "note" */
+  note: Array<Note>;
+  /** fetch aggregated fields from the table: "note" */
+  note_aggregate: Note_Aggregate;
+  /** fetch data from the table: "note" using primary key columns */
+  note_by_pk?: Maybe<Note>;
   /** fetch data from the table: "room" */
   room: Array<Room>;
   /** fetch aggregated fields from the table: "room" */
@@ -606,6 +868,29 @@ export type Query_RootMessage_AggregateArgs = {
 
 
 export type Query_RootMessage_By_PkArgs = {
+  uuid: Scalars['uuid']['input'];
+};
+
+
+export type Query_RootNoteArgs = {
+  distinct_on?: InputMaybe<Array<Note_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Note_Order_By>>;
+  where?: InputMaybe<Note_Bool_Exp>;
+};
+
+
+export type Query_RootNote_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Note_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Note_Order_By>>;
+  where?: InputMaybe<Note_Bool_Exp>;
+};
+
+
+export type Query_RootNote_By_PkArgs = {
   uuid: Scalars['uuid']['input'];
 };
 
@@ -926,6 +1211,14 @@ export type Subscription_Root = {
   message_by_pk?: Maybe<Message>;
   /** fetch data from the table in a streaming manner: "message" */
   message_stream: Array<Message>;
+  /** fetch data from the table: "note" */
+  note: Array<Note>;
+  /** fetch aggregated fields from the table: "note" */
+  note_aggregate: Note_Aggregate;
+  /** fetch data from the table: "note" using primary key columns */
+  note_by_pk?: Maybe<Note>;
+  /** fetch data from the table in a streaming manner: "note" */
+  note_stream: Array<Note>;
   /** fetch data from the table: "room" */
   room: Array<Room>;
   /** fetch aggregated fields from the table: "room" */
@@ -980,6 +1273,36 @@ export type Subscription_RootMessage_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Message_Stream_Cursor_Input>>;
   where?: InputMaybe<Message_Bool_Exp>;
+};
+
+
+export type Subscription_RootNoteArgs = {
+  distinct_on?: InputMaybe<Array<Note_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Note_Order_By>>;
+  where?: InputMaybe<Note_Bool_Exp>;
+};
+
+
+export type Subscription_RootNote_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Note_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Note_Order_By>>;
+  where?: InputMaybe<Note_Bool_Exp>;
+};
+
+
+export type Subscription_RootNote_By_PkArgs = {
+  uuid: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootNote_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Note_Stream_Cursor_Input>>;
+  where?: InputMaybe<Note_Bool_Exp>;
 };
 
 
@@ -1319,7 +1642,7 @@ export type User_Room_Bool_Exp = {
 
 /** unique or primary key constraints on table "user_room" */
 export enum User_Room_Constraint {
-  /** unique or primary key constraint on columns "user_uuid", "room_uuid" */
+  /** unique or primary key constraint on columns "room_uuid", "user_uuid" */
   UserRoomPkey = 'user_room_pkey'
 }
 
@@ -1496,6 +1819,7 @@ export type AddMessageMutationVariables = Exact<{
   user_uuid: Scalars['uuid']['input'];
   room_uuid: Scalars['uuid']['input'];
   content: Scalars['String']['input'];
+  reply_to_id?: InputMaybe<Scalars['uuid']['input']>;
 }>;
 
 
@@ -1506,7 +1830,37 @@ export type GetMessagesByRoomSubscriptionVariables = Exact<{
 }>;
 
 
-export type GetMessagesByRoomSubscription = { __typename?: 'subscription_root', message: Array<{ __typename?: 'message', uuid: any, content: string, created_at: any, user: { __typename?: 'user', uuid: any, username: string } }> };
+export type GetMessagesByRoomSubscription = { __typename?: 'subscription_root', message: Array<{ __typename?: 'message', uuid: any, content: string, created_at: any, reply_to_id?: any | null, user: { __typename?: 'user', uuid: any, username: string }, replied_message?: { __typename?: 'message', uuid: any, content: string, user: { __typename?: 'user', uuid: any, username: string } } | null }> };
+
+export type AddNoteMutationVariables = Exact<{
+  room_uuid: Scalars['uuid']['input'];
+  content: Scalars['String']['input'];
+}>;
+
+
+export type AddNoteMutation = { __typename?: 'mutation_root', insert_note_one?: { __typename?: 'note', uuid: any, content: string, created_at: any, updated_at: any } | null };
+
+export type GetNotesByRoomQueryVariables = Exact<{
+  room_uuid: Scalars['uuid']['input'];
+}>;
+
+
+export type GetNotesByRoomQuery = { __typename?: 'query_root', note: Array<{ __typename?: 'note', uuid: any, content: string, created_at: any, updated_at: any }> };
+
+export type UpdateNoteMutationVariables = Exact<{
+  uuid: Scalars['uuid']['input'];
+  content: Scalars['String']['input'];
+}>;
+
+
+export type UpdateNoteMutation = { __typename?: 'mutation_root', update_note_by_pk?: { __typename?: 'note', uuid: any, content: string, created_at: any, updated_at: any } | null };
+
+export type DeleteNoteMutationVariables = Exact<{
+  uuid: Scalars['uuid']['input'];
+}>;
+
+
+export type DeleteNoteMutation = { __typename?: 'mutation_root', delete_note_by_pk?: { __typename?: 'note', uuid: any } | null };
 
 export type AddRoomMutationVariables = Exact<{
   name: Scalars['String']['input'];
@@ -1554,11 +1908,19 @@ export type GetUsersByUsernameQueryVariables = Exact<{
 
 export type GetUsersByUsernameQuery = { __typename?: 'query_root', user: Array<{ __typename?: 'user', uuid: any, password: string }> };
 
+export type UpdateUserPasswordMutationVariables = Exact<{
+  uuid: Scalars['uuid']['input'];
+  password: Scalars['String']['input'];
+}>;
+
+
+export type UpdateUserPasswordMutation = { __typename?: 'mutation_root', update_user_by_pk?: { __typename?: 'user', uuid: any } | null };
+
 
 export const AddMessageDocument = gql`
-    mutation addMessage($user_uuid: uuid!, $room_uuid: uuid!, $content: String!) {
+    mutation addMessage($user_uuid: uuid!, $room_uuid: uuid!, $content: String!, $reply_to_id: uuid) {
   insert_message_one(
-    object: {user_uuid: $user_uuid, room_uuid: $room_uuid, content: $content}
+    object: {user_uuid: $user_uuid, room_uuid: $room_uuid, content: $content, reply_to_id: $reply_to_id}
   ) {
     uuid
   }
@@ -1582,6 +1944,7 @@ export type AddMessageMutationFn = Apollo.MutationFunction<AddMessageMutation, A
  *      user_uuid: // value for 'user_uuid'
  *      room_uuid: // value for 'room_uuid'
  *      content: // value for 'content'
+ *      reply_to_id: // value for 'reply_to_id'
  *   },
  * });
  */
@@ -1602,6 +1965,15 @@ export const GetMessagesByRoomDocument = gql`
     }
     content
     created_at
+    reply_to_id
+    replied_message {
+      uuid
+      content
+      user {
+        uuid
+        username
+      }
+    }
   }
 }
     `;
@@ -1628,6 +2000,156 @@ export function useGetMessagesByRoomSubscription(baseOptions: Apollo.Subscriptio
       }
 export type GetMessagesByRoomSubscriptionHookResult = ReturnType<typeof useGetMessagesByRoomSubscription>;
 export type GetMessagesByRoomSubscriptionResult = Apollo.SubscriptionResult<GetMessagesByRoomSubscription>;
+export const AddNoteDocument = gql`
+    mutation addNote($room_uuid: uuid!, $content: String!) {
+  insert_note_one(object: {room_uuid: $room_uuid, content: $content}) {
+    uuid
+    content
+    created_at
+    updated_at
+  }
+}
+    `;
+export type AddNoteMutationFn = Apollo.MutationFunction<AddNoteMutation, AddNoteMutationVariables>;
+
+/**
+ * __useAddNoteMutation__
+ *
+ * To run a mutation, you first call `useAddNoteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddNoteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addNoteMutation, { data, loading, error }] = useAddNoteMutation({
+ *   variables: {
+ *      room_uuid: // value for 'room_uuid'
+ *      content: // value for 'content'
+ *   },
+ * });
+ */
+export function useAddNoteMutation(baseOptions?: Apollo.MutationHookOptions<AddNoteMutation, AddNoteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddNoteMutation, AddNoteMutationVariables>(AddNoteDocument, options);
+      }
+export type AddNoteMutationHookResult = ReturnType<typeof useAddNoteMutation>;
+export type AddNoteMutationResult = Apollo.MutationResult<AddNoteMutation>;
+export type AddNoteMutationOptions = Apollo.BaseMutationOptions<AddNoteMutation, AddNoteMutationVariables>;
+export const GetNotesByRoomDocument = gql`
+    query getNotesByRoom($room_uuid: uuid!) {
+  note(where: {room_uuid: {_eq: $room_uuid}}, order_by: {created_at: asc}) {
+    uuid
+    content
+    created_at
+    updated_at
+  }
+}
+    `;
+
+/**
+ * __useGetNotesByRoomQuery__
+ *
+ * To run a query within a React component, call `useGetNotesByRoomQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetNotesByRoomQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetNotesByRoomQuery({
+ *   variables: {
+ *      room_uuid: // value for 'room_uuid'
+ *   },
+ * });
+ */
+export function useGetNotesByRoomQuery(baseOptions: Apollo.QueryHookOptions<GetNotesByRoomQuery, GetNotesByRoomQueryVariables> & ({ variables: GetNotesByRoomQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetNotesByRoomQuery, GetNotesByRoomQueryVariables>(GetNotesByRoomDocument, options);
+      }
+export function useGetNotesByRoomLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetNotesByRoomQuery, GetNotesByRoomQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetNotesByRoomQuery, GetNotesByRoomQueryVariables>(GetNotesByRoomDocument, options);
+        }
+export function useGetNotesByRoomSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetNotesByRoomQuery, GetNotesByRoomQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetNotesByRoomQuery, GetNotesByRoomQueryVariables>(GetNotesByRoomDocument, options);
+        }
+export type GetNotesByRoomQueryHookResult = ReturnType<typeof useGetNotesByRoomQuery>;
+export type GetNotesByRoomLazyQueryHookResult = ReturnType<typeof useGetNotesByRoomLazyQuery>;
+export type GetNotesByRoomSuspenseQueryHookResult = ReturnType<typeof useGetNotesByRoomSuspenseQuery>;
+export type GetNotesByRoomQueryResult = Apollo.QueryResult<GetNotesByRoomQuery, GetNotesByRoomQueryVariables>;
+export const UpdateNoteDocument = gql`
+    mutation updateNote($uuid: uuid!, $content: String!) {
+  update_note_by_pk(pk_columns: {uuid: $uuid}, _set: {content: $content}) {
+    uuid
+    content
+    created_at
+    updated_at
+  }
+}
+    `;
+export type UpdateNoteMutationFn = Apollo.MutationFunction<UpdateNoteMutation, UpdateNoteMutationVariables>;
+
+/**
+ * __useUpdateNoteMutation__
+ *
+ * To run a mutation, you first call `useUpdateNoteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateNoteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateNoteMutation, { data, loading, error }] = useUpdateNoteMutation({
+ *   variables: {
+ *      uuid: // value for 'uuid'
+ *      content: // value for 'content'
+ *   },
+ * });
+ */
+export function useUpdateNoteMutation(baseOptions?: Apollo.MutationHookOptions<UpdateNoteMutation, UpdateNoteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateNoteMutation, UpdateNoteMutationVariables>(UpdateNoteDocument, options);
+      }
+export type UpdateNoteMutationHookResult = ReturnType<typeof useUpdateNoteMutation>;
+export type UpdateNoteMutationResult = Apollo.MutationResult<UpdateNoteMutation>;
+export type UpdateNoteMutationOptions = Apollo.BaseMutationOptions<UpdateNoteMutation, UpdateNoteMutationVariables>;
+export const DeleteNoteDocument = gql`
+    mutation deleteNote($uuid: uuid!) {
+  delete_note_by_pk(uuid: $uuid) {
+    uuid
+  }
+}
+    `;
+export type DeleteNoteMutationFn = Apollo.MutationFunction<DeleteNoteMutation, DeleteNoteMutationVariables>;
+
+/**
+ * __useDeleteNoteMutation__
+ *
+ * To run a mutation, you first call `useDeleteNoteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteNoteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteNoteMutation, { data, loading, error }] = useDeleteNoteMutation({
+ *   variables: {
+ *      uuid: // value for 'uuid'
+ *   },
+ * });
+ */
+export function useDeleteNoteMutation(baseOptions?: Apollo.MutationHookOptions<DeleteNoteMutation, DeleteNoteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteNoteMutation, DeleteNoteMutationVariables>(DeleteNoteDocument, options);
+      }
+export type DeleteNoteMutationHookResult = ReturnType<typeof useDeleteNoteMutation>;
+export type DeleteNoteMutationResult = Apollo.MutationResult<DeleteNoteMutation>;
+export type DeleteNoteMutationOptions = Apollo.BaseMutationOptions<DeleteNoteMutation, DeleteNoteMutationVariables>;
 export const AddRoomDocument = gql`
     mutation addRoom($name: String!, $intro: String!, $invite_code: String!) {
   insert_room_one(object: {name: $name, intro: $intro, invite_code: $invite_code}) {
@@ -1859,3 +2381,37 @@ export type GetUsersByUsernameQueryHookResult = ReturnType<typeof useGetUsersByU
 export type GetUsersByUsernameLazyQueryHookResult = ReturnType<typeof useGetUsersByUsernameLazyQuery>;
 export type GetUsersByUsernameSuspenseQueryHookResult = ReturnType<typeof useGetUsersByUsernameSuspenseQuery>;
 export type GetUsersByUsernameQueryResult = Apollo.QueryResult<GetUsersByUsernameQuery, GetUsersByUsernameQueryVariables>;
+export const UpdateUserPasswordDocument = gql`
+    mutation updateUserPassword($uuid: uuid!, $password: String!) {
+  update_user_by_pk(pk_columns: {uuid: $uuid}, _set: {password: $password}) {
+    uuid
+  }
+}
+    `;
+export type UpdateUserPasswordMutationFn = Apollo.MutationFunction<UpdateUserPasswordMutation, UpdateUserPasswordMutationVariables>;
+
+/**
+ * __useUpdateUserPasswordMutation__
+ *
+ * To run a mutation, you first call `useUpdateUserPasswordMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateUserPasswordMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateUserPasswordMutation, { data, loading, error }] = useUpdateUserPasswordMutation({
+ *   variables: {
+ *      uuid: // value for 'uuid'
+ *      password: // value for 'password'
+ *   },
+ * });
+ */
+export function useUpdateUserPasswordMutation(baseOptions?: Apollo.MutationHookOptions<UpdateUserPasswordMutation, UpdateUserPasswordMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateUserPasswordMutation, UpdateUserPasswordMutationVariables>(UpdateUserPasswordDocument, options);
+      }
+export type UpdateUserPasswordMutationHookResult = ReturnType<typeof useUpdateUserPasswordMutation>;
+export type UpdateUserPasswordMutationResult = Apollo.MutationResult<UpdateUserPasswordMutation>;
+export type UpdateUserPasswordMutationOptions = Apollo.BaseMutationOptions<UpdateUserPasswordMutation, UpdateUserPasswordMutationVariables>;
