@@ -2,7 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { Button, Input, message, Spin } from "antd";
 import { user } from "./getUser";
 import * as graphql from "./graphql";
-import { Bubble, Card, Container, Scroll, Text } from "./Components";
+import { Bubble, Card, Container, Link, Scroll, Text } from "./Components";
+
+type Message = graphql.GetMessagesByRoomSubscription["message"][0];
 
 interface ChatBoxProps {
   user: user | null;
@@ -13,6 +15,7 @@ interface ChatBoxProps {
 const ChatBox: React.FC<ChatBoxProps> = ({ user, room, handleClose }) => {
   const [text, setText] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const [replyTo, setReplyTo] = useState<Message | null>(null);
 
   const { data, error } = graphql.useGetMessagesByRoomSubscription({
     skip: !room,
@@ -40,6 +43,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ user, room, handleClose }) => {
         user_uuid: user?.uuid,
         room_uuid: room?.uuid,
         content: text,
+        reply_to_id: replyTo?.uuid,
       },
     });
     if (result.errors) {
@@ -47,6 +51,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ user, room, handleClose }) => {
       message.error("发送消息失败！");
     }
     setText("");
+    setReplyTo(null);
     setLoading(false);
   };
 
@@ -82,7 +87,40 @@ const ChatBox: React.FC<ChatBoxProps> = ({ user, room, handleClose }) => {
           {room.intro}
         </Text>
       </Container>
-      <MessageFeed user={user} messages={data?.message} />
+      <MessageFeed user={user} messages={data?.message} onReply={setReplyTo} />
+      {replyTo && (
+        <div
+          className="need-interaction"
+          style={{
+            marginTop: "6px",
+            padding: "6px 12px",
+            borderRadius: "8px",
+            backgroundColor: "rgba(0, 0, 0, 0.08)",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Text
+            size="small"
+            style={{
+              flex: 1,
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            }}
+          >
+            回复 {replyTo.user.username}：{replyTo.content}
+          </Text>
+          <Button
+            type="link"
+            style={{ width: "24px", height: "24px", fontSize: "12px", padding: 0 }}
+            onClick={() => setReplyTo(null)}
+          >
+            ✕
+          </Button>
+        </div>
+      )}
       <div
         className="need-interaction"
         style={{
@@ -113,9 +151,10 @@ const ChatBox: React.FC<ChatBoxProps> = ({ user, room, handleClose }) => {
 interface MessageFeedProps {
   user: user;
   messages: graphql.GetMessagesByRoomSubscription["message"] | undefined;
+  onReply: (message: Message) => void;
 }
 
-const MessageFeed: React.FC<MessageFeedProps> = ({ user, messages }) => {
+const MessageFeed: React.FC<MessageFeedProps> = ({ user, messages, onReply }) => {
   const bottomRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -129,7 +168,7 @@ const MessageFeed: React.FC<MessageFeedProps> = ({ user, messages }) => {
             ref={index === messages.length - 1 ? bottomRef : null}
             key={index}
           >
-            <MessageBubble user={user} message={message} />
+            <MessageBubble user={user} message={message} onReply={onReply} />
           </div>
         ))
       ) : (
@@ -143,10 +182,15 @@ const MessageFeed: React.FC<MessageFeedProps> = ({ user, messages }) => {
 
 interface MessageBubbleProps {
   user: user;
-  message: graphql.GetMessagesByRoomSubscription["message"][0];
+  message: Message;
+  onReply: (message: Message) => void;
 }
 
-const MessageBubble: React.FC<MessageBubbleProps> = ({ user, message }) => {
+const MessageBubble: React.FC<MessageBubbleProps> = ({
+  user,
+  message,
+  onReply,
+}) => {
   const isSelf = user.uuid === message.user.uuid;
   const dateUTC = new Date(message.created_at);
   const date = new Date(
@@ -162,11 +206,21 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ user, message }) => {
         alignItems: isSelf ? "flex-end" : "flex-start",
       }}
     >
-      <div style={{ marginLeft: "12px", marginRight: "12px" }}>
+      <div
+        style={{
+          marginLeft: "12px",
+          marginRight: "12px",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
         <Text size="small">{message.user.username}</Text>
         <Text size="small" style={{ marginLeft: "6px" }}>
           {date.toLocaleString("zh-CN")}
         </Text>
+        <Link style={{ marginLeft: "6px" }} onClick={() => onReply(message)}>
+          回复
+        </Link>
       </div>
       <Bubble
         style={{
@@ -178,6 +232,21 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ user, message }) => {
             : "rgba(255, 255, 255, 0.25)",
         }}
       >
+        {message.replied_message && (
+          <div
+            style={{
+              marginBottom: "4px",
+              padding: "4px 8px",
+              borderRadius: "6px",
+              backgroundColor: "rgba(0, 0, 0, 0.06)",
+            }}
+          >
+            <Text size="small">
+              回复 {message.replied_message.user.username}：
+              {message.replied_message.content}
+            </Text>
+          </div>
+        )}
         <Text style={{ wordBreak: "break-all" }}>{message.content}</Text>
       </Bubble>
     </div>

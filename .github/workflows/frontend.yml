@@ -1,29 +1,20 @@
-# Simple workflow for deploying static content to GitHub Pages
+# Build the documentation site and publish the frontend demo below /demo.
 name: frontend
 
 on:
-  # Runs on pushes targeting the default branch
   push:
     branches: ["main"]
 
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
   group: "pages"
   cancel-in-progress: false
-
-defaults:
-  run:
-    working-directory: frontend
 
 jobs:
   build:
@@ -33,6 +24,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -40,26 +34,42 @@ jobs:
           cache: yarn
           cache-dependency-path: ./frontend/yarn.lock
 
+      - name: Convert TOC syntax
+        run: node assets/js/convert-toc.js
+
+      - name: Build documentation with Jekyll
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+
+      - name: Fix documentation site permissions
+        run: sudo chown -R "$(id -u):$(id -g)" ./_site
+
       - name: Install dependencies
-        run: |
-          yarn install --frozen-lockfile
+        working-directory: frontend
+        run: yarn install --frozen-lockfile
 
       - name: Check grammar
+        working-directory: frontend
         run: |
           yarn typecheck
           yarn lint
 
       - name: Build
-        run: |
-          yarn build
+        working-directory: frontend
+        run: yarn build
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
+      - name: Copy frontend demo into documentation site
+        working-directory: frontend
+        run: |
+          mkdir -p ../_site/demo
+          cp -R build/. ../_site/demo/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "./frontend/build"
+          path: "./_site"
 
   deploy:
     environment:
@@ -71,4 +81,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

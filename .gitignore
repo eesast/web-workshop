@@ -5,5 +5,8 @@ node_modules
 
 build
 electron
+_site
+.jekyll-cache
+.sass-cache
 
 .local.env

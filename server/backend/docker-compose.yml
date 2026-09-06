@@ -1,0 +1,10 @@
+services:
+  backend:
+    image: web-workshop-backend:local
+    restart: unless-stopped
+    ports:
+      - "20248:8888"
+    env_file:
+      - .local.env
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

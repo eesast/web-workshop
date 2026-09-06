@@ -2,6 +2,8 @@
 
 在前 5 节中，我们已经在本地完成了网站的全部开发工作，但如何让世界上所有人都能 24 小时访问你的网站呢？在本节，我们将运用 Github CI/CD 来构建前端和后端的 Docker 镜像，使用 Github Pages 来托管前端页面，并尝试自己购买一个云服务器来提供网站的后端和数据库服务。
 
+本仓库的最终 Github Pages 根路径用于展示教学文档，前端演示页面部署在 [https://eesast.github.io/web-workshop/demo/](https://eesast.github.io/web-workshop/demo/)；这不会改变本节要学习的 Github Pages 托管前端页面的基本流程。
+
 ### 已实现的功能
 
 | 哈希值前 7 位 | 提交信息                                   | 对应知识点                                         | 实现效果                                                |

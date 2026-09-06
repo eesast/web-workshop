@@ -1,0 +1,32 @@
+mutation addNote($room_uuid: uuid!, $content: String!) {
+  insert_note_one(object: { room_uuid: $room_uuid, content: $content }) {
+    uuid
+    content
+    created_at
+    updated_at
+  }
+}
+
+query getNotesByRoom($room_uuid: uuid!) {
+  note(where: { room_uuid: { _eq: $room_uuid } }, order_by: { created_at: asc }) {
+    uuid
+    content
+    created_at
+    updated_at
+  }
+}
+
+mutation updateNote($uuid: uuid!, $content: String!) {
+  update_note_by_pk(pk_columns: { uuid: $uuid }, _set: { content: $content }) {
+    uuid
+    content
+    created_at
+    updated_at
+  }
+}
+
+mutation deleteNote($uuid: uuid!) {
+  delete_note_by_pk(uuid: $uuid) {
+    uuid
+  }
+}
