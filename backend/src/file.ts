@@ -74,4 +74,28 @@ router.get("/download", authenticate, (req, res) => {
   }
 });
 
+router.post("/delete", authenticate, (req, res) => {
+  const { room, filename } = req.body ?? {};
+  if (!room || !filename) {
+    return res.status(422).send("422 Unprocessable Entity: Missing room or filename");
+  }
+
+  const roomDir = path.resolve(baseDir, room as string);
+  const target = path.resolve(roomDir, filename as string);
+  if (target !== roomDir && !target.startsWith(roomDir + path.sep)) {
+    return res.status(400).send("400 Bad Request: Invalid path");
+  }
+
+  try {
+    if (!fs.existsSync(target)) {
+      return res.status(404).send("404 Not Found: File does not exist");
+    }
+    fs.unlinkSync(target);
+    return res.status(204).send();
+  } catch (err) {
+    console.error(err);
+    return res.sendStatus(500);
+  }
+});
+
 export default router;
