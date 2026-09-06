@@ -62,3 +62,65 @@
 .styled-list li {
   line-height: 2em;
 }
+
+/* ===== 关于我页面 ===== */
+#about-me-frame {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 32px 16px;
+  box-sizing: border-box;
+  background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+}
+
+.about-me-card {
+  background-color: rgba(255, 255, 255, 0.35);
+}
+
+#about-me-header {
+  width: min(640px, 92vw);
+  text-align: center;
+}
+
+#about-me-avatar {
+  width: 88px;
+  height: 88px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 40px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #6a82fb 0%, #fc5c7d 100%);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.about-me-subtitle {
+  color: rgba(0, 0, 0, 0.65);
+}
+
+#about-me-grid {
+  width: min(920px, 94vw);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+}
+
+.about-me-col {
+  flex: 1 1 320px;
+  max-width: 460px;
+}
+
+.about-me-quote {
+  margin: 12px 0;
+  padding: 8px 16px;
+  border-left: 4px solid #6a82fb;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.35);
+  color: rgba(0, 0, 0, 0.75);
+}
