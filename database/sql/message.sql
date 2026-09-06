@@ -42,3 +42,4 @@ insert into public.message (user_uuid, room_uuid, content) values
 ('00000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-100000000003', '好了，今天就到这里吧');
 
 update public.message set created_at = '2021-01-01 00:00:00' where room_uuid = '00000000-0000-0000-0000-100000000002';
+-- 信息由AI生成

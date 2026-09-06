@@ -1,5 +1,6 @@
 import express from "express";
 import jwt from "jsonwebtoken";
+import authenticate from "./authenticate";
 import { sdk as graphql } from "./index";
 
 interface userJWTPayload {
@@ -65,6 +66,29 @@ router.post("/register", async (req, res) => {
       expiresIn: "24h",
     });
     return res.status(200).json({ token });
+  } catch (err) {
+    console.error(err);
+    return res.sendStatus(500);
+  }
+});
+
+router.get("/delete", authenticate, async (req, res) => {
+  try {
+    const authHeader = req.get("Authorization");
+    if (!authHeader) {
+      return res.status(401).send("401 Unauthorized: Missing Token");
+    }
+    const token = authHeader.substring(7);
+    const payload = jwt.verify(token, process.env.JWT_SECRET!) as userJWTPayload;
+    if (!payload.uuid) {
+      return res.status(401).send("401 Unauthorized: Token does not contain user uuid");
+    }
+
+    const mutationResult = await graphql.deleteUserByUuid({ uuid: payload.uuid });
+    if (!mutationResult.delete_user_by_pk) {
+      return res.status(404).send("404 Not Found: User does not exist");
+    }
+    return res.status(204).send();
   } catch (err) {
     console.error(err);
     return res.sendStatus(500);

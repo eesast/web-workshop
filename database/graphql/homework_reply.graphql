@@ -1,0 +1,74 @@
+# 作业三：聊天室消息的单层回复
+
+# 1. 发一条回复消息：reply_to 指向被回复的消息
+mutation replyMessage(
+  $user_uuid: uuid!,
+  $room_uuid: uuid!,
+  $content: String!,
+  $reply_to: uuid!
+) {
+  insert_message_one(object: {
+    user_uuid: $user_uuid,
+    room_uuid: $room_uuid,
+    content: $content,
+    reply_to: $reply_to
+  }) {
+    uuid
+    content
+    # 自引用外键的对象关系名：Hasura 中为目标表名 message
+    message {
+      uuid
+      content
+    }
+  }
+}
+
+# 2. 查询某个会议的消息，并带出每条消息回复的目标（单层）
+query messagesWithReply($room_uuid: uuid!) {
+  message(
+    where: { room_uuid: { _eq: $room_uuid } },
+    order_by: { created_at: asc }
+  ) {
+    uuid
+    content
+    created_at
+    user {
+      username
+    }
+    # 回复目标（通过 message.reply_to 外键的对象关系）
+    message {
+      uuid
+      content
+      user {
+        username
+      }
+    }
+  }
+}
+
+# 3. 查询某条消息收到了哪些回复
+query messageReplies($uuid: uuid!) {
+  message(where: { reply_to: { _eq: $uuid } }) {
+    uuid
+    content
+    user {
+      username
+    }
+    message {
+      uuid
+      content
+    }
+  }
+}
+
+# 4. 订阅某个会议的新消息（含回复关系），方便聊天室实时更新
+subscription messagesByRoomWithReply($room_uuid: uuid!) {
+  message(where: { room_uuid: { _eq: $room_uuid } }) {
+    uuid
+    content
+    message {
+      uuid
+      content
+    }
+  }
+}

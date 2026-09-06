@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Form, Input, List, message, Modal } from "antd";
+import axios from "axios";
 import {
   UserOutlined,
   LoginOutlined,
   LogoutOutlined,
   PlusOutlined,
+  DeleteOutlined,
 } from "@ant-design/icons";
 import * as graphql from "./graphql";
 import { Bubble, Card, Link, Scroll, Text } from "./Components";
@@ -31,6 +33,8 @@ const MainPanel: React.FC<MainPanelProps> = (props) => {
 
 const User: React.FC<MainPanelProps> = ({ user }) => {
   const navigate = useNavigate();
+  const [deleteOpen, setDeleteOpen] = useState<boolean>(false);
+  const [deleting, setDeleting] = useState<boolean>(false);
 
   const handleClick = () => {
     if (user) {
@@ -38,6 +42,22 @@ const User: React.FC<MainPanelProps> = ({ user }) => {
       navigate(0);
     } else {
       navigate("/login");
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    setDeleting(true);
+    try {
+      await axios.get("/user/delete");
+      message.success("账号已删除");
+      localStorage.removeItem("token");
+      localStorage.removeItem("username");
+      navigate("/login");
+    } catch (error) {
+      console.error(error);
+      message.error("删除账号失败！");
+      setDeleting(false);
+      setDeleteOpen(false);
     }
   };
 
@@ -65,19 +85,61 @@ const User: React.FC<MainPanelProps> = ({ user }) => {
       >
         {user ? user.username : "未登录"}
       </Text>
-      <Button
-        style={{
-          width: "36px",
-          height: "36px",
-          fontSize: "36px",
-          marginLeft: "12px",
-        }}
-        onClick={handleClick}
-        type="link"
-        danger={user ? true : false}
+      {user ? (
+        <>
+          <Button
+            style={{
+              width: "36px",
+              height: "36px",
+              fontSize: "36px",
+              marginLeft: "12px",
+            }}
+            onClick={handleClick}
+            type="link"
+            danger
+          >
+            <LogoutOutlined />
+          </Button>
+          <Button
+            style={{
+              width: "36px",
+              height: "36px",
+              fontSize: "36px",
+              marginLeft: "4px",
+            }}
+            onClick={() => setDeleteOpen(true)}
+            type="link"
+            danger
+          >
+            <DeleteOutlined />
+          </Button>
+        </>
+      ) : (
+        <Button
+          style={{
+            width: "36px",
+            height: "36px",
+            fontSize: "36px",
+            marginLeft: "12px",
+          }}
+          onClick={handleClick}
+          type="link"
+        >
+          <LoginOutlined />
+        </Button>
+      )}
+      <Modal
+        title="注销账号"
+        open={deleteOpen}
+        okText="删除"
+        okButtonProps={{ danger: true }}
+        confirmLoading={deleting}
+        onOk={handleDeleteAccount}
+        onCancel={() => setDeleteOpen(false)}
+        cancelText="取消"
       >
-        {user ? <LogoutOutlined /> : <LoginOutlined />}
-      </Button>
+        确定要删除当前账号吗？该操作会同时删除你的会议记录与消息，且不可恢复。
+      </Modal>
     </Bubble>
   );
 };

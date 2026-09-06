@@ -24,6 +24,9 @@ const storage = multer.diskStorage({
     }
   },
   filename: (req, file, cb) => {
+    // multipart 文件名被 busboy 按 latin1 解码，这里还原为 UTF-8，
+    // 避免中文文件名在磁盘与文件列表中显示为乱码。
+    file.originalname = Buffer.from(file.originalname, "latin1").toString("utf8");
     return cb(null, file.originalname);
   }
 })
@@ -68,6 +71,30 @@ router.get("/download", authenticate, (req, res) => {
     } else {
       return res.status(404).send("404 Not Found: File does not exist");
     }
+  } catch (err) {
+    console.error(err);
+    return res.sendStatus(500);
+  }
+});
+
+router.post("/delete", authenticate, (req, res) => {
+  const { room, filename } = req.body ?? {};
+  if (!room || !filename) {
+    return res.status(422).send("422 Unprocessable Entity: Missing room or filename");
+  }
+
+  const roomDir = path.resolve(baseDir, room as string);
+  const target = path.resolve(roomDir, filename as string);
+  if (target !== roomDir && !target.startsWith(roomDir + path.sep)) {
+    return res.status(400).send("400 Bad Request: Invalid path");
+  }
+
+  try {
+    if (!fs.existsSync(target)) {
+      return res.status(404).send("404 Not Found: File does not exist");
+    }
+    fs.unlinkSync(target);
+    return res.status(204).send();
   } catch (err) {
     console.error(err);
     return res.sendStatus(500);
