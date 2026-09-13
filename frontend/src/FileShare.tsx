@@ -129,6 +129,9 @@ const FileShare: React.FC<FileShareProps> = ({ room, handleClose }) => {
   if (!room) {
     return null;
   }
+  const visibleFiles = fileList.filter((filename) =>
+    filename.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase())
+  );
   return (
     <Card style={{ width: "300px", height: "500px" }}>
       <Refresh />
@@ -149,11 +152,12 @@ const FileShare: React.FC<FileShareProps> = ({ room, handleClose }) => {
         onChange={(event) => setSearchTerm(event.target.value)}
         style={{ marginBottom: "8px" }}
       />
+      <Text size="small" style={{ display: "block", marginBottom: "4px" }}>
+        显示 {visibleFiles.length} / {fileList.length} 个文件
+      </Text>
       <FileList
         roomUUID={room.uuid}
-        filelist={fileList.filter((filename) =>
-          filename.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase())
-        )}
+        filelist={visibleFiles}
         onDeleted={(filename) => setFileList((current) => current.filter((item) => item !== filename))}
       />
       <div
@@ -223,15 +227,19 @@ const FileList: React.FC<FileListProps> = ({ roomUUID, filelist, onDeleted }) =>
   );
   return (
     <Scroll>
-      <List
-        size="small"
-        dataSource={filelist}
-        renderItem={(filename) => (
-          <List.Item style={{ padding: "8px" }} actions={[Download(filename), Delete(filename)]}>
-            <Text style={{ wordBreak: "break-all" }}>{filename}</Text>
-          </List.Item>
-        )}
-      />
+      {filelist.length === 0 ? (
+        <Text size="small">没有匹配的文件</Text>
+      ) : (
+        <List
+          size="small"
+          dataSource={filelist}
+          renderItem={(filename) => (
+            <List.Item style={{ padding: "8px" }} actions={[Download(filename), Delete(filename)]}>
+              <Text style={{ wordBreak: "break-all" }}>{filename}</Text>
+            </List.Item>
+          )}
+        />
+      )}
     </Scroll>
   );
 };
