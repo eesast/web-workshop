@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>关于谭翔之</title>
+    <link rel="stylesheet" href="./about-me.css" />
+    <script src="./about-me.js" type="module" defer></script>
+  </head>
+  <body>
+    <main class="profile-shell">
+      <header class="profile-header">
+        <div>
+          <p class="eyebrow">WEB WORKSHOP · ABOUT ME</p>
+          <h1>你好，我是谭翔之</h1>
+          <p class="subtitle">无57班 · 正在学习全栈 Web 开发</p>
+        </div>
+        <button id="theme-toggle" type="button" aria-pressed="false">切换夜间模式</button>
+      </header>
+
+      <section class="profile-grid" aria-label="个人介绍">
+        <article class="profile-card highlight-card">
+          <h2>我的关键词</h2>
+          <ul class="tag-list">
+            <li>好奇心</li>
+            <li>动手实践</li>
+            <li>持续学习</li>
+          </ul>
+          <p>我喜欢把课堂上学到的知识做成可以实际使用的小工具，并在调试过程中理解它们为什么工作。</p>
+        </article>
+
+        <article class="profile-card">
+          <h2>兴趣爱好</h2>
+          <ol>
+            <li>探索新的编程语言和框架</li>
+            <li>记录学习过程中的问题与收获</li>
+            <li>和同学一起讨论有趣的技术实现</li>
+          </ol>
+        </article>
+
+        <article class="profile-card">
+          <h2>最近的小目标</h2>
+          <table>
+            <thead><tr><th>目标</th><th>进度</th></tr></thead>
+            <tbody>
+              <tr><td>完成 Web Workshop</td><td><meter min="0" max="5" value="5">5/5</meter></td></tr>
+              <tr><td>写出可复用组件</td><td><meter min="0" max="5" value="3">3/5</meter></td></tr>
+            </tbody>
+          </table>
+        </article>
+
+        <article class="profile-card contact-card">
+          <h2>给未来的自己</h2>
+          <blockquote>把大问题拆成小步骤，先让第一个版本跑起来。</blockquote>
+          <a href="https://github.com/tuu23888-gif" target="_blank" rel="noreferrer">查看我的 GitHub</a>
+        </article>
+      </section>
+
+      <section class="profile-card activity-card" aria-live="polite">
+        <div class="activity-heading">
+          <h2>GitHub 动态</h2>
+          <button id="load-github" type="button">加载公开信息</button>
+        </div>
+        <p id="github-status">点击按钮后从 GitHub 获取公开资料。</p>
+        <div id="github-info" class="github-info" hidden></div>
+      </section>
+    </main>
+  </body>
+</html>
