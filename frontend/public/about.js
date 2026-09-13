@@ -1,5 +1,6 @@
 /* eslint-disable eqeqeq */
 import message, { displaySuccessMessage, displayWarningMessage } from "./displayMessage.js";
+import { apiUrl } from "./config.js";
 
 message("欢迎加入电子系科协，共同享受网页开发的乐趣");
 
@@ -84,7 +85,7 @@ for (let i = 0; i < planTitleDOMList.length; i++) {
 }
 
 const contactUsDOM = document.getElementById("contact-us");
-contactUsDOM.onsubmit = (event) => {
+contactUsDOM.onsubmit = async (event) => {
   event.preventDefault();
   const formData = new FormData(contactUsDOM);
   const email = formData.get("email").toLowerCase();
@@ -100,6 +101,27 @@ contactUsDOM.onsubmit = (event) => {
     displayWarningMessage("包含SQL关键字或非法字符！");
     return false;
   }
-  displaySuccessMessage("提交成功！");
-  return true;
+  try {
+    const response = await fetch(`${apiUrl}/email/contact-us`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: formData.get("email"),
+        name: formData.get("name"),
+        message: formData.get("textarea"),
+      }),
+    });
+    if (response.status === 200) {
+      displaySuccessMessage("提交成功！");
+      return true;
+    } else {
+      throw new Error("Unexpected error");
+    }
+  } catch (error) {
+    console.error(error);
+    displayWarningMessage("提交失败！");
+    return false;
+  }
 };

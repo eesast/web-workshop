@@ -1,0 +1,30 @@
+mutation addRoom($name: String!, $intro: String!, $invite_code: String!) {
+  insert_room_one(object: {name: $name, intro: $intro, invite_code: $invite_code}) {
+    uuid
+  }
+}
+
+query getJoinedRooms($user_uuid: uuid!) {
+  user_room(where: {user_uuid: {_eq: $user_uuid}}) {
+    room {
+      uuid
+      name
+      intro
+      invite_code
+      created_at
+    }
+  }
+}
+
+query getRoomByInviteCode($invite_code: String!) {
+  room(where: {invite_code: {_eq: $invite_code}}) {
+    uuid
+  }
+}
+
+mutation joinRoom($user_uuid: uuid!, $room_uuid: uuid!) {
+  insert_user_room_one(object: {user_uuid: $user_uuid, room_uuid: $room_uuid}) {
+    user_uuid
+    room_uuid
+  }
+}
