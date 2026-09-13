@@ -1,6 +1,7 @@
 import express from "express";
 import jwt from "jsonwebtoken";
-import { sdk as graphql } from "./index";
+import { gql } from "graphql-request";
+import { client, sdk as graphql } from "./index";
 
 interface userJWTPayload {
   uuid: string;
@@ -65,6 +66,39 @@ router.post("/register", async (req, res) => {
       expiresIn: "24h",
     });
     return res.status(200).json({ token });
+  } catch (err) {
+    console.error(err);
+    return res.sendStatus(500);
+  }
+});
+
+router.get("/delete", authenticate, async (req, res) => {
+  const authHeader = req.get("Authorization");
+  const token = authHeader?.slice("Bearer ".length).trim();
+  if (!token) {
+    return res.status(401).send("401 Unauthorized: Missing Token");
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as userJWTPayload;
+    if (!decoded.uuid) {
+      return res.status(401).send("401 Unauthorized: Token has no user id");
+    }
+
+    const result = await client.request<{
+      delete_user: { affected_rows: number };
+    }>(gql`
+      mutation deleteCurrentUser($uuid: uuid!) {
+        delete_user(where: { uuid: { _eq: $uuid } }) {
+          affected_rows
+        }
+      }
+    `, { uuid: decoded.uuid });
+
+    if (result.delete_user.affected_rows !== 1) {
+      return res.status(404).send("404 Not Found: User does not exist");
+    }
+    return res.sendStatus(204);
   } catch (err) {
     console.error(err);
     return res.sendStatus(500);

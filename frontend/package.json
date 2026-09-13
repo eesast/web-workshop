@@ -31,7 +31,9 @@
     "start": "craco start",
     "build": "craco build",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint src --ext .ts,.tsx"
+    "lint": "eslint src --ext .ts,.tsx",
+    "electron": "yarn build && electron .",
+    "electron:build": "electron-builder"
   },
   "eslintConfig": {
     "extends": [
@@ -49,5 +51,47 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "name": "web-workshop",
+  "version": "2024.0.0",
+  "main": "build/electron.js",
+  "build": {
+    "productName": "EESAST Web Workshop",
+    "appId": "web-workshop",
+    "icon": "build/logo.png",
+    "directories": {
+      "output": "electron"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "nsis": {
+      "shortcutName": "EESAST",
+      "oneClick": false,
+      "perMachine": true,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ]
+    },
+    "linux": {
+      "category": "Utility",
+      "maintainer": "EESAST",
+      "target": [
+        "AppImage",
+        "deb",
+        "rpm",
+        "tar.gz"
+      ]
+    }
   }
 }

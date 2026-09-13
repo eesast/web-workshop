@@ -8,6 +8,7 @@ import {
   PlusOutlined,
 } from "@ant-design/icons";
 import * as graphql from "./graphql";
+import axios from "axios";
 import { Bubble, Card, Link, Scroll, Text } from "./Components";
 import { user } from "./getUser";
 
@@ -17,6 +18,7 @@ interface MainPanelProps {
   refetchRooms: () => void;
   addChatBox: (id: number) => void;
   addFileShare: (id: number) => void;
+  addNotes: (id: number) => void;
 }
 
 const MainPanel: React.FC<MainPanelProps> = (props) => {
@@ -39,6 +41,29 @@ const User: React.FC<MainPanelProps> = ({ user }) => {
     } else {
       navigate("/login");
     }
+  };
+
+  const handleDeleteAccount = () => {
+    if (!user) return;
+    Modal.confirm({
+      title: "删除账号",
+      content: "删除后账号、会议关系和消息将无法恢复，确定继续吗？",
+      okText: "删除",
+      okType: "danger",
+      cancelText: "取消",
+      onOk: async () => {
+        try {
+          await axios.get("/user/delete");
+          localStorage.removeItem("token");
+          localStorage.removeItem("username");
+          message.success("账号已删除");
+          navigate(0);
+        } catch (error) {
+          console.error(error);
+          message.error("删除账号失败，请稍后重试");
+        }
+      },
+    });
   };
 
   return (
@@ -78,6 +103,11 @@ const User: React.FC<MainPanelProps> = ({ user }) => {
       >
         {user ? <LogoutOutlined /> : <LoginOutlined />}
       </Button>
+      {user && (
+        <Button danger type="link" onClick={handleDeleteAccount} aria-label="删除账号">
+          删除账号
+        </Button>
+      )}
     </Bubble>
   );
 };
@@ -183,6 +213,7 @@ const RoomList: React.FC<MainPanelProps> = ({
   refetchRooms,
   addChatBox,
   addFileShare,
+  addNotes,
 }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -248,6 +279,7 @@ const RoomList: React.FC<MainPanelProps> = ({
               room={item.room}
               handleOpenChat={() => addChatBox(index)}
               handleOpenFileShare={() => addFileShare(index)}
+              handleOpenNotes={() => addNotes(index)}
             />
           )}
         />
@@ -287,12 +319,14 @@ interface RoomListItemProps {
   room: graphql.GetJoinedRoomsQuery["user_room"][0]["room"];
   handleOpenChat: () => void;
   handleOpenFileShare: () => void;
+  handleOpenNotes: () => void;
 }
 
 const RoomListItem: React.FC<RoomListItemProps> = ({
   room,
   handleOpenChat,
   handleOpenFileShare,
+  handleOpenNotes,
 }) => {
   const dateUTC = new Date(room.created_at);
   const date = new Date(
@@ -334,6 +368,9 @@ const RoomListItem: React.FC<RoomListItemProps> = ({
         </Link>
         <Link style={{ marginLeft: "12px" }} onClick={handleOpenFileShare}>
           打开文件共享空间
+        </Link>
+        <Link style={{ marginLeft: "12px" }} onClick={handleOpenNotes}>
+          打开个人便签
         </Link>
         <Link danger style={{ marginLeft: "12px" }} onClick={handleQuit}>
           退出会议

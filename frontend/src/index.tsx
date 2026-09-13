@@ -16,6 +16,7 @@ const MainPanel = React.lazy(() => import("./MainPanel"));
 const LoginPage = React.lazy(() => import("./LoginPage"));
 const ChatBox = React.lazy(() => import("./ChatBox"));
 const FileShare = React.lazy(() => import("./FileShare"));
+const MeetingNotes = React.lazy(() => import("./MeetingNotes"));
 
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL!;
 axios.interceptors.request.use((config) => {
@@ -65,6 +66,7 @@ const App = () => {
   const user = getUser();
   const [chatBoxList, setChatBoxList] = useState<number[]>([]);
   const [fileShareList, setFileShareList] = useState<number[]>([]);
+  const [notesList, setNotesList] = useState<number[]>([]);
   const [currentDrag, setCurrentDrag] = useState<string>("");
 
   const draggableProps = {
@@ -87,6 +89,12 @@ const App = () => {
   };
   const removeFileShare = (idx: number) => {
     setFileShareList(fileShareList.filter((id) => id !== idx));
+  };
+  const addNotes = (idx: number) => {
+    if (!notesList.includes(idx)) setNotesList([...notesList, idx]);
+  };
+  const removeNotes = (idx: number) => {
+    setNotesList(notesList.filter((id) => id !== idx));
   };
 
   const { data, error, refetch } = graphql.useGetJoinedRoomsQuery({
@@ -111,6 +119,7 @@ const App = () => {
           refetchRooms={refetch}
           addChatBox={addChatBox}
           addFileShare={addFileShare}
+          addNotes={addNotes}
         />
       </Suspense>
       <MyDraggable key="dice" oid="dice" {...draggableProps}>
@@ -146,6 +155,22 @@ const App = () => {
             <FileShare
               room={data?.user_room[idx].room}
               handleClose={() => removeFileShare(idx)}
+            />
+          </Suspense>
+        </MyDraggable>
+      ))}
+      {notesList.map((idx) => (
+        <MyDraggable
+          key={`note-${idx}`}
+          oid={`note-${idx}`}
+          style={{ position: "absolute", right: 0 }}
+          {...draggableProps}
+        >
+          <Suspense fallback={null}>
+            <MeetingNotes
+              user={user}
+              room={data?.user_room[idx].room}
+              handleClose={() => removeNotes(idx)}
             />
           </Suspense>
         </MyDraggable>

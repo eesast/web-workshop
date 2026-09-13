@@ -1,0 +1,55 @@
+name: build-gh-pages
+
+on:
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: yarn
+          cache-dependency-path: ./frontend/yarn.lock
+
+      - name: Convert TOC syntax
+        run: node assets/js/convert-toc.js
+
+      - name: Build documentation with Jekyll
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+
+      - name: Fix documentation site permissions
+        run: sudo chown -R "$(id -u):$(id -g)" ./_site
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: yarn install --frozen-lockfile
+
+      - name: Check grammar
+        working-directory: frontend
+        run: |
+          yarn typecheck
+          yarn lint
+
+      - name: Build
+        working-directory: frontend
+        run: yarn build
+
+      - name: Copy frontend demo into documentation site
+        working-directory: frontend
+        run: |
+          mkdir -p ../_site/demo
+          cp -R build/. ../_site/demo/

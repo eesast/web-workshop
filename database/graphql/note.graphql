@@ -1,0 +1,24 @@
+query getMeetingNote($user_uuid: uuid!, $room_uuid: uuid!) {
+  note(where: {user_uuid: {_eq: $user_uuid}, room_uuid: {_eq: $room_uuid}}) {
+    uuid
+    user_uuid
+    room_uuid
+    content
+    created_at
+    updated_at
+  }
+}
+
+mutation upsertMeetingNote($user_uuid: uuid!, $room_uuid: uuid!, $content: String!) {
+  insert_note_one(
+    object: {user_uuid: $user_uuid, room_uuid: $room_uuid, content: $content}
+    on_conflict: {
+      constraint: note_user_uuid_room_uuid_key
+      update_columns: [content, updated_at]
+    }
+  ) {
+    uuid
+    content
+    updated_at
+  }
+}

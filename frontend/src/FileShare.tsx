@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { Button, List, message, Spin, Upload } from "antd";
+import { Button, Input, List, message, Modal, Spin, Upload } from "antd";
 import {
   InboxOutlined,
   DownloadOutlined,
+  DeleteOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
 import axios from "axios";
@@ -47,10 +48,15 @@ const downloadFile = async (roomUUID: string, filename: string) => {
   }
 };
 
+const deleteFile = async (roomUUID: string, filename: string) => {
+  await axios.post("/file/delete", { room: roomUUID, filename });
+};
+
 const FileShare: React.FC<FileShareProps> = ({ room, handleClose }) => {
   const [fileList, setFileList] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     if (room) {
@@ -123,6 +129,9 @@ const FileShare: React.FC<FileShareProps> = ({ room, handleClose }) => {
   if (!room) {
     return null;
   }
+  const visibleFiles = fileList.filter((filename) =>
+    filename.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase())
+  );
   return (
     <Card style={{ width: "300px", height: "500px" }}>
       <Refresh />
@@ -135,7 +144,22 @@ const FileShare: React.FC<FileShareProps> = ({ room, handleClose }) => {
           文件共享空间
         </Text>
       </Container>
-      <FileList roomUUID={room.uuid} filelist={fileList} />
+      <Input
+        className="need-interaction"
+        placeholder="搜索文件名"
+        allowClear
+        value={searchTerm}
+        onChange={(event) => setSearchTerm(event.target.value)}
+        style={{ marginBottom: "8px" }}
+      />
+      <Text size="small" style={{ display: "block", marginBottom: "4px" }}>
+        显示 {visibleFiles.length} / {fileList.length} 个文件
+      </Text>
+      <FileList
+        roomUUID={room.uuid}
+        filelist={visibleFiles}
+        onDeleted={(filename) => setFileList((current) => current.filter((item) => item !== filename))}
+      />
       <div
         className="need-interaction"
         style={{ marginTop: "12px", width: "100%" }}
@@ -160,9 +184,10 @@ const FileShare: React.FC<FileShareProps> = ({ room, handleClose }) => {
 interface FileListProps {
   roomUUID: string;
   filelist: string[];
+  onDeleted: (filename: string) => void;
 }
 
-const FileList: React.FC<FileListProps> = ({ roomUUID, filelist }) => {
+const FileList: React.FC<FileListProps> = ({ roomUUID, filelist, onDeleted }) => {
   const Download = (filename: string) => (
     <Button
       type="link"
@@ -172,17 +197,49 @@ const FileList: React.FC<FileListProps> = ({ roomUUID, filelist }) => {
       <DownloadOutlined />
     </Button>
   );
+  const Delete = (filename: string) => (
+    <Button
+      type="link"
+      danger
+      style={{ fontSize: "18px", width: "18px", height: "18px", padding: 0 }}
+      onClick={() => {
+        Modal.confirm({
+          title: "删除文件",
+          content: `确定删除“${filename}”吗？`,
+          okText: "删除",
+          okType: "danger",
+          cancelText: "取消",
+          onOk: async () => {
+            try {
+              await deleteFile(roomUUID, filename);
+              onDeleted(filename);
+              message.success("文件已删除");
+            } catch (error) {
+              console.error(error);
+              message.error("删除文件失败");
+            }
+          },
+        });
+      }}
+    >
+      <DeleteOutlined />
+    </Button>
+  );
   return (
     <Scroll>
-      <List
-        size="small"
-        dataSource={filelist}
-        renderItem={(filename) => (
-          <List.Item style={{ padding: "8px" }} actions={[Download(filename)]}>
-            <Text style={{ wordBreak: "break-all" }}>{filename}</Text>
-          </List.Item>
-        )}
-      />
+      {filelist.length === 0 ? (
+        <Text size="small">没有匹配的文件</Text>
+      ) : (
+        <List
+          size="small"
+          dataSource={filelist}
+          renderItem={(filename) => (
+            <List.Item style={{ padding: "8px" }} actions={[Download(filename), Delete(filename)]}>
+              <Text style={{ wordBreak: "break-all" }}>{filename}</Text>
+            </List.Item>
+          )}
+        />
+      )}
     </Scroll>
   );
 };
