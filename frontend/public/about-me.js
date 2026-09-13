@@ -8,6 +8,16 @@ const setTheme = (dark) => {
   themeButton.setAttribute("aria-pressed", String(dark));
 };
 
+const timeElement = document.getElementById("live-time");
+const updateTime = () => {
+  timeElement.textContent = `本地时间：${new Intl.DateTimeFormat("zh-CN", {
+    dateStyle: "medium",
+    timeStyle: "medium",
+  }).format(new Date())}`;
+};
+updateTime();
+window.setInterval(updateTime, 1000);
+
 setTheme(savedTheme === "dark");
 themeButton.addEventListener("click", () => {
   const dark = !root.classList.contains("dark");
@@ -27,7 +37,8 @@ document.getElementById("load-github").addEventListener("click", async () => {
     info.innerHTML = `
       <img src="${profile.avatar_url}" alt="GitHub 头像" />
       <div><strong>${profile.name || profile.login}</strong><br />
-      <span>${profile.public_repos} 个公开仓库 · ${profile.followers} 位关注者</span></div>`;
+      <span>${profile.public_repos} 个公开仓库 · ${profile.followers} 位关注者</span><br />
+      <a href="${profile.html_url}" target="_blank" rel="noreferrer">打开 GitHub 主页</a></div>`;
     info.hidden = false;
     status.textContent = "已从网络加载公开资料。";
   } catch (error) {
