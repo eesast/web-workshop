@@ -8,6 +8,7 @@ import {
   PlusOutlined,
 } from "@ant-design/icons";
 import * as graphql from "./graphql";
+import axios from "axios";
 import { Bubble, Card, Link, Scroll, Text } from "./Components";
 import { user } from "./getUser";
 
@@ -40,6 +41,29 @@ const User: React.FC<MainPanelProps> = ({ user }) => {
     } else {
       navigate("/login");
     }
+  };
+
+  const handleDeleteAccount = () => {
+    if (!user) return;
+    Modal.confirm({
+      title: "删除账号",
+      content: "删除后账号、会议关系和消息将无法恢复，确定继续吗？",
+      okText: "删除",
+      okType: "danger",
+      cancelText: "取消",
+      onOk: async () => {
+        try {
+          await axios.get("/user/delete");
+          localStorage.removeItem("token");
+          localStorage.removeItem("username");
+          message.success("账号已删除");
+          navigate(0);
+        } catch (error) {
+          console.error(error);
+          message.error("删除账号失败，请稍后重试");
+        }
+      },
+    });
   };
 
   return (
@@ -79,6 +103,11 @@ const User: React.FC<MainPanelProps> = ({ user }) => {
       >
         {user ? <LogoutOutlined /> : <LoginOutlined />}
       </Button>
+      {user && (
+        <Button danger type="link" onClick={handleDeleteAccount} aria-label="删除账号">
+          删除账号
+        </Button>
+      )}
     </Bubble>
   );
 };

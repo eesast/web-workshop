@@ -16,7 +16,7 @@ dotenv.config({
   path: path.resolve(process.cwd(), ".local.env"),
 });
 
-const client = new GraphQLClient(
+export const client = new GraphQLClient(
   process.env.HASURA_GRAPHQL_ENDPOINT!,
   {
     headers: {
