@@ -1,0 +1,55 @@
+table:
+  name: note
+  schema: public
+object_relationships:
+  - name: room
+    using:
+      foreign_key_constraint_on: room_uuid
+  - name: user
+    using:
+      foreign_key_constraint_on: user_uuid
+insert_permissions:
+  - role: user
+    permission:
+      check:
+        user_uuid:
+          _eq: X-Hasura-User-Id
+      columns:
+        - content
+        - room_uuid
+        - user_uuid
+    comment: "Users can insert only their own meeting notes"
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - content
+        - created_at
+        - room_uuid
+        - updated_at
+        - user_uuid
+        - uuid
+      filter:
+        user_uuid:
+          _eq: X-Hasura-User-Id
+    comment: "Notes are private to their owner"
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - content
+        - updated_at
+      filter:
+        user_uuid:
+          _eq: X-Hasura-User-Id
+      check:
+        user_uuid:
+          _eq: X-Hasura-User-Id
+    comment: "Users can update only their own notes"
+delete_permissions:
+  - role: user
+    permission:
+      filter:
+        user_uuid:
+          _eq: X-Hasura-User-Id
+    comment: "Users can delete only their own notes"
